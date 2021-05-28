@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>舒尔补</title>
+    <url>/2021/05/28/linear-algebra/SchurComplement/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>舒尔补其实就是将一个矩阵变成块对角化的矩阵，便于求逆。</p>
+<h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>n*n 的矩阵可以写成分块矩阵形式</p>
+<script type="math/tex; mode=display">
+M = \left[\begin{array}{cc}{A} & {B} \\ 
+{C} & {D}\end{array}\right]_{n\times n}</script><ul>
+<li>若 A 是非奇异的，则 A 在 M 中的舒尔补为：$D-CA^{-1}B$</li>
+<li>若 D 是非奇异的，则 D 在 M 中的舒尔补为：$A-BD^{-1}C$</li>
+<li>只要记住字母顺序 DCAB、ABDC 都是在 M 中<strong>顺时针</strong>排列的</li>
+</ul>
+<h2 id="2-推导"><a href="#2-推导" class="headerlink" title="2. 推导"></a>2. 推导</h2><p>若 A 非奇异，有</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{cc}{I} & {0} \\ 
+{-C A^{-1}} & {I}\end{array}\right]
+\left[\begin{array}{cc}{A} & {B} \\ 
+{C} & {D}\end{array}\right]
+\left[\begin{array}{cc}{I} & {-A^{-1} B} \\ 
+{0} & {I}\end{array}\right]=
+\left[\begin{array}{cc}{A} & {0} \\ 
+{0} & {D-C A^{-1} B}\end{array}\right]</script><p>可得到</p>
+<script type="math/tex; mode=display">
+\left|\begin{array}{cc}{A} & {B} \\ 
+{C} & {D}\end{array}\right|=
+\left|\begin{array}{cc}{A} & {0} \\ 
+{0} & {D-C A^{-1} B}\end{array}\right|=
+|A||D-CA^{-1}B|</script><p>此时</p>
+<script type="math/tex; mode=display">
+M 非奇异 \Leftrightarrow D-CA^{-1}B 非奇异</script><h2 id="3-性质"><a href="#3-性质" class="headerlink" title="3. 性质"></a>3. 性质</h2><p>记矩阵 $A&lt;0$ 表示 A 负定，则对于矩阵 M 有以下性质</p>
+<script type="math/tex; mode=display">
+M < 0 \\
+\iff A<0, D-C A^{-1} B<0 \\
+\iff D<0, A-BD^{-1}C<0</script><p>逆矩阵</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{cc}{A} & {B} \\ 
+{C} & {D}\end{array}\right]^{-1} = 
+\left[\begin{array}{cc}{(A-BD^{-1}C)^{-1}} & {X} \\ 
+{Y} & {(D-CA^{-1}B)^{-1}}\end{array}\right]</script>]]></content>
+      <categories>
+        <category>Linear Algebra</category>
+      </categories>
+      <tags>
+        <tag>舒尔补</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>转载|理解复数域上的向量空间</title>
     <url>/2021/04/08/linear-algebra/complex_space/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><blockquote>

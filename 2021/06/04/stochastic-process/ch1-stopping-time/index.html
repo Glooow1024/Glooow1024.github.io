@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" type="image/png" href="/img/kiwi_fruit.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  <title>【随机过程】基本概念 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Glooow</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程】基本概念">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 22:19" pubdate>
+        June 4, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程】基本概念</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 4, 2021 pm
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>第一章主要介绍随机过程中的基本概念。</p>
+<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><p><strong>什么是随机过程？</strong></p>
+<p><strong>定义</strong>：设 $(\Omega, \mathcal{F},P)$ 是一个概率空间，$(E,\mathcal{E})$ 是一个可测空间，$\mathcal{T}$ 是一个指标集，$X_{\mathcal{T} }=\{X_t,t\in{\mathcal T}\}$ 是一族定义在 $(\Omega, \mathcal{F},P)$ 上，取值于 $(E,\mathcal{E})$ 中的随机变量，称 $X_T$ 为（E-值）<strong>随机过程</strong>。对每个 $\omega\in\Omega$，$X_T(\omega)=\{X_t(\omega),t\in T\}$ 称为随机过程的一个<strong>实现</strong>，或者<strong>样本轨道</strong>，或者<strong>样本函数</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：随机过程实际上是一个二元函数 $X(t,\omega)$，因此这里的 $\omega$ 所属的样本空间 $\Omega$ 包含了所有时刻 ${\mathcal T}$ 的所有可能事件，而不是只针对某个时刻随机变量 $X_t$ 的样本空间。</p>
+</blockquote>
+<a id="more"></a>
+<p><strong>定义</strong>：设 $X_T$ 是一个 $E$-值随机过程，对任意 $\Lambda=\{t_1,\cdots,t_n\}\subset T$，称 $\mu_\Lambda(B_\Lambda) = P((X_{t_1},\cdots,X_{t_n})\in B_\Lambda), B_\Lambda\in{\mathcal E}^\Lambda$ 为 $X_T$ 的一个<strong>有限维分布</strong>。称 $\{\mu_\Lambda, \Lambda\Subset T\}$ 为 $X_T$ 的<strong>有限维分布族</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：这里相当于是取了 $X_T$ 在一个下标集子集（一般取至多可数集）上的限制，这么做一半是为了从连续时间随机过程转到离散时间，可能便于处理。</p>
+</blockquote>
+<p><strong>命题 1.1.1</strong>：$\{\mu_\Lambda,\Lambda\Subset T\}$ 是<strong>相容</strong>的，也就是说对于 $\Lambda_1\subset\Lambda_2\Subset T$，有 $\mu_{\Lambda_2}(B_{\Lambda_1}\times E^{\Lambda_2\backslash \Lambda_1})=\mu_{\Lambda_2}(B_{\Lambda_1}).$</p>
+<p>证明：略。</p>
+<p><strong>定义</strong>：设 $X_T,Y_T$ 是两个 $E$ 值随机过程</p>
+<ol>
+<li>若 $X_T,Y_T$ 有相同的有限维分布族，则称 $Y_T$ 是 $X_T$ 的一个<strong>版本</strong>；</li>
+<li>若 $P(X_t=Y_t)=1,\forall t\in T$，则称 $Y_T$ 是 $X_T$ 的一个<strong>修正</strong>；</li>
+<li>若 $P(X_t=Y_t,\forall t\in T)=1$，则称 $Y_T$ 是 $X_T$ 的一个<strong>不可区别</strong>；</li>
+</ol>
+<blockquote>
+<p><strong>注</strong>：$(3)\Rightarrow(2)\Rightarrow(1)$。</p>
+</blockquote>
+<h2 id="2-可测性"><a href="#2-可测性" class="headerlink" title="2. 可测性"></a>2. 可测性</h2><p><strong>定义</strong>：设 $X_T$ 是定义在 $(\Omega, \mathcal{F},P)$ 上取值于 $(E,\mathcal{E})$ 中的随机过程，若 $X(t,\omega):([0,+\infty)\times\Omega, {\mathcal B}_{[0,+\infty)}\times{\mathcal F}) \to (E,{\mathcal E})$ 是可测的，则称过程 $X_T$ 是<strong>可测</strong>的。</p>
+<p><strong>定义</strong>：设 $\{ {\mathcal F}_t,t\in T\}(T\subset {\mathbb R}_+ \})$ 是 ${\mathcal F}$ 的一族单调上升子 $\sigma$ 代数（即 $s\le t\rightarrow {\mathcal F}_s\subset {\mathcal F}_t $，此时也称 $\{ {\mathcal F}_t,t\in T\}$ 为 ${\mathcal F}$ 的一个子 $\sigma$ 域流），$X_T$ 是 $E$ 值随机过程，称 $X_T$ 是 $\{ {\mathcal F}_t,t\in T\}$ <strong>适应</strong>的，若 $\forall t\in T, X_t:(\Omega,{\mathcal F}_t)\to(E,{\mathcal E})$ 可测（简单来说即 $X_t$ 是 ${\mathcal F}_t$ 可测的）。若 $\forall t\in T,X(s,\omega):([0,t)\times\Omega, {\mathcal B}_{[0,t)}\times{\mathcal F}_t) \to (E,{\mathcal E})$ 可测，则称 $X_T$ <strong>循序可测</strong>。</p>
+<p><strong>命题 1.2.1</strong>：设 $X_T=\{X_t,t\ge0\}$ 是实值随机过程，关于域流 $\{ {\mathcal F}_t, t\ge0\}$ 适应，若 $X_T$ 是右连续的，则它一定是循序可测的。</p>
+<h2 id="3-可分性"><a href="#3-可分性" class="headerlink" title="3.  可分性"></a>3.  可分性</h2><p><strong>定义</strong>：设 $X_T=\{X_t,t\ge0\}$ 是一个实值随机过程，$Q\subset [0,+\infty)$ 可数稠密，若 $\forall \omega$，$\{(t,X_t(\omega)), t\ge0\}\subset\{(r,X_r(\omega)), r\in Q \}^-$（$A^-$ 表示 $A$ 的闭包），则称 $X_T$ 关于 $Q$ 可分。$Q$ 称为一个可分集，若存在可数稠密 $Q\subset [0,+\infty)$ 使 $X_T$ 关于 $Q$ 可分，则称 $X_T$ 可分。</p>
+<blockquote>
+<p><strong>注</strong>：可分性用的比较多的大概是把原来的连续指标集 $T$ 转化成可数指标集 $Q$，便于证明。</p>
+</blockquote>
+<p><strong>命题 1.3.1</strong>：若实值随机过程 $X_T=\{X_t,t\ge0\}$ 可分，则 $\forall c$，$\{X_t\ge c, t\ge0\}\in {\mathcal F}$。</p>
+<p>证明：利用可分性，将其表示为可数个集合的交集。</p>
+<p><strong>定理 1.3.2</strong>：任一实值随机过程必有可分修正。</p>
+<h2 id="4-停时"><a href="#4-停时" class="headerlink" title="4. 停时"></a>4. 停时</h2><p><strong>定义</strong>：设 $(\Omega, \mathcal{F},P)$ 是一个概率空间，$\{ {\mathcal F}_t,t\in T\}$ 是 ${\mathcal F}$ 的一个上升子 $\sigma$ 域流，$T\subset {\mathbb R}_+$ 是一个时间参数集，$\tau$ 是从 $\Omega$ 到 $T$ 中的映射，若 $\{\tau\le t\}\in{\mathcal F}_t,\forall t\in T$，则称 $\tau$ （关于 $\{ {\mathcal F}_t,t\in T\}$）是一个<strong>停时</strong>。若 $\{\tau&lt; t\}\in{\mathcal F}_t,\forall t\in T$，则称 $\tau$ （关于 $\{ {\mathcal F}_t,t\in T\}$）是一个<strong>宽停时</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：引用网上对于停时的直观解释：$\{\tau\le t\}\in{\mathcal F}_t$ 意味着到 $t$ 时刻的信息足够判断是否在 $t$ 时刻或 $t$ 之前停下来。</p>
+</blockquote>
+<p><strong>性质 1.4.1</strong>：</p>
+<ol>
+<li>若 $\tau,\sigma$ 是两个停时，则 $\tau \vee\sigma, \tau\wedge\sigma,\tau+\sigma$ 也是停时；</li>
+<li>若 $\{\tau_n,n\ge1\}$ 是一列宽停时，则 $\sup_n \tau_n,\inf_n \tau_n, \liminf \tau_n,\limsup \tau_n$ 也是宽停时；</li>
+<li>若 $\{\tau_n,n\ge1\}$ 是一列停时，则 $\sup_n \tau_n$ 也是停时；</li>
+<li>$\tau$ 是 $\{ {\mathcal F}_t,t\ge0\}$ 停时 $\iff$ $\tau$ 关于域流 ${\mathcal F}_{t+}\triangleq \cap_{s&gt;t}{\mathcal F}_s,t\in T$ 是停时；</li>
+<li>若 $\tau$ 是宽停时，则它是一列停时，$\tau_n$ 的递减极限，即 $\tau_n \downarrow \tau$；</li>
+<li>若 $T={\mathbb Z_+}\text{ or }{\mathbb N}$（可数），则 $\tau$ 是停时 $\iff$ $\{\tau=t\}\in {\mathcal F}_t,\forall t\in T$。</li>
+</ol>
+<p>证明：略</p>
+<p><strong>定义</strong>：设 $\tau$ 是 ${\mathcal F}_t$ 停时，定义 ${\mathcal F}_\tau=\{A\in{\mathcal F}, A\cap \{\tau\le t\}\in {\mathcal F}_t,\forall t\in T \}$，则 ${\mathcal F}_\tau$ 是停时。</p>
+<p><strong>定理</strong>：设 $\tau$ 是 ${\mathcal F}_t$ 停时，$X_t$ 是 ${\mathcal F}_t$ 适应的，则</p>
+<ol>
+<li>$\tau$ 是 ${\mathcal F}_\tau$ 可测的；</li>
+<li>若 $T={\mathbb Z}_+\text{ or }{\mathbb N}$，则 $X_\tau$ 是 ${\mathcal F}_\tau$ 可测的；</li>
+<li>若 $T=[0,+\infty)$ 且 $\{X_t,t\ge0\}$ 是关于 $\{ {\mathcal F}_t,t\ge0\}$ 循序可测，则 $X_\tau$ 是 ${\mathcal F}_\tau$ 可测的。</li>
+</ol>
+<p>证明：略。</p>
+<p>接下来定义某个时间首次发生的时间作为首中时，实际上很多情况下首中时就是一种停时，他在很多问题中都会出现，比如赌博前决定赢1毛钱就收手，首次发生“赢1毛钱”这个事件的时刻就是一个停时。</p>
+<p><strong>定义</strong>：$\{X_t,t\ge0\},(E,{\mathcal E}),B\in{\mathcal E}$，定义<strong>首中时</strong> $\tau_B=\inf\{t:X_t(\omega)\in B\}$</p>
+<p><strong>定理 1.4.2</strong>：</p>
+<ol>
+<li>若 $T={\mathbb Z}_+$，则 $\forall B\in{\mathcal E}$，$\tau_B$ 是停时；</li>
+<li>若 $(E,{\mathcal E})$ 是距离可测空间，$T={\mathbb R}_+$，$X_t$ 适应， $B$ 是<strong>开集</strong>，若 $X_t$ 是关于 $t$ <strong>右连续</strong>的，则 $\tau_B$ 是<strong>宽停时</strong>；</li>
+<li>若 $(E,{\mathcal E})$ 是距离可测空间，$T={\mathbb R}_+$，$X_t$ 适应， $B$ 是<strong>闭集</strong>，若 $X_t$ 是关于 $t$ <strong>连续</strong>的，则 $\tau_B$ 是<strong>停时</strong>。</li>
+</ol>
+<p>证明：略。</p>
+<blockquote>
+<p><strong>注1</strong>：若 $\{ {\mathcal F}_t\}$ 右连续（即 ${\mathcal F}_{t+}={\mathcal F}_t,t\ge0$）则$B$无论开、闭，$\tau_B$ 都是停时。</p>
+<p><strong>注2</strong>：这里为什么会有开集/闭集的区别？是怎么跟停时/宽停时的定义联系在一起的？以及为什么会对 $X_t$ 的连续性有要求？</p>
+<p><strong>注</strong>：实际上我们常用的域流是自然 $\sigma$ 域流，即 ${\mathcal F}^X_t=\sigma\{X_s:s\le t\}$。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Stochastic-Process/">Stochastic Process</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">可分性</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%B7%E6%9C%AC%E8%BD%A8%E9%81%93/">样本轨道</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AA%E5%BA%8F%E5%8F%AF%E6%B5%8B/">循序可测</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%81%9C%E6%97%B6/">停时</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">首中时</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/04/stochastic-process/ch0-intro/">
+                        <span class="hidden-mobile">【随机过程】绪论</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "iw199srhJNXO53sMUbMWkSxL-gzGzoHsz",
+          app_key: "ogmo6qYs8PSc7MBFk8A1PDUl",
+          placeholder: "说点啥子吧 ^_^",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="https://valine.js.org" rel="nofollow noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

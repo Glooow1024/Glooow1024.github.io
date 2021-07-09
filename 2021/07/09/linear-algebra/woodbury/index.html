@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
-  <title>【随机过程】基本概念 - 你是下雨天</title>
+  <title>转载 | Woodbury 恒等式 - 你是下雨天</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -174,7 +174,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="【随机过程】基本概念">
+            <span class="h2" id="subtitle" title="转载 | Woodbury 恒等式">
               
             </span>
 
@@ -184,8 +184,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-04 22:19" pubdate>
-        June 4, 2021 pm
+      <time datetime="2021-07-09 09:13" pubdate>
+        July 9, 2021 am
       </time>
     </span>
   
@@ -196,7 +196,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      944 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      13
        分钟
     </span>
   
@@ -244,83 +244,61 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【随机过程】基本概念</h1>
+            <h1 style="display: none">转载 | Woodbury 恒等式</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：June 4, 2021 pm
+                  本文最后更新于：July 9, 2021 am
                 
               </p>
             
             <div class="markdown-body">
-              <p>第一章主要介绍随机过程中的基本概念。</p>
-<h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><p><strong>什么是随机过程？</strong></p>
-<p><strong>定义</strong>：设 $(\Omega, \mathcal{F},P)$ 是一个概率空间，$(E,\mathcal{E})$ 是一个可测空间，$\mathcal{T}$ 是一个指标集，$X_{\mathcal{T} }=\{X_t,t\in{\mathcal T}\}$ 是一族定义在 $(\Omega, \mathcal{F},P)$ 上，取值于 $(E,\mathcal{E})$ 中的随机变量，称 $X_T$ 为（E-值）<strong>随机过程</strong>。对每个 $\omega\in\Omega$，$X_T(\omega)=\{X_t(\omega),t\in T\}$ 称为随机过程的一个<strong>实现</strong>，或者<strong>样本轨道</strong>，或者<strong>样本函数</strong>。</p>
-<blockquote>
-<p><strong>注</strong>：随机过程实际上是一个二元函数 $X(t,\omega)$，因此这里的 $\omega$ 所属的样本空间 $\Omega$ 包含了所有时刻 ${\mathcal T}$ 的所有可能事件，而不是只针对某个时刻随机变量 $X_t$ 的样本空间。</p>
+              <blockquote>
+<p>版权声明：本文为CSDN博主「Anusat」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Louis___Zhang/article/details/103483743">https://blog.csdn.net/Louis___Zhang/article/details/103483743</a></p>
 </blockquote>
-<a id="more"></a>
-<p><strong>定义</strong>：设 $X_T$ 是一个 $E$-值随机过程，对任意 $\Lambda=\{t_1,\cdots,t_n\}\subset T$，称 $\mu_\Lambda(B_\Lambda) = P((X_{t_1},\cdots,X_{t_n})\in B_\Lambda), B_\Lambda\in{\mathcal E}^\Lambda$ 为 $X_T$ 的一个<strong>有限维分布</strong>。称 $\{\mu_\Lambda, \Lambda\Subset T\}$ 为 $X_T$ 的<strong>有限维分布族</strong>。</p>
-<blockquote>
-<p><strong>注</strong>：这里相当于是取了 $X_T$ 在一个下标集子集（一般取至多可数集）上的限制，这么做一半是为了从连续时间随机过程转到离散时间，可能便于处理。</p>
-</blockquote>
-<p><strong>命题 1.1.1</strong>：$\{\mu_\Lambda,\Lambda\Subset T\}$ 是<strong>相容</strong>的，也就是说对于 $\Lambda_1\subset\Lambda_2\Subset T$，有 $\mu_{\Lambda_2}(B_{\Lambda_1}\times E^{\Lambda_2\backslash \Lambda_1})=\mu_{\Lambda_2}(B_{\Lambda_1}).$</p>
-<p>证明：略。</p>
-<p><strong>定义</strong>：设 $X_T,Y_T$ 是两个 $E$ 值随机过程</p>
-<ol>
-<li>若 $X_T,Y_T$ 有相同的有限维分布族，则称 $Y_T$ 是 $X_T$ 的一个<strong>版本</strong>；</li>
-<li>若 $P(X_t=Y_t)=1,\forall t\in T$，则称 $Y_T$ 是 $X_T$ 的一个<strong>修正</strong>；</li>
-<li>若 $P(X_t=Y_t,\forall t\in T)=1$，则称 $Y_T$ 是 $X_T$ 的一个<strong>不可区别</strong>；</li>
+<p>在数学（特别是线性代数）中，Woodbury矩阵恒等式是以Max A.Woodbury命名的，它 可以通过对原矩阵的逆进行秩k校正来计算某个矩阵的秩k校正的逆。这个公式的另一个名字是矩阵逆引理，谢尔曼-莫里森-伍德伯里（Sherman–Morrison–Woodbury formula）公式或只是伍德伯里公式。然而，在伍德伯里发现之前，这一等式出现在其他文献中。</p>
+<h2 id="1-伍德伯里矩阵恒等式"><a href="#1-伍德伯里矩阵恒等式" class="headerlink" title="1. 伍德伯里矩阵恒等式"></a>1. 伍德伯里矩阵恒等式</h2><script type="math/tex; mode=display">
+\left(A+UCV\right)^{-1}=A^{-1}-A^{-1}U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}</script><p>其中$A$、$U$、 $C$ 和 $V$ 都表示适形尺寸的矩阵。具体来说， $A$ 的大小为 $n \times n$， $U$ 为 $n \times k$， $C$ 为 $k \times k$ $V$ 为 $k \times n$。</p>
+<h2 id="2-扩展"><a href="#2-扩展" class="headerlink" title="2. 扩展"></a>2. 扩展</h2><p>不失一般性，可用单位矩阵替换矩阵 $A$ 和 $C$：</p>
+<script type="math/tex; mode=display">
+\left(I+UV\right)^{-1}=I-U\left(I+VU\right)^{-1}V</script><p>这里 $U=A^{-1}X, V = C Y$。</p>
+<p>这个等式本身可以看作是两个简单等式的组合，即等式</p>
+<script type="math/tex; mode=display">
+(I+P)^{-1}=I-(I+P)^{-1}P=I-P(I+P)^{-1}</script><p>和所谓的 push-through 等式</p>
+<script type="math/tex; mode=display">
+(I+UV)^{-1}U=U(I+VU)^{-1}</script><p>的结合。</p>
+<h2 id="3-特殊情况"><a href="#3-特殊情况" class="headerlink" title="3. 特殊情况"></a>3. 特殊情况</h2><p>当 $V, U$ 是向量时，伍德伯里恒等式退化为谢尔曼-莫里森公式，在标量情况下，它（简化版）只是：</p>
+<script type="math/tex; mode=display">
+{\frac {1}{1+uv}}=1-{\frac {uv}{1+uv}}</script><p>如果 $p = q$ 和 $U=V=I_p$ 是单位矩阵，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left({A}+{B}\right)^{-1} &= A^{-1}-A^{-1}(B^{-1}+A^{-1})^{-1}A^{-1} \\
+&= {A}^{-1}-{A}^{-1}\left({I}+{B}{A}^{-1}\right)^{-1}{B}{A}^{-1}. 
+\end{aligned}</script><p>继续合并上述方程最右边的项，就可以得到一下恒等式：</p>
+<script type="math/tex; mode=display">
+\left({A}+{B}\right)^{-1}={A}^{-1}-\left({A}+{A}{B}^{-1}{A}\right)^{-1}</script><p>此等式的另一个有用的形式是：</p>
+<script type="math/tex; mode=display">
+\left({A}-{B}\right)^{-1}={A}^{-1}+{A}^{-1}{B}\left({A}-{B}\right)^{-1}</script><p>它有一个递归结构：</p>
+<script type="math/tex; mode=display">
+\left({A}-{B}\right)^{-1}=\sum _{k=0}^{\infty }\left({A}^{-1}{B}\right)^{k}{A}^{-1}</script><p>这种形式可用于微扰展开式，其中$B$ 是 $A$ 的微扰。</p>
+<h2 id="4-推广"><a href="#4-推广" class="headerlink" title="4. 推广"></a>4. 推广</h2><p>二项式逆定理（Binomial Inverse Theorem）<br>如果 $A,U,B,V$ 分别是 $p\times p,p\times q, q\times q, q\times p$ 的矩阵，那么:</p>
+<script type="math/tex; mode=display">
+\left(A+UBV\right)^{-1}=A^{-1}-A^{-1}UB\left(B+BVA^{-1}UB\right)^{-1}BVA^{-1}</script><p>前提是 $A$ 和 $B+BVA^{-1}UB$ 是非奇异的。后者的非奇异性要求 $B^{-1}$ 存在，因为它等于 $B(I+VA＝1ub)$ ，并且后者的秩不能超过 $B$ 的秩。由于 $B$ 是可逆的，所以在右手边的附加量逆的两边的两个 $B$ 项可以被 $(B^{-1})^{-1}$ 替换，从而得到原始的Woodbury恒等式:</p>
+<script type="math/tex; mode=display">
+(A+UBV)^{-1}=A^{-1}-A^{-1}U(I+BVA^{-1}U)^{-1}BVA^{-1}</script><p>在某些情况下，$A$ 是有可能是奇异的。</p>
+<h2 id="5-延伸"><a href="#5-延伸" class="headerlink" title="5. 延伸"></a>5. 延伸</h2><p>公式可以通过检查  $A+UCV$ 乘以伍德伯里恒等式右侧的所谓逆得到恒等式矩阵来证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+& \left(A+UCV\right)\left[A^{-1}-A^{-1}U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}\right] \\
+=& \left\{I-U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}\right\}+\left\{UCVA^{-1}-UCVA^{-1}U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}\right\} \\
+=& \left\{I+UCVA^{-1}\right\}-\left\{U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}+UCVA^{-1}U\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1}\right\} \\
+=& UCVA^{-1}-\left(U+UCVA^{-1}U\right)\left(C^{-1}+VA^{-1}U\right)^{-1}VA^{-1} \\
+=& UCVA^{-1}-UC \left( C^{-1} + VA^{-1}U \right) \left(C^{-1}+VA^{-1}U\right)^{-1} VA^{-1} + UCVA^{-1}-UCVA^{-1} \left({A}+{B}\right)^{-1} \\
+=& A^{-1}-A^{-1}(B^{-1}+A^{-1})^{-1}A^{-1} \\
+=& {A}^{-1}-{A}^{-1}\left({I}+{B}{A}^{-1}\right)^{-1}{B}{A}^{-1}.
+\end{aligned}</script><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Woodbury_matrix_identit">https://en.wikipedia.org/wiki/Woodbury_matrix_identity</a></li>
 </ol>
-<blockquote>
-<p><strong>注</strong>：$(3)\Rightarrow(2)\Rightarrow(1)$。</p>
-</blockquote>
-<h2 id="2-可测性"><a href="#2-可测性" class="headerlink" title="2. 可测性"></a>2. 可测性</h2><p><strong>定义</strong>：设 $X_T$ 是定义在 $(\Omega, \mathcal{F},P)$ 上取值于 $(E,\mathcal{E})$ 中的随机过程，若 $X(t,\omega):([0,+\infty)\times\Omega, {\mathcal B}_{[0,+\infty)}\times{\mathcal F}) \to (E,{\mathcal E})$ 是可测的，则称过程 $X_T$ 是<strong>可测</strong>的。</p>
-<p><strong>定义</strong>：设 $\{ {\mathcal F}_t,t\in T\}(T\subset {\mathbb R}_+ \})$ 是 ${\mathcal F}$ 的一族单调上升子 $\sigma$ 代数（即 $s\le t\rightarrow {\mathcal F}_s\subset {\mathcal F}_t $，此时也称 $\{ {\mathcal F}_t,t\in T\}$ 为 ${\mathcal F}$ 的一个子 $\sigma$ 域流），$X_T$ 是 $E$ 值随机过程，称 $X_T$ 是 $\{ {\mathcal F}_t,t\in T\}$ <strong>适应</strong>的，若 $\forall t\in T, X_t:(\Omega,{\mathcal F}_t)\to(E,{\mathcal E})$ 可测（简单来说即 $X_t$ 是 ${\mathcal F}_t$ 可测的）。若 $\forall t\in T,X(s,\omega):([0,t)\times\Omega, {\mathcal B}_{[0,t)}\times{\mathcal F}_t) \to (E,{\mathcal E})$ 可测，则称 $X_T$ <strong>循序可测</strong>。</p>
-<p><strong>命题 1.2.1</strong>：设 $X_T=\{X_t,t\ge0\}$ 是实值随机过程，关于域流 $\{ {\mathcal F}_t, t\ge0\}$ 适应，若 $X_T$ 是右连续的，则它一定是循序可测的。</p>
-<h2 id="3-可分性"><a href="#3-可分性" class="headerlink" title="3.  可分性"></a>3.  可分性</h2><p><strong>定义</strong>：设 $X_T=\{X_t,t\ge0\}$ 是一个实值随机过程，$Q\subset [0,+\infty)$ 可数稠密，若 $\forall \omega$，$\{(t,X_t(\omega)), t\ge0\}\subset\{(r,X_r(\omega)), r\in Q \}^-$（$A^-$ 表示 $A$ 的闭包），则称 $X_T$ 关于 $Q$ 可分。$Q$ 称为一个可分集，若存在可数稠密 $Q\subset [0,+\infty)$ 使 $X_T$ 关于 $Q$ 可分，则称 $X_T$ 可分。</p>
-<blockquote>
-<p><strong>注</strong>：可分性用的比较多的大概是把原来的连续指标集 $T$ 转化成可数指标集 $Q$，便于证明。</p>
-</blockquote>
-<p><strong>命题 1.3.1</strong>：若实值随机过程 $X_T=\{X_t,t\ge0\}$ 可分，则 $\forall c$，$\{X_t\ge c, t\ge0\}\in {\mathcal F}$。</p>
-<p>证明：利用可分性，将其表示为可数个集合的交集。</p>
-<p><strong>定理 1.3.2</strong>：任一实值随机过程必有可分修正。</p>
-<h2 id="4-停时"><a href="#4-停时" class="headerlink" title="4. 停时"></a>4. 停时</h2><p><strong>定义</strong>：设 $(\Omega, \mathcal{F},P)$ 是一个概率空间，$\{ {\mathcal F}_t,t\in T\}$ 是 ${\mathcal F}$ 的一个上升子 $\sigma$ 域流，$T\subset {\mathbb R}_+$ 是一个时间参数集，$\tau$ 是从 $\Omega$ 到 $T$ 中的映射，若 $\{\tau\le t\}\in{\mathcal F}_t,\forall t\in T$，则称 $\tau$ （关于 $\{ {\mathcal F}_t,t\in T\}$）是一个<strong>停时</strong>。若 $\{\tau&lt; t\}\in{\mathcal F}_t,\forall t\in T$，则称 $\tau$ （关于 $\{ {\mathcal F}_t,t\in T\}$）是一个<strong>宽停时</strong>。</p>
-<blockquote>
-<p><strong>注</strong>：引用网上对于停时的直观解释：$\{\tau\le t\}\in{\mathcal F}_t$ 意味着到 $t$ 时刻的信息足够判断是否在 $t$ 时刻或 $t$ 之前停下来。</p>
-</blockquote>
-<p><strong>性质 1.4.1</strong>：</p>
-<ol>
-<li>若 $\tau,\sigma$ 是两个停时，则 $\tau \vee\sigma, \tau\wedge\sigma,\tau+\sigma$ 也是停时；</li>
-<li>若 $\{\tau_n,n\ge1\}$ 是一列宽停时，则 $\sup_n \tau_n,\inf_n \tau_n, \liminf \tau_n,\limsup \tau_n$ 也是宽停时；</li>
-<li>若 $\{\tau_n,n\ge1\}$ 是一列停时，则 $\sup_n \tau_n$ 也是停时；</li>
-<li>$\tau$ 是 $\{ {\mathcal F}_t,t\ge0\}$ 停时 $\iff$ $\tau$ 关于域流 ${\mathcal F}_{t+}\triangleq \cap_{s&gt;t}{\mathcal F}_s,t\in T$ 是停时；</li>
-<li>若 $\tau$ 是宽停时，则它是一列停时，$\tau_n$ 的递减极限，即 $\tau_n \downarrow \tau$；</li>
-<li>若 $T={\mathbb Z_+}\text{ or }{\mathbb N}$（可数），则 $\tau$ 是停时 $\iff$ $\{\tau=t\}\in {\mathcal F}_t,\forall t\in T$。</li>
-</ol>
-<p>证明：略</p>
-<p><strong>定义</strong>：设 $\tau$ 是 ${\mathcal F}_t$ 停时，定义 ${\mathcal F}_\tau=\{A\in{\mathcal F}, A\cap \{\tau\le t\}\in {\mathcal F}_t,\forall t\in T \}$，则 ${\mathcal F}_\tau$ 是停时。</p>
-<p><strong>定理</strong>：设 $\tau$ 是 ${\mathcal F}_t$ 停时，$X_t$ 是 ${\mathcal F}_t$ 适应的，则</p>
-<ol>
-<li>$\tau$ 是 ${\mathcal F}_\tau$ 可测的；</li>
-<li>若 $T={\mathbb Z}_+\text{ or }{\mathbb N}$，则 $X_\tau$ 是 ${\mathcal F}_\tau$ 可测的；</li>
-<li>若 $T=[0,+\infty)$ 且 $\{X_t,t\ge0\}$ 是关于 $\{ {\mathcal F}_t,t\ge0\}$ 循序可测，则 $X_\tau$ 是 ${\mathcal F}_\tau$ 可测的。</li>
-</ol>
-<p>证明：略。</p>
-<p>接下来定义某个时间首次发生的时间作为首中时，实际上很多情况下首中时就是一种停时，他在很多问题中都会出现，比如赌博前决定赢1毛钱就收手，首次发生“赢1毛钱”这个事件的时刻就是一个停时。</p>
-<p><strong>定义</strong>：$\{X_t,t\ge0\},(E,{\mathcal E}),B\in{\mathcal E}$，定义<strong>首中时</strong> $\tau_B=\inf\{t:X_t(\omega)\in B\}$</p>
-<p><strong>定理 1.4.2</strong>：</p>
-<ol>
-<li>若 $T={\mathbb Z}_+$，则 $\forall B\in{\mathcal E}$，$\tau_B$ 是停时；</li>
-<li>若 $(E,{\mathcal E})$ 是距离可测空间，$T={\mathbb R}_+$，$X_t$ 适应， $B$ 是<strong>开集</strong>，若 $X_t$ 是关于 $t$ <strong>右连续</strong>的，则 $\tau_B$ 是<strong>宽停时</strong>；</li>
-<li>若 $(E,{\mathcal E})$ 是距离可测空间，$T={\mathbb R}_+$，$X_t$ 适应， $B$ 是<strong>闭集</strong>，若 $X_t$ 是关于 $t$ <strong>连续</strong>的，则 $\tau_B$ 是<strong>停时</strong>。</li>
-</ol>
-<p>证明：略。</p>
-<blockquote>
-<p><strong>注1</strong>：若 $\{ {\mathcal F}_t\}$ 右连续（即 ${\mathcal F}_{t+}={\mathcal F}_t,t\ge0$）则$B$无论开、闭，$\tau_B$ 都是停时。</p>
-<p><strong>注2</strong>：这里为什么会有开集/闭集的区别？是怎么跟停时/宽停时的定义联系在一起的？以及为什么会对 $X_t$ 的连续性有要求？</p>
-<p><strong>注</strong>：实际上我们常用的域流是自然 $\sigma$ 域流，即 ${\mathcal F}^X_t=\sigma\{X_s:s\le t\}$。</p>
-</blockquote>
 
             </div>
             <hr>
@@ -330,7 +308,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Stochastic-Process/">Stochastic Process</a>
+                      <a class="hover-with-bg" href="/categories/Linear-Algebra/">Linear Algebra</a>
                     
                   </div>
                 
@@ -338,15 +316,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">可分性</a>
+                      <a class="hover-with-bg" href="/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%A0%B7%E6%9C%AC%E8%BD%A8%E9%81%93/">样本轨道</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%BE%AA%E5%BA%8F%E5%8F%AF%E6%B5%8B/">循序可测</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%81%9C%E6%97%B6/">停时</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">首中时</a>
+                      <a class="hover-with-bg" href="/tags/Woodbury-%E6%81%92%E7%AD%89%E5%BC%8F/">Woodbury 恒等式</a>
                     
                   </div>
                 
@@ -359,18 +331,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/09/linear-algebra/woodbury/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">转载 | Woodbury 恒等式</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/04/stochastic-process/ch0-intro/">
-                        <span class="hidden-mobile">【随机过程】绪论</span>
+                      <a href="/2021/06/04/stochastic-process/ch1-stopping-time/">
+                        <span class="hidden-mobile">【随机过程】基本概念</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

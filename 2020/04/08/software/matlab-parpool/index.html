@@ -16,22 +16,21 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="现在想要对 \(n\) 个目标 \(U&#x3D;\{x_1,...,x_n\}\) 分类，并且每个对象都有多个指标，也即 \(x_i&#x3D;\{x_{i1},...,x_{im}\}\)。 模糊聚类通常包括三个步骤：  建立模糊矩阵 建立模糊等价矩阵 进行聚类">
+    <meta name="description" content="最近在用 MATLAB 跑仿真，但是不知怎么回事，之前并行计算 parfor 用的好好的，昨天突然就不能用了，一直报错无法启动并行池，报错原因还特别奇怪。在网上找了一大堆教程互相抄来抄去，没一个能用的。最后还是在官网论坛找到了一个答案成功解决问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="模糊数学笔记 5：模糊聚类">
-<meta property="og:url" content="http://example.com/2020/03/07/fuzzy/ch5-clustering/index.html">
+<meta property="og:title" content="MATLAB R2016a 无法启动并行池">
+<meta property="og:url" content="http://example.com/2020/04/08/software/matlab-parpool/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="现在想要对 \(n\) 个目标 \(U&#x3D;\{x_1,...,x_n\}\) 分类，并且每个对象都有多个指标，也即 \(x_i&#x3D;\{x_{i1},...,x_{im}\}\)。 模糊聚类通常包括三个步骤：  建立模糊矩阵 建立模糊等价矩阵 进行聚类">
+<meta property="og:description" content="最近在用 MATLAB 跑仿真，但是不知怎么回事，之前并行计算 parfor 用的好好的，昨天突然就不能用了，一直报错无法启动并行池，报错原因还特别奇怪。在网上找了一大堆教程互相抄来抄去，没一个能用的。最后还是在官网论坛找到了一个答案成功解决问题。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-03-07T15:39:59.000Z">
-<meta property="article:modified_time" content="2020-03-27T10:07:28.000Z">
+<meta property="article:published_time" content="2020-04-08T03:49:35.000Z">
+<meta property="article:modified_time" content="2020-12-27T03:38:22.000Z">
 <meta property="article:author" content="Glooow">
-<meta property="article:tag" content="模糊矩阵">
-<meta property="article:tag" content="模糊聚类">
+<meta property="article:tag" content="matlab">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>模糊数学笔记 5：模糊聚类 - 你是下雨天</title>
+  <title>MATLAB R2016a 无法启动并行池 - 你是下雨天</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -189,7 +188,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="模糊数学笔记 5：模糊聚类">
+            <span class="h2" id="subtitle" title="MATLAB R2016a 无法启动并行池">
               
             </span>
 
@@ -199,8 +198,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2020-03-07 23:39" pubdate>
-        March 7, 2020 pm
+      <time datetime="2020-04-08 11:49" pubdate>
+        April 8, 2020 am
       </time>
     </span>
   
@@ -210,7 +209,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      3.4k 字
     </span>
   
 
@@ -219,7 +218,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17 分钟
+      29 分钟
     </span>
   
 
@@ -248,166 +247,167 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">模糊数学笔记 5：模糊聚类</h1>
+            <h1 style="display: none">MATLAB R2016a 无法启动并行池</h1>
             
             <div class="markdown-body">
-              <p>现在想要对 <span class="math inline">\(n\)</span> 个目标 <span
-class="math inline">\(U=\{x_1,...,x_n\}\)</span>
-分类，并且每个对象都有多个指标，也即 <span
-class="math inline">\(x_i=\{x_{i1},...,x_{im}\}\)</span>。</p>
-<p>模糊聚类通常包括三个步骤：</p>
-<ol type="1">
-<li>建立模糊矩阵</li>
-<li>建立模糊等价矩阵</li>
-<li>进行聚类</li>
-</ol>
+              <p>最近在用 MATLAB 跑仿真，但是不知怎么回事，之前并行计算 parfor
+用的好好的，昨天突然就不能用了，一直报错无法启动并行池，报错原因还特别奇怪。在网上找了一大堆教程互相抄来抄去，没一个能用的。最后还是在官网论坛找到了一个答案成功解决问题。</p>
 <span id="more"></span>
-<h2 id="数据标准化">1. 数据标准化</h2>
-<p>实际中各个指标的量纲与数量级很可能相差很大，比如高校评价指标中，可能包括科研经费、论文数量、获奖数量等，数量级差别很大，这个时候就需要先对各项数据进行标准化。常用方法有</p>
-<p><strong>标准差标准化</strong> <span class="math display">\[
-x_{ij}&#39;=\frac{x_{ij}-\bar{x}_j}{\sigma_j}
-\]</span> <strong>极差正规化</strong> <span class="math display">\[
-\boldsymbol{x}_{i j}^{\prime \prime}=\frac{\boldsymbol{x}_{i
-j}^{\prime}-\min _{1 \leq i \leq n}\left\{\boldsymbol{x}_{i
-j}^{\prime}\right\}}{\max _{1}\left\{\boldsymbol{x}_{i
-j}^{\prime}\right\}-\min _{1: i \leqslant n}\left\{\boldsymbol{x}_{i
-j}^{\prime}\right\}}
-\]</span> <strong>极差标准化</strong> <span class="math display">\[
-x_{i j}^{\prime}=\frac{x_{i j}-\bar{x}_{i}}{\max \left\{x_{i
-j}\right\}-\min \left\{x_{i j}\right\}}
-\]</span> <strong>最大值规格化</strong> <span class="math display">\[
-x_{ij}&#39;=\frac{x_{ij}}{\max{(x_{1j},x_{2j},...,x_{nj})}}
-\]</span></p>
-<h2 id="建立模糊相似矩阵">2. 建立模糊相似矩阵</h2>
-<p>接下来需要确定不同对象之间的相似度，相似度的确定也有几种常用度量：</p>
-<h3 id="相关系数类">1.1 相关系数类</h3>
-<figure>
-<img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-relation.PNG" srcset="/img/loading.gif" lazyload
-alt="correlation" />
-<figcaption aria-hidden="true">correlation</figcaption>
-</figure>
-<h3 id="距离类">1.2 距离类</h3>
-<figure>
-<img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-distance.PNG" srcset="/img/loading.gif" lazyload
-alt="distance" />
-<figcaption aria-hidden="true">distance</figcaption>
-</figure>
-<h3 id="贴近度类">1.3 贴近度类</h3>
-<figure>
-<img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-nearness.PNG" srcset="/img/loading.gif" lazyload
-alt="nearness" />
-<figcaption aria-hidden="true">nearness</figcaption>
-</figure>
-<h2 id="聚类">3. 聚类</h2>
-<p>获得模糊相似矩阵以后，需要首先求出传递闭包 <span
-class="math inline">\(t(R)\)</span>，以获得模糊等价矩阵，然后根据不同的阈值
-<span class="math inline">\(\lambda\)</span>
-进行聚类，然后再画出动态聚类图。</p>
-<p><strong><em>举个栗子</em></strong></p>
-<figure>
-<img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg1.PNG" srcset="/img/loading.gif" lazyload
-alt="exercise" />
-<figcaption aria-hidden="true">exercise</figcaption>
-</figure>
-<p>求解过程如下</p>
+<h2 id="问题描述">1. 问题描述</h2>
+<p>我用的是 MATLAB R2016a，当我运行带有 parfor
+的代码时，左下角会有如下提示，表示无法启动并行池，而正常情况应该是右边这幅图</p>
 <table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>0. 特性指标矩阵</th>
-<th>1. 数据标准化</th>
-<th>2. 求模糊相似矩阵</th>
+<th>报错情况</th>
+<th>正常情况</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg2.PNG" srcset="/img/loading.gif" lazyload /></td>
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/matlab-parpool-error.png" srcset="/img/loading.gif" lazyload
+alt="error info" /></td>
 <td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg3.PNG" srcset="/img/loading.gif" lazyload /></td>
-<td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg4.PNG" srcset="/img/loading.gif" lazyload /></td>
-</tr>
-<tr class="even">
-<td><strong>3. 求传递闭包</strong></td>
-<td><strong>4. 根据不同阈值聚类</strong></td>
-<td><strong>5. 画动态聚类图</strong></td>
-</tr>
-<tr class="odd">
-<td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg5.PNG" srcset="/img/loading.gif" lazyload /></td>
-<td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg6.PNG" srcset="/img/loading.gif" lazyload /></td>
-<td><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg7.PNG" srcset="/img/loading.gif" lazyload /></td>
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/matlab-parpool-normal.png" srcset="/img/loading.gif" lazyload
+alt="normal info" /></td>
 </tr>
 </tbody>
 </table>
-<h2 id="其他问题">4. 其他问题</h2>
-<p>在实际应用过程中，还会出现一些其他问题，比如：</p>
-<ul>
-<li><em>在实际应用中，如何选择适当的 <span
-class="math inline">\(\lambda\)</span>？从而给出一个较明确的聚类。</em></li>
-</ul>
-<p>实际中最佳阈值的确定，可以由专家给出值；也可以应用
-F-统计量确定最佳阈值。</p>
-<ul>
-<li><em>如果不用传递闭包，直接对相似矩阵进行聚类会怎么样？</em></li>
-</ul>
-<p>直接应用模糊相似矩阵进行聚类时，可以首先确定一个阈值 <span
-class="math inline">\(\lambda\)</span>，然后根据截集获得一系列聚类结果，由于模糊相似矩阵并不是等价矩阵，因此此时的聚类结果是不严谨的，后面需要对交集非空的集合进行合并（这里可能表述的不清楚，看下面的例子就明白了）</p>
-<p><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg8.PNG" srcset="/img/loading.gif" lazyload /></p>
-<p><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg9.PNG" srcset="/img/loading.gif" lazyload /></p>
-<p><img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-eg10.PNG" srcset="/img/loading.gif" lazyload /></p>
-<ul>
-<li><em>当样本点很多时（几百万甚至上千万个像素），例如需
-要对一张图片上的样本点进行聚类，该怎么办？</em></li>
-</ul>
-<p>可以应用<strong>模糊C均值法(FCM)</strong></p>
-<h2 id="模糊c均值法fcm">5. 模糊C均值法(FCM)</h2>
-<p>设 <span class="math inline">\(x_i(i=1,2,...,n)\)</span>
-是n个样本组成的样本集合，<span class="math inline">\(c\)</span>
-为预定的类别数目， <span class="math inline">\(u_{ij}\)</span> 是第
-<span class="math inline">\(i\)</span> 个样本对于第 <span
-class="math inline">\(j\)</span>
-类的隶属度函数。用隶属度函数定义的聚类损失函数可以写为 <span
-class="math display">\[
-\sum_{j=1}^{c} \sum_{i=1}^{n} u_{i j}^{m} d_{i j}^{2}=\sum_{j=1}^{c}
-\sum_{i=1}^{n} u_{i
-j}^{m}\left\|\mathbf{p}_{j}-\mathbf{x}_{i}\right\|^{2}
-\]</span> 其中 <span class="math inline">\(m&gt;1\)</span>，<span
-class="math inline">\(P_j\)</span> 是第 <span
-class="math inline">\(j\)</span>
-类的聚类中心，后面会给出公式。通常也会假设 <span
-class="math inline">\(\sum_j u_{ij}=1\)</span>。</p>
-<p>下面则给出该算法的推导：为了最小化损失函数，则可以应用 Lagrange
-乘子法 <span class="math display">\[
-J=\sum_{i=1}^{n} \sum_{j=1}^{c} u_{i j}^{m} d_{i j}^{2}-\sum_{i=1}^{n}
-\lambda_{i}\left(\left(\sum_{j=1}^{c} u_{i j}\right)-1\right)
-\]</span> 对 <span class="math inline">\(\lambda_i,u_{ij}\)</span>
-求偏导等于 0，则可以得到迭代公式为 <span class="math display">\[
-u_{i j}=\frac{\left(\frac{1}{d_{i j}}\right)^{2
-/(m-1)}}{\sum_{k=1}^{c}\left(\frac{1}{d_{i k}}\right)^{2 /(m-1)}}
-\\\mathbf{p}_{j}=\frac{\sum_{i=1}^{n} u_{i j}^{m}
-\mathbf{x}_{i}}{\sum_{i=1}^{n} u_{i j}^{m}}
-\]</span> 由此就可以给出 FCM 算法的框架</p>
+<p>当我点击查看 more details
+时，会报如下的错误，参数不对？这不是自带函数吗？</p>
 <figure>
 <img
-src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-fcm.PNG" srcset="/img/loading.gif" lazyload
-alt="FCM" />
-<figcaption aria-hidden="true">FCM</figcaption>
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/matlab-parpool-error2.png" srcset="/img/loading.gif" lazyload
+alt="error info" />
+<figcaption aria-hidden="true">error info</figcaption>
 </figure>
+<p>然后我参考了网上的教程，查看 <code>Home-&gt;Parallel-&gt;Manage
+Cluster Profiles</code>，但是网上教程说如果是下面这个样子</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>我的错误是这样的</th>
+<th>网上只有这样的</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/matlab-parpool-error3.png" srcset="/img/loading.gif" lazyload
+alt="my error" /></td>
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/matlab-parpool-error4.png" srcset="/img/loading.gif" lazyload
+alt="others" /></td>
+</tr>
+</tbody>
+</table>
+<p>很显然我的第一步就 fail 了，我按照网上的说法运行下面这句话也没用</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs matlab">distcomp.feature( <span class="hljs-string">&#x27;LocalUseMpiexec&#x27;</span>, <span class="hljs-built_in">false</span> )<br></code></pre></td></tr></table></figure>
+<p>最后幸运的是在官网论坛找到了一篇可以解决我的问题的回答，下面给出解决方法。</p>
+<h2 id="解决方法">2. 解决方法</h2>
+<blockquote>
+<p>参考链接：<a
+target="_blank" rel="noopener" href="https://www.mathworks.com/matlabcentral/answers/92124-why-am-i-unable-to-use-parpool-with-the-local-scheduler-or-validate-my-local-configuration-of-parall">https://www.mathworks.com/matlabcentral/answers/92124-why-am-i-unable-to-use-parpool-with-the-local-scheduler-or-validate-my-local-configuration-of-parall</a></p>
+<p>我用<strong>第 5 步(Clear the local scheduler data
+folder)</strong>解决了我的问题，不过下面还是贴出来完整的 debug 过程</p>
+</blockquote>
+<h3 id="检查-license">2.1 检查 license</h3>
+<p>运行命令检查 <code>Parallel Computing Toolbox</code> 的 license
+正确</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">license checkout Distrib_Computing_Toolbox<br></code></pre></td></tr></table></figure>
+<p>如果得到的回答是 <code>ans=1</code>，则说明 license
+没问题。否则需要添加 license。</p>
+<h3 id="确保你的-matlab-版本与-pct-版本匹配">2.2 确保你的 MATLAB 版本与
+PCT 版本匹配</h3>
+<p>运行命令 <code>ver</code> 查看，如果不匹配则无法使用。这种情况 ......
+建议重装。</p>
+<h3 id="disable-local-mpiexec">2.3 Disable local mpiexec</h3>
+<p>运行下面的命令</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">distcomp.feature( <span class="hljs-string">&#x27;LocalUseMpiexec&#x27;</span>, <span class="hljs-built_in">false</span> )<br></code></pre></td></tr></table></figure>
+<p>这也是网上绝大部分教程的方法，不过对我就不适用，如果对你也不适用的话，往下继续看。</p>
+<h3 id="check-your-local-scheduler-configuration">2.4 Check your local
+scheduler configuration</h3>
+<p>这一部分我贴出原文吧，大概是说如果你修改了默认配置，则可以重置他们。</p>
+<blockquote>
+<p>There are no changes that need to be made in order to use the local
+scheduler, but if you have made changes to the configuration, you may
+want to reset these. This can be done by creating a new local scheduler
+configuration. To do so,</p>
+<ol type="1">
+<li>Go to the Parallel menu in MATLAB and select "Manage Cluster
+Profiles..." ("Manage Configurations..." for R2011b or earlier)</li>
+<li>Click on Add &gt; Custom &gt; Local (for older releases: From the
+File menu, select New &gt; Local Configuration)</li>
+<li>Click the radio option in the default column to set this as the
+default configuration</li>
+</ol>
+<p>Once complete, close the Manage Configuration windows and try
+again.</p>
+</blockquote>
+<h3 id="clear-the-local-scheduler-data-folder">2.5 Clear the local
+scheduler data folder</h3>
+<p>出现无法启动并行池的原因也可能是本地的 local scheduler data
+有问题，可以把他删除。删除的步骤为</p>
+<ol type="1">
+<li><p>运行命令</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">&gt;&gt;prefdir<br>ans =<br>C:<span class="hljs-symbol">\U</span>sers<span class="hljs-symbol">\A</span>dministrator<span class="hljs-symbol">\A</span>ppData<span class="hljs-symbol">\R</span>oaming<span class="hljs-symbol">\M</span>athWorks<span class="hljs-symbol">\M</span>ATLAB<span class="hljs-symbol">\R</span>2016a<br></code></pre></td></tr></table></figure>
+<p>然后我们就可以在路径
+<code>C:\Users\Administrator\AppData\Roaming\MathWorks\MATLAB</code>
+下面找到文件夹 <code>local_scheduler_data</code> 或者
+<code>local_cluster_jobs</code></p></li>
+<li><p>关闭 MATLAB</p></li>
+<li><p>将上面的文件夹 <code>local_scheduler_data</code> 或者
+<code>local_cluster_jobs</code> 重命名或者直接删除</p></li>
+<li><p>重启 MATLAB，试着开启并行池</p></li>
+</ol>
+<p>我做完这一步就能解决问题了，如果还不行，原文还给出了其他可能的原因，后面的我就直接贴出来原文了。</p>
+<h3 id="ensure-that-hostname-resolution-works-on-your-computer">2.6
+Ensure that hostname resolution works on your computer</h3>
+<p>In order to use the local scheduler, your computer's own hostname
+must be resolvable. To confirm this, run the following command in
+MATLAB:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">!hostname<br></code></pre></td></tr></table></figure>
+<p>This will give you your computer's hostname. You must be able to
+resolve this hostname to the computer's IP address. To test this you can
+run:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">!ping &lt;hostname&gt;<br></code></pre></td></tr></table></figure>
+<p>Where <hostname> is the output of the hostname command above. If the
+results indicate the wrong IP address or say that your computer is an
+"unknown host", there is a network issue on your computer that needs to
+be resolved in order to use the local scheduler. In that case, ask your
+network administrator for help.</p>
+<h3
+id="check-to-see-if-you-have-a-startup.m-file-on-the-matlab-path">2.7
+Check to see if you have a startup.m file on the MATLAB path</h3>
+<p>It may be causing an error, even if it works fine in MATLAB when run
+as code.</p>
+<p>To see if you have a startup.m file on the MATLAB path run the below
+command in MATLAB:</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">which startup.m<br></code></pre></td></tr></table></figure>
+<p>Either delete or move that file outside of the MATLAB path.</p>
+<p>If you are still unable to run parpool, run a validation of your
+local scheduler configuration and submit this to support. To
+validate:</p>
+<ol type="1">
+<li>Go to the Parallel menu in MATLAB and select "Manage Cluster
+Profiles..." ("Manage Configurations..." for R2011b or earlier)</li>
+<li>Highlight your local scheduler configuration and click the
+"Validate" button ("Start Validation" for R201b or earlier)</li>
+<li>Once the validation completes, click the "details" link to see the
+results</li>
+</ol>
+<p>You can then forward your output of validation, the results of the
+tests below, and your license number to support here: <a
+target="_blank" rel="noopener" href="http://www.mathworks.com/support/contact_us/index.html">http://www.mathworks.com/support/contact_us/index.html</a></p>
 
             </div>
             <hr>
@@ -417,7 +417,7 @@ alt="FCM" />
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
+                      <a class="hover-with-bg" href="/categories/Software/">Software</a>
                     
                   </div>
                 
@@ -425,9 +425,7 @@ alt="FCM" />
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%A8%A1%E7%B3%8A%E7%9F%A9%E9%98%B5/">模糊矩阵</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%A8%A1%E7%B3%8A%E8%81%9A%E7%B1%BB/">模糊聚类</a>
+                      <a class="hover-with-bg" href="/tags/matlab/">matlab</a>
                     
                   </div>
                 
@@ -444,9 +442,9 @@ alt="FCM" />
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/03/11/software/next-beautify/">
+                      <a href="/2020/04/10/optimization/ch16-subgradient/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hexo NexT 7.7 主题美化</span>
+                        <span class="hidden-mobile">凸优化笔记16：次梯度 Subgradient</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -454,8 +452,8 @@ alt="FCM" />
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/03/06/optimization/ch7-quasicvx/">
-                        <span class="hidden-mobile">凸优化笔记 7：拟凸函数 Quasiconvex Function</span>
+                      <a href="/2020/04/05/optimization/ch15-gradient/">
+                        <span class="hidden-mobile">凸优化笔记15：梯度方法 Gradient Method</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

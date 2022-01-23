@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>【高等数值分析】Krylov子空间方法</title>
+    <link href="/2022/01/23/advanced-numerical-analysis/ada-krylov/"/>
+    <url>/2022/01/23/advanced-numerical-analysis/ada-krylov/</url>
+    
+    <content type="html"><![CDATA[<p>test</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>高等数值分析</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>线性方程组</tag>
+      
+      <tag>Arnoldi过程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2022/01/23/hello-world/"/>
     <url>/2022/01/23/hello-world/</url>

@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面讲了凸优化问题的定义，以及一些常见的凸优化问题类型，这一章就要引入著名的拉格朗日函数和对偶问题了。通过对偶问题，我们可以将一些非凸问题转化为凸优化问题，还可以求出原问题的非平凡下界，这对复杂优化问题是很有用的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记 11：对偶原理 &amp; 拉格朗日函数">
+<meta property="og:url" content="http://example.com/2020/03/18/optimization/ch11-dual/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面讲了凸优化问题的定义，以及一些常见的凸优化问题类型，这一章就要引入著名的拉格朗日函数和对偶问题了。通过对偶问题，我们可以将一些非凸问题转化为凸优化问题，还可以求出原问题的非平凡下界，这对复杂优化问题是很有用的。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-18T14:46:26.000Z">
+<meta property="article:modified_time" content="2020-04-05T10:41:06.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="对偶原理">
+<meta property="article:tag" content="拉格朗日函数">
+<meta property="article:tag" content="SCQ">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记 11：对偶原理 &amp; 拉格朗日函数 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记 11：对偶原理 &amp; 拉格朗日函数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-18 22:46" pubdate>
+        March 18, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      75 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记 11：对偶原理 &amp; 拉格朗日函数</h1>
+            
+            <div class="markdown-body">
+              <p>前面讲了凸优化问题的定义，以及一些常见的凸优化问题类型，这一章就要引入著名的拉格朗日函数和对偶问题了。通过对偶问题，我们可以将一些非凸问题转化为凸优化问题，还可以求出原问题的非平凡下界，这对复杂优化问题是很有用的。</p>
+<span id="more"></span>
+<h2 id="拉格朗日函数">1. 拉格朗日函数</h2>
+<p>考虑凸优化问题 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;h_{i}(x)=0, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 假设 <span class="math inline">\(x\in R^n\)</span>，定义域为
+<span class="math inline">\(\mathcal{D}\)</span>，最优解为 <span
+class="math inline">\(p^\star\)</span>。</p>
+<p>我们定义<strong>拉格朗日函数(Lagrangian)</strong>为 <span
+class="math inline">\(L:R^n\times R^m\times R^p\to R\)</span>，<span
+class="math inline">\(\text{dom}L=\mathcal{D}\times R^m\times
+R^p\)</span> <span class="math display">\[
+L(x,\lambda,\nu)=f_0(x)+\lambda^Tf(x)+\nu^Th(x)
+\]</span> 再取下确界得到<strong>拉格朗日对偶函数(Lagrange dual
+function)</strong> <span class="math inline">\(g:R^m\times R^p\to
+R\)</span> <span class="math display">\[
+g(\lambda,\nu)=\inf_{x\in\mathcal{D}}\left(f_0(x)+\lambda^Tf(x)+\nu^Th(x)\right)
+\]</span> 这个拉格朗日对偶函数可不得了啦！他有两个很重要的性质：</p>
+<blockquote>
+<ol type="1">
+<li><span class="math inline">\(g(\lambda,\nu)\)</span>
+是<strong>凹函数</strong>（不论原问题是否为凸问题）</li>
+<li>如果 <span class="math inline">\(\lambda\succeq 0\)</span>，那么
+<span class="math inline">\(g(\lambda,\nu)\le p^\star\)</span>（对任意
+<span class="math inline">\(\lambda\succeq0,\nu\)</span> 都成立）</li>
+</ol>
+</blockquote>
+<p><strong>Remarks</strong>：上面两个性质为什么重要呢？首先由于 <span
+class="math inline">\(g(\lambda,\nu)\le
+p^\star\)</span>，这可以给出原问题最优解的一个<strong>不平凡下界</strong>，这意味着如果原问题很难求解的时候，我们可以转变思路，求解一个新的优化问题：
+<span class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; g(\lambda,\nu)\\
+\text { subject to } \quad&amp; \lambda\succeq0
+\end{aligned}
+\]</span>
+另一方面，由于不论原函数是否为凸优化问题，新的问题都是凸的，因此可以方便求解。下面举几个例子。</p>
+<p><strong><em>例子 1</em></strong>：原问题为 <span
+class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; x^Tx\\
+\text { subject to } \quad&amp; Ax=b
+\end{aligned}
+\]</span> 那么可以很容易得到拉格朗日函数为 <span
+class="math inline">\(L(x,\nu)=x^Tx+\nu^T(Ax-b)\)</span>，对偶函数为
+<span
+class="math inline">\(g(\nu)=-(1/4)\nu^TAA^T\nu-b^T\nu\)</span>，也即</p>
+<p><span class="math inline">\(p^\star\ge g(\nu)\)</span>。</p>
+<p><strong><em>例子 2</em></strong>：标准形式的线性规划(LP) <span
+class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; c^Tx\\
+\text { subject to } \quad&amp; Ax=b,\quad x\succeq0
+\end{aligned}
+\]</span> 按照定义容易得到对偶问题为 <span class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; -b^T\nu\\
+\text { subject to } \quad&amp; A^T\nu+c\succeq0
+\end{aligned}
+\]</span> <strong><em>例子 3</em></strong>：原问题为最小化范数 <span
+class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; \Vert x\Vert\\
+\text { subject to } \quad&amp; Ax=b
+\end{aligned}
+\]</span> 对偶函数为 <span class="math display">\[
+g(\nu)=\inf_{x} (\Vert x\Vert+\nu^T(b-Ax))
+=\begin{cases}b^T\nu &amp; \Vert A^T\nu\Vert_* \le1 \\ -\infty &amp;
+o.w.\end{cases}
+\]</span>
+这个推导过程中用到了<strong>共轭函数</strong>的知识。实际上上面三个例子都是线性等式约束，这种情况下，我们应用定义推导过程中可以很容易联想到共轭函数。（实际上加上线性不等式约束也可以）</p>
+<p><strong><em>例子 4</em></strong>：(原问题非凸)考虑 Two-way
+partitioning (不知道怎么翻译了...) <span class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; x^TWx\\
+\text { subject to } \quad&amp; x_i^2=1,\quad i=1,...,n
+\end{aligned}
+\]</span> 对偶函数为 <span class="math display">\[
+\begin{aligned}
+g(\nu)&amp;=\inf_{x}\left( x^{T}(W+\operatorname{diag}(\nu)) x
+\right)-\mathbf{1}^{T} \nu \\
+&amp;=\left\{\begin{array}{ll}
+-\mathbf{1}^{T} \nu &amp; W+\operatorname{diag}(\nu) \succeq 0 \\
+-\infty &amp; \text { otherwise }
+\end{array}\right.
+\end{aligned}
+\]</span> 于是可以给出原问题最优解的下界为 <span
+class="math inline">\(p^\star\ge-\mathbf{1}^{T} \nu\)</span> if <span
+class="math inline">\(W+\operatorname{diag}(\nu) \succeq
+0\)</span>。这个下界是不平凡的，比如可以取 <span
+class="math inline">\(\nu=-\lambda_{\min}(W)\mathbf{1}\)</span>，可以给出
+<span class="math inline">\(p^\star\ge n\lambda_{\min}(W)\)</span>。</p>
+<h2 id="对偶问题">2. 对偶问题</h2>
+<p>上面已经多次提到<strong>对偶问题(Lagrange dual problem)</strong>了
+<span class="math display">\[
+\begin{aligned}
+\text { maximize } \quad&amp; g(\lambda,\nu)\\
+\text { subject to } \quad&amp; \lambda\succeq0
+\end{aligned}
+\]</span> 假如对偶问题的最优解为 <span
+class="math inline">\(d^\star=\max g(\lambda,\nu)\)</span>，那么我们有
+<span class="math inline">\(p^\star \ge d^\star\)</span>。</p>
+<p>现在我们当然想知道什么情况下可以取等号，也即 <span
+class="math inline">\(p^\star =
+d^\star\)</span>，此时我们只需要求解对偶问题就可以获得原问题的最优解了。在此之前，我们先引入两个概念：强对偶和弱对偶。</p>
+<p><strong>弱对偶(weak duality)</strong>：满足 <span
+class="math inline">\(p^\star \ge
+d^\star\)</span>，原问题不论是否为凸，弱对偶总是成立；</p>
+<p><strong>强对偶(strong duality)</strong>：满足 <span
+class="math inline">\(p^\star =
+d^\star\)</span>，强对偶并不总是成立，如果原问题为凸优化问题，一般情况下都成立。在凸优化问题中，保证强对偶成立的条件为被称为
+<strong>constraint qualiﬁcations</strong>。</p>
+<p>有很多种不同的 constraint qualiﬁcations，常用到的一种为
+<strong>Slater’s constraint qualiﬁcation(SCQ)</strong>，其表述为</p>
+<blockquote>
+<p><strong>SCQ</strong>：对于凸优化问题 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;Ax=b
+\end{aligned}
+\]</span> 如果存在可行解 <span
+class="math inline">\(x\in\text{int}\mathcal{D}\)</span>，使得 <span
+class="math display">\[
+Ax=b,\quad f_i(x)&lt;0,\quad,i=1,...,m
+\]</span> 那么就能保证强对偶性。</p>
+<p><strong>Remarks</strong>：</p>
+<ul>
+<li>由于存在线性等式约束，因此实际定义域可能不存在内点，可以将这一条件放松为相对内点
+<span class="math inline">\(x\in\text{relint}\mathcal{D}\)</span>；</li>
+<li>如果不等式约束中存在线性不等式，那么他也不必严格小于0。也即如果
+<span class="math inline">\(f_i(x)=C^Tx+d\)</span>，则只需要满足 <span
+class="math inline">\(f_i(x)\le0\)</span> 即可。</li>
+</ul>
+</blockquote>
+<p>下面再举几个例子，看一看他们的 SCQ 条件是什么。</p>
+<p><strong><em>例子 1</em></strong>：还是考虑线性规划(LP)
+或者二次规划(QP) <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; c^Tx \quad(\text{ or }x^TPx)\\
+\text { subject to } \quad&amp; Ax\preceq b
+\end{aligned}
+\]</span> 那么根据 SCQ 可以得到，如果想得到强对偶性，应该有 <span
+class="math inline">\(\exist x, \text{ s.t. } Ax\preceq b\)</span>。</p>
+<p><strong><em>例子 2</em></strong>：(原问题非凸) Trust Region Methods
+<span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; x^TAx+2b^Tx\\
+\text { subject to } \quad&amp; x^Tx\le1
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(A\nsucceq
+0\)</span>，因此原问题不是凸的。他的对偶函数就是 <span
+class="math display">\[
+g(\lambda)=\inf_x\left(x^T\left(A+\lambda I\right)x+2b^Tx-\lambda\right)
+=\begin{cases}-b^T(A+\lambda I)^\dagger b-\lambda &amp; A+\lambda
+I\succeq0,b\in \mathcal{R}(A+\lambda I) \\ -\infty &amp; o.w.
+\end{cases}
+\]</span> 注意如果不满足 <span class="math inline">\(A+\lambda
+I\succeq0\)</span> 或 <span class="math inline">\(b\in
+\mathcal{R}(A+\lambda I)\)</span>，则 <span
+class="math inline">\(g(\lambda)\to-\infty\)</span>。那么就可以得到对偶问题为
+<span class="math display">\[
+\begin{aligned}
+\text {maximize} \quad&amp; -b^{T}(A+\lambda I)^{\dagger} b -\lambda\\
+\text {subject to} \quad&amp; A+\lambda I \succeq 0\\
+&amp;b \in \mathcal{R}(A+\lambda I)
+\end{aligned}
+\]</span> 也可以等价转换为 SDP <span class="math display">\[
+\begin{aligned}
+\text {maximize} \quad&amp; -t-\lambda\\
+\text {subject to}\quad&amp; \left[\begin{array}{cc}A+\lambda I &amp; b
+\\ b^{T} &amp; t\end{array}\right] \succeq 0
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p><strong>Remarks</strong>：这里用到了舒尔补(Schur
+complement)的知识。考虑矩阵 <span class="math display">\[
+X = \left[\begin{array}{cc}A &amp; B \\ B^{T} &amp; C\end{array}\right]
+\]</span> 其中 <span class="math inline">\(\det
+A\ne0,S=C-B^TA^{-1}B\)</span>。那么有以下及条性质：</p>
+<ul>
+<li><span class="math inline">\(X\succ0 \iff
+A\succ0,S\succ0\)</span></li>
+<li>若 <span class="math inline">\(A\succ0\)</span>，则 <span
+class="math inline">\(X\succeq0 \iff S\succeq 0\)</span></li>
+<li><span class="math inline">\(X\succeq0 \iff
+A\succeq0,(I-AA^\dagger)B=0,S=C-B^TA^{\dagger}B\succeq0\)</span></li>
+</ul>
+<p>关于第 3 条中的第二个要求 <span
+class="math inline">\((I-AA^\dagger)B=0\)</span>，对 <span
+class="math inline">\(A\)</span> 进行奇异值分解，有 <span
+class="math inline">\(A=U\Sigma V\)</span>，那么我们对任意 <span
+class="math inline">\(v\)</span>，有 <span
+class="math inline">\((I-AA^\dagger)Bv=(I-UU^T)Bv=0\)</span>，而 <span
+class="math inline">\(UU^T\)</span> 实际上就是向 <span
+class="math inline">\(\mathcal{R}(A)\)</span> 的投影矩阵，因此就要求
+<span class="math inline">\(Bv\in\mathcal{R}(A)\)</span>。</p>
+</blockquote>
+<h2 id="scq-几何解释">3. SCQ 几何解释</h2>
+<p>前面给出的是 SCQ
+的代数描述，那么如何证明呢？另外如何从几何角度直观理解呢？</p>
+<p>首先我们可以考虑最简单的优化问题 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_0(x)\\
+\text { subject to } \quad&amp; f_1(x)
+\end{aligned}
+\]</span> 定义集合 <span
+class="math inline">\(\mathcal{G}=\{(f_1(x),f_0(x))|x\in\mathcal{D}\}\)</span>，那么对偶函数为
+<span class="math display">\[
+g(\lambda)=\inf_{(u,t)\in\mathcal{G}}(t+\lambda u)
+\]</span> 如果我们画出下面这张图，阴影部分就是可行区域 <span
+class="math inline">\(\mathcal{G}\)</span>，而 <span
+class="math inline">\((\lambda,1)^T\)</span>
+则正好定义了一个支撑超平面，<span
+class="math inline">\(g(\lambda)\)</span> 就等于 <span
+class="math inline">\(t\)</span> 轴的交点。通过取不同的 <span
+class="math inline">\(\lambda\)</span>
+我们就可以得到不同的支撑超平面，也可以得到不同的 <span
+class="math inline">\(g(\lambda)\)</span>，最终会有某一个 <span
+class="math inline">\(\lambda^\star\)</span> 对应的是 <span
+class="math inline">\(d^\star=g(\lambda^\star)\)</span>。还需要注意这里的支撑超平面永远不可能是竖直的。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-geo.PNG" srcset="/img/loading.gif" lazyload
+alt="dual geometry" /></th>
+<th><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-geo2.PNG" srcset="/img/loading.gif" lazyload
+alt="dual geometry" /></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\((\lambda,1)^T\)</span>
+正好定义了一个支撑超平面</td>
+<td>每个 <span class="math inline">\(\lambda\)</span>
+对应一个支撑超平面</td>
+</tr>
+</tbody>
+</table>
+<p>那么 <span class="math inline">\(p^\star\)</span>
+体现在哪个点呢？由于对于原优化问题，我们有 <span
+class="math inline">\(f_1(x)\le0\)</span>，因此体现在这个图里面就是
+<span
+class="math inline">\(u\le0\)</span>，也就是上面左图当中的红色区域，而
+<span class="math inline">\(p^\star=\min f_0(x)=\min t\)</span>。</p>
+<p>理解了这张图，我们现在开始证明两件事：</p>
+<ol type="1">
+<li>证明弱对偶性，也即 <span class="math inline">\(p^\star \ge
+d^\star\)</span>；</li>
+<li>证明强对偶性条件 SCQ。</li>
+</ol>
+<p>注：在此之前，我们不妨加入等式约束，也即 <span
+class="math inline">\(g(\lambda,\mu)=\inf_{(u,v,t)\in\mathcal{G}}(t+\lambda^T
+u+\mu^T v)\)</span>。</p>
+<p><strong>弱对偶性的证明</strong>：我们有 <span
+class="math inline">\(\lambda\ge0\)</span> <span class="math display">\[
+\begin{aligned}
+p^\star &amp;= \inf\{t|(u,v,t)\in\mathcal{G},u\le0,v=0\} \\
+&amp;\ge \inf\{t+\lambda^Tu+\mu^Tv|(u,v,t)\in\mathcal{G},u\le0,v=0\} \\
+&amp;\ge \inf\{t+\lambda^Tu+\mu^Tv|(u,v,t)\in\mathcal{G}\} \\
+&amp;= g(\lambda,\mu)
+\end{aligned}
+\]</span> <strong>强对偶性条件 SCQ 的证明</strong>：由 <span
+class="math inline">\(g(\lambda,\mu)=\inf_{(u,v,t)\in\mathcal{G}}(t+\lambda^T
+u+\mu^Tv)\)</span> 可以得到 <span class="math display">\[
+(\lambda,\mu,1)^T(u,v,t)\ge g(\lambda,\mu),\quad \forall
+(u,v,t)\in\mathcal{G}
+\]</span> 这实际上定义了 <span
+class="math inline">\(\mathcal{G}\)</span> 的一个超平面。特别的有 <span
+class="math inline">\((0,0,p^\star)\in\text{bd}\mathcal{G}\)</span>，因此也有
+<span class="math display">\[
+(\lambda,\mu,1)^T(0,0,p^\star)\ge g(\lambda,\mu)
+\]</span>
+这个不等式可以自然地导出弱对偶性，当“=”成立时则可以导出强对偶性。那么什么时候取等号呢？点
+<span class="math inline">\((0,0,p^\star)\)</span>
+为<strong>支撑点</strong>的时候！也就是说</p>
+<blockquote>
+<p>如果在边界点 <span class="math inline">\((0,0,p^\star)\)</span>
+处存在一个<strong>非竖直的支撑超平面</strong>，那么我们就可以找到 <span
+class="math inline">\(\lambda,\mu\)</span>
+使得上面的等号成立，也就是得到了强对偶性。</p>
+</blockquote>
+<p>注意前面的分析中我们并没有提到 SCQ，那么 SCQ
+是如何保证强对偶性的呢？注意 SCQ 要求存在 <span
+class="math inline">\(x\in\mathcal{D}\)</span> 使得 <span
+class="math inline">\(f(x)&lt;0\)</span>，这也就意味着 <span
+class="math inline">\(\mathcal{G}\)</span> 在 <span
+class="math inline">\(u&lt; 0\)</span>
+半平面上有点，因此如果支撑超平面存在的话，就一定不是垂直的。</p>
+<p>但这又引出另一个问题，那就是支撑超平面一定存在吗？答案是一定存在，这是由原问题的凸性质决定的。为了证明这一点，我们可以引入一个类似于
+epigraph 的概念： <span class="math display">\[
+\begin{aligned}
+\mathcal{A} &amp;= \mathcal{G} + (R^m_+\times \{0\}\times R_+) \\
+&amp;= \left\{(u,v,t) |\ \exist x\in\mathcal{D},s.t. f(x)\le
+u,h(x)=v,f_0(x)\le t\right\}
+\end{aligned}
+\]</span> 由于原优化问题为凸的，可以应用定义证明集合 <span
+class="math inline">\(\mathcal{A}\)</span> 也是凸的，同时 <span
+class="math inline">\((0,0,p^\star)\in\text{bd}\mathcal{A}\)</span>，那么集合
+<span class="math inline">\(\mathcal{A}\)</span> 在 <span
+class="math inline">\((0,0,p^\star)\)</span>
+点就一定存在一个支撑超平面。又由 SCQ
+可知这个支撑超平面一定不是竖直的，因此就可以得到强对偶性了。</p>
+<p>注：<span class="math inline">\((\lambda,\mu,1)^T(u,v,t)\ge
+g(\lambda,\mu),\quad \forall (u,v,t)\in\mathcal{A}\)</span> 也成立。</p>
+<h2 id="广义不等式约束与sdp">4. 广义不等式约束与SDP</h2>
+<p>前面讨论拉格朗日函数的时候都只考虑了标量函数，如果约束函数为<strong>广义不等式</strong>，也即
+<span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \preceq_{K_i} 0, \quad i=1,
+\ldots, m\\
+&amp;h_{i}(x)=0, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 那么他的拉格朗日函数就是 <span class="math display">\[
+L\left(x, \lambda_{1}, \cdots, \lambda_{m},
+\nu\right)=f_{0}(x)+\sum_{i=1}^{m} \lambda_{i}^{T}
+f_{i}(x)+\sum_{i=1}^{p} \nu_{i} h_{i}(x)
+\]</span> 对偶函数就是 <span class="math display">\[
+g\left(\lambda_{1}, \ldots, \lambda_{m}, \nu\right)=\inf _{x \in
+\mathcal{D}} L\left(x, \lambda_{1}, \cdots, \lambda_{m}, \nu\right)
+\]</span> 其同样满足 <span class="math inline">\(p^\star\ge
+g\left(\lambda_{1}, \ldots, \lambda_{m}, \nu\right)\)</span>。对偶问题为
+<span class="math display">\[
+\begin{aligned}
+\text {maximize} \quad&amp; g\left(\lambda_{1}, \ldots, \lambda_{m},
+\nu\right) \\
+\text {subject to}\quad&amp; \lambda_i\succeq_{K_i^*}0,i=1,...,m
+\end{aligned}
+\]</span> 强对偶性以及 Slater's Condition 是类似的。</p>
+<p>对于 <strong>SDP 问题</strong> <span class="math display">\[
+\begin{aligned}
+\text {maximize} \quad&amp; c^Tx \\
+\text {subject to}\quad&amp; x_1F_1+\cdots +x_nF_n\preceq G
+\end{aligned}
+\]</span> 拉格朗日函数就是 <span class="math display">\[
+L(x, Z)=c^{T} x+\operatorname{tr}\left(Z\left(x_{1} F_{1}+\cdots+x_{n}
+F_{n}-G\right)\right)
+\]</span> 对偶函数为 <span class="math display">\[
+g(Z)=\inf _{x} L(x, Z)=\left\{\begin{array}{ll}
+-\operatorname{tr}(G Z) &amp; \operatorname{tr}\left(F_{i}
+Z\right)+c_{i}=0, \quad i=1, \ldots, n \\
+-\infty &amp; \text { otherwise }
+\end{array}\right.
+\]</span> 对偶问题就是 <span class="math display">\[
+\begin{aligned}
+\text {maximize} \quad&amp; -\operatorname{tr}(G Z)\\
+\text {subject to} \quad&amp; Z \succeq 0, \quad
+\operatorname{tr}\left(F_{i} Z\right)+c_{i}=0, \quad i=1, \ldots, n
+\end{aligned}
+\]</span> 强对偶性以及 Slater's Condition 是类似的。</p>
+<h2 id="对偶问题的强对偶性与可行性">5. 对偶问题的强对偶性与可行性</h2>
+<p>注意我们说<strong>强对偶性</strong>需要<strong>严格满足</strong>不等式约束(也即最优解需要满足
+<span class="math inline">\(h(x^\star)&lt;0\)</span> 而不能是 <span
+class="math inline">\(h(x^\star)\le0\)</span>)，但如果存在线性不等式约束，则可以取到等号(也即
+<span
+class="math inline">\(Ax^\star+b\le0\)</span>)。这就会出现下面的现象：</p>
+<ol type="1">
+<li>对于 <strong>LP</strong>
+问题，由于约束是线性的，因此强对偶性只要求有可行解，而不要求
+<strong>strictly feasible</strong>；</li>
+<li>对于其他问题，若存在非线性约束，比如 <strong>SOCP/SDP</strong>
+问题，如果想要满足强对偶性，就需要满足 <strong>strictly
+feasible</strong>，这就会出现两种情况：1）问题本身的可行域不可能满足
+<strong>strictly feasible</strong>，那么就达不到强对偶性，于是 <span
+class="math inline">\(p^\star\ned^\star\)</span>；2）问题可行域满足
+<strong>strictly feasible</strong>，但是由于最优解达不到(比如 <span
+class="math inline">\(\min
+1/x\)</span>)，那么此时原问题和对偶问题仍满足强队偶性，但是原问题最优解达不到，而对偶问题则可以达到。</li>
+</ol>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-counter0.PNG" srcset="/img/loading.gif" lazyload
+alt="LP duality" />
+<figcaption aria-hidden="true">LP duality</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-counter1.PNG" srcset="/img/loading.gif" lazyload
+alt="SDP/SOCP duality" />
+<figcaption aria-hidden="true">SDP/SOCP duality</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-counter2.PNG" srcset="/img/loading.gif" lazyload
+alt="SOCP duality" />
+<figcaption aria-hidden="true">SOCP duality</figcaption>
+</figure>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/11-dual-counter3.PNG" srcset="/img/loading.gif" lazyload
+alt="SDP duality" />
+<figcaption aria-hidden="true">SDP duality</figcaption>
+</figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">对偶原理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SCQ/">SCQ</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/26/optimization/ch12-kkt/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记12：KKT 条件</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/15/fuzzy/ch7-ahp/">
+                        <span class="hidden-mobile">模糊数学笔记 7：层次分析法</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

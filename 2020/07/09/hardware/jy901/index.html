@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最近在用JY901做一些实验，关于JY901网上有很多资料了，也有上位机软件，可以方便的查看输出数据。我想做的是对输出的角速度进行积分，对比积分后的结果与输出的角度，如果数据都比较准确地话，那么他们应该相差不大。 这篇文章里，要完成的事情就是通过串口接收他输出的角速度和角度，然后对角速度进行积分，并实时显示数据结果。下面我首先对各个部分进行分块解释，完整的代码放在最后。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JY901串口数据接收与处理(Python)">
+<meta property="og:url" content="http://example.com/2020/07/09/hardware/jy901/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="最近在用JY901做一些实验，关于JY901网上有很多资料了，也有上位机软件，可以方便的查看输出数据。我想做的是对输出的角速度进行积分，对比积分后的结果与输出的角度，如果数据都比较准确地话，那么他们应该相差不大。 这篇文章里，要完成的事情就是通过串口接收他输出的角速度和角度，然后对角速度进行积分，并实时显示数据结果。下面我首先对各个部分进行分块解释，完整的代码放在最后。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-08T23:40:23.000Z">
+<meta property="article:modified_time" content="2020-07-09T00:17:12.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="IMU">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>JY901串口数据接收与处理(Python) - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JY901串口数据接收与处理(Python)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-07-09 07:40" pubdate>
+        July 9, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      61 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JY901串口数据接收与处理(Python)</h1>
+            
+            <div class="markdown-body">
+              <p>最近在用JY901做一些实验，关于JY901网上有很多资料了，也有上位机软件，可以方便的查看输出数据。我想做的是对输出的角速度进行积分，对比积分后的结果与输出的角度，如果数据都比较准确地话，那么他们应该相差不大。</p>
+<p>这篇文章里，要完成的事情就是通过串口接收他输出的角速度和角度，然后对角速度进行积分，并实时显示数据结果。下面我首先对各个部分进行分块解释，完整的代码放在最后。</p>
+<span id="more"></span>
+<h2 id="串口通信">1. 串口通信</h2>
+<p>python实现串口通信可以用 <code>pySerial</code>
+库。我们首先选择串口对应的设备端口：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取串口设备对应的端口</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_serial_port</span>():</span><br>    ports = <span class="hljs-built_in">list</span>(serial.tools.list_ports.comports())<br>    <span class="hljs-keyword">for</span> port <span class="hljs-keyword">in</span> ports:<br>        <span class="hljs-built_in">print</span>(ports.index(port), port)<br>    selected = -<span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> selected &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> selected &gt;= <span class="hljs-built_in">len</span>(ports):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;please input serial to use [start from 0]:&quot;</span>)<br>        selected = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;selected: &quot;</span>, selected)<br><br>    port = ports[selected]<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;use &quot;</span>, port)<br>    port = <span class="hljs-built_in">list</span>(port)<br>    <span class="hljs-keyword">return</span> port[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+<p>然后打开串口并持续接收数据，在收到的数据中提取IMU数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">serial_readers</span>(<span class="hljs-params">self, port = <span class="hljs-literal">None</span>, size = <span class="hljs-number">22</span></span>):</span><br>    <span class="hljs-comment"># port   : 串口端口</span><br>    <span class="hljs-comment"># size   : 默认一次读取数据长度(bytes)</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> port:<br>        port = get_serial_port()<br>    total = <span class="hljs-built_in">bytearray</span>()<br>    ser = <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ser:<br>                ser = serial.Serial(port, <span class="hljs-number">115200</span>, timeout=<span class="hljs-number">60</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ser.is_open:<br>                ser.<span class="hljs-built_in">open</span>()<br>            tmp = ser.read(size)<br>            total.extend(tmp)<br>            total, ext_omega, ext_angle = self.extract_raw_data(total)   <span class="hljs-comment">#提取IMU数据</span><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;exception &quot;</span>, e)<br>            <span class="hljs-keyword">if</span> ser:<br>                ser.close()<br>            time.sleep(<span class="hljs-number">5</span>)<br><br>    <span class="hljs-keyword">return</span> self.record_omega, self.record_angle<br></code></pre></td></tr></table></figure>
+<h2 id="imu数据提取">2. IMU数据提取</h2>
+<p>首先我们来看JY901串口数据的帧结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reStructuredText">加速度：0x55 0x51 AxL AxH AyL AyH AzL AzH TL TH SUM <br>角速度：0x55 0x52 wxL wxH wyL wyH wzL wzH TL TH SUM <br>角度：  0x55 0x53 RollL RollH PitchL PitchH YawL YawH TL TH SUM <br></code></pre></td></tr></table></figure>
+<p>这三种数据帧长度都是 11
+Bytes，最后一位为校验位，我们从串口数据中提取IMU数据也是根据这个帧结构，先检测帧头，然后读取整个帧（代码里偷了懒，并没有核对校验位）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extract_raw_data</span>(<span class="hljs-params">self, data</span>):</span><br>    <span class="hljs-comment"># 根据报文格式读取角速度数据</span><br>    <span class="hljs-comment"># 0x55 0x52 + data + CRC(8bits)</span><br>    length = <span class="hljs-number">9</span><br>    ext_omega = <span class="hljs-literal">None</span><br>    ext_angle = <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">try</span>:<br>        st = data.index(<span class="hljs-string">b&#x27;\x55&#x27;</span>)                <span class="hljs-comment"># 寻找报文引导字</span><br>        <span class="hljs-keyword">if</span> st &gt;= <span class="hljs-number">0</span>:<br>            reserved = data[st+<span class="hljs-number">1</span>]               <span class="hljs-comment"># 数据类型</span><br>            <span class="hljs-keyword">if</span> reserved == <span class="hljs-number">82</span>:                  <span class="hljs-comment"># 0x52，提取角速度消息</span><br>                <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                    <span class="hljs-keyword">if</span> self.count_omega==<span class="hljs-number">0</span>:<br>                        self.time_now = self.time_last = time.time()<br>                    <span class="hljs-keyword">else</span>:<br>                        self.time_last = self.time_now<br>                        self.time_now = time.time()<br><br>                    ext_omega = data[st:st+length+<span class="hljs-number">2</span>]<br>                    temp = <span class="hljs-built_in">int</span>.from_bytes(ext_omega[<span class="hljs-number">6</span>:<span class="hljs-number">8</span>], byteorder=<span class="hljs-string">&#x27;little&#x27;</span>, signed=<span class="hljs-literal">True</span>)<br>                    self.omega = temp/<span class="hljs-number">32768</span>*<span class="hljs-number">2000</span><br>                    self.record_omega.append(self.omega)   <span class="hljs-comment">#deg/s</span><br>                    data = data[st+length+<span class="hljs-number">2</span>:]<br>                    self.count_omega += <span class="hljs-number">1</span><br><br>                    self.omega_inte += self.omega*(self.time_now - self.time_last)<br>                    self.omega_inte = (self.omega_inte+<span class="hljs-number">180</span>)%<span class="hljs-number">360</span> - <span class="hljs-number">180</span><br>                    self.record_inte.append(self.omega_inte)<br><br>            <span class="hljs-keyword">elif</span> reserved == <span class="hljs-number">83</span>:                <span class="hljs-comment"># 0x53，提取角度消息</span><br>                <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                    ext_angle = data[st:st+length+<span class="hljs-number">2</span>]<br>                    temp = <span class="hljs-built_in">int</span>.from_bytes(ext_angle[<span class="hljs-number">6</span>:<span class="hljs-number">8</span>], byteorder=<span class="hljs-string">&#x27;little&#x27;</span>, signed=<span class="hljs-literal">True</span>)<br>                    self.yaw = temp/<span class="hljs-number">32768</span>*<span class="hljs-number">180</span><br>                    <span class="hljs-keyword">if</span> self.count_yaw==<span class="hljs-number">0</span>:                   <span class="hljs-comment">#记录初始相位</span><br>                        self.yaw_init = self.yaw<br>                    self.record_angle.append(self.yaw - self.yaw_init)      <span class="hljs-comment">#deg</span><br>                    data = data[st+length+<span class="hljs-number">2</span>:]<br>                    self.count_yaw += <span class="hljs-number">1</span><br><br>            <span class="hljs-keyword">elif</span> reserved == <span class="hljs-number">81</span>:                <span class="hljs-comment"># 0x51, 丢弃加速度消息</span><br>                <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                    ext_data = <span class="hljs-literal">None</span><br>                    data = data[st+length+<span class="hljs-number">2</span>:]<br>            <span class="hljs-keyword">else</span>:<br>                data = data[st+<span class="hljs-number">2</span>:]<br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">return</span> data, ext_omega, ext_angle<br>    <span class="hljs-keyword">if</span> self.count_yaw%<span class="hljs-number">100</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> self.count_yaw&gt;<span class="hljs-number">0</span>:<br>        self.save_data()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(self.record_omega),<span class="hljs-string">&#x27; extract omega  &#x27;</span>,ext_omega,self.omega_inte)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(self.record_angle),<span class="hljs-string">&#x27; extract angle  &#x27;</span>,ext_angle,self.yaw - self.yaw_init)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;*&#x27;</span>*<span class="hljs-number">30</span>)<br>    <span class="hljs-keyword">return</span> data, ext_omega, ext_angle<br></code></pre></td></tr></table></figure>
+<h2 id="绘图显示">3. 绘图显示</h2>
+<p>我把历史接收数据都存在一个 <code>list</code> 里面了，每过 0.1s
+就重新绘图，看起来就像是在实时更新一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot</span>(<span class="hljs-params">self</span>):</span><br>    plt.ion()<br>    plt.figure()<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.record_angle)&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(self.record_inte)&gt;<span class="hljs-number">0</span> :<br>                plt.clf()<br>                plt.plot(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.record_angle))),self.record_angle,<span class="hljs-string">&#x27;r&#x27;</span>)<br>                plt.plot(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.record_inte))),self.record_inte,<span class="hljs-string">&#x27;b&#x27;</span>)<br>                plt.xlim(<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,self.count_yaw-<span class="hljs-number">3000</span>),self.count_yaw+<span class="hljs-number">200</span>)<br>                plt.legend(labels=[<span class="hljs-string">&#x27;angle&#x27;</span>,<span class="hljs-string">&#x27;integration&#x27;</span>])<br>                plt.pause(<span class="hljs-number">0.1</span>)<br>                plt.ioff()<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;exception &quot;</span>, e)<br></code></pre></td></tr></table></figure>
+<h2 id="运行效果">4. 运行效果</h2>
+<h2 id="完整代码">5. 完整代码</h2>
+<p>为了便于共享数据，定义了一个类
+<code>JY901</code>，将上面的各个函数放在这个类里面，输出的数据也都记录在
+<code>JY901</code> 的成员变量里。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> serial<br><span class="hljs-keyword">import</span> serial.tools.list_ports<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> struct<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> threading<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JY901</span>():</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.time_last = <span class="hljs-number">0</span><br>        self.time_now = <span class="hljs-number">0</span><br>        self.record_angle = []<br>        self.record_omega = []<br>        self.record_inte = []<br>        self.count_yaw = <span class="hljs-number">0</span><br>        self.count_omega = <span class="hljs-number">0</span><br>        self.omega_inte = <span class="hljs-number">0</span>         <span class="hljs-comment">#角速度积分</span><br>        self.yaw_init = <span class="hljs-number">0</span><br>        self.yaw = <span class="hljs-number">0</span><br>        self.omega = <span class="hljs-number">0</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extract_raw_data</span>(<span class="hljs-params">self, data</span>):</span><br>        <span class="hljs-comment"># 根据报文格式读取角速度数据</span><br>        <span class="hljs-comment"># 0x55 0x52 + data + CRC(8bits)</span><br>        length = <span class="hljs-number">9</span><br>        ext_omega = <span class="hljs-literal">None</span><br>        ext_angle = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">try</span>:<br>            st = data.index(<span class="hljs-string">b&#x27;\x55&#x27;</span>)                <span class="hljs-comment"># 寻找报文引导字</span><br>            <span class="hljs-keyword">if</span> st &gt;= <span class="hljs-number">0</span>:<br>                reserved = data[st+<span class="hljs-number">1</span>]               <span class="hljs-comment"># 数据类型</span><br>                <span class="hljs-keyword">if</span> reserved == <span class="hljs-number">82</span>:                  <span class="hljs-comment"># 0x52，提取角速度消息</span><br>                    <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                        <span class="hljs-keyword">if</span> self.count_omega==<span class="hljs-number">0</span>:<br>                            self.time_now = self.time_last = time.time()<br>                        <span class="hljs-keyword">else</span>:<br>                            self.time_last = self.time_now<br>                            self.time_now = time.time()<br><br>                        ext_omega = data[st:st+length+<span class="hljs-number">2</span>]<br>                        temp = <span class="hljs-built_in">int</span>.from_bytes(ext_omega[<span class="hljs-number">6</span>:<span class="hljs-number">8</span>], byteorder=<span class="hljs-string">&#x27;little&#x27;</span>, signed=<span class="hljs-literal">True</span>)<br>                        self.omega = temp/<span class="hljs-number">32768</span>*<span class="hljs-number">2000</span><br>                        self.record_omega.append(self.omega)   <span class="hljs-comment">#deg/s</span><br>                        data = data[st+length+<span class="hljs-number">2</span>:]<br>                        self.count_omega += <span class="hljs-number">1</span><br><br>                        self.omega_inte += self.omega*(self.time_now - self.time_last)<br>                        self.omega_inte = (self.omega_inte+<span class="hljs-number">180</span>)%<span class="hljs-number">360</span> - <span class="hljs-number">180</span><br>                        self.record_inte.append(self.omega_inte)<br><br>                <span class="hljs-keyword">elif</span> reserved == <span class="hljs-number">83</span>:                <span class="hljs-comment"># 0x53，提取角度消息</span><br>                    <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                        ext_angle = data[st:st+length+<span class="hljs-number">2</span>]<br>                        temp = <span class="hljs-built_in">int</span>.from_bytes(ext_angle[<span class="hljs-number">6</span>:<span class="hljs-number">8</span>], byteorder=<span class="hljs-string">&#x27;little&#x27;</span>, signed=<span class="hljs-literal">True</span>)<br>                        self.yaw = temp/<span class="hljs-number">32768</span>*<span class="hljs-number">180</span><br>                        <span class="hljs-keyword">if</span> self.count_yaw==<span class="hljs-number">0</span>:                   <span class="hljs-comment">#记录初始相位</span><br>                            self.yaw_init = self.yaw<br>                        self.record_angle.append(self.yaw - self.yaw_init)      <span class="hljs-comment">#deg</span><br>                        data = data[st+length+<span class="hljs-number">2</span>:]<br>                        self.count_yaw += <span class="hljs-number">1</span><br><br>                <span class="hljs-keyword">elif</span> reserved == <span class="hljs-number">81</span>:                <span class="hljs-comment"># 0x51, 丢弃加速度消息</span><br>                    <span class="hljs-keyword">if</span> st+length+<span class="hljs-number">1</span> &lt; <span class="hljs-built_in">len</span>(data):<br>                        ext_data = <span class="hljs-literal">None</span><br>                        data = data[st+length+<span class="hljs-number">2</span>:]<br>                <span class="hljs-keyword">else</span>:<br>                    data = data[st+<span class="hljs-number">2</span>:]<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">return</span> data, ext_omega, ext_angle<br>        <span class="hljs-keyword">if</span> self.count_yaw%<span class="hljs-number">100</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> self.count_yaw&gt;<span class="hljs-number">0</span>:<br>            self.save_data()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(self.record_omega),<span class="hljs-string">&#x27; extract omega  &#x27;</span>,ext_omega,self.omega_inte)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(self.record_angle),<span class="hljs-string">&#x27; extract angle  &#x27;</span>,ext_angle,self.yaw - self.yaw_init)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;*&#x27;</span>*<span class="hljs-number">30</span>)<br>        <span class="hljs-keyword">return</span> data, ext_omega, ext_angle<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">serial_readers</span>(<span class="hljs-params">self, port = <span class="hljs-literal">None</span>, size = <span class="hljs-number">22</span></span>):</span><br>        <span class="hljs-comment"># port   : 串口端口</span><br>        <span class="hljs-comment"># size   : 默认一次读取数据长度(bytes)</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> port:<br>            port = get_serial_port()<br>        total = <span class="hljs-built_in">bytearray</span>()<br>        ser = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ser:<br>                    ser = serial.Serial(port, <span class="hljs-number">115200</span>, timeout=<span class="hljs-number">60</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ser.is_open:<br>                    ser.<span class="hljs-built_in">open</span>()<br>                tmp = ser.read(size)<br>                total.extend(tmp)<br>                total, ext_omega, ext_angle = self.extract_raw_data(total)<br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;exception &quot;</span>, e)<br>                <span class="hljs-keyword">if</span> ser:<br>                    ser.close()<br>                time.sleep(<span class="hljs-number">5</span>)<br><br>        <span class="hljs-keyword">return</span> self.record_omega, self.record_angle<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_data</span>(<span class="hljs-params">self</span>):</span><br>        np.savez(<span class="hljs-string">&#x27;record.npz&#x27;</span>,record_omega=self.record_omega, record_angle=self.record_angle)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot</span>(<span class="hljs-params">self</span>):</span><br>        plt.ion()<br>        plt.figure()<br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.record_angle)&gt;<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-built_in">len</span>(self.record_inte)&gt;<span class="hljs-number">0</span> :<br>                    plt.clf()<br>                    plt.plot(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.record_angle))),self.record_angle,<span class="hljs-string">&#x27;r&#x27;</span>)<br>                    plt.plot(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.record_inte))),self.record_inte,<span class="hljs-string">&#x27;b&#x27;</span>)<br>                    plt.xlim(<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,self.count_yaw-<span class="hljs-number">3000</span>),self.count_yaw+<span class="hljs-number">200</span>)<br>                    plt.legend(labels=[<span class="hljs-string">&#x27;angle&#x27;</span>,<span class="hljs-string">&#x27;integration&#x27;</span>])<br>                    plt.pause(<span class="hljs-number">0.1</span>)<br>                    plt.ioff()<br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;exception &quot;</span>, e)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_serial_port</span>():</span><br>    ports = <span class="hljs-built_in">list</span>(serial.tools.list_ports.comports())<br>    <span class="hljs-keyword">for</span> port <span class="hljs-keyword">in</span> ports:<br>        <span class="hljs-built_in">print</span>(ports.index(port), port)<br>    selected = -<span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> selected &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> selected &gt;= <span class="hljs-built_in">len</span>(ports):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;please input serial to use [start from 0]:&quot;</span>)<br>        selected = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;selected: &quot;</span>, selected)<br><br>    port = ports[selected]<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;use &quot;</span>, port)<br>    port = <span class="hljs-built_in">list</span>(port)<br>    <span class="hljs-keyword">return</span> port[<span class="hljs-number">0</span>]<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    imu = JY901()<br>    thread_rcv = threading.Thread(target=imu.serial_readers)<br>    thread_plt = threading.Thread(target=imu.plot)<br>    thread_plt.start()<br>    thread_rcv.start()<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Hardware/">Hardware</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/IMU/">IMU</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/20/hardware/raspberrypi-autostart/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">树莓派设置开机自启动程序</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/12/music/WhyBabyWhy/">
+                        <span class="hidden-mobile">Why Baby Why</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

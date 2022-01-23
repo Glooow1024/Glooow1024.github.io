@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一致有界性原理的一个应用就是序列和算子的收敛性分析。 1. 序列收敛性 \((X,\Vert\cdot\Vert)\)，有 \(x_n,x\in X\)，称 \(x_n\) 强收敛到 \(x\)，若 \(\Vert x_n-x\Vert \to 0\)；称 \(x_n\) 弱收敛到 \(x\) 若 \(\forall f\in X&#39;\) 都有 \(f(x_n)\to f(x)\)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛函分析笔记7：弱收敛与弱星收敛">
+<meta property="og:url" content="http://example.com/2020/12/26/functional-analysis/ch4-4-convergence/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="一致有界性原理的一个应用就是序列和算子的收敛性分析。 1. 序列收敛性 \((X,\Vert\cdot\Vert)\)，有 \(x_n,x\in X\)，称 \(x_n\) 强收敛到 \(x\)，若 \(\Vert x_n-x\Vert \to 0\)；称 \(x_n\) 弱收敛到 \(x\) 若 \(\forall f\in X&#39;\) 都有 \(f(x_n)\to f(x)\)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-26T08:40:38.000Z">
+<meta property="article:modified_time" content="2020-12-30T09:46:50.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="强收敛">
+<meta property="article:tag" content="弱收敛">
+<meta property="article:tag" content="弱星收敛">
+<meta property="article:tag" content="一致收敛">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>泛函分析笔记7：弱收敛与弱星收敛 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="泛函分析笔记7：弱收敛与弱星收敛">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-26 16:40" pubdate>
+        December 26, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      72 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛函分析笔记7：弱收敛与弱星收敛</h1>
+            
+            <div class="markdown-body">
+              <p>一致有界性原理的一个应用就是序列和算子的收敛性分析。</p>
+<h2 id="序列收敛性">1. 序列收敛性</h2>
+<p><span class="math inline">\((X,\Vert\cdot\Vert)\)</span>，有 <span
+class="math inline">\(x_n,x\in X\)</span>，称 <span
+class="math inline">\(x_n\)</span> <strong>强收敛</strong>到 <span
+class="math inline">\(x\)</span>，若 <span class="math inline">\(\Vert
+x_n-x\Vert \to 0\)</span>；称 <span class="math inline">\(x_n\)</span>
+<strong>弱收敛</strong>到 <span class="math inline">\(x\)</span> 若
+<span class="math inline">\(\forall f\in X&#39;\)</span> 都有 <span
+class="math inline">\(f(x_n)\to f(x)\)</span>，记为 <span
+class="math inline">\(x_n \stackrel{w}{\longrightarrow} x.\)</span></p>
+<p>关于弱收敛有以下几条性质：</p>
+<ul>
+<li>若 <span class="math inline">\(x_n \stackrel{w}{\longrightarrow} x,
+x_n \stackrel{w}{\longrightarrow} y\)</span>，则 <span
+class="math inline">\(x=y\)</span>；</li>
+<li>若 <span class="math inline">\(x_n \stackrel{w}{\longrightarrow}
+x\)</span>，则存在 <span class="math inline">\(c\ge0, \Vert x_n\Vert \le
+c.\)</span></li>
+</ul>
+<span id="more"></span>
+<p>证明：仅证第二条。这个性质说明 <span
+class="math inline">\(x_n\)</span>
+有界，因此容易想到需要用一致有界性原理证明，但是该原理说明的是算子的一致有界，这里是元素
+<span class="math inline">\(x_n\)</span>
+有界，因此又可以想到上一篇讲到的典范映射 <span
+class="math inline">\(J:X\to X&#39;&#39;\)</span>
+从元素映射到算子。因此这里考虑 <span
+class="math inline">\(X&#39;\)</span> 上的线性泛函 <span
+class="math inline">\(g_n= J(x_n):X&#39;\to \mathbb{R}\)</span>，有
+<span class="math inline">\(g_n(f)=f(x_n),\forall f\in X&#39;.\)</span>
+于是有 <span class="math inline">\(f(x_n)\to f(x)\)</span>，因而固定任一
+<span class="math inline">\(f\)</span>，都有 <span
+class="math inline">\(\sup_n g_n(f) &lt; \infty\)</span>，同时由于 <span
+class="math inline">\(X&#39;\)</span> 总为 Banach
+空间，利用一致有界性原理有 <span class="math inline">\(\sup_n \Vert
+g_n\Vert =\sup_n \Vert x_n\Vert &lt; \infty\)</span>。证毕。</p>
+<blockquote>
+<p><strong>定理</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，有 <span
+class="math inline">\(x_n,x\in X\)</span>，则 <span
+class="math inline">\(x_n \stackrel{w}{\longrightarrow} x\)</span>
+<strong>当且仅当</strong>：</p>
+<ol type="1">
+<li>存在 <span class="math inline">\(c\ge0,\Vert x_n\Vert\le
+c\)</span>；</li>
+<li>并且存在 <span class="math inline">\(M\subset
+X&#39;,\overline{\text{span}M}=X&#39;\)</span>，对 <span
+class="math inline">\(\forall f\in M, f(x_n)\to f(x).\)</span>（此时
+<span class="math inline">\(M\)</span>
+称为<strong>完全集</strong>）</li>
+</ol>
+<p><strong>NOTE</strong>：该定理简化了弱收敛的判断条件，只需要在 <span
+class="math inline">\(X&#39;\)</span>
+的一个子集上判断函数值是否收敛。</p>
+</blockquote>
+<p>证明：<span
+class="math inline">\(&quot;\Longrightarrow&quot;\)</span> 易证；</p>
+<p><span
+class="math inline">\(&quot;\Longleftarrow&quot;\)</span>，首先考虑
+<span class="math inline">\(\forall f\in \text{span}M\)</span>，容易得到
+<span class="math inline">\(f(x_n)\to f(x)\)</span>。然后对 <span
+class="math inline">\(\forall g\in X&#39;\)</span>，那么存在 <span
+class="math inline">\(f_m\in\text{span}M\)</span> 使得 <span
+class="math inline">\(\Vert f_m-g\Vert \le 1/m\)</span>，因此 <span
+class="math display">\[
+\begin{align}
+|g(x_n)-g(x)|&amp;\le |g(x_n)-f_m(x_n)|+|f_m(x_n)-f_m(x)|+|f_m(x)-g(x)|
+\\
+&amp;\le \frac{1}{m}(\Vert x_n\Vert+\Vert x\Vert)+|f_m(x_n)-f_m(x)| \to
+0(m,n\to\infty)
+\end{align}
+\]</span> 证毕。</p>
+<p><strong><em>例子 1</em></strong>：考虑 <span
+class="math inline">\(X=\ell^p(1&lt;p&lt;\infty)\)</span>，有 <span
+class="math inline">\((\ell^p)&#39;=\ell^q, 1/p+1/q=1.\)</span>
+考虑线性泛函 <span class="math inline">\(f_y(x)=\sum_i y_ix_i,y\in
+\ell^q\)</span>，有 <span class="math inline">\(\Vert f_y\Vert=\Vert
+y\Vert_q\)</span>。我们考虑 <span class="math inline">\(X&#39;\)</span>
+的子空间 <span class="math inline">\(M=\{e_n,n\ge1\}\)</span>，其中
+<span class="math inline">\(e_n=(...,0,1,0,...)\)</span> 表示只有第
+<span class="math inline">\(n\)</span> 个分量为 1，其余为 0。那么 <span
+class="math inline">\(\overline{\text{span}M}=X&#39;\)</span>，因此要想验证
+<span class="math inline">\(x_n\)</span> 是否弱收敛到 <span
+class="math inline">\(x\)</span> 就只需要验证：1）其有界性；2）对每个
+<span class="math inline">\(f_{e_k},k\ge1\)</span> 是否有 <span
+class="math inline">\(f_{e_k}(x_n)\to
+f_{e_k}(x)(n\to\infty).\)</span></p>
+<p>强收敛与弱收敛之间有如下关系：</p>
+<ul>
+<li><span class="math inline">\(x_n\to x \Longrightarrow x_n
+\stackrel{w}{\longrightarrow} x\)</span>(即强收敛可以导出弱收敛)；</li>
+<li>若 <span class="math inline">\(\text{dim}X&lt;\infty\)</span>，则
+<span class="math inline">\(x_n \stackrel{w}{\longrightarrow}
+x\Longrightarrow x_n\to
+x\)</span>(<strong>有限维</strong>赋范空间中，强收敛与弱收敛等价)；</li>
+</ul>
+<p>证明：仅证第二条。设 <span
+class="math inline">\(\text{dim}X=n&lt;\infty\)</span>，有限维赋范空间中我们可以找到一组基，<span
+class="math inline">\(x_k=\lambda_{k,1}e_1+\cdots+\lambda_{k,n}e_n\)</span>，<span
+class="math inline">\(x=\lambda_1 e_1+\cdots+\lambda_n
+e_n\)</span>。那么 <span class="math display">\[
+\lambda_{k,1}f(e_1)+\cdots+\lambda_{k,n}f(e_n) \to
+\lambda_{1}f(e_1)+\cdots+\lambda_{n}f(e_n), \quad\forall f\in X&#39;
+\]</span> 由于 <span class="math inline">\(f\in X&#39;\)</span>
+任取，那么我们可以取 <span
+class="math inline">\(f_i(y)=\mu_i\)</span>，其中 <span
+class="math inline">\(y=\mu_1 e_1+\cdots+\mu_n e_n\)</span>，即 <span
+class="math inline">\(f_i\)</span> 取出来第 <span
+class="math inline">\(i\)</span> 个坐标系数。由此可以得到 <span
+class="math inline">\(\lambda_{k,i}\to\lambda_i(k\to\infty)\)</span>，然后就容易得到
+<span class="math inline">\(x_n\to x.\)</span> 证毕。</p>
+<p><strong><em>例子 2</em></strong>：有些无穷维空间中也可以得到 <span
+class="math inline">\(x_n \stackrel{w}{\longrightarrow} x\iff x_n\to
+x\)</span>，例如 <span class="math inline">\(\ell^1.\)</span></p>
+<p><strong><em>例子 3</em></strong>：无穷维 Hilbert 空间（<span
+class="math inline">\(\ell^2\)</span>，注意只有 <span
+class="math inline">\(2-\)</span>范数才能定义出对应的内积），考虑 <span
+class="math inline">\(\{e_1,e_2,\ldots\}\)</span> 为 <span
+class="math inline">\(H\)</span> 的标准正交集，那么有 <span
+class="math inline">\(e_n \stackrel{w}{\longrightarrow} 0\)</span> 但是
+<span class="math inline">\(e_n \nrightarrow 0\)</span>。考虑 <span
+class="math inline">\(\forall f\in H&#39;\)</span>，存在唯一的 <span
+class="math inline">\(z_0\in H, f(x)=\langle
+x,z_0\rangle\)</span>，由Bessel方程 <span
+class="math inline">\(\sum_n|\langle e_n,z_0\rangle|^2\le \Vert
+z_0\Vert^2\)</span>，因此 <span class="math inline">\(f(e_n)\to 0(n\to
+\infty),\forall f\in H&#39;\)</span>，但另一方面 <span
+class="math inline">\(\Vert e_n\Vert=1\nrightarrow0\)</span>。</p>
+<h2 id="线性泛函收敛性">2. 线性泛函收敛性</h2>
+<p>对于算子的收敛性，如线性泛函 <span class="math inline">\(f_n\in
+X&#39;\)</span> 或者有界线性算子 <span class="math inline">\(T\in
+B(X,Y)\)</span>，收敛性的定义跟上面序列的收敛性是相似的，但是又略有不同。下面就先给出线性泛函收敛性的分析。</p>
+<p>同样考虑赋范空间 <span class="math inline">\(X\)</span>，<span
+class="math inline">\(f,f_n\in X&#39;\)</span>，称 <span
+class="math inline">\(f_n\)</span> <strong>弱星收敛</strong>到 <span
+class="math inline">\(f\)</span>，若任取 <span
+class="math inline">\(x\in X\)</span> 都有 <span
+class="math inline">\(f_n(x)\to f(x)\)</span>，记为 <span
+class="math inline">\(f_n \stackrel{w\star}{\longrightarrow}
+f.\)</span></p>
+<p><strong>NOTE</strong>：实际上这里的弱星收敛跟序列的弱收敛是完全对称的，因此他们的性质也是类似的。</p>
+<ul>
+<li>弱星收敛极限 <span class="math inline">\(f\)</span> 唯一；</li>
+<li><span class="math inline">\(\{f_n\}\)</span> 的任意子列均弱星收敛到
+<span class="math inline">\(f\)</span>；</li>
+<li>若 <span class="math inline">\(X\)</span> 为 Banach 空间，则 <span
+class="math inline">\(\{f_n\}\)</span> 在 <span
+class="math inline">\(X&#39;\)</span> 中为<strong>有界集</strong>。</li>
+</ul>
+<p>证明：仅证第三条，对于任意 <span class="math inline">\(x\in
+X\)</span>，有 <span class="math inline">\(f_n(x)\to f(x)\)</span>，因此
+<span class="math inline">\(f_n(x)\)</span>
+有界，由一致有界性原理，<span class="math inline">\(\sup_n \Vert
+f_n\Vert&lt;\infty.\)</span> 证毕。</p>
+<blockquote>
+<p><strong>定理</strong>：<span class="math inline">\(X\)</span> 为
+<strong>Banach 空间</strong>，<span class="math inline">\(f_n,f\in
+X&#39;\)</span>，则 <span class="math inline">\(f_n
+\stackrel{w\star}{\longrightarrow} f\)</span>
+<strong>当且仅当</strong>：</p>
+<ol type="1">
+<li>存在 <span class="math inline">\(c\ge0,\Vert f_n\Vert\le
+c\)</span>；</li>
+<li>并且存在 <span class="math inline">\(M\subset
+X,\overline{\text{span}M}=X\)</span>，对 <span
+class="math inline">\(\forall x\in M, f_n(x)\to f(x).\)</span></li>
+</ol>
+<p><strong>NOTE</strong>：该性质与序列弱收敛的性质完全对称，证明省略。</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE</strong>：对于 <span
+class="math inline">\(X&#39;\)</span> 中的线性算子 <span
+class="math inline">\(f\)</span>，也有范数的定义，因此我们也可以按照序列的收敛性来定义算子的收敛性。这个时候就用
+<span class="math inline">\(X&#39;\)</span> 代替上面的 <span
+class="math inline">\(X\)</span>，用 <span
+class="math inline">\(X&#39;&#39;\)</span> 代替上面的 <span
+class="math inline">\(X&#39;\)</span>。我们可以得到什么样的强收敛和弱收敛定义呢？（下面并不是标准的数学定义，只是我为了引出之后的内容做的解释）</p>
+<p>对于 <span class="math inline">\(f,f_n\in X&#39;\)</span>，若满足
+<span class="math inline">\(\Vert f_n-f\Vert\to 0\)</span>，则称 <span
+class="math inline">\(f_n\)</span> <strong>一致收敛</strong>到 <span
+class="math inline">\(f\)</span>；若对 <span
+class="math inline">\(\forall g\in X&#39;&#39;\)</span>，都有 <span
+class="math inline">\(g(f_n)\to g(f)\)</span>，那么称 <span
+class="math inline">\(f_n\)</span> <strong>强收敛</strong>到 <span
+class="math inline">\(f\)</span>；弱收敛的定义暂且不管。</p>
+<p>注意从这个定义的字面意思来看，这里的一致收敛对应于上面序列的强收敛；这里的强收敛对应上面序列的弱收敛，它实际上也就对应于弱星收敛。这里就有两个值得思考的问题：1）<strong>一致收敛和强收敛的区别是什么？</strong>2）这里的强收敛为什么对应上面的弱收敛？</p>
+<p>先看第2个问题：讲 Hahn-Banach 定理应用的时候我们讲到了典范映射，如果
+<span class="math inline">\(X\)</span> 为自反的，那么任意一个 <span
+class="math inline">\(g_0\in X&#39;&#39;\)</span> 都唯一的对应于 <span
+class="math inline">\(X\)</span> 中的元素 <span
+class="math inline">\(x_0\)</span>，并且满足 <span
+class="math inline">\(g_0(f)=f(x_0),\forall f\in X&#39;\)</span>。假设
+<span class="math inline">\(X\)</span>
+是自反的，那么上面的强收敛定义就可以表述为 <span
+class="math inline">\(\forall x\in X\)</span>，都有 <span
+class="math inline">\(f_n(x)\to
+f(x)\)</span>，注意看！这是不是就是线性泛函弱星收敛的定义！也对应了序列的弱收敛。不过弱星收敛的定义里面并没有要求
+<span class="math inline">\(X\)</span> 是自反的。</p>
+<p>那么再看第1个问题：一致收敛中要求 <span class="math inline">\(\Vert
+f_n-f\Vert\to0\)</span>，线性算子的范数是针对整个源空间考虑的；而强收敛中对每个
+<span class="math inline">\(x\in X\)</span>，关注 <span
+class="math inline">\(f_n(x)\to
+f(x)\)</span>，也就是说关注的是每一个局部点。因此一致收敛要强于强收敛。</p>
+</blockquote>
+<h2 id="一般有界线性算子收敛性">3. 一般有界线性算子收敛性</h2>
+<p>实际上一致收敛、强收敛、弱收敛的概念可以扩展到任意的有界线性算子定义。</p>
+<p>设 <span class="math inline">\(X,Y\)</span> 为赋范空间，<span
+class="math inline">\(T_n\in B(X,Y),T:X\to Y\)</span>
+为线性算子，有三种收敛性：</p>
+<ul>
+<li><span class="math inline">\(\{T_n\}\)</span>
+<strong>一致收敛</strong>到 <span class="math inline">\(T\)</span>，若
+<span class="math inline">\(\Vert T_n-T\Vert \to 0\)</span>；</li>
+<li><span class="math inline">\(\{T_n\}\)</span>
+<strong>强收敛</strong>到 <span class="math inline">\(T\)</span>，若
+<span class="math inline">\(\forall x\in X,T_n x\to Tx\)</span>；</li>
+<li><span class="math inline">\(\{T_n\}\)</span>
+<strong>弱收敛</strong>到 <span class="math inline">\(T\)</span>，若任取
+<span class="math inline">\(x\in X, f\in Y&#39;\)</span>，<span
+class="math inline">\(f(T_nx)\to f(Tx)\)</span>。</li>
+</ul>
+<p>容易看出来一致收敛 <span
+class="math inline">\(\Longrightarrow\)</span> 强收敛 <span
+class="math inline">\(\Longrightarrow\)</span>
+弱收敛，但是反向则不成立，可以举出对应的反例。</p>
+<p><strong><em>例子 4</em></strong>(强收敛 <span
+class="math inline">\(\nRightarrow\)</span> 一致收敛)：<span
+class="math inline">\(X=Y=\ell^2\)</span>，<span
+class="math inline">\(T_n:\ell^2\to\ell^2\)</span> 有 <span
+class="math display">\[
+T_n: (x_1,x_2,\cdots) \mapsto (0,\cdots,0,x_{n+1},x_{n+2},\cdots)
+\]</span> 容易验证 <span class="math inline">\(T_n\)</span>
+为有界线性算子，<span class="math inline">\(\Vert
+T_n\Vert=1\)</span>。可以验证 <span class="math inline">\(T_n\)</span>
+强收敛到 <span class="math inline">\(0\)</span> 算子，即 <span
+class="math inline">\(T_0x\equiv 0\)</span>。但是 <span
+class="math inline">\(\Vert T_n-T_0\Vert=1\nrightarrow
+0\)</span>，即不满足一致收敛。</p>
+<p><strong><em>例子 5</em></strong>(弱收敛 <span
+class="math inline">\(\nRightarrow\)</span> 强收敛)：<span
+class="math inline">\(X=Y=\ell^2\)</span>，<span
+class="math inline">\(T_n:\ell^2\to\ell^2\)</span> 有 <span
+class="math display">\[
+T_n:(x_1,x_2,\cdots)\mapsto(0_1,\cdots,0_n,x_1,x_2,\cdots)
+\]</span> 可以验证 <span class="math inline">\(T_n\)</span>
+为有界线性算子，并且 <span class="math inline">\(\Vert
+T_n\Vert=1\)</span>。是否有 <span class="math inline">\(T_n\)</span>
+弱收敛到某个 <span class="math inline">\(T\)</span> 呢？考虑任意 <span
+class="math inline">\(f\in(\ell^2)&#39;\)</span>，都存在唯一的 <span
+class="math inline">\(z\in\ell^2\)</span>，<span
+class="math inline">\(f(x)=\langle x,z\rangle\)</span>，所以 <span
+class="math inline">\(f(T_nx)=x_1\overline{z_{n+1}}+x_2\overline{z_{n+2}}+\cdots\)</span>，因此
+<span class="math display">\[
+|f(T_nx)|\le\sum_{k=1}^\infty |x_k|\cdot|z_{n+k}| \le \Vert
+x\Vert\left(\sum_{k=n+1}^\infty |z_k|^2\right)^{1/2} \to 0
+\]</span> 所以有 <span class="math inline">\(f(T_nx) \to 0\)</span>
+对任意 <span class="math inline">\(f\in (\ell^2)&#39;\)</span>
+成立，因此 <span class="math inline">\(f(T_nx)\to f(T_0x)\equiv
+f(0)=0\)</span>。所以 <span class="math inline">\(T_n\)</span> 弱收敛到
+<span class="math inline">\(T_0=0\)</span> 算子，但是总有 <span
+class="math inline">\(\Vert T_nx\Vert=\Vert x\Vert\nrightarrow
+0\)</span>，因此 <span class="math inline">\(T_nx\nrightarrow
+T_0x\)</span>，即不满足强收敛。</p>
+<p><strong>命题</strong>：对于一般有界线性算子，若 <span
+class="math inline">\(T_n\)</span> <strong>一致收敛</strong>到 <span
+class="math inline">\(T\)</span>，则 <span
+class="math inline">\(T\)</span> 也是有界的，这是因为 <span
+class="math inline">\(\Vert T\Vert\le \Vert T-T_n\Vert+\Vert T_n\Vert
+\le \infty\)</span>；若只能得到 <span class="math inline">\(T_n\)</span>
+<strong>强收敛</strong>到 <span class="math inline">\(T\)</span>，那么
+<span class="math inline">\(T\)</span>
+<strong>不一定是有界</strong>的。</p>
+<p><strong><em>例子 6</em></strong>(强收敛极限未必有界)：<span
+class="math inline">\(X=Y=\{(x_n),\exists N,\forall n\ge N, x_n=0
+\}\)</span>，考虑 <span class="math inline">\(T_n:X\to Y\)</span> 有
+<span class="math display">\[
+\begin{aligned}
+T_n:&amp; (x_1,x_2,\cdots)\mapsto
+(x_1,2x_2,\cdots,nx_n,x_{n+1},x_{n+2},\cdots) \\
+T:&amp; (x_1,x_2,\cdots)\mapsto (x_1,2x_2,\cdots)
+\end{aligned}
+\]</span> 那么 <span class="math inline">\(\Vert
+T_n\Vert=n\)</span>，取可以验证对于 <span class="math inline">\(\forall
+x\in X\)</span>，<span class="math inline">\(T_nx\to Tx\)</span>，即
+<span class="math inline">\(T_n\)</span> 强收敛到 <span
+class="math inline">\(T\)</span>，但是 <span
+class="math inline">\(T\)</span> 不是有界算子。</p>
+<p>那么什么情况下可以保证强/弱收敛极限也是有界算子呢？</p>
+<blockquote>
+<p><strong>定理</strong>：设 <span class="math inline">\(X\)</span> 为
+<strong>Banach 空间</strong>，<span class="math inline">\(Y\)</span>
+为赋范空间，<span class="math inline">\(T_n\in B(X,Y),T:X\to Y\)</span>
+为线性算子。设 <span class="math inline">\(T_n\)</span>
+<strong>弱收敛</strong>到 <span class="math inline">\(T\)</span>，则
+<span class="math inline">\(\sup_{n\ge1}\Vert T_n\Vert &lt; \infty, T\in
+B(X,Y)\)</span> 并且 <span class="math inline">\(\Vert T\Vert \le
+\sup_{n\ge1}\Vert T_n\Vert &lt;\infty.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：由于 <span class="math inline">\(T_n\)</span>
+弱收敛到 <span class="math inline">\(T\)</span>，即 <span
+class="math inline">\(\forall x\in X,f\in Y&#39;\)</span> 都有 <span
+class="math inline">\(f(T_nx)\to f(Tx)\)</span>，因此有 <span
+class="math inline">\(T_nx \stackrel{w}{\longrightarrow}
+Tx\)</span>。那么根据序列弱收敛的性质，存在 <span
+class="math inline">\(c_x\)</span> 满足 <span
+class="math inline">\(\sup_n \Vert T_nx\Vert \le
+c_x\)</span>，再由一致有界性原理，有 <span class="math inline">\(\sup_n
+\Vert T_n\Vert &lt; \infty\)</span>。</p>
+<p>然后考虑 <span class="math inline">\(T\)</span>，<span
+class="math inline">\(\forall x\in X\)</span>，由 Hahn-Banach
+定理的推论，都存在 <span class="math inline">\(f\in Y&#39;,\Vert
+f\Vert=1\)</span> 满足 <span class="math display">\[
+\Vert Tx\Vert=|f(Tx)| = \lim_{n\to\infty} |f(T_nx)| \le
+\lim_{n\to\infty}\Vert T_nx\Vert
+\]</span> 因此 <span class="math inline">\(\Vert T\Vert\le \sup_n\Vert
+T_n\Vert.\)</span> 证毕。</p>
+<blockquote>
+<p><strong>定理</strong>：设 <span class="math inline">\(X\)</span> 为
+<strong>Banach 空间</strong>，<span class="math inline">\(Y\)</span>
+为赋范空间，<span class="math inline">\(T_n,T\in B(X,Y)\)</span>，则
+<span class="math inline">\(T_n\)</span> <strong>强收敛</strong>到 <span
+class="math inline">\(T\)</span> <strong>当且仅当</strong>：</p>
+<ol type="1">
+<li><span class="math inline">\(\sup_n \Vert T_n\Vert &lt;
+\infty\)</span>；</li>
+<li>存在 <span class="math inline">\(M\subset
+X,\overline{\text{span}M}=X\)</span>，对 <span
+class="math inline">\(\forall x\in M, T_n(x)\to T(x).\)</span></li>
+</ol>
+<p><strong>NOTE</strong>：这跟线性泛函弱星收敛的等价条件是完全一样的，证明省略。</p>
+</blockquote>
+<h2 id="应用举例">4. 应用举例</h2>
+<p><strong><em>例子 7</em></strong>(求积分的数值方法)：考虑实值函数
+<span class="math inline">\(x\in C[a,b]\)</span>，并赋予无穷范数，那么
+<span class="math inline">\((C[a,b],\Vert\cdot\Vert)\)</span> 为 Banach
+空间，求 <span class="math inline">\(\int_a^b x(t)dt.\)</span></p>
+<p>既然是在本节举的这个例子，那就要用到算子收敛性。先定义有界线性算子
+<span class="math inline">\(f(x)=\int_a^b x(t)dt\)</span>，<span
+class="math inline">\(\Vert
+f\Vert=b-a\)</span>。我们现在的目标就是找一列有界线性泛函 <span
+class="math inline">\(f_n\)</span> 弱收敛到 <span
+class="math inline">\(f\)</span>。回忆我们在学微积分的时候，往往是用分段的矩形面积求和来逼近积分。在
+<span class="math inline">\([a,b]\)</span> 上取 <span
+class="math inline">\(n+1\)</span> 个结点 <span
+class="math inline">\(a=t_{n,0}&lt;t_{n,1}&lt;\cdots&lt;t_{n,n}=b\)</span>，再取
+<span class="math inline">\(n+1\)</span> 个实数 <span
+class="math inline">\(a_{n,0},\cdots,a_{n,n}\)</span>，令 <span
+class="math display">\[
+f_n(x) = \sum_{k=0}^n a_{n,k} x(t_{n,k})
+\]</span> <span class="math inline">\(f_n\)</span> 是 <span
+class="math inline">\(C[a,b]\)</span> 上的线性泛函，并且 <span
+class="math inline">\(\Vert f_n\Vert \le
+\sum_{k=0}^n|a_{n,k}|\)</span>，另外我们总能够造出一个 <span
+class="math inline">\(x\in C[a,b]\)</span> 满足 <span
+class="math inline">\(x(t_{n,k})=\text{sgn}(a_{n,k})\)</span> 并且 <span
+class="math inline">\(\Vert x\Vert_\infty=1\)</span>，此时就有 <span
+class="math inline">\(f(x)=\sum_{k=0}^n|a_{n,k}|\)</span>，于是可以得到
+<span class="math inline">\(\Vert f_n\Vert =
+\sum_{k=0}^n|a_{n,k}|\)</span>。现在的问题就是我们能否找到合适的系数
+<span class="math inline">\(a_{n,k}\)</span> 使得 <span
+class="math inline">\(f_n\stackrel{w}{\longrightarrow} f\)</span> ？</p>
+<p>这里我们提出一个额外的要求，就是对于次数小于 <span
+class="math inline">\(n\)</span> 的多项式 <span
+class="math inline">\(p\)</span>，需要 <span
+class="math inline">\(f_n(p)\)</span> 能获得精确积分结果，即 <span
+class="math inline">\(f_n(p)=\int_a^b p(t)dt\)</span>。由于 <span
+class="math inline">\(\{1,t,\ldots,t^n\}\)</span> 构成次数小于 <span
+class="math inline">\(n\)</span> 的多项式空间的 Hamel
+基，所以只需要验证对每个基有 <span class="math inline">\(f_n(e_k)=
+f(e_k)\)</span> 即可。这就要求 <span class="math display">\[
+\begin{cases}
+\begin{matrix}
+a_{n,0} &amp; + &amp; a_{n,1} &amp; + &amp; \cdots &amp; + &amp; a_{n,n}
+&amp; = &amp; b-a \\
+a_{n,0}t_{n,0} &amp; + &amp; a_{n,1}t_{n,1} &amp; + &amp; \cdots &amp; +
+&amp; a_{n,n}t_{n,n} &amp; = &amp; \frac{b^2-a^2}{2} \\
+&amp; &amp; &amp; &amp; \ldots &amp; \\
+a_{n,0}t_{n,0}^n &amp; + &amp; a_{n,1}t_{n,1}^n &amp; + &amp; \cdots
+&amp; + &amp; a_{n,n}t_{n,n}^n &amp; = &amp; \frac{b^{n+1}-a^{n+1}}{n+1}
+\end{matrix}
+\end{cases}
+\]</span> 上式左侧可以用 Vandermonde 矩阵表示，因此存在唯一解 <span
+class="math inline">\(a_{n,k},k=1,...,n\)</span>。</p>
+<p>接下来对于任意的 <span class="math inline">\(x\in
+C[a,b]\)</span>，能否找到 <span class="math inline">\(a_{n,k}\)</span>
+满足的条件使得 <span class="math inline">\(f_n(x)\to f(x)\)</span>
+呢？根据 Stone-Weierstrass 定理，多项式的集合在 <span
+class="math inline">\(C[a,b]\)</span>
+中是<strong>稠密的</strong>，因此对于任意次数 <span
+class="math inline">\(N\)</span> 的多项式 <span
+class="math inline">\(p\)</span> 总有 <span
+class="math inline">\(f_n(p)\to
+f(p)\)</span>。那么再应用前面的定理（即只需要判断完全集 <span
+class="math inline">\(M\subset X\)</span>
+中的元素是否满足条件即可），可以有如下结论</p>
+<p><strong>定理(G.Polya)</strong>：设数值积分 <span
+class="math inline">\(f_n\)</span> 满足前面对于有限次多项式的要求（即
+<span class="math inline">\(a_{n,k}\)</span> 为 Vandermonde
+矩阵方程的解）则任取 <span class="math inline">\(x\in C[a,b],f_n(x)\to
+f(x)\)</span> 当且仅当存在常数 <span
+class="math inline">\(C\ge0\)</span>，使得任取 <span
+class="math inline">\(n\ge1\)</span>，有 <span
+class="math inline">\(\sum_{k=1}^na_{n,k}\le C.\)</span></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Functional-Analysis/">Functional Analysis</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E6%94%B6%E6%95%9B/">强收敛</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%B1%E6%94%B6%E6%95%9B/">弱收敛</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%B1%E6%98%9F%E6%94%B6%E6%95%9B/">弱星收敛</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B8%80%E8%87%B4%E6%94%B6%E6%95%9B/">一致收敛</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/27/functional-analysis/ch4-5-open-closed/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">泛函分析笔记8：开映射定理与闭图像定理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/26/functional-analysis/ch4-3-banach-steinhauss/">
+                        <span class="hidden-mobile">泛函分析笔记6：一致有界性原理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

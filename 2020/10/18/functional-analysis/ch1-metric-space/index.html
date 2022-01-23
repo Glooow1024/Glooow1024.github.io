@@ -1,0 +1,1099 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这一章节研究度量空间的基本结构，在开始前，我们需要思考几个问题：  什么是度量空间？ 我们为什么要首先学习度量空间呢？  在这篇笔记的最后再来回答这个问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛函分析笔记1：度量空间">
+<meta property="og:url" content="http://example.com/2020/10/18/functional-analysis/ch1-metric-space/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="这一章节研究度量空间的基本结构，在开始前，我们需要思考几个问题：  什么是度量空间？ 我们为什么要首先学习度量空间呢？  在这篇笔记的最后再来回答这个问题。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-18T13:43:17.000Z">
+<meta property="article:modified_time" content="2020-10-19T03:38:52.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="度量空间">
+<meta property="article:tag" content="完备空间">
+<meta property="article:tag" content="开集">
+<meta property="article:tag" content="可分性">
+<meta property="article:tag" content="柯西列">
+<meta property="article:tag" content="连续映射">
+<meta property="article:tag" content="Banach不动点定理">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>泛函分析笔记1：度量空间 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="泛函分析笔记1：度量空间">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-18 21:43" pubdate>
+        October 18, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      95 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛函分析笔记1：度量空间</h1>
+            
+            <div class="markdown-body">
+              <p>这一章节研究度量空间的基本结构，在开始前，我们需要思考几个问题：</p>
+<ol type="1">
+<li>什么是度量空间？</li>
+<li>我们为什么要首先学习度量空间呢？</li>
+</ol>
+<p>在这篇笔记的最后再来回答这个问题。</p>
+<span id="more"></span>
+<h2 id="度量空间定义">1. 度量空间定义</h2>
+<p>对于工科生来说，“空间”这个概念还是比较模糊的，但是我本人在学习数学的过程中发现很多数学的分支学科都是对于某个空间进行研究，比如欧氏空间、内积空间、测度空间、拓扑空间、希尔伯特空间，以及这门课要学习的度量空间等等。</p>
+<p>个人觉得，定义空间的同时往往伴随着相应的某种运算的定义，也就是说我们研究空间的时候，主要还是为了研究某些运算，为了保证运算前后的结果都有比较好的性质（或者说便于处理），我们才抽象出了对应的空间的概念。回到这门课，泛函分析里面将要遇到的空间都是度量空间，因此我们首先需要知道他的定义。</p>
+<p><strong>“度量”实际上指的就是抽象的“距离”</strong>，比如两个点的距离、两个向量的距离、两个无穷长序列的距离、两个连续函数的距离。尽管点、向量、无穷长序列、连续函数的形式差别很大，但是如果我们都把他们抽象成为高维空间中的一个点，我们可以用相似的方式定义距离（也就是度量）的概念。</p>
+<p>这样一来，由于<strong>大多数时候我们关心的是两个高维点之间的相对距离，而不是他们本身的绝对坐标</strong>（比如我们研究数列收敛性
+<span class="math inline">\(x_n\to x\)</span> 的时候，只需要分析 <span
+class="math inline">\(|x_n-x|\to 0\)</span> 是否成立，而不太关心 <span
+class="math inline">\(x\)</span>
+具体是什么），因此抽象出距离这个概念之后，我们就可以把点、向量、序列、连续函数都统一的看待，用统一的方法和理论处理相似的问题。</p>
+<p>首先，我们可以抽象出一个集合 <span
+class="math inline">\(X\)</span>。<span class="math inline">\(X\)</span>
+可以是一个实数点集，比如 <span
+class="math inline">\(X=\mathbb{R}\)</span>；也可以是一个多维实空间
+<span
+class="math inline">\(X=\mathbb{R}^n\)</span>，他的元素就是向量；也可以是连续函数集
+<span class="math inline">\(X=C[a,b]\)</span>，表示区间 <span
+class="math inline">\([a,b]\)</span> 上的所有连续函数构成的集合。</p>
+<p>现在问题的关键就是<strong>如何定义度量</strong>？当然不能随意定义，我们必须要他满足一定条件，才能称之为度量：</p>
+<ol type="1">
+<li><span class="math inline">\(\forall x,y\in X,
+d(x,y)\ge0\)</span>;</li>
+<li><span class="math inline">\(x,y\in X, d(x,y)=0 \iff
+x=y\)</span></li>
+<li><span class="math inline">\(\forall x,y\in X,
+d(x,y)=d(y,x)\)</span></li>
+<li><span class="math inline">\(\forall x,y,z\in X, d(x,y)\le
+d(x,z)+d(z,y)\)</span></li>
+</ol>
+<p>根据定义可以看出来，度量就是一种距离，称 <span
+class="math inline">\((X,d)\)</span>
+为<strong>度量空间</strong>（或<strong>距离空间</strong>）。下面给出一些度量空间的例子，要证明是否是度量只需要验证几条定义即可。</p>
+<p><strong>注</strong>：后面的内容基本都默认我们是在度量空间 <span
+class="math inline">\((X,d)\)</span>
+中讨论，为了书写省劲，一般都没有明确写出来“存在度量空间 <span
+class="math inline">\((X,d)\)</span>”，但是需要注意我们是在度量空间中讨论的。</p>
+<p><strong><em>例子 1(离散度量)</em></strong>：定义 <span
+class="math display">\[
+d(x,y) = \begin{cases}
+0, &amp; x=y \\
+1, &amp; x\ne y
+\end{cases}
+\]</span> <strong><em>例子 2</em></strong>：记 <span
+class="math inline">\(X=\mathbb{K}\)</span>，其中我们记 <span
+class="math inline">\(\mathbb{K}=\mathbb{R} \text{ or }
+\mathbb{C}\)</span>（后面的笔记也都保持这个习惯），<span
+class="math inline">\(d(x,y)=|x-y|\)</span>，那么 <span
+class="math inline">\((X,d)\)</span> 是一个度量空间。</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\(X=\mathbb{K}^n,
+d_p(\boldsymbol{x,y})=\|\boldsymbol{x-y}\|_p = (\sum_i
+|x_i-y_i|^p)^{1/p}\)</span>，对于 <span class="math inline">\(1\le p \le
+\infty\)</span>，<span class="math inline">\((X,d_p)\)</span>
+是度量空间。</p>
+<p><strong><em>例子 4</em></strong>：<span
+class="math inline">\(X=\ell^p,d_p(\boldsymbol{x,y})=\|\boldsymbol{x-y}\|_p\)</span>，对于
+<span class="math inline">\(1\le p\le \infty\)</span>，<span
+class="math inline">\((\ell^p,d_p)\)</span> 是度量空间。其中 <span
+class="math display">\[
+\ell^p = \left\{(x_n)_{n\ge1},\ x_n\in\mathbb{K},\ \exists c\ge0,\
+|x_n|\le c  \right\}
+\]</span> 这个在证明的过程中需要证明 <span class="math inline">\(\forall
+x,y\in\ell^p\)</span>，都有 <span class="math inline">\(x+y \in
+\ell^p\)</span>。</p>
+<p>例子3、4的证明过程中还需要用到两个比较重要的不等式：Hölder 不等式和
+Minkowski 不等式。</p>
+<blockquote>
+<p><strong>Hölder不等式</strong>：<span class="math inline">\(\forall
+1\le p,q\le\infty, \frac{1}{p}+\frac{1}{q}=1,\forall
+x,y\in\mathbb{R}^n\)</span>，有 <span class="math display">\[
+\sum_{i=1}^{n}|x_iy_i| \le \|x\|_p \|y\|_q
+\]</span> 当 <span class="math inline">\(p=q=2\)</span>
+的时候，上面的式子就退化成 Cauchy-Schwarz 不等式。</p>
+<p><strong>证明</strong>：可以取 <span
+class="math inline">\(u(t)=t^{p-1},t\ge0\)</span>，反函数就有 <span
+class="math inline">\(t=u^{\frac{1}{p-1}}=u^{q-1},u\ge0\)</span>。考虑可能有下面两种情况：</p>
+<p><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/1-holder.png" srcset="/img/loading.gif" lazyload /></p>
+<p>以第一种情况为例，<span class="math inline">\(\int_0^\alpha t^{p-1}dt
++ \int_0^\beta u^{q-1}du = \frac{\alpha^p}{p}+\frac{\beta^q}{q} \ge
+\alpha\beta\)</span>，第二种情况也有相同的结果。我们可以首先假设 <span
+class="math inline">\(\|x\|_p = \|y\|_q=1\)</span>，因而就有 <span
+class="math display">\[
+|x_iy_i| \le \frac{|x_i|^p}{p} + \frac{|y_i|^q}{q} \\
+\Longrightarrow \sum |x_iy_i| \le 1 = \|x\|_p \|y\|_q
+\]</span> 如果 <span class="math inline">\(\|x\|_p \ne
+1\)</span>，那么我们可以取 <span class="math inline">\(x&#39; =
+x/\|x\|_p\)</span>，代入上面的情况就能得到 Hölder 不等式了。证毕。</p>
+<p><strong>Minkowski 不等式</strong>：<span
+class="math inline">\(\forall x,y\in\ell^p, p\ge1\)</span>，都有 <span
+class="math display">\[
+\|x+y\|_p \le \|x\|_p + \|y\|_p .
+\]</span> <strong>证明</strong>：</p>
+<p>证毕。</p>
+</blockquote>
+<p>对于空间 <span class="math inline">\(\ell^p\)</span>
+还有如下有趣的<strong>性质</strong>：</p>
+<ul>
+<li>若 <span class="math inline">\(1\le p\le q\)</span>，则 <span
+class="math inline">\(\ell^p \subset \ell^q\)</span></li>
+<li><span class="math inline">\(\lim_{p\downarrow 1} \|x\|_p =
+\|x\|_1\)</span></li>
+<li><span class="math inline">\(\lim_{p\uparrow 1} \|x\|_p =
+\|x\|_\infty\)</span></li>
+</ul>
+<p><strong><em>例子 5(无穷维向量)</em></strong>：定义 <span
+class="math inline">\(S=\{(x_n)_{n\ge1},
+x_n\in\mathbb{K}\}\)</span>，定义如下度量 <span class="math display">\[
+d(x,y) = \sum_{n=1}^\infty\frac{1}{2^n}\frac{|x_n-y_n|}{1+|x_n-y_n|}
+&lt; \infty
+\]</span> 则 <span class="math inline">\((S,d)\)</span> 是度量空间。</p>
+<p><strong><em>例子 6(连续函数)</em></strong>：<span
+class="math inline">\(X=C[a,b],\ d_p(x,y) = \left(\int_a^b
+|x(t)-y(t)|^pdt\right)^{1/p},\ 1\le p\le\infty\)</span>，则 <span
+class="math inline">\((X,d)\)</span> 是度量空间。</p>
+<h2 id="开集">2. 开集</h2>
+<p>上面一小节分析了度量空间 <span class="math inline">\((X,d)\)</span>
+中度量 <span class="math inline">\(d\)</span>
+的定义，这一部分研究一下集合 <span class="math inline">\(X\)</span>
+的性质。我们主要从<strong>开集和闭集</strong>这个角度来分析集合的结构。</p>
+<p>需要注意的是在实空间 <span class="math inline">\(\mathbb{R}\)</span>
+当中我们对开集（开区间）都比较熟悉了，但是还有很多其他很复杂的集合，比如上面提到的连续函数构成的集合
+<span
+class="math inline">\(C[a,b]\)</span>，这种情况下什么是<strong>开集</strong>呢？这个时候我们就需要抽象出“开集”这个概念最为本质的性质了。</p>
+<h3 id="开集的定义">2.1 开集的定义</h3>
+<p><strong>定义</strong>：开球 <span
+class="math inline">\(B(x_0,\delta)=\{x\in X,\
+d(x,x_0)&lt;\delta\}\)</span>，闭球 <span
+class="math inline">\(\bar{B}(x_0,\delta)=\{x\in X,\
+d(x,x_0)\le\delta\}\)</span>，球面 <span
+class="math inline">\(S(x_0,\delta)=\{x\in X,\
+d(x,x_0)=\delta\}.\)</span></p>
+<p><strong>定义</strong>：<span class="math inline">\((X,d),M\subset
+X\)</span>，称 <span class="math inline">\(x_0\in M\)</span> 为 <span
+class="math inline">\(M\)</span> 的<strong>内点</strong>，若 <span
+class="math inline">\(\exists \delta&gt;0, B(x_0,\delta)\subset
+M\)</span>，<span class="math inline">\(M\)</span> 的所有内点的集合称为
+<span class="math inline">\(M\)</span> 的内部，记为 <span
+class="math inline">\(\mathring{M}\)</span>。</p>
+<p><strong>定义</strong>：<span class="math inline">\(M\)</span>
+为<strong>开集</strong> <span class="math inline">\(\iff M=\mathring{M}
+\iff \forall x\in M,\ \exists \delta&gt;0,\ B(x,\delta)\subset
+M\)</span>。</p>
+<p><strong>定义</strong>：<span class="math inline">\(F\subset
+X\)</span> 为<strong>闭集</strong> <span class="math inline">\(\iff
+F^c=X\setminus F\)</span> 为开集。</p>
+<p><strong>定义</strong>：<strong>闭包</strong> <span
+class="math inline">\(\bar{M}=\{x\in X,\ \forall \delta&gt;0,\
+B(x,\delta)\cap M\ne \varnothing \}.\)</span></p>
+<p><strong>注 1</strong>：有的集合可能既不是开集，也不是闭集！比如实空间
+<span class="math inline">\(\mathbb{R}\)</span> 中区间 <span
+class="math inline">\([0,1)\)</span>。</p>
+<p><strong>注 2</strong>：但是假如现在考虑的不是实空间，而是 <span
+class="math inline">\(X=[0,+\infty)\)</span>，那么 <span
+class="math inline">\([0,1)\)</span>
+就是开集！判断是否是开集还是要根据定义！</p>
+<p><strong><em>例子 1(离散度量空间)</em></strong>：<span
+class="math inline">\((X,d)\)</span> 为离散度量空间，那么任意的 <span
+class="math inline">\(M\subset X\)</span>
+都是既开又闭的集合。因为我们可以取 <span class="math inline">\(\forall
+x\in M,\ B(x,1/2)=\{x\}\subset M\)</span>。</p>
+<h3 id="开集的性质">2.2 开集的性质</h3>
+<p><strong>命题</strong>：<span
+class="math inline">\(\mathring{M}\)</span> 为包含在 <span
+class="math inline">\(M\)</span> 中的最大开集。</p>
+<p><strong>证明</strong>：分为三个过程：1）<span
+class="math inline">\(\mathring{M}\subset M\)</span>；<strong>2）<span
+class="math inline">\(\mathring{M}\)</span> 为开集；</strong>3）<span
+class="math inline">\(\mathring{M}\)</span> 最大。注意不要忘了第 2)
+部分，细节略。</p>
+<p><strong>定理</strong>：<span
+class="math inline">\((X,d)\)</span>，则</p>
+<ul>
+<li><span class="math inline">\(X,\varnothing\)</span> 为开集</li>
+<li><span class="math inline">\((G_i)_{i\in I}\)</span> 为一族开集，则
+<span class="math inline">\(\bigcup_{i\in I}G_i\)</span>
+为开集（<strong>开集无限并</strong>仍然是开集）；</li>
+<li><span class="math inline">\(G_1,...,G_n\)</span> 为开集，则 <span
+class="math inline">\(\bigcap_{i=1}^n G_i\)</span>
+为开集（<strong>开集有限交</strong>仍然是开集）；</li>
+</ul>
+<p>证明：略。</p>
+<p><strong>定理</strong>：<span
+class="math inline">\((X,d)\)</span>，则</p>
+<ul>
+<li><span class="math inline">\(X,\varnothing\)</span> 为闭集（注意
+<span class="math inline">\(X,\varnothing\)</span> 既开又闭）</li>
+<li><span class="math inline">\((F_i)_{i\in I}\)</span> 为一族开集，则
+<span class="math inline">\(\bigcap_{i\in I}F_i\)</span>
+为开集（<strong>闭集无限交</strong>仍然是闭集）；</li>
+<li><span class="math inline">\(F_1,...,F_n\)</span> 为开集，则 <span
+class="math inline">\(\bigcup_{i=1}^n F_i\)</span>
+为开集（<strong>闭集有限并</strong>仍然是闭集）；</li>
+</ul>
+<p>证明：略。</p>
+<p><strong>性质</strong>：闭包 <span
+class="math inline">\(\bar{M}\)</span> 为闭集，且 <span
+class="math inline">\(\bar{M}\)</span> 为包含 <span
+class="math inline">\(M\)</span> 的最小闭集。</p>
+<p><strong>推论</strong>：<span class="math inline">\((X,d), M\subset
+X\)</span>，<span class="math inline">\(M\)</span> 为闭集 <span
+class="math inline">\(\iff M=\bar{M}.\)</span></p>
+<p>证明：略。</p>
+<blockquote>
+<p><strong>拓扑空间</strong></p>
+<p>拓扑的定义是：给集合 <span class="math inline">\(X\)</span>
+指定拓扑，就是指定集合 <span class="math inline">\(X\)</span>
+中哪些子集是开集，指定的方式需要满足：</p>
+<ol type="1">
+<li><span class="math inline">\(R,\varnothing\)</span> 是开集；</li>
+<li>开集的有限交仍然是开集；</li>
+<li>开集的任意并仍然是开集。</li>
+</ol>
+<p><span class="math inline">\(X\)</span> 上的<strong>拓扑</strong>
+<span class="math inline">\(\mathcal{T}\)</span> 是 <span
+class="math inline">\(X\)</span> 的子集族，满足上述的条件。定义了拓扑
+<span class="math inline">\(\mathcal{T}\)</span> 的集合 <span
+class="math inline">\(X\)</span>
+称为<strong>拓扑空间</strong>。对于拓扑空间 <span
+class="math inline">\((X,\mathcal{T})\)</span> 有子集 <span
+class="math inline">\(\mathcal{O}\)</span>，若 <span
+class="math inline">\(\mathcal{O}\in \mathcal{T}\)</span>，则称 <span
+class="math inline">\(\mathcal{O}\)</span> 为开集。</p>
+<p><strong>注1</strong>：先有拓扑 <span
+class="math inline">\(\mathcal{T}\)</span>，然后如果 <span
+class="math inline">\(X\)</span> 的子集 <span
+class="math inline">\(\mathcal{O}\in \mathcal{T}\)</span>，才有 <span
+class="math inline">\(\mathcal{O}\)</span> 是开集的说法。</p>
+<p><strong>注2</strong>：拓扑空间跟度量空间类似，首先定义了一种运算，比如度量空间是需要定义度量，拓扑空间是需要定义对开集封闭的运算（有限交、任意并），其中的元素对这些运算封闭，然后才有空间的概念.</p>
+</blockquote>
+<h3 id="稠密与可分">2.3 稠密与可分</h3>
+<p><strong>定义</strong>：称 <span class="math inline">\(M\subset
+X\)</span> 是 <span class="math inline">\(X\)</span>
+的<strong>稠密子集</strong>，若 <span
+class="math inline">\(\bar{M}=X\)</span>。换一种表述方式，也就是说 <span
+class="math inline">\(\forall x\in X,\forall \delta &gt; 0,
+B(x,\delta)\cap M\ne \varnothing\)</span>。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\((\mathbb{R},d)\)</span>，其中 <span
+class="math inline">\(d(x,y)=|x-y|\)</span>，则 <span
+class="math inline">\(\bar{\mathbb{Q}}=\mathbb{R}.\)</span></p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\((\mathbb{C},d)\)</span>，其中 <span
+class="math inline">\(d(x,y)=|x-y|\)</span>，则 <span
+class="math inline">\(\overline{\mathbb{Q}+i\mathbb{Q}}=\mathbb{C}.\)</span></p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\((\mathbb{R}^n,d_2)\)</span>，则 <span
+class="math inline">\(\overline{\mathbb{Q}^n}=\mathbb{R}^n.\)</span></p>
+<p><strong><em>例子 4</em></strong>：对于 <span
+class="math inline">\(1\le p\le \infty\)</span>，定义 <span
+class="math inline">\(M=\{(x_n)_{n\ge1},\ x_n\in\mathbb{Q},\exists
+N,\forall n\ge N, x_n=0 \}\)</span>，那么对于度量 <span
+class="math inline">\(d_p\)</span>，有 <span
+class="math inline">\(\bar{M}=\ell^p.\)</span></p>
+<p><strong>性质</strong>：对于两个度量 <span
+class="math inline">\(d_1,d_2\)</span>，如果存在 <span
+class="math inline">\(c_1,c_2&gt;0\)</span>，对 <span
+class="math inline">\(\forall x,y\in X\)</span>，都有 <span
+class="math inline">\(c_1d_1(x,y)\le d_2(x,y)\le c_2
+d_1(x,y)\)</span>，也即这两个度量相互控制，那么对任意 <span
+class="math inline">\(M\subset X\)</span>，有 <span
+class="math inline">\(M\)</span>
+的<strong>闭包相同</strong>，<strong>内部也相同</strong>。</p>
+<p><strong><em>例子 5</em></strong>：对于离散度量空间，<span
+class="math inline">\(X\)</span> 的稠密子集只有 <span
+class="math inline">\(X\)</span> 本身。</p>
+<p><strong><em>例子 6</em></strong>：<span
+class="math inline">\(X=C[a,b]\)</span>，<span
+class="math inline">\(d_\infty(x,y)=\max_{t\in[a,b]}
+|x(t)-y(t)|\)</span>，因此 <span class="math inline">\(M=\{多项式
+p(t)=a_0+a_1t+\cdots+a_Nt^N,a_i\in\mathbb{Q}\}\)</span>，则 <span
+class="math inline">\(\bar{M}=X.\)</span></p>
+<p><strong>定义</strong>：称度量空间 <span
+class="math inline">\((X,d)\)</span> 是<strong>可分</strong>的，若 <span
+class="math inline">\(\exists M\)</span>
+为至多可数集（有限集或者可数集），并且 <span
+class="math inline">\(\bar{M}=X.\)</span></p>
+<p>这里先介绍几个关于<strong>可数集</strong>的性质：</p>
+<ul>
+<li>若 <span class="math inline">\(X_1,...,X_n\)</span> 可数，则 <span
+class="math inline">\(X_1\times \cdots \times X_n\)</span> 可数</li>
+<li><strong>可数个</strong>可数集的<strong>并集</strong>仍然是可数集</li>
+</ul>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(\{0,1\}^{\mathbb{N}}\)</span>
+<strong>不是可数集</strong>！其中 <span
+class="math inline">\(\mathbb{N}\)</span> 为自然数集。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\((\mathbb{K}^n, d_p)\)</span> 可分。</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\((\ell^p,d_p)\)</span> 可分，<span
+class="math inline">\(M\)</span> 与上面例子 4 的定义相同。</p>
+<p><strong><em>例子 4</em></strong>：<span
+class="math inline">\((C[a,b],d_\infty)\)</span> 可分，<span
+class="math inline">\(M\)</span> 与上面例子 6 的定义相同。</p>
+<p><strong><em>例子 5</em></strong>：<span
+class="math inline">\((\ell^\infty,d_\infty)\)</span>
+<strong>不可分</strong>。</p>
+<p><em>证明</em>：反证法。参考课本 P14，略。</p>
+<h2 id="收敛性与完备性">3. 收敛性与完备性</h2>
+<p>这一部分则开始考虑 <span class="math inline">\(X\)</span>
+中的元素序列，以及序列的极限是否存在、极限是什么的问题。之所以考虑序列这件事情，是因为我们实际中处理问题的时候往往是用序列去逼近一个元素，序列当中的每个元素可能是简单的，二最后去逼近的这个元素往往是不太显然或者比较复杂的东西。这样我们只需要证明序列中的元素满足某些性质，就能证明最后的极限具有某些特殊性质，更容易处理。</p>
+<h3 id="序列收敛性">3.1 序列收敛性</h3>
+<p>我们对<strong>序列收敛性</strong>的定义是对于 <span
+class="math inline">\(x_n,x\in\mathbb{R}\)</span>，称 <span
+class="math inline">\(x_n\)</span> 收敛到 <span
+class="math inline">\(x\)</span>，记为 <span
+class="math inline">\(x_n\to x\)</span> (<span
+class="math inline">\(\lim_{n\to\infty} x_n=x\)</span>)，若 <span
+class="math inline">\(\forall \varepsilon&gt; 0,\exists N,\ \forall n\ge
+N\)</span>，都有 <span
+class="math inline">\(|x_n-x|&lt;\varepsilon\)</span>。换一种表述方式就是在度量空间
+<span class="math inline">\((X,d)\)</span> 中，<span
+class="math inline">\(d(x_n,x)\to 0\)</span>。</p>
+<p><strong>注</strong>：需要注意的是只有 <span
+class="math inline">\(x\in X\)</span>，我们才能说 <span
+class="math inline">\(x_n\to x\)</span>。例如取 <span
+class="math inline">\(X=(0,1),x_n=\frac{1}{n+1}\)</span>，那么 <span
+class="math inline">\(x_n\)</span> 在 <span
+class="math inline">\(X\)</span> 中<strong>不收敛</strong>。</p>
+<p><strong>命题</strong>：若 <span class="math inline">\(x_n\to
+x\)</span>，则 <span class="math inline">\(\{x_n\}_{n\ge1}\)</span>
+为有界集合，且 <span class="math inline">\(x\)</span> 唯一。</p>
+<p><strong>定理</strong>：度量空间 <span
+class="math inline">\((X,d)\)</span>，有 <span
+class="math inline">\(M\subset X\)</span>，那么</p>
+<ul>
+<li><span class="math inline">\(x\in \bar{M} \iff \exists x_n\in M,\
+x_n\to x\)</span>；</li>
+<li><span class="math inline">\(M\)</span> 为<strong>闭集</strong> <span
+class="math inline">\(\iff \forall x_n\in M\)</span>，设 <span
+class="math inline">\(x_n\to x\in X\)</span>，则 <span
+class="math inline">\(x\in
+M\)</span>（即<strong>闭集对极限封闭</strong>）。</li>
+</ul>
+<p>证明：第一条应用定义，第二条应用第一条的结论。细节略。</p>
+<h3 id="柯西列与完备性">3.2 柯西列与完备性</h3>
+<p><strong>定义</strong>：<span class="math inline">\(x_n\in
+X\)</span>，称 <span class="math inline">\(x_n\)</span>
+为<strong>柯西列</strong>，若 <span class="math inline">\(\forall
+\varepsilon &gt; 0,\exists N, \forall m,n\ge N\)</span>，则 <span
+class="math inline">\(d(x_m,x_n)&lt;\varepsilon\)</span>。称 <span
+class="math inline">\(X\)</span> 是<strong>完备</strong>的，若 <span
+class="math inline">\(\forall x_n\in X\)</span> 为柯西列，则 <span
+class="math inline">\(\exists x\in X,x_n \to x\)</span>。</p>
+<p><strong>注</strong>：实际上，收敛列一定是柯西列，即 <span
+class="math inline">\(\{收敛列\} \subset \{柯西列\}\)</span>；而如果
+<span class="math inline">\(X\)</span>
+又是完备的，那么说明柯西列也一定是收敛列。因此 <span
+class="math inline">\(X\)</span> 完备 <span class="math inline">\(\iff
+\{柯西列\}=\{收敛列\}\)</span>。</p>
+<p><strong>命题</strong>：<span class="math inline">\(x_n\)</span>
+为柯西列，则 <span class="math inline">\(\{x_n,n\ge 1\}\)</span>
+为有界集。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\((\mathbb{R},d_1)\)</span> 完备；<span
+class="math inline">\((\mathbb{K}^n, d_p)\)</span> 完备；<span
+class="math inline">\((\ell^\infty, d_\infty)\)</span> 完备；<span
+class="math inline">\((\ell^p,d_p)\)</span> 完备；<span
+class="math inline">\((C[a,b],d_\infty)\)</span> 完备。</p>
+<p><strong><em>证明</em></strong>：证明完备性的套路：</p>
+<ol type="1">
+<li>任取柯西列 <span class="math inline">\(x_n\in X\)</span>；</li>
+<li>找到可能的极限 <span class="math inline">\(x\)</span>；</li>
+<li>证明 <span class="math inline">\(x\in X\)</span>；</li>
+<li>证明 <span class="math inline">\(x_n\to x\)</span>。</li>
+</ol>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\((C[a,b], d_p)\)</span>
+<strong>不完备</strong>（反例如下图所示）；<span
+class="math inline">\(\mathbb{Q}\)</span> 不完备（因为不是闭集）；<span
+class="math inline">\(c_{00}\)</span>
+（有限个元素不为零的序列）不完备。</p>
+<p><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/2-example.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>定理</strong>：度量空间 <span
+class="math inline">\((X,d)\)</span></p>
+<ul>
+<li><span class="math inline">\(\forall Y\subset X\)</span> 为完备的，则
+<span class="math inline">\(Y\)</span> 为闭集；</li>
+<li>若 <span class="math inline">\((X,d)\)</span> 完备，则 <span
+class="math inline">\(\forall Y\subset X\)</span> 完备 <span
+class="math inline">\(\iff Y\)</span> 为闭集。</li>
+</ul>
+<p>证明：第一条应用闭集对极限封闭的性质；第二条反向应用 <span
+class="math inline">\((X,d)\)</span> 完备的性质。细节略。</p>
+<p><strong>定理</strong>：若 <span class="math inline">\(x_n\in
+C[a,b],x_n\rightrightarrows x\)</span>（一致收敛），则 <span
+class="math inline">\(x\in C[a,b]\)</span>。</p>
+<h2 id="映射与连续性">4. 映射与连续性</h2>
+<p>前面从单个度量空间的角度来考虑元素的性质，现在考虑两个度量空间的对应关系，也就是映射。</p>
+<p>对于实空间的映射 <span class="math inline">\(f:(a,b)\to
+\mathbb{R}\)</span>，我们对连续性的定义为：<span
+class="math inline">\(f\)</span> 在 <span
+class="math inline">\(t_0\in(a,b)\)</span> 处连续，若 <span
+class="math inline">\(\lim_{t\to
+t_0}f(t)=f(t_0)\)</span>。由于我们在度量空间中已经定义了距离
+，因此可以将其推广至度量空间。</p>
+<p>假设有度量空间 <span class="math inline">\((X_1,d_1)\)</span> 和
+<span class="math inline">\((X_2,d_2)\)</span>，映射 <span
+class="math inline">\(T:X_1 \to X_2\)</span>。</p>
+<p><strong>定义</strong>：称映射 <span class="math inline">\(T\)</span>
+在 <span class="math inline">\(t=t_0\)</span>
+处<strong>连续</strong>，若 <span class="math inline">\(\forall
+\varepsilon &gt; 0,\ \exists \delta &gt; 0\)</span>，使得 <span
+class="math inline">\(\forall t\in X_1,\
+d_1(t,t_0)&lt;\delta\)</span>，都有 <span class="math inline">\(d_2(Tt,
+Tt_0)&lt;\varepsilon\)</span>。若 <span class="math inline">\(T\)</span>
+在 <span class="math inline">\(\forall t\in X_1\)</span> 处都连续，则称
+<span class="math inline">\(T\)</span> 为<strong>连续映射</strong>。</p>
+<p><strong><em>例子 1</em></strong>：若 <span
+class="math inline">\((X_1,d_1)\)</span> 为离散度量空间，那么任意 <span
+class="math inline">\(T:X_1 \to X_2\)</span>
+一定是连续映射。证明只需要套用定义，取 <span
+class="math inline">\(\delta=1/2\)</span> 即可。</p>
+<p><strong><em>例子 2</em></strong>(Lipschitz 连续)：<span
+class="math inline">\(\exists c&gt;0,\ \forall s,t\in X_1\)</span> 都有
+<span class="math inline">\(d_2(Ts,Tt)&lt; c d_1(s,t)\)</span>，那么
+<span class="math inline">\(T\)</span> 是连续映射。</p>
+<p><strong>定理</strong>：<span class="math inline">\(T\)</span>
+为<strong>连续映射</strong> <span class="math inline">\(\iff \forall
+G\subset X_2\)</span> 为开集，那么 <span
+class="math inline">\(T^{-1}(G)=\{x\in X_1, Tx\in G\}\)</span> 是 <span
+class="math inline">\(X_1\)</span> 中的开集。</p>
+<p><strong>证明</strong>："<span
+class="math inline">\(\Longrightarrow\)</span>"：若已知 <span
+class="math inline">\(T\)</span> 连续，<span
+class="math inline">\(G\)</span> 为开集</p>
+<p><span class="math inline">\(G\)</span> 为开集，就有 <span
+class="math inline">\(\forall x_0\in T^{-1}(G),\exists \varepsilon &gt;
+0,\ B(Tx_0,\varepsilon)\subset G\)</span></p>
+<p>由于 <span class="math inline">\(T\)</span> 连续，则一定 <span
+class="math inline">\(\exists \delta &gt; 0\)</span>，使得 <span
+class="math inline">\(\forall x\in B(x_0, \delta)\)</span>，都有 <span
+class="math inline">\(Tx\in B(Tx_0,\varepsilon)\)</span>，因而 <span
+class="math inline">\(B(x_0,\varepsilon)\subset X_1\)</span></p>
+<p>故 <span class="math inline">\(T^{-1}(G)\)</span> 为开集。</p>
+<p>"<span class="math inline">\(\Longleftarrow\)</span>"：假设 <span
+class="math inline">\(\forall G\subset X_2\)</span> 为开集，<span
+class="math inline">\(T^{-1}(G)\)</span> 在 <span
+class="math inline">\(X_1\)</span>
+中也是开集，那么套用连续映射的定义，就能证明 <span
+class="math inline">\(T\)</span> 为连续映射。</p>
+<p>证毕。</p>
+<p><strong>推论</strong>：<span class="math inline">\(T\)</span>
+为<strong>连续映射</strong> <span class="math inline">\(\iff \forall
+F\subset X_2\)</span> 为闭集，那么 <span
+class="math inline">\(T^{-1}(F)=\{x\in X_1, Tx\in F\}\)</span> 是 <span
+class="math inline">\(X_1\)</span> 中的闭集。</p>
+<p><strong>定理</strong>：<span class="math inline">\(T\)</span> 在
+<span class="math inline">\(x_0\)</span> 处连续 <span
+class="math inline">\(\iff \forall x_n\in X_1, x_n\to x_0\)</span>，则
+<span class="math inline">\(Tx_n \to Tx_0\)</span>。</p>
+<p><strong>证明</strong>："<span
+class="math inline">\(\Longrightarrow\)</span>"：应用定义；</p>
+<p>"<span class="math inline">\(\Longleftarrow\)</span>"：反证法，假设
+<span class="math inline">\(T\)</span> 在 <span
+class="math inline">\(x_0\)</span> 处不连续，</p>
+<p>那么 <span class="math inline">\(\exists \varepsilon_0 &gt; 0,\forall
+\delta &gt;0, \exists x\in B(x_0, \delta)\)</span>，使得 <span
+class="math inline">\(d(Tx_0, Tx) &gt; \varepsilon_0\)</span></p>
+<p>可以取 <span class="math inline">\(\delta =
+1/n\)</span>，由此构造出一个序列 <span class="math inline">\(x_n \in
+B(x_0,1/n)\)</span>，</p>
+<p>可以知道 <span class="math inline">\(x_n\to x_0\)</span>，但是却有
+<span class="math inline">\(d(x_n,x_0) \ge
+\varepsilon_0\)</span>，与假设矛盾。</p>
+<p>证毕。</p>
+<p><strong>推论</strong>：<span class="math inline">\(T:X_1\to
+X_2\)</span> 处处连续 <span class="math inline">\(\iff \forall x_n\to x,
+Tx_n \to Tx\)</span>。</p>
+<h2 id="banach-不动点定理">5. Banach 不动点定理</h2>
+<p>不动点想必大家在别的地方都或多或少听说过或者用过，应该是解决很多问题的重要工具。在这一部分的内容里面则可以看到，前面讲的序列收敛性、映射在不动点定理当中的应用。</p>
+<p><strong>定义</strong>：考虑 <span
+class="math inline">\(X\ne\varnothing, T:X\to X\)</span>，若 <span
+class="math inline">\(x_0\in X,Tx_0=x_0\)</span>，则称 <span
+class="math inline">\(x_0\)</span> 为 <span
+class="math inline">\(T\)</span> 的<strong>不动点</strong>。</p>
+<p><strong>定义</strong>：<span class="math inline">\(T:X\to
+X\)</span>，假设 <span class="math inline">\(\exists 0\le \alpha &lt;
+1\)</span>，使得 <span class="math inline">\(\forall x,y\in
+X\)</span>，都有 <span class="math inline">\(d(Tx,Ty) \le \alpha
+d(x,y)\)</span>，则称 <span class="math inline">\(T\)</span>
+为<strong>压缩映射</strong>。</p>
+<p><strong>定理(Banach不动点定理)</strong>：假设 <span
+class="math inline">\((X,d)\)</span>
+为<strong>非空、完备</strong>度量空间，<span
+class="math inline">\(T:X\to X\)</span> 为压缩映射，则 <span
+class="math inline">\(T\)</span> <strong>存在唯一</strong>的不动点。</p>
+<p><strong>证明</strong>：考虑 <span class="math inline">\(x_0\in
+X,x_1=Tx_0,\cdots,x_n=Tx_{n-1},\cdots\)</span>，那么可以首先证明 <span
+class="math inline">\(x_n\)</span> 为柯西列，进而存在收敛值 <span
+class="math inline">\(x\)</span>。 由于 <span
+class="math inline">\(d(x_n,x_{n+1})=d(x_n,Tx_n)\to
+0\)</span>，从而趋向于 <span
+class="math inline">\(x=Tx\)</span>。之后再证明唯一性。证毕。</p>
+<p><strong>定理</strong>：假设 <span
+class="math inline">\((X,d)\)</span> <strong>非空完备</strong>，<span
+class="math inline">\(T:X\to X\)</span>，设 <span
+class="math inline">\(\exists m\ge1\)</span>，<span
+class="math inline">\(T^m\)</span> 为压缩映射，则 <span
+class="math inline">\(\exists! x\in X\)</span> 使得 <span
+class="math inline">\(Tx=x\)</span>。</p>
+<p><strong>证明</strong>：只需要证明 <span
+class="math inline">\(S=T^m\)</span> 的不动点都是 <span
+class="math inline">\(T\)</span> 的不动点，反之 <span
+class="math inline">\(T\)</span> 的不动点也都是 <span
+class="math inline">\(S\)</span> 的不动点即可。</p>
+<p>由不动点定理可知，<span class="math inline">\(S\)</span>
+存在唯一一个不动点，记为 <span class="math inline">\(y_0\)</span>，即
+<span class="math inline">\(Sy_0=y_0\)</span>，那么 <span
+class="math inline">\(STy_0=T^{m+1}y_0=TSy_0=Ty_0\)</span>，即 <span
+class="math inline">\(Ty_0\)</span> 也是 <span
+class="math inline">\(S\)</span> 的不动点，因此一定有 <span
+class="math inline">\(Ty_0=y_0\)</span>，即 <span
+class="math inline">\(y_0\)</span> 也是 <span
+class="math inline">\(T\)</span> 的不动点。假设 <span
+class="math inline">\(z_0\)</span> 是 <span
+class="math inline">\(T\)</span> 的不动点，那么很容易证明他也是 <span
+class="math inline">\(S\)</span> 的不动点。因此 <span
+class="math inline">\(T\)</span> 存在唯一不动点。证毕。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(c&gt;0\)</span>，求 <span
+class="math inline">\(\sqrt{c}\)</span> 的数值解。可以用数值迭代，取
+<span
+class="math inline">\(f(x)=(x+\frac{c}{x})/2,D=[\sqrt{c},+\infty)\)</span>，求不动点即可。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\((X=\mathbb{K}^n,d_\infty),C\in\mathbb{K}^{n\times
+n},b\in\mathbb{K}^n\)</span>，映射 <span
+class="math inline">\(Tx=Cx+b\)</span>。容易证明若 <span
+class="math inline">\(\forall i,\sum_j|a_{ij}|&lt;1\)</span>，则 <span
+class="math inline">\(T\)</span> 为压缩映射。</p>
+<p><strong><em>例子 3</em></strong>：考虑 <span
+class="math inline">\((t_0,x_0)\in
+\mathbb{R}^2,a,b&gt;0\)</span>，考虑矩形 <span
+class="math inline">\(R=[t_0-a,t_0+a]\times[x_0-b,x_0+b]\)</span>，连续函数
+<span class="math inline">\(f:R\to\mathbb{R}\)</span>，假设存在 <span
+class="math inline">\(k\ge0,|f(t,u)-f(t,v)|\le k|u-v|,\forall
+(t,u),(t,v)\in R\)</span>。考虑初值问题 <span class="math display">\[
+(P):\begin{cases}
+x&#39;(t)=f(t,x(t)) \\
+x(t_0)=x_0
+\end{cases}
+\]</span> 求上述初值问题的解 <span class="math inline">\(x(t)\in
+C[t_0-\beta,t_0+\beta],0&lt;\beta\le a\)</span>。</p>
+<p><strong><em>解</em></strong>：首先给出结论：如果给定 <span
+class="math inline">\(c=\max_{(t,x)\in
+R}|f(t,x)|,0&lt;\beta&lt;\min\{a,\frac{b}{c},\frac{1}{k}\}\)</span>，那么存在唯一的
+<span class="math inline">\(x\in
+C^1[t_0-\beta,t_0+\beta]\)</span>，使得当 <span
+class="math inline">\(t\in[t_0-\beta,t_0+\beta]\)</span> 时，有 <span
+class="math inline">\(x(t)\in[x_0-b,x_0+b]\)</span> 且 <span
+class="math inline">\(x\)</span> 满足方程 <span
+class="math inline">\((P)\)</span>。下面给出证明。</p>
+<p>由于 <span class="math inline">\(x&#39;(t)=f(t,x(t)) \Longrightarrow
+\int_{t_0}^t x&#39;(\tau)d\tau=\int_{t_0}^t f(\tau,x(\tau))d\tau
+\Longrightarrow x(t)=x_0+\int_{t_0}^t
+f(\tau,x(\tau))d\tau\)</span>，</p>
+<p>可以证明 <span class="math inline">\(|x(t)-x_0|\le c\beta &lt;b
+\Longrightarrow (t,x(t))\in R\)</span>。</p>
+<p><span class="math inline">\((X,d_\infty)\)</span> 完备，取 <span
+class="math inline">\(M=\bar{B}(x_0,c\beta)\)</span> 为闭集，因此 <span
+class="math inline">\(M\)</span> 为完备的，</p>
+<p>取 <span class="math inline">\(Tx=x_0+\int_{t_0}^t
+f(\tau,x(\tau))d\tau\)</span>，也可以证明 <span
+class="math inline">\(d_\infty(Tx,x_0)\le c\beta \Longrightarrow Tx\in
+M\)</span>，即 <span class="math inline">\(T:M\to M\)</span>，</p>
+<p>又容易证明 <span class="math inline">\(T\)</span>
+为压缩映射，因而存在唯一的 <span class="math inline">\(x\in M\)</span>
+使得 <span class="math inline">\(Tx=x\)</span>，只需要迭代即可获得 <span
+class="math inline">\(x(t)\)</span>。</p>
+<p><strong><em>例子 4(隐函数存在定理)</em></strong>：略。</p>
+<h2 id="小结">6. 小结</h2>
+<p>这一章当中讲解了度量空间、开集闭集、序列收敛性、柯西列、集合完备性、映射与连续性，以及最后的Banach不动点定理。现在我们已经完成了度量空间中的内容，你能够回答文章开头的问题了吗？对于度量空间这个概念有什么新的理解吗？</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Functional-Analysis/">Functional Analysis</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4/">度量空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%8C%E5%A4%87%E7%A9%BA%E9%97%B4/">完备空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E9%9B%86/">开集</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">可分性</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9F%AF%E8%A5%BF%E5%88%97/">柯西列</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BF%9E%E7%BB%AD%E6%98%A0%E5%B0%84/">连续映射</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Banach%E4%B8%8D%E5%8A%A8%E7%82%B9%E5%AE%9A%E7%90%86/">Banach不动点定理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/10/functional-analysis/ch2-normed-space/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">泛函分析笔记2：赋范空间</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/18/functional-analysis/ch0-intro/">
+                        <span class="hidden-mobile">泛函分析笔记0：绪论</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

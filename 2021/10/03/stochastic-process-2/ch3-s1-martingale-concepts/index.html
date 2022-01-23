@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="3.1 条件概率 在初等概率论中，条件期望的概念比较好理解，有 \({\mathbb E}[X | Y &#x3D; y_j] &#x3D; \sum_i x_i P(X&#x3D;x_i | Y &#x3D; y_j)\)，得到的条件期望实际上是一个关于 \(Y&#x3D;y_j\) 的函数。但是在现代概率论中，这一概念进行了推广，也变得更加抽象，严谨的数学定义需要高等概率的知识，本教程基本只需要建立直观理解就够了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】离散鞅论1 | 基本概念">
+<meta property="og:url" content="http://example.com/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="3.1 条件概率 在初等概率论中，条件期望的概念比较好理解，有 \({\mathbb E}[X | Y &#x3D; y_j] &#x3D; \sum_i x_i P(X&#x3D;x_i | Y &#x3D; y_j)\)，得到的条件期望实际上是一个关于 \(Y&#x3D;y_j\) 的函数。但是在现代概率论中，这一概念进行了推广，也变得更加抽象，严谨的数学定义需要高等概率的知识，本教程基本只需要建立直观理解就够了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-03T14:18:40.000Z">
+<meta property="article:modified_time" content="2021-10-16T15:09:58.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="条件期望">
+<meta property="article:tag" content="鞅">
+<meta property="article:tag" content="Jensen不等式">
+<meta property="article:tag" content="鞅分解定理">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】离散鞅论1 | 基本概念 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】离散鞅论1 | 基本概念">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-03 22:18" pubdate>
+        October 3, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      51 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】离散鞅论1 | 基本概念</h1>
+            
+            <div class="markdown-body">
+              <h2 id="条件概率">3.1 条件概率</h2>
+<p>在初等概率论中，条件期望的概念比较好理解，有 <span
+class="math inline">\({\mathbb E}[X | Y = y_j] = \sum_i x_i P(X=x_i | Y
+= y_j)\)</span>，得到的条件期望实际上是一个关于 <span
+class="math inline">\(Y=y_j\)</span>
+的函数。但是在现代概率论中，这一概念进行了推广，也变得更加抽象，严谨的数学定义需要高等概率的知识，本教程基本只需要建立直观理解就够了。</p>
+<span id="more"></span>
+<p>（不严谨地）简单来说，条件期望 <span class="math inline">\({\mathbb
+E}[X | Y]\)</span> 是一个新的随机变量，也可以看作是随机变量 <span
+class="math inline">\(Y\)</span> 的函数。也就是可以理解为 <span
+class="math inline">\(g(Y)\)</span>，这个函数由 <span
+class="math inline">\(X,Y\)</span> 的性质所决定。</p>
+<p>性质（可以用直觉来理解这些性质，培养一下数学直观）：</p>
+<ul>
+<li><span class="math inline">\({\mathbb E}[{\mathbb E}[X|Y]] = {\mathbb
+E}[X]\)</span></li>
+<li><span class="math inline">\({\mathbb E}[\sum_i a_i X_i | Y] = \sum_i
+a_i {\mathbb E}[X_i |Y]\)</span></li>
+<li><span class="math inline">\({\mathbb E}[g(X)h(Y) | Y] = h(Y)
+{\mathbb E}[g(X) | Y]\)</span>，<span
+class="math inline">\(g(X),h(Y)\)</span> 为有界函数</li>
+<li><span class="math inline">\({\mathbb E}[X | X] = X\)</span></li>
+<li>若 <span class="math inline">\(X,Y\)</span> 独立，则 <span
+class="math inline">\({\mathbb E}[X|Y] = {\mathbb E}[X]\)</span></li>
+<li><span class="math inline">\({\mathbb E}[{\mathbb E}[X|Y,Z] ~|~ Y\in
+{\mathcal D}_j, Z\in{\mathcal D}_k] = {\mathbb E}[X | Y\in {\mathcal
+D}_j, Z\in{\mathcal D}_k]\)</span></li>
+<li><span class="math inline">\({\mathbb E}[{\mathbb E}[X|Y,Z] ~|~ Y]
+={\mathbb E}[X|Y] = {\mathbb E}[{\mathbb E}[X|Y] ~|~ Y,Z]\)</span></li>
+</ul>
+<h2 id="鞅的定义与基本性质">3.2 鞅的定义与基本性质</h2>
+<p><strong>定义</strong>：<span class="math inline">\(\forall
+n\ge0\)</span>，若 (1) <span class="math inline">\({\mathbb E} |X_n|
+&lt; \infty\)</span>；(2) <span class="math inline">\({\mathbb
+E}[X_{n+1} | X_0,...,X_n]=X_n\)</span>，则过程 <span
+class="math inline">\(\{X_n,n\ge0\}\)</span> 称为鞅。</p>
+<p>注：鞅过程和平稳过程没有相互包含关系，也不同于Markov过程。</p>
+<p>有的时候 <span class="math inline">\(X_n\)</span>
+不能直接观察，只能观察另一个过程 <span
+class="math inline">\(\{Y_n,n\ge0\}\)</span>，因此将鞅的定义进行推广。</p>
+<p><strong>定义（推广）</strong>：设两个随即过程 <span
+class="math inline">\(\{X_n,n\ge0\},\{Y_n,n\ge0\}\)</span>，若满足 (1)
+<span class="math inline">\({\mathbb E}|X_n|&lt;\infty\)</span>；(2)
+<span class="math inline">\({\mathbb E}[X_{n+1} | Y_0,...,Y_n] =
+X_n\)</span>，则称 <span class="math inline">\(\{X_n,n\ge0\}\)</span>
+关于 <span class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅。</p>
+<p>性质：</p>
+<ul>
+<li><span class="math inline">\({\mathbb E}[X_n | Y_0,...,Y_n] =
+X_n\)</span>，再推广可以有 <span class="math inline">\({\mathbb
+E}[X_{n-k} | Y_0,...,Y_n] = X_{n-k}, k\ge0\)</span></li>
+<li><span class="math inline">\({\mathbb E}[X_{n+k} | Y_0,...,Y_n] =
+X_{n+k}, k\ge0\)</span></li>
+<li><span class="math inline">\({\mathbb E}X_{n+1} = {\mathbb E}X_n =
+{\mathbb E}X_0\)</span></li>
+<li>若 <span class="math inline">\(g(Y_0,...,Y_n)\)</span> 有界，则
+<span class="math inline">\({\mathbb E}[g(Y_0,...,Y_n)X_{n+k} |
+Y_0,...,Y_n] = g(Y_0,...,Y_n){\mathbb E}[X_{n+k} |
+Y_0,...,Y_n]\)</span></li>
+<li>若 <span class="math inline">\(\{X_n,n\ge0\},\{Z_n,n\ge0\}\)</span>
+关于 <span class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅，则 <span
+class="math inline">\(\{X_n\pm Z_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅</li>
+<li>若 <span class="math inline">\(\{X_n,n\ge0\},\{Z_n,n\ge0\}\)</span>
+关于 <span class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅，且 <span
+class="math inline">\(X_n,Z_n\)</span> 独立，则 <span
+class="math inline">\(\{X_n Z_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅</li>
+</ul>
+<p>注：<span class="math inline">\({\mathbb E}[X_{n+1}X_n] = {\mathbb
+E}[{\mathbb E}[X_{n+1}X_n | Y_0,...,Y_n]] = {\mathbb E}[X_n {\mathbb
+E}[X_{n+1}|Y_0,...,Y_n]] = {\mathbb
+E}[X_n^2]\)</span>，说明鞅不是平稳过程。</p>
+<h2 id="鞅的举例与构造方法">3.3 鞅的举例与构造方法</h2>
+<p><em>栗子 3.1</em>：<span
+class="math inline">\(Y_0=0,\{Y_n,n\ge1\}\)</span> 独立同分布，<span
+class="math inline">\({\mathbb E}|Y_n|&lt;\infty\)</span>，<span
+class="math inline">\({\mathbb E}Y_n=0\)</span>，取 <span
+class="math inline">\(X_0=0,X_n=\sum_{i=1}^nY_i\)</span>，则 <span
+class="math inline">\(\{X_n,n\ge0\}\)</span> 关于 <span
+class="math inline">\(\{Y_n,n\ge0\}\)</span> 是鞅。</p>
+<p><em>栗子 3.2</em>：<span
+class="math inline">\(Y_0=0,\{Y_n,n\ge1\}\)</span> 独立同分布，<span
+class="math inline">\({\mathbb E}Y_n=0, {\mathbb
+E}Y_n^2=\sigma^2\)</span>，取 <span class="math inline">\(X_0=0,X_n =
+\sum_{i=1}^n Y_i^2-n\sigma^2\)</span>，则 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p><em>栗子 3.3</em>（一般线性求和）：<span class="math inline">\(X_n =
+\sum_{k=0}^n a_k(Y_0,...,Y_{k-1}) \cdot \{f(Z_k) - {\mathbb
+E}[f(Z_k)|Y_0,...,Y_{k-1}]\}\)</span>，要求 <span
+class="math inline">\({\mathbb E}|f(Z_k)|&lt;\infty\)</span>，<span
+class="math inline">\(|a_k(y_0,...,y_{k-1})|&lt;A_k,\forall
+y_0,...,y_{k-1}\)</span>。（一般情况下取 <span class="math inline">\(a_k
+= 1\)</span>）</p>
+<p><em>栗子 3.4</em>（Doob 鞅过程）：<span
+class="math inline">\(X_n={\mathbb E}[X | Y_0,...,Y_n]\)</span>，<span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p><em>栗子 3.5</em>（似然比构成的鞅）：设 <span
+class="math inline">\(\{Y_n\}\)</span> 独立同分布，<span
+class="math inline">\(f_0,f_1\)</span> 是概率密度函数（PDF），<span
+class="math inline">\(\forall y,f_0(y)&gt;0\)</span>，令 <span
+class="math inline">\(X_n=\frac{f_1(Y_0)\cdots f_1(Y_n)}{f_0(Y_0)\cdots
+f_0(Y_n)}\)</span>，当 <span class="math inline">\(Y_n\)</span> 的PDF为
+<span class="math inline">\(f_0\)</span> 时，<span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p><em>栗子 3.6</em>：<span class="math inline">\(\{Y_n\}\)</span> 为
+Markov 链，状态空间为 <span class="math inline">\({\mathcal
+S}\)</span>，转移矩阵为 <span class="math inline">\(P\)</span>，定义
+<span class="math inline">\(F=(f(0),...,f(i),...)\)</span>
+为右特征向量，<span class="math inline">\({\mathbb
+E}|f(Y_n)|&lt;\infty\)</span>。令 <span class="math inline">\(X_n =
+\lambda^{-n} f(Y_n)\)</span>，则 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p>证明：<span class="math inline">\({\mathbb E}|X_n| = \lambda^{-n}
+{\mathbb E}|f(Y_n)|&lt;\infty\)</span>， <span class="math display">\[
+{\mathbb E}[X_{n+1} | Y_0,...,Y_n] = {\mathbb E}[\lambda^{-n-1}
+f(Y_{n+1}) | Y_n] = \lambda^{-n-1} \sum_{j\in{\mathcal S}}
+f(y_j)P(Y_{n+1}=y_j|Y_n)=\lambda^{-n} f(Y_n)
+\]</span> <em>栗子 3.7</em>（分支过程构造）：设 <span
+class="math inline">\(Z^{(n)}(j)\)</span> 表示第 <span
+class="math inline">\(n\)</span> 代第 <span
+class="math inline">\(j\)</span> 个个体产生的个体数目，<span
+class="math inline">\(Z^{(n)}(i)(i=1,2,...)\)</span> 独立同分布，<span
+class="math inline">\({\mathbb E}[Z^{(n)}(i)]=m\)</span>，<span
+class="math inline">\(Y_{n+1} = Z^{(n)}(1) + \cdots +
+Z^{(n)}(Y_n)\)</span>，则 <span
+class="math inline">\(X_n=m^{-n}Y_n\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。<span
+class="math inline">\({\mathbb E}[Y_{n+1} | Y_n] = Y_n {\mathbb
+E}[Z^{(n)}(1)] = mY_n\)</span>。</p>
+<p><em>栗子 3.8</em>（Wald鞅）：<span
+class="math inline">\(Y_0=0,\{Y_n\}\)</span> 独立同分布，<span
+class="math inline">\(\phi(\lambda)={\mathbb E}[\exp(\lambda
+Y_n)]\)</span>，<span
+class="math inline">\(X_0=1,X_n=\phi^{-n}(\lambda)\exp[\lambda
+(Y_1+\cdots+Y_n)]\)</span>，<span class="math inline">\(\{X_n\}\)</span>
+关于 <span class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p>证明：定义 <span class="math inline">\(S_n=\sum_{k=1}^n
+Y_k\)</span>，结合栗子 3.6 可知 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{S_n\}\)</span> 是鞅，由于 <span
+class="math inline">\(S_1,...,S_n\)</span> 与 <span
+class="math inline">\(Y_1,...,Y_n\)</span> 可以相互表示，因此 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 也是鞅。</p>
+<p><em>栗子 3.9</em>（R-N导数构成的鞅）：设 <span
+class="math inline">\(Z\sim U[0,1]\)</span>，<span
+class="math inline">\(f\)</span> 是 <span
+class="math inline">\([0,1]\)</span> 上的有界函数，令 <span
+class="math inline">\(X_n=2^n [f(Y_n+2^{-n}) - f(Y_n)]\)</span>，而
+<span class="math inline">\(Y_n=\sum_{k=0}^{2^n-1} \frac{k}{2^n}
+{\mathbf 1}_{\{k/2^n \le Z &lt; (k+1)/2^n\}}\)</span>，则 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅。</p>
+<p>证明：在 <span class="math inline">\(Y_0,...,Y_n\)</span>
+条件下，<span class="math inline">\(Z\)</span> 服从 <span
+class="math inline">\([Y_n,Y_n+2^{-n})\)</span> 的均匀分布，并且 <span
+class="math inline">\(Y_{n+1}\)</span> 以相同的概率等于 <span
+class="math inline">\(Y_n\)</span> 或者 <span
+class="math inline">\(Y_n+2^{-n-1}\)</span>，于是有 <span
+class="math display">\[
+\begin{aligned}
+{\mathbb E}[X_{n+1} | Y_0,...,Y_n] &amp;= 2^{n+1} {\mathbb
+E}[f(Y_{n+1}+2^{-n-1})-f(Y_{n+1}) | Y_0,...,Y_n] \\
+&amp;= 2^{n+1}\left\{ \frac{1}{2} [f(Y_n+2^{-n-1})-f(Y_n)] +
+\frac{1}{2}[f(Y_n+2^{-n}) - f(Y_n+2^{-n-1})] \right\} \\
+&amp;= X_n
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>小结（鞅的构造方法）：</p>
+<ol type="1">
+<li>满足 Markov 性的序列，若满足 <span class="math inline">\({\mathbb
+E}[X_{n+1} | X_n] = \lambda X_n\)</span>，则 <span
+class="math inline">\(Z_n = \lambda^{-n} X_n\)</span> 构成一个鞅；</li>
+<li>满足 Markov 性的序列，若满足 <span class="math inline">\({\mathbb
+E}[g(X_{n+1}) | X_n] = f(\lambda) g(X_n)\)</span>，<span
+class="math inline">\(g(x)\)</span> 为有界函数，<span
+class="math inline">\(f(\lambda)\ne0\)</span>，则 <span
+class="math inline">\(Z_n = f(\lambda)^{-n} g(X_n)\)</span>
+构成一个鞅；</li>
+<li>一般线性求和。</li>
+</ol>
+</blockquote>
+<h2 id="上鞅下鞅的定义及基本性质">3.4 上鞅、下鞅的定义及基本性质</h2>
+<p><strong>定义</strong>：随机过程 <span
+class="math inline">\(\{X_n,n\ge0\},\{Y_n,n\ge0\}\)</span>
+满足下列条件：</p>
+<ol type="1">
+<li><span class="math inline">\({\mathbb E}[X^-]&gt;\infty,
+x^-:=\min(x,0)\)</span>；</li>
+<li><span class="math inline">\({\mathbb E}[X_{n+1} | Y_0,...,Y_n] \le
+X_n\)</span>；</li>
+<li><span class="math inline">\(X_n\)</span> 是 <span
+class="math inline">\(Y_0,...,Y_n\)</span> 的函数；</li>
+</ol>
+<p>则称 <span class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是上鞅。同理可定义下鞅。</p>
+<p><strong>性质</strong>：</p>
+<ul>
+<li>上鞅 <span class="math inline">\(\{X_n\}\)</span>，则 <span
+class="math inline">\({\mathbb E}[X_{n+k} | Y_0,...,Y_n]\le X_n,\forall
+k\ge0\)</span></li>
+<li>上鞅 <span class="math inline">\(\{X_n\}\)</span>，则 <span
+class="math inline">\({\mathbb E}[X_n] \le {\mathbb E}X_k \le {\mathbb
+E}X_0,0\le k\le n\)</span></li>
+<li>上鞅 <span class="math inline">\(\{X_n\}\)</span>，<span
+class="math inline">\(g(Y_0,...,Y_n)\)</span> 是非负函数，则 <span
+class="math inline">\({\mathbb E}[g(Y_0,...,Y_n)X_{n+k} | Y_0,...,Y_n] =
+g(Y_0,...,Y_n) {\mathbb E}[X_{n+k} | Y_0,...,Y_n]\)</span></li>
+<li><span class="math inline">\(\{X_n\},\{Z_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是上（下）鞅，则 <span
+class="math inline">\(\{X_n+Z_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是上（下）鞅</li>
+<li><span class="math inline">\(\{X_n\},\{Z_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是上鞅，且 <span
+class="math inline">\(X_n,Z_n\)</span> 相互独立，则 <span
+class="math inline">\(\{X_nZ_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是上鞅（应该要求 <span
+class="math inline">\(X_n,Z_n\ge0\)</span>？？？）</li>
+</ul>
+<h2 id="jensen不等式与下鞅的构造">3.5 Jensen不等式与下鞅的构造</h2>
+<p><strong>定理 3.1</strong>：若 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅，<span
+class="math inline">\(\varphi(x)\)</span> 为一个凸函数，且对 <span
+class="math inline">\(\forall n\)</span>，<span
+class="math inline">\({\mathbb E}[\varphi(X_n)^+]&lt;\infty\)</span>，则
+<span class="math inline">\(\{\varphi(X_n)\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是下鞅。</p>
+<p><strong>推论 3.1.1</strong>：若 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅，对 <span
+class="math inline">\(\forall n\)</span>，<span
+class="math inline">\({\mathbb E}[X_n^2]&lt;\infty\)</span>，则 <span
+class="math inline">\(\{|X_n|\},\{X_n^2\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是下鞅。</p>
+<p><strong>推论 3.1.2</strong>：若 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅，对 <span
+class="math inline">\(\forall n,p\ge1\)</span>，<span
+class="math inline">\({\mathbb E}[|X_n^p|]&lt;\infty\)</span>，则 <span
+class="math inline">\(\{|X_n|^p\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是下鞅。</p>
+<h2 id="分解定理">3.6 分解定理</h2>
+<p><strong>定理 3.2（分解定理）</strong>：对任意一个 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 的下鞅，必存在过程 <span
+class="math inline">\(\{M_n\},\{Z_n\}\)</span> 使得</p>
+<ol type="1">
+<li><span class="math inline">\(\{M_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅</li>
+<li><span class="math inline">\(Z_n\)</span> 是 <span
+class="math inline">\(Y_0,...,Y_n\)</span> 的函数，且满足 <span
+class="math inline">\(Z_1=0,Z_n\le Z_{n+1},{\mathbb
+E}Z_n&lt;\infty\)</span></li>
+<li><span class="math inline">\(X_n=M_n+Z_n\)</span></li>
+</ol>
+<p>且上述分解是<strong>唯一</strong>的。</p>
+<p><strong>证明</strong>：证明的思路是首先构造出来这样一对 <span
+class="math inline">\(M_n,Z_n\)</span>，然后证明他们确实满足条件，最后再证明唯一性。</p>
+<p>构造 <span class="math inline">\(Z_n = \sum_{k=1}^n{\mathbb E}[X_k
+-X_{k-1}| Y_0,...,Y_n]\)</span>，<span
+class="math inline">\(M_n=X_n-Z_n\)</span>，可以验证 <span
+class="math inline">\(\{M_n\}\)</span> 是鞅并且 <span
+class="math inline">\(Z_n\)</span> 是 <span
+class="math inline">\(Y_0,...,Y_n\)</span>
+的非负单调非降函数。唯一性证明用反证法。证毕。</p>
+<p><strong>推论 3.2.1</strong>：对任意一个 <span
+class="math inline">\(\{X_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 的上鞅，必存在过程 <span
+class="math inline">\(\{M_n\},\{Z_n\}\)</span> 使得</p>
+<ol type="1">
+<li><span class="math inline">\(\{M_n\}\)</span> 关于 <span
+class="math inline">\(\{Y_n\}\)</span> 是鞅</li>
+<li><span class="math inline">\(Z_n\)</span> 是 <span
+class="math inline">\(Y_0,...,Y_n\)</span> 的函数，且满足 <span
+class="math inline">\(Z_1=0,Z_n\le Z_{n+1},{\mathbb
+E}Z_n&lt;\infty\)</span></li>
+<li><span class="math inline">\(X_n=M_n-Z_n\)</span></li>
+</ol>
+<p>且上述分解是<strong>唯一</strong>的。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9D%A1%E4%BB%B6%E6%9C%9F%E6%9C%9B/">条件期望</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9E%85/">鞅</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Jensen%E4%B8%8D%E7%AD%89%E5%BC%8F/">Jensen不等式</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9E%85%E5%88%86%E8%A7%A3%E5%AE%9A%E7%90%86/">鞅分解定理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/16/stochastic-process-2/ch3-s2-martingale-stopping%20time/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【随机过程2】离散鞅论2 | 停时与停时定理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/02/stochastic-process-2/ch2-stationary/">
+                        <span class="hidden-mobile">【随机过程2】平稳过程与二阶矩过程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

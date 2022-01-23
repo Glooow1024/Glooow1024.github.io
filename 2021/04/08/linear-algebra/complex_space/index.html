@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="说明：本文转载自博客：理解复数域上的向量空间（第一篇），由于没有找到原作者的联系方式，所以直接搬运过来了，如有侵权请联系我，我立即删除。  线性代数进行到酉空间中的自伴算子、正规算子以及谱定理这部分内容时，会发现很多在复空间中成立的命题在实空间中却未必成立。这种情况多少让人感到有点奇怪，为什么会出现这种情况？ 复数域是包含实数域的，我们学习复数之后碰到最多的是相反的情况：原本在实数域上成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转载|理解复数域上的向量空间">
+<meta property="og:url" content="http://example.com/2021/04/08/linear-algebra/complex_space/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="说明：本文转载自博客：理解复数域上的向量空间（第一篇），由于没有找到原作者的联系方式，所以直接搬运过来了，如有侵权请联系我，我立即删除。  线性代数进行到酉空间中的自伴算子、正规算子以及谱定理这部分内容时，会发现很多在复空间中成立的命题在实空间中却未必成立。这种情况多少让人感到有点奇怪，为什么会出现这种情况？ 复数域是包含实数域的，我们学习复数之后碰到最多的是相反的情况：原本在实数域上成">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-08T03:23:30.000Z">
+<meta property="article:modified_time" content="2021-07-09T01:03:20.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="复数域空间">
+<meta property="article:tag" content="矩阵分析">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>转载|理解复数域上的向量空间 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="转载|理解复数域上的向量空间">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-04-08 11:23" pubdate>
+        April 8, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">转载|理解复数域上的向量空间</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>说明：本文转载自<a
+target="_blank" rel="noopener" href="https://math.tianpeng.org/2010/07/%e7%90%86%e8%a7%a3%e5%a4%8d%e6%95%b0%e5%9f%9f%e4%b8%8a%e7%9a%84%e5%90%91%e9%87%8f%e7%a9%ba%e9%97%b4%ef%bc%88%e7%ac%ac%e4%b8%80%e7%af%87%ef%bc%89/">博客：理解复数域上的向量空间（第一篇）</a>，由于没有找到原作者的联系方式，所以直接搬运过来了，如有侵权请联系我，我立即删除。</p>
+</blockquote>
+<p>线性代数进行到酉空间中的自伴算子、正规算子以及谱定理这部分内容时，会发现很多在复空间中成立的命题在实空间中却未必成立。这种情况多少让人感到有点奇怪，为什么会出现这种情况？
+复数域是包含实数域的，我们学习复数之后碰到最多的是相反的情况：原本在实数域上成立的性质在复数域中不一定成立了，比如，实数可以比较大小，但复数没有大小关系；又比如，实数的平方非负，等等。这样的命题见多了，容易使人产生思维定势，认为复数包含实数，因此在复数范围内成立的命题在实数范围内也必然成立，而实数范围成立的命题不一定都能推广到复数。
+可尤其是学习到复变函数之后，这种情况似乎反过来了，同样的一个概念，到了复数中反倒比原来实数情况下的相应概念有了更多的内涵。这又是为什么呢？</p>
+<span id="more"></span>
+<p>比如，在”Linear Algebra Done Right” 第七章有个命题 7.2，是说</p>
+<p><strong>命题7.2：</strong> 如果 <span
+class="math inline">\(V\)</span>是复数域上的内积空间，并且 <span
+class="math inline">\(T\)</span>是 <span
+class="math inline">\(V\)</span>上的线性算子，且对任意向量 <span
+class="math inline">\(v\)</span>，都有 <span
+class="math inline">\(\langle Tv,v\rangle=0\)</span>，那么 <span
+class="math inline">\(T=0\)</span>。 <strong>证明：</strong> 使用恒等式
+<span class="math inline">\(\begin{aligned}\langle
+Tu,w\rangle=&amp;\frac{\langle T(u+w),u+w\rangle-\langle
+T(u-w),u-w\rangle}{4}\\ &amp;+\frac{\langle T(u+iw),u+iw\rangle+\langle
+T(u-iw),u-iw\rangle}{4}i\end{aligned}\)</span> 即可得证。</p>
+<p>但是，同样的假设，在实数空间中却得不出同样的结论来，比如，二维空间中把所有向量都逆时针旋转90度角。</p>
+<p>可是，在实空间中可以存在旋转90度的映射，为什么在复空间中就没有这种映射？难道就不可以有一个线性变换像实空间中那样把每一个向量都旋转到垂直的位置上吗？</p>
+<p>它的证明的确在那里，证法也的确没有错，但是我却从直观上难以接受这个命题。我不甘心，于是找来实空间中的那个旋转映射放在复空间上，定义复空间上的映射
+<span class="math inline">\(T\begin{pmatrix}a\\
+b\end{pmatrix}=\begin{pmatrix}b\\ -a\end{pmatrix}\)</span> 那么 <span
+class="math inline">\(\langle Tv,v\rangle=a\bar b-b\bar
+a\)</span>，通常情况下，这是个纯虚数，不一定是零。所以这个反例失败了，在这个例子上，我不得不承认上面那个命题。但是，它给我带来更多的思考：</p>
+<p>我们应该怎样直观地想象复向量空间？从前我们总是把向量想象成一条带有方向的线段，把一维子空间想象成一条直线，”线”总是伴随着我们对向量空间的影像理解，因为实数上面可以定义线序，而我们生存的三维空间就可以看成实三维空间，所以在理解一般的向量空间的时候，这种影像可以帮助我们建立起很多问题的直观。但是，当探究复向量空间内部的特殊结构的时候，这种形象的理解遇到了一些问题。
+比如，把一个复向量取共轭，跟原来的向量是什么位置关系？又比如，一个向量
+<span class="math inline">\(v\)</span>乘以 <span
+class="math inline">\(i\)</span>，变成了 <span
+class="math inline">\(iv\)</span>，是把这个向量怎么样了？旋转了九十度？可是毕竟二者是线性相关的，而在我们的直观理解中，线性相关的两个向量是共线的，数乘只是把向量拉长或缩短。但是如果把它们两个想象成共线的，又无法想象它们两个有相同的长度，一个一维子空间中相同长度的向量不是两个，而是无穷多个，无法想象。
+看来，与复平面类似，只有把一维复向量空间理解成我们所熟悉的平面才自然一些，而这个一维复空间中的一个复向量，可以看成是躺在个平面上的，它并不占据这个一维空间的一整段，在它周围可以有无数多条与它长度相等的向量。
+那么这么看来，一个 n 维的复空间，是否可以形象地把它想象成一个 2n
+维实空间？</p>
+<p>把问题提得更明确一些，如果我们把一个 n
+维复空间看成一个实数域上的向量空间，即把数量乘法中用到的数限制在实数域中，那么，原来的基底
+<span
+class="math inline">\(e_1,e_2,\dots,e_n\)</span>就张不成整个空间了，可以证明，
+向量组 <span
+class="math inline">\(e_1,ie_1,e_2,ie_2,\dots,e_n,ie_n\)</span>是这个实向量空间的基底，一共
+2n 个元素，所以它是一个 2n
+维实向量空间。（注意，这个实数空间中的一个向量 v
+在原来复空间意义下可以乘以纯量 i 变成 iv，但在实空间中 iv
+将不再是这种乘法的结果，它只是与 v 有关的一个向量而已。我们仍然记为
+iv。）</p>
+<p>如果只考虑空间本身，那么这样的理解是足够的，也足以提供复空间的一些直观信息。可是，我们需要理解的不止是这些，还有内积、线性变换等一些东西，在这个衍生出来的实空间中的这些东西到底跟原来的复空间中相应的对象有什么联系？</p>
+<p>首先分析内积，如果原来的复空间中有内积 <span
+class="math inline">\(\langle \cdot,\cdot\rangle\)</span>，那么 <span
+class="math inline">\(\mathrm{Re}\,\langle
+\cdot,\cdot\rangle\)</span>就是衍生出的实空间中的内积，我们用方括号
+<span class="math inline">\([\cdot,\cdot]\)</span>表示这个实空间的内积，
+那么原来的内积就可以用这个实数空间内积表示为 <span
+class="math inline">\(\langle u,v\rangle=[u,v]+i[u,iv]\)</span>
+并且，这两个内积诱导的范数是相同的。 对任意向量 <span
+class="math inline">\(v\)</span>，向量 <span
+class="math inline">\(iv\)</span>在实数空间的内积意义下是垂直于 <span
+class="math inline">\(v\)</span>的： <span
+class="math inline">\([iv,v]=\mathrm{Re}\,i\langle
+v,v\rangle=0\)</span>。 如果 <span
+class="math inline">\(e_1,e_2,\dots,e_n\)</span>是复空间的标准正交基底，那么
+<span
+class="math inline">\(e_1,ie_1,e_2,ie_2,\dots,e_n,ie_n\)</span>是实空间的标准正交基底。</p>
+<p>下面讨论一个向量乘以 i 是怎么回事。在复空间中，变换 <span
+class="math inline">\(S=iI\)</span>是个线性变换，那么在实空间中 <span
+class="math inline">\(v\)</span>到 <span
+class="math inline">\(iv\)</span>的变换是否也是线性变换？注意到原来复空间的任何线性变换在实空间下也是线性变换，所以
+<span
+class="math inline">\(S\)</span>也不例外。那么它在实空间意义下对应什么矩阵呢？
+取上面的标准正交基底 <span
+class="math inline">\(e_1,ie_1,e_2,ie_2,\dots,e_n,ie_n\)</span>，显然它在这组基底下的矩阵为
+<span class="math inline">\(\begin{pmatrix}0&amp;-1&amp;&amp;0&amp;0\\
+1&amp;0&amp;&amp;0&amp;0\\ &amp;&amp;\ddots&amp;&amp;\\
+0&amp;0&amp;&amp;0&amp;-1\\
+0&amp;0&amp;&amp;1&amp;0\end{pmatrix}\)</span> 即主对角线上是 2×2
+阶矩阵块 <span class="math inline">\(\begin{pmatrix}0&amp;-1\\
+1&amp;0\end{pmatrix}\)</span> 其余位置都为零。</p>
+<p>接下来讨论一般的线性变换。在复空间中每个线性变换 <span
+class="math inline">\(T\)</span>都对应实空间的一个线性变换，那么反过来，是否一个实空间的线性变换在复空间中也是线性变换呢？
+<span
+class="math inline">\(T(u+v)=Tu+Tv\)</span>这一条是两种空间都共同满足的，但关键是
+<span
+class="math inline">\(T(kv)=kTv\)</span>这个性质，对于实空间，我们只要求
+<span class="math inline">\(k\)</span>为实数，但对于复空间，我们还要求
+<span class="math inline">\(k\)</span>可以取复数。那么就必须有 <span
+class="math inline">\(T(au+biu)=aTu+biTu\)</span>，换句话说，就是 <span
+class="math inline">\(T\)</span>与上面定义的 <span
+class="math inline">\(S\)</span>可交换：<span
+class="math inline">\(TSv=STv\)</span>，只有这样的 <span
+class="math inline">\(T\)</span>才有资格作为复空间的线性变换，并且这是个充要条件。
+分析一下 <span class="math inline">\(\mathcal L(V)\)</span>的维数，当
+<span class="math inline">\(V\)</span>是复空间时，<span
+class="math inline">\(\mathcal L(V)\)</span>的维数是 <span
+class="math inline">\(n^2\)</span>，把 <span
+class="math inline">\(\mathcal
+L(V)\)</span>看成相应的实数空间，维数也不过是 <span
+class="math inline">\(2n^2\)</span>，但如果把 <span
+class="math inline">\(V\)</span>看成相应的实空间，那么 <span
+class="math inline">\(\mathcal L(V)\)</span>的维数是 <span
+class="math inline">\(4n^2\)</span>，可见，复空间上的线性变换比相应的实空间的线性变换少了一半，原因就是复空间的特性对线性变换会有更多的限制。
+利用矩阵的分块乘法规则可以证明，实空间上的 <span
+class="math inline">\(2n\times 2n\)</span> 阶矩阵 <span
+class="math inline">\(A\)</span>，如果与 <span
+class="math inline">\(S\)</span> 对应的矩阵可交换，那么 <span
+class="math inline">\(A\)</span> 有以下形式： <span
+class="math inline">\(\begin{pmatrix}a&amp;-b&amp;&amp;c&amp;-d\\
+b&amp;a&amp;&amp;d&amp;c\\ &amp;&amp;\ddots&amp;&amp;\\
+e&amp;-f&amp;&amp;g&amp;-h\\
+f&amp;e&amp;&amp;h&amp;g\end{pmatrix}\)</span>
+显然，它对应复空间上的矩阵 <span
+class="math inline">\(\begin{pmatrix}a+bi&amp;\dots&amp;c+di\\
+\vdots&amp;\ddots&amp;\vdots\\
+e+fi&amp;\dots&amp;g+hi\end{pmatrix}\)</span>
+而且，分析这种矩阵的自由度，与上面分析的复空间变换的维数恰好吻合。</p>
+<p>下面利用实空间的理论，在复空间衍生的实空间中证明命题
+7.2。首先证明一条引理：</p>
+<p><strong>引理1：</strong> 如果 <span class="math inline">\(V\)</span>
+是实的内积空间，<span class="math inline">\(T\in\mathcal
+L(V)\)</span>，那么 <span class="math inline">\(T\)</span> 满足 <span
+class="math inline">\(\forall v\in V,\langle Tv,v\rangle=0\)</span>
+当且仅当 <span class="math inline">\(T\)</span> 是斜自伴的，即 <span
+class="math inline">\(T^\star=-T\)</span>。 <strong>证明：</strong> 如果
+<span class="math inline">\(T^\star=-T\)</span>，那么有 <span
+class="math inline">\(\langle Tv,v\rangle=\langle v,T^\star
+v\rangle=-\langle v,Tv\rangle=-\langle Tv,v\rangle\)</span>，因此 <span
+class="math inline">\(\langle Tv,v\rangle=0\)</span>。 反过来，如果
+<span class="math inline">\(\forall v\in V,\langle
+Tv,v\rangle=0\)</span>，那么 <span
+class="math inline">\(\begin{aligned}\langle
+T(v+w),v+w\rangle=&amp;\langle Tv,v\rangle+\langle Tv,w\rangle+\langle
+Tw,v\rangle+\langle Tw,w\rangle\\ =&amp;0\end{aligned}\)</span> 因此
+<span class="math inline">\(\begin{aligned}\langle Tv,w\rangle+\langle
+Tw,v\rangle=&amp;\langle Tv,w\rangle+\langle w,T^{\star}v\rangle\\
+=&amp;\langle Tv,w\rangle+\langle T^{\star}v,w\rangle\\ =&amp;\langle
+(T+T^{\star})v,w\rangle\\ =&amp;0\end{aligned}\)</span> 取 <span
+class="math inline">\(w=(T+T^{\star})v\)</span>即可得证。</p>
+<p>接下来把命题7.2 翻译成实空间中的命题并证明之。</p>
+<p><strong>命题2</strong>：<span
+class="math inline">\(V\)</span>是实内积空间，<span
+class="math inline">\(T\)</span> 与 <span
+class="math inline">\(S\)</span> 都是 <span
+class="math inline">\(V\)</span>上的斜自伴算子，且 <span
+class="math inline">\(S\)</span> 可逆，<span
+class="math inline">\(T\)</span> 与 <span
+class="math inline">\(S\)</span> 可交换，并且任意向量 <span
+class="math inline">\(v\)</span>，<span class="math inline">\(\langle
+Tv,Sv\rangle=0\)</span>，那么 <span class="math inline">\(T=0\)</span>。
+证明：由 <span class="math inline">\(\langle Tv,Sv\rangle=-\langle
+STv,v\rangle=0\)</span>，可知 <span class="math inline">\(ST\)</span>
+也是斜自伴的。那么 <span
+class="math inline">\(-TS=(TS)^{\star}=S^{\star}T^{\star}=ST=TS\)</span>，因此
+<span class="math inline">\(TS=0\)</span>。又 <span
+class="math inline">\(S\)</span> 可逆，故 <span
+class="math inline">\(T=0\)</span>。证毕。 （P.S: 如果没有 <span
+class="math inline">\(S\)</span> 可逆的条件，那么 <span
+class="math inline">\(\mathrm{null}\,T\supset\mathrm{range}\,S\)</span>。）</p>
+<p>原来一个复向量空间上的线性变换相当于暗中假定了这么多的条件！难怪复空间中的算子理论有那么好的性质。</p>
+<hr />
+<p>2015/10/28 补充：</p>
+<p>我们可以完善引理1，使得通过这个引理可以更直接地证明书上的命题7.2：</p>
+<p><strong>引理1'：</strong> 设 <span
+class="math inline">\(V\)</span>是实数域或复数域上的内积空间，<span
+class="math inline">\(T\in\mathcal L(V)\)</span>。记<span
+class="math inline">\(i\mathbb R\)</span>为所有纯虚数和<span
+class="math inline">\(0\)</span>构成的集合，那么，<span
+class="math inline">\(T\)</span> 满足 <span
+class="math inline">\(\forall v\in V,\langle Tv,v\rangle\in i\mathbb
+R\)</span> 当且仅当 <span class="math inline">\(T\)</span>是斜自伴的，即
+<span class="math inline">\(T^{\star}=-T\)</span>。
+<strong>证明：</strong> 如果 <span
+class="math inline">\(T^{\star}=-T\)</span>，那么有 <span
+class="math inline">\(\langle Tv,v\rangle=\langle
+v,T^{\star}v\rangle=-\langle v,Tv\rangle=-\overline{\langle
+Tv,v\rangle}\)</span>，因此 <span class="math inline">\(\langle
+Tv,v\rangle\in i\mathbb R\)</span>。 反过来，如果 <span
+class="math inline">\(\forall v\in V,\langle Tv,v\rangle\in i\mathbb
+R\)</span>，那么 <span class="math inline">\(\begin{aligned}\langle
+T(v+w),v+w\rangle=&amp;\langle Tv,v\rangle+\langle Tv,w\rangle+\langle
+Tw,v\rangle+\langle Tw,w\rangle\\ \in&amp; i\mathbb
+R\end{aligned}\)</span> 因此 <span
+class="math inline">\(\begin{aligned}\Re\langle Tv,w\rangle+\langle
+Tw,v\rangle=&amp;\Re(\langle Tv,w\rangle+\langle w,T^{\star}v\rangle)\\
+=&amp;\Re(\langle Tv,w\rangle+\langle T^{\star}v,w\rangle)\\
+=&amp;\Re\langle (T+T^{\star})v,w\rangle\\ =&amp;0\end{aligned}\)</span>
+取 <span class="math inline">\(w=(T+T^\star)v\)</span> 即可得 <span
+class="math inline">\(\forall v, \|(T+T^\star)v\|^2=0\)</span>，因此
+<span class="math inline">\(T=-T^\star\)</span>。</p>
+<p>这样，在复数域空间中，如果<span
+class="math inline">\(T\)</span>满足<span class="math inline">\(\forall
+v\in V,\langle Tv,v\rangle =0\)</span>，那么<span
+class="math inline">\(T\)</span>和<span
+class="math inline">\(iT\)</span>就同时满足引理1’的条件，所以同时有<span
+class="math inline">\(T=-T^\star\)</span>和<span
+class="math inline">\(iT=-(iT)^\star=iT^\star\)</span>，因此<span
+class="math inline">\(T=0\)</span>。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Linear-Algebra/">Linear Algebra</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%8D%E6%95%B0%E5%9F%9F%E7%A9%BA%E9%97%B4/">复数域空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%9F%A9%E9%98%B5%E5%88%86%E6%9E%90/">矩阵分析</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/28/linear-algebra/SchurComplement/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">舒尔补</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/12/music/LovePea/">
+                        <span class="hidden-mobile">红豆</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

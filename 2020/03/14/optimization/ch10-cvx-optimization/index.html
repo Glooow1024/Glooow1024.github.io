@@ -1,0 +1,1260 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面讲了那么多关于凸集、凸函数的知识，然而都是铺垫，现在我们才来到了这门课的重头戏部分——凸优化问题！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记 10：凸优化问题">
+<meta property="og:url" content="http://example.com/2020/03/14/optimization/ch10-cvx-optimization/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面讲了那么多关于凸集、凸函数的知识，然而都是铺垫，现在我们才来到了这门课的重头戏部分——凸优化问题！">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-14T15:54:56.000Z">
+<meta property="article:modified_time" content="2021-06-04T14:13:06.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="凸优化问题">
+<meta property="article:tag" content="LP">
+<meta property="article:tag" content="SOCP">
+<meta property="article:tag" content="QP">
+<meta property="article:tag" content="SDP">
+<meta property="article:tag" content="GP">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记 10：凸优化问题 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记 10：凸优化问题">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-14 23:54" pubdate>
+        March 14, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      15k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      128 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记 10：凸优化问题</h1>
+            
+            <div class="markdown-body">
+              <p>前面讲了那么多关于凸集、凸函数的知识，然而都是铺垫，现在我们才来到了这门课的重头戏部分——凸优化问题！</p>
+<span id="more"></span>
+<h2 id="一般优化问题">1. 一般优化问题</h2>
+<p>一般优化问题的形式为 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;h_{i}(x)=0, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(f_0(x)\)</span>
+为目标函数，<span class="math inline">\(f_i(x)\)</span>
+为不等式约束函数， <span class="math inline">\(h_i\)</span>
+为等式约束函数。优化问题的<strong>最优解</strong>为 <span
+class="math display">\[
+p^{\star}=\inf \left\{f_{0}(x) | f_{i}(x) \leq 0, i=1, \ldots, m,
+h_{i}(x)=0, i=1, \ldots, p\right\}
+\]</span> 如果 <span
+class="math inline">\(p^{\star}=\infty\)</span>，则问题不可行；如果
+<span class="math inline">\(p^{\star}=-\infty\)</span>
+则该问题没有下界。</p>
+<p><strong>最优解</strong>则有 <span
+class="math inline">\(f_0(x)=p^{\star}\)</span>，<strong>局部最优解(local
+optimal)</strong>有 <span class="math display">\[
+\begin{aligned}
+\text{minimize} (\text{over } z) \quad&amp; f_{0}(z) \\
+\text{subject to} \quad&amp;f_{i}(z) \leq 0, \quad i=1, \ldots, m, \quad
+h_{i}(z)=0, \quad i=1, \ldots, p \\
+&amp;\|z-x\|_{2} \leq R
+\end{aligned}
+\]</span> 也即只在一个小的邻域内考虑优化问题。</p>
+<p>注意：</p>
+<ul>
+<li>有的优化问题有最小值，但是没有可行解，比如 <span
+class="math inline">\(f_0(x)=1/x\)</span>；</li>
+<li>有的问题根本就没有最小值，比如 <span
+class="math inline">\(f_0(x)=-\log x\)</span></li>
+<li>有的问题只有局部最小值，比如 <span
+class="math inline">\(f_0(x)=x^3-3x\)</span></li>
+</ul>
+<p>上面提到的优化问题中有等式和不等式约束，这些我们都称为<strong>显式约束(explicit
+constraints)</strong>，同时由于 <span class="math inline">\(x\)</span>
+应属于各个函数的定义域内，因此还有<strong>隐式约束(implicit
+constraint)</strong>，即 <span class="math display">\[
+x \in \mathcal{D}=\bigcap_{i=0}^{m} \operatorname{dom} f_{i} \cap
+\bigcap_{i=1}^{p} \operatorname{dom} h_{i}
+\]</span>
+没有显式约束的优化问题被称为<strong>无约束优化问题(unconstrained)</strong>。比如
+<span class="math display">\[
+\text { minimize } \quad f_{0}(x)=-\sum_{i=1}^{k} \log
+\left(b_{i}-a_{i}^{T} x\right)
+\]</span> 是一个无约束优化问题，包含了隐式约束 <span
+class="math inline">\(a_i^Tx&lt; b_i\)</span>。</p>
+<p>其实有约束优化问题也可以转化为无约束优化问题，只需要加一个指示函数，一开始提到的一般优化问题就可以利用
+<span class="math inline">\(\delta_C\)</span>
+转化为下面的无约束优化问题，不过这种转化可能并没有太大的意义 <span
+class="math display">\[
+\min_x f_0(x)+\delta_{C}(x) \\
+\delta_C(x)=\begin{cases}0&amp;f_i(x)\le0,h_i(x)=0 \\ \infty \end{cases}
+\]</span> 除了优化问题，还有一种<strong>可行解问题(Feasibility
+problem)</strong>，也就是给定一系列约束来寻找是否有可行解 <span
+class="math display">\[
+\begin{aligned}
+\text {find} \quad&amp; x \\
+\text { subject to} \quad&amp; f_{i}(x) \leq 0,\quad i=1, \ldots, m \\
+&amp; h_{i}(x)=0,\quad i=1, \ldots, p
+\end{aligned}
+\]</span> 这实际上也可以转化为一般优化问题 <span class="math display">\[
+\begin{aligned}
+\text {minimize} \quad&amp; 0 \\
+\text { subject to} \quad&amp; f_{i}(x) \leq 0,\quad i=1, \ldots, m \\
+&amp; h_{i}(x)=0,\quad i=1, \ldots, p
+\end{aligned}
+\]</span></p>
+<h2 id="凸优化问题">2. 凸优化问题</h2>
+<h3 id="凸优化问题定义">2.1 凸优化问题定义</h3>
+<p><strong>凸优化问题(Convex optimization
+problem)</strong>要求目标函数为凸函数，而且定义域为凸集，这样可以利用凸函数和凸集的优良性质简化问题，因此凸优化问题的一般形式为
+<span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;Ax=b, \qquad\qquad\qquad\qquad\quad\bigstar
+\end{aligned}
+\]</span> 其中要求目标函数和约束函数 <span
+class="math inline">\(f_0,f_1,...,f_m\)</span>
+均为<strong>凸函数</strong>。</p>
+<blockquote>
+<p><strong>Remarks</strong>：需要注意这里还要求<strong>等式约束均为仿射函数</strong>，这是因为我们希望定义域是凸集，假设等式约束
+<span class="math inline">\(h_i\)</span> 不是线性的，即使 <span
+class="math inline">\(h_i\)</span> 是凸函数，<span
+class="math inline">\(\{x|h_i(x)=0\}\)</span>
+也不一定是凸集。比如二次等式约束 <span class="math inline">\(\Vert
+x\Vert_2=r\)</span>，得到的定义域就是一个球面，显然不是一个凸集，这对优化不利。</p>
+</blockquote>
+<p>有时候我们直接拿到的优化问题并不符合上面的形式，但是可以经过化简得到等价问题，就是凸的了，比如
+<span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)=x_{1}^{2}+x_{2}^{2}\\
+\text { subject to } \quad&amp; f_{1}(x)=x_{1} /\left(1+x_{2}^{2}\right)
+\leq 0\\
+&amp;h_{1}(x)=\left(x_{1}+x_{2}\right)^{2}=0
+\end{aligned}
+\]</span> 经过简单化简就有 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; x_{1}^{2}+x_{2}^{2}\\
+\text { subject to } \quad&amp; x_{1} \leq 0\\
+&amp;x_{1}+x_{2}=0
+\end{aligned}
+\]</span></p>
+<h3 id="凸优化问题的最优解">2.2 凸优化问题的最优解</h3>
+<p>对于凸优化问题有一个极其重要的性质，就是</p>
+<blockquote>
+<p><strong>凸优化问题的局部最优解就是全局最优解</strong></p>
+</blockquote>
+<p>证明也很简单，若 <span class="math inline">\(x^{\star}\)</span>
+为局部最优解，只需要假设另外一个全局最优解 <span
+class="math inline">\(y\ne
+x^{\star},f(y)&lt;x\)</span>，那么利用凸函数的性质，就可以在 <span
+class="math inline">\(x^{\star}\)</span>
+的邻域内导出矛盾，如下图图示。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-global-opti.PNG" srcset="/img/loading.gif" lazyload
+alt="optimal" />
+<figcaption aria-hidden="true">optimal</figcaption>
+</figure>
+<p>凸优化问题的最优解还有一个很好的判据</p>
+<blockquote>
+<p><span class="math inline">\(x\)</span>
+为最优解，<strong>当且仅当</strong> <span class="math display">\[
+\nabla f_{0}(x)^{T}(y-x) \geq 0 \quad \text { for all feasible } y
+\]</span></p>
+</blockquote>
+<p>证明过程只需要应用凸函数的一阶等价定义即可，即 <span
+class="math inline">\(f(y)\ge f(x)+\nabla f^T(x)(y-x)\)</span>。</p>
+<p>这个怎么直观理解呢？还记得我们之前在拟凸函数那里提到的“支撑超平面”吗？实际上
+<span class="math inline">\(f_0(x)\)</span>
+定义了一个<strong>等高线</strong>，由于 <span
+class="math inline">\(f_0\)</span>
+是一个凸函数，因此这个等高线实际上围成了一个凸集，这个凸集也就是一个下水平集。而这里的
+<span class="math inline">\(\nabla f_0(x)\)</span>
+就是这个下水平集的一个支撑超平面，正如下图所示。同时注意，<span
+class="math inline">\(\nabla f_0(x)\)</span>
+也代表着函数指上升的方向，如果说对任意定义域内的 <span
+class="math inline">\(y\)</span>，都有 <span
+class="math inline">\(\nabla f_{0}(x)^{T}(y-x) \geq 0\)</span>
+成立，那么说明我们从 <span class="math inline">\(x\)</span> 走到 <span
+class="math inline">\(y\)</span> 总会使 <span
+class="math inline">\(f_0\)</span> 增大，也就是说 <span
+class="math inline">\(x\)</span> 就是最优解，对应最小值。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-global-opti2.PNG" srcset="/img/loading.gif" lazyload
+alt="gradient" />
+<figcaption aria-hidden="true">gradient</figcaption>
+</figure>
+<p>利用上面这两个性质，我们可以对很多类型的凸优化问题的最优解有一个认识。</p>
+<p><strong>无约束优化问题</strong>：对无约束优化问题，<span
+class="math inline">\(x\)</span> 为最优解，当且仅当 <span
+class="math display">\[
+x\in\text{dom} f_0,\quad \nabla f_0(x)=0
+\]</span> <strong>等式约束优化问题</strong>：<span
+class="math inline">\(\min\quad f_0(x),\qquad s.t.\quad
+Ax=b\)</span>，则有 <span class="math inline">\(x\)</span>
+为最优解，当且仅当存在 <span class="math inline">\(\nu\)</span> <span
+class="math display">\[
+x \in \operatorname{dom} f_{0}, \quad A x=b, \quad \nabla f_{0}(x)+A^{T}
+\nu=0
+\]</span> 证明：因为 <span class="math inline">\(Ax=b\)</span>
+实际上定义了一个超平面，如果 <span class="math inline">\(x\)</span>
+为最优解，那么 <span class="math inline">\(\nabla f_0(x)\)</span>
+一定没有这个平面内的分量，也就是说 <span class="math inline">\(\nabla
+f_0(x)\in \ker(A)^\perp\)</span>。</p>
+<p>这个实际上就等价于 <strong>Lagrange
+乘子法</strong>，我们来看拉格朗日函数的定义 <span
+class="math display">\[
+L(x,v)=f_0(x)+&lt;Ax-b,v&gt; \\
+\Longrightarrow
+\begin{cases}\nabla f_0(x)+A^Tv=0 \\ Ax-b=0\end{cases}
+\]</span> <strong>非负象限内的优化</strong>：<span
+class="math inline">\(\min\quad f_0(x),\qquad s.t.\quad x\succeq
+0\)</span>，<span class="math inline">\(x\)</span> 为最优解，当且仅当
+<span class="math display">\[
+x \in \operatorname{dom} f_{0}, \quad x \succeq 0,
+\quad\left\{\begin{array}{l}
+\nabla f_{0}(x)_{i} \geq 0 \quad x_{i}=0 \\
+\nabla f_{0}(x)_{i}=0 \quad x_{i}&gt;0
+\end{array}\right.
+\]</span> 证明：首先由于定义域为非负象限，意味着 <span
+class="math inline">\((y-x)\)</span> 可以取到正无穷，因此可以推导出
+<span class="math inline">\(\nabla f_0(x) \succeq 0\)</span>，故 <span
+class="math inline">\(\nabla
+f_0^T(x)x\ge0\)</span>。另一方面，对于凸优化问题的最优解，有 <span
+class="math inline">\(\nabla f_0^T(x)(y-x)\ge0\)</span>，取 <span
+class="math inline">\(y=0\)</span>，因此有 <span
+class="math inline">\(\nabla f_0^T(x)x\le0\)</span>，故 <span
+class="math inline">\(\nabla f_0^T(x)x=0\)</span>。</p>
+<p>实际上这里被称为<strong>互补性条件(complementary
+condition)</strong>，也就是 <strong>KKT 条件</strong>的一部分。</p>
+<h3 id="等价问题化简">2.3 等价问题化简</h3>
+<p>有时原始优化问题比较难，可以通过等价转换进行简化。</p>
+<p><strong>消去等式约束</strong>：比如对一般的凸优化问题，等式约束实际上定义了一个超平面，这可以表示为特解
++ 一组基的形式 <span class="math display">\[
+Ax=b \iff x=Fz+x_0 \text { for some } z
+\]</span> 原始凸优化问题就可转化为 <span class="math display">\[
+\begin{aligned}
+\text { minimize (over }z) \quad&amp; f_{0}\left(F z+x_{0}\right)\\
+\text { subject to } \quad&amp; f_{i}\left(F z+x_{0}\right) \leq 0,
+\quad i=1, \dots, m
+\end{aligned}
+\]</span>
+<strong>添加等式约束</strong>：实际上就是上面的一个逆过程，这个过程中取药添加一个等式约束
+<span class="math inline">\(y=Ax+b\)</span>，由于添加了变量 <span
+class="math inline">\(y\)</span>，会使问题变量数增加，同时优化变量也需要加上
+<span class="math inline">\(y\)</span>。</p>
+<p><strong>引入松弛变量</strong>：比如对于线性不等式约束的优化问题 <span
+class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; a_i^Tx\le b_i,\quad i=1,...,m
+\end{aligned}
+\]</span> 可以引入松弛因子 <span
+class="math inline">\(s_i\)</span>，得到 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; a_i^Tx + s_i = b_i,\quad i=1,...,m \\
+&amp; s_i \ge0,\quad i=1,...,m
+\end{aligned}
+\]</span>
+<strong><em>例子</em></strong>：下面两个优化问题是等价的吗？其中 <span
+class="math inline">\(W^TW=I\)</span> <span class="math display">\[
+\min_x f(x)+g(Wx) \\
+\min_c f(W^T c)+g(c)
+\]</span> 不一定等价。由于 <span
+class="math inline">\(W^TW=I\)</span>，若 <span
+class="math inline">\(W\)</span> 为方针，则二者等价，否则说明 <span
+class="math inline">\(W\in R^{m\times n},m\ge n\)</span>，也即 <span
+class="math inline">\(W\)</span> 为一个瘦高型的矩阵，如果我们取 <span
+class="math inline">\(f\equiv 0\)</span>，那么很显然 <span
+class="math inline">\(\min_x g(Wx)\)</span> 与 <span
+class="math inline">\(\min_c g(c)\)</span> 并不等价，因为 <span
+class="math inline">\(W\)</span> 列不满秩。</p>
+<p><strong>epigraph
+形式</strong>：任意标准形式的凸优化问题都可以转化为下面的形式 <span
+class="math display">\[
+\begin{aligned}
+\text { minimize (over }x,t) \quad&amp; t\\
+\text { subject to } \quad&amp; f_{0}(x)\\
+\quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;Ax=b
+\end{aligned}
+\]</span>
+这种变化很重要，可以将优化目标转化为约束函数，对于后面一些典型凸优化问题的转化很有用。</p>
+<p><strong>对某些变量最小化</strong>：实际上就是对于存在多个优化变量时，提前通过计算消去一些变量
+<span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}\left(x_{1}, x_{2}\right)\\
+\text { subject to } \quad&amp; f_{i}\left(x_{1}\right) \leq 0, \quad
+i=1, \dots, m
+\end{aligned}
+\iff
+\begin{aligned}
+\text { minimize } \quad&amp; \tilde{f}_{0}\left(x_{1}\right)\\
+\text { subject to } \quad&amp; \tilde{f}_{i}\left(x_{1}\right) \leq 0,
+\quad i=1, \dots, m
+\end{aligned}
+\]</span> 其中 <span
+class="math inline">\(\tilde{f}_0(x_1)=\inf_{x_2}f_0(x_1,x_2)\)</span>。</p>
+<h2 id="拟凸优化问题">3. 拟凸优化问题</h2>
+<p>拟凸函数跟凸函数有一些相似的性质，尤其是拟凸函数的任意下水平集都是凸集，因此很多时候对于拟凸问题，也可以用凸优化的一些方法有效解决。</p>
+<p><strong>拟凸优化问题(Quasi convex optimization)</strong>
+的一般定义为与凸优化基本相同，只不过<strong>目标函数 <span
+class="math inline">\(f_0(x)\)</span>
+可以是拟凸函数</strong>，但约束函数 <span
+class="math inline">\(f_1,...,f_m\)</span> 仍需要是凸函数。</p>
+<blockquote>
+<p><strong>Remarks</strong>：我个人觉得这里其实约束函数也可以是拟凸函数？因为即使是拟凸函数，<span
+class="math inline">\(f_i(x)\le0\)</span> 也可以得到凸的定义域？</p>
+</blockquote>
+<p>但是此时拟凸优化问题就没有凸优化那么好的性质了，比如局部最优解不一定是全局最优解</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-quasicvx.PNG" srcset="/img/loading.gif" lazyload
+alt="quasicvx" />
+<figcaption aria-hidden="true">quasicvx</figcaption>
+</figure>
+<p>尽管如此，由于拟凸函数任意下水平集 <span
+class="math inline">\(\{x|f(x)\le t\}\)</span>
+都是凸集，我们可以利用这个性质将其转化为凸函数 <span
+class="math inline">\(\phi_t(x)\le0\)</span>
+来表示，由此就可以用凸优化来求解。</p>
+<p><strong><em>例子</em></strong></p>
+<p>最简单的例子，拟凸函数 <span class="math inline">\(f(x)\)</span>
+的下水平集可以表示为 <span class="math inline">\(\{x|f(x)\le
+t\}\)</span>，我们可以用函数 <span
+class="math inline">\(\phi_t(x)\le0\)</span> 来等价表示 <span
+class="math display">\[
+\phi_t(x)=\begin{cases}0 &amp; f(x)\le t \\ \infty \end{cases}
+\]</span> 不过这种表示方法意义不大，
+这个函数不连续不可微。我们还有其他的表示方法比如 <span
+class="math display">\[
+\phi_t(x)=\text{dist}\left(x,\{z|f(z)\le t\}\right)
+\]</span> 另外，如果拟凸函数 <span class="math inline">\(f_0(x)\)</span>
+有一些特定的性质，比如 <span
+class="math inline">\(f_0(x)=p(x)/q(x)\)</span>，其中 <span
+class="math inline">\(p(x)\)</span> 为凸函数，而 <span
+class="math inline">\(q(x)&gt;0\)</span> 为凹函数（容易证明此时 <span
+class="math inline">\(f_0\)</span> 为拟凸函数），那么我们还可以取 <span
+class="math inline">\(\phi_t(x)\)</span> 为 <span
+class="math display">\[
+\phi_t(x)=p(x)-t q(x)
+\]</span> <strong>拟凸优化问题的求解</strong></p>
+<p>假如当前拟凸优化问题的最优解为 <span
+class="math inline">\(p^{\star}\)</span>，那么对于寻找可行解问题 <span
+class="math display">\[
+\begin{aligned}
+\text{find} \quad&amp; x \\
+s.t. \quad&amp; \phi_{t}(x) \leq 0, \quad f_{i}(x) \leq 0, \quad i=1,
+\ldots, m, \\
+&amp;A x=b
+\end{aligned}
+\]</span> 如果 <span class="math inline">\(t\ge
+p^{\star}\)</span>，则该问题有可行解，如果 <span
+class="math inline">\(t&lt;p^{\star}\)</span>，则没有可行解。因此对于原始凸优化问题，可以利用二分法迭代求解</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-quasicvx-solve.PNG" srcset="/img/loading.gif" lazyload
+alt="quasicvx-solve" />
+<figcaption aria-hidden="true">quasicvx-solve</figcaption>
+</figure>
+<h2 id="典型凸优化问题">4. 典型凸优化问题</h2>
+<h3 id="线性规划lp">4.1 线性规划(LP)</h3>
+<p>线性规划(Linear program)问题的一般形式为 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^{T} x+d \\
+\text{subject to} \quad&amp; G x \preceq h \\
+&amp;A x=b
+\end{aligned}
+\]</span> 联系我们前面提到的凸优化问题最优解性质，有 <span
+class="math inline">\(c^T(y-x)\ge0\)</span>，也即目标函数的等高线是一系列超平面</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-lp4.PNG" srcset="/img/loading.gif" lazyload
+alt="LP" />
+<figcaption aria-hidden="true">LP</figcaption>
+</figure>
+<p><strong><em>例子 1</em></strong>：对于 piecewise-linear minimization
+问题(无约束优化) <span class="math display">\[
+\text { minimize } \max _{i=1, \ldots, m}\left(a_{i}^{T} x+b_{i}\right)
+\]</span> 可以转化为 <span class="math display">\[
+\begin{aligned}
+\text { minimize} \quad&amp; t\\
+\text { subject to} \quad&amp; a_i^Tx + b_i \le t
+\end{aligned}
+\]</span> <strong><em>例子
+2</em></strong>：多面体的切比雪夫中心(Chebyshev center) <span
+class="math display">\[
+\mathcal{P}=\left\{x | a_{i}^{T} x \leq b_{i}, i=1, \dots, m\right\}
+\]</span> 可以用优化问题表示为 <span class="math display">\[
+\begin{aligned}
+\text{maximize} \quad&amp; r\\
+\text{subject to} \quad&amp; a_{i}^{T} x_{c}+r\left\|a_{i}\right\|_{2}
+\leq b_{i}, \quad i=1, \ldots, m
+\end{aligned}
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-chebyshev_center.PNG" srcset="/img/loading.gif" lazyload
+alt="chebyshev_center" /></p>
+<h3 id="线性分式规划">4.2 线性分式规划</h3>
+<p>线性分式规划(Linear-fractional program) 的一般形式为 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f_0(x) \\
+\text{subject to} \quad&amp; G x \preceq h \\
+&amp;A x=b
+\end{aligned}
+\]</span> 其中 <span
+class="math inline">\(f_0(x)=\frac{c^Tx+d}{e^Tx+f},\quad
+\text{dom}f_0(x)=\{x|e^Tx+f&gt;0\}\)</span>。这个问题可以等价转化为线性规划。</p>
+<h3 id="二次规划qp">4.3 二次规划(QP)</h3>
+<p>二次规划(Quadratic program)的一般形式为 <span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; (1/2)x^TPx+q^Tx+r \\
+\text{subject to} \quad&amp; G x \preceq h \\
+&amp;A x=b
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(P\in S_{+}^n\)</span>。</p>
+<p>与线性规划不同的是，目标函数的等高线变成了椭球面</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-qp.PNG" srcset="/img/loading.gif" lazyload
+alt="QP" />
+<figcaption aria-hidden="true">QP</figcaption>
+</figure>
+<p><strong><em>例子</em></strong>：最小二乘就是最经典的二次规划的例子，<span
+class="math inline">\(\min \Vert Ax+b\Vert_2^2\)</span></p>
+<h3 id="二次约束二次规划qcqp">4.4 二次约束二次规划(QCQP)</h3>
+<p>二次约束二次规划(Quadratically constrained quadratic
+program)的一般形式为 <span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; (1/2)x^TP_0x+q_0^Tx+r_0 \\
+\text{subject to} \quad&amp; (1/2)x^TP_ix+q_i^Tx+r_i \le 0 \\
+&amp;A x=b\end{aligned}
+\]</span> 其中 <span class="math inline">\(P_i\in S_{+}^n\)</span>。</p>
+<p>一般会限制 <span class="math inline">\(P_1,...,P_m\in
+S_{++}^n\)</span>，也就是不能为 0 矩阵(有什么意义吗？不关键)</p>
+<h3 id="二次锥规划socp">4.5 二次锥规划(SOCP)</h3>
+<p>二次锥规划(Second-order cone programming)的一般形式为 <span
+class="math display">\[
+\begin{array}{cl}
+\text { minimize } &amp; f^{T} x \\
+\text { subject to } &amp; \left\|A_{i} x+b_{i}\right\|_{2} \leq
+c_{i}^{T} x+d_{i}, \quad i=1, \ldots, m \\
+&amp; F x=g
+\end{array}
+\]</span> 其实 SOCP 比前面几种问题都更广泛，他们都可以看作是 SOCP
+的一种情况</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-socp.PNG" srcset="/img/loading.gif" lazyload
+alt="SOCP" />
+<figcaption aria-hidden="true">SOCP</figcaption>
+</figure>
+<h3 id="鲁棒线性规划">4.6 鲁棒线性规划</h3>
+<p>对于优化问题，有时候我们的参数比如 <span
+class="math inline">\(a_i,b_i\)</span>
+等都是不确定的，他们可能是在一定范围内属于某个集合，也可能是一个随机变量，这个时候就引入了鲁棒优化的概念。</p>
+<p>对于线性规划问题来说，比如 <span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^{T} x+d \\
+\text{subject to} \quad&amp; a_i^Tx\le b_i
+\end{aligned}
+\]</span> 一种是考虑<strong>确定性模型</strong>，也即 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^{T} x+d \\
+\text{subject to} \quad&amp; a_i^Tx\le b_i \text{ for all }
+a_i\in\mathcal{E}_i
+\end{aligned}
+\]</span> 如果 <span
+class="math inline">\(\mathcal{E}_{i}=\left\{\bar{a}_{i}+P_{i} u
+|\|u\|_{2} \leq 1\right\}\)</span> 是一个椭球，则该问题可以转化为一个
+SOCP 问题 <span class="math display">\[
+\begin{aligned}
+\text{maximize} \quad&amp; c^Tx\\
+\text{subject to} \quad&amp; \bar{a}_{i}^{T}
+x+\left\|P_{i}^Tx\right\|_{2} \leq b_{i}, \quad i=1, \ldots, m
+\end{aligned}
+\]</span> 另一种是<strong>随机性模型</strong>，即 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^{T} x \\
+\text{subject to} \quad&amp; \operatorname{prob}\left(a_{i}^{T} x \leq
+b_{i}\right) \geq \eta, \quad i=1, \ldots, m
+\end{aligned}
+\]</span> 假如 <span
+class="math inline">\(a_i\sim\mathcal{N}(\bar{a}_i,\Sigma_i)\)</span>
+服从高斯分布，则该问题同样可以转化为一个 SOCP 问题 <span
+class="math display">\[
+\begin{aligned}
+\text{maximize} \quad&amp; c^Tx\\
+\text{subject to} \quad&amp; \bar{a}_{i}^{T}
+x+\Phi^{-1}(\eta)\left\|\Sigma_{i}^{1 / 2} x\right\|_{2} \leq b_{i},
+\quad i=1, \ldots, m
+\end{aligned}
+\]</span></p>
+<h3 id="几何规划gp">4.7 几何规划(GP)</h3>
+<p>首先定义<strong>单项式函数(monomial function)</strong> <span
+class="math inline">\(f(x)=cx_1^{a_1}x_2^{a_2}\cdots x_n^{a_n},\quad
+\text{dom}f=R_{++}^n\)</span>，其中 <span
+class="math inline">\(c&gt;0,a_i\)</span> 为任意实数；</p>
+<p><strong>正项式函数(posynomial function)</strong> <span
+class="math inline">\(f(x)=\sum_k c_k x_1^{a_{1k}} x_2^{a_{2k}}\cdots
+x_n^{a_{nk}},\quad \text{dom}f=R_{++}^n\)</span></p>
+<p>然后就可以定义<strong>几何规划(geometric program)</strong>了 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f_0(x) \\
+\text{subject to} \quad&amp; f_i(x)\le 1,\quad i=1,...,m \\
+&amp;h_i(x)=1,\quad i=1,...,p
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(f_i\)</span> 为正项式，<span
+class="math inline">\(h_i\)</span> 为单项式。</p>
+<p>首先说明，这个优化问题并不一定是凸的，因为 <span
+class="math inline">\(a_i\)</span> 可以取任意实数，比如 <span
+class="math inline">\(a_i=1/2\)</span>
+就不是凸的。那么我们这里为什么要介绍这个问题呢？别急，一会稍微做一个变换我们就可以解决这个问题了。那还有一个问题，这种形式的函数有什么意义呢？为什么专门引入这样一种非凸优化问题呢？我们看这个单项式函数
+<span class="math inline">\(cx_1^{a_1}x_2^{a_2}\cdots
+x_n^{a_n}\)</span>，像不像体积或者面积的表达式？这也是他被称为“几何规划”的原因吧。</p>
+<p>好，现在我们怎么把这个非凸的问题转化为凸优化问题呢？加个 <span
+class="math inline">\(\log\)</span> 就行啦！对单项式来说 <span
+class="math display">\[
+\begin{aligned}
+\log f(x) &amp;= \sum_i a_i \log x_i +\log c = a^Ty+b \\
+f(x) &amp;= e^{a^Ty+b}
+\end{aligned}
+\]</span> 对多项式来说 <span class="math display">\[
+\log f(x)=\log \left(\sum_i \exp(a_i^Ty+b_i)\right)
+\]</span> 这么一来，取完对数后的问题就是凸的了，而且我们也知道 <span
+class="math inline">\(\log\)</span> 是一个单射函数，原始优化问题就变成了
+<span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; \log \left(\sum_k
+\exp(a_{0k}^Ty+b_{0k})\right) \\
+\text{subject to} \quad&amp; \log \left(\sum_k
+\exp(a_{ik}^Ty+b_{ik})\right)\le 0,\quad i=1,...,m \\
+&amp;Gy+d=0
+\end{aligned}
+\]</span></p>
+<h3 id="半正定规划sdp">4.8 半正定规划(SDP)</h3>
+<p>前面所讲到的都是标量函数，约束条件也都是函数值与 0
+比大小，而前面的章节中我们也提到了广义不等式，对于正常锥则可以定义不等号。所以我们可以定义一种凸优化问题，这种凸优化问题的约束条件不再是普通不等式，而是广义不等式
+<span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f_0(x) \\
+\text{subject to} \quad&amp; f_i(x)\preceq_{K_i} 0,\quad i=1,...,m \\
+&amp;Ax=b
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(f_0:R^n\to R\)</span>
+为凸函数，<span class="math inline">\(f_i:R^n\to R^{k_i}\)</span>
+为关于正常锥 <span class="math inline">\(K_i\)</span> 的凸函数。</p>
+<p>注意这种带有广义不等式约束的凸优化问题与普通凸优化问题有着相同的性质，比如可行集为凸的，局部最优解就是全局最优解等。</p>
+<p>一种简单形式的凸优化问题就是向量形式的，也就是说目标函数与约束都是仿射函数
+<span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^Tx \\
+\text{subject to} \quad&amp; Fx+g\preceq_K 0 \\
+&amp;Ax=b
+\end{aligned}
+\]</span>
+这种向量形式的广义不等式实际上就是对每个元素进行比较，因此实际上可以按照每一行拆分成多个不等式，如果取
+<span class="math inline">\(K=R_+^m\)</span>
+就与普通的线性规划(LP)没什么区别了。</p>
+<p>接下来要介绍的就是重头戏<strong>半正定规划(Semideﬁnite
+program)</strong>了，我们取 <span class="math inline">\(K=S^n_+\)</span>
+<span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; c^Tx \\
+\text{subject to} \quad&amp; x_1 F_1+x_2F_2+\cdots+x_nF_n+G\preceq_K 0
+\\
+&amp;Ax=b
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(F_i,G\in S^n\)</span>。</p>
+<p>这里的不等式约束就是大名鼎鼎的<strong>线性矩阵不等式(linear matrix
+inequality, LMI)</strong>。</p>
+<p>如果说我们现在有两个不等式约束怎么办呢？ <span
+class="math display">\[
+x_1 \hat{F}_1+x_2\hat{F}_2+\cdots+x_n\hat{F}_n+G\preceq_K 0 \\
+x_1 \tilde{F}_1+x_2\tilde{F}_2+\cdots+x_n\tilde{F}_n+G\preceq_K 0
+\]</span> 合成一个更大的矩阵就可以了，实际上这种操作在后面也会经常见到
+<span class="math display">\[
+x_{1}\left[\begin{array}{cc}
+\hat{F}_{1} &amp; 0 \\
+0 &amp; \tilde{F}_{1}
+\end{array}\right]+x_{2}\left[\begin{array}{cc}
+\hat{F}_{2} &amp; 0 \\
+0 &amp; \tilde{F}_{2}
+\end{array}\right]+\cdots+x_{n}\left[\begin{array}{cc}
+\hat{F}_{n} &amp; 0 \\
+0 &amp; \tilde{F}_{n}
+\end{array}\right]+\left[\begin{array}{cc}
+\hat{G} &amp; 0 \\
+0 &amp; \tilde{G}
+\end{array}\right] \preceq 0
+\]</span>
+这是因为分块对角矩阵为正定矩阵等价于每一个子块都为正定矩阵。</p>
+<p><strong><em>例子
+1</em></strong>：半正定规划之所以重要，是因为他的形式更广泛，前面说 SOCP
+包含了 LP、QP、QCQP，而半正定规划则包含了 SOCP！比如下面的 SOCP
+问题就可以转化为 SDP <span class="math display">\[
+\begin{aligned}
+SOCP:\qquad \text{minimize}&amp;\quad f^{T} x \\
+\text{subject to}&amp;\quad \left\|A_{i} x+b_{i}\right\|_{2} \leq
+c_{i}^{T} x+d_{i}, \quad i=1, \ldots, m \\
+\\
+SDP:\qquad \text{minimize}&amp;\quad f^{T} x \\
+\text{subject to}&amp;\quad \left[\begin{array}{cc}
+\left(c_{i}^{T} x+d_{i}\right) I &amp; A_{i} x+b_{i} \\
+\left(A_{i} x+b_{i}\right)^{T} &amp; c_{i}^{T} x+d_{i}
+\end{array}\right] \succeq 0, \quad i=1, \ldots, m
+\end{aligned}
+\]</span> <strong><em>例子 2</em></strong>：最小化矩阵的最大特征值 <span
+class="math inline">\(\min
+\lambda_{\max}(A(x))\)</span>，也可以通过半正定规划来描述 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; t \\
+\text{subject to} \quad&amp; A(x)\preceq tI
+\end{aligned}
+\]</span> 其中优化变量为 <span class="math inline">\(x\in R^n,t\in
+R\)</span>。这种等价转化是因为 <span
+class="math inline">\(\lambda_{\max}(A)\le t\iff A\preceq
+tI\)</span>。</p>
+<p><strong><em>例子 3</em></strong>：最小化矩阵范数 <span
+class="math inline">\(\min \Vert
+A(x)\Vert_2=\left(\lambda\left(A\left(x\right)^TA\left(x\right)\right)\right)^{1/2}\)</span>，也可以等价为SDP
+<span class="math display">\[
+\begin{aligned}
+\text{minimize}&amp;\quad t \\
+\text{subject to}&amp;\quad \left[\begin{array}{cc}
+t I &amp; A(x) \\
+A(x)^T &amp; tI
+\end{array}\right] \succeq 0
+\end{aligned}
+\]</span></p>
+<h3 id="向量优化">4.9 向量优化</h3>
+<p>前面介绍的所有优化问题的目标函数都是标量（尽管约束可能会出现广义不等式），如果目标函数为向量怎么办呢？前面的章节中我们介绍了广义的凸函数，同样也是基于锥定义的（实际上高维空间中“比大小”我们一般都需要通过锥来定义）。</p>
+<p>一般的向量优化问题可以表示为 <span class="math display">\[
+\begin{alignat}{}
+&amp;\text{minimize(w.r.t. K)} \quad&amp; f_0(x) \\
+&amp;\text{subject to} \quad&amp; f_i(x)\le 0,\quad i=1,...,m \\
+&amp; &amp;h_i(x)=0,\quad i=1,...,p
+\end{alignat}
+\]</span> 凸的向量优化问题只需要将上面的等式约束换为仿射函数 <span
+class="math inline">\(Ax=b\)</span>，同时要求 <span
+class="math inline">\(f_0\)</span> 为 <span
+class="math inline">\(K-\)</span>convex 的，<span
+class="math inline">\(f_1,...,f_m\)</span> 为凸的。</p>
+<p>向量约束优化问题的最优解相当于在下面的集合中寻找最优解 <span
+class="math display">\[
+\mathcal{O}=\{f_0(x)|x \text{ feasible}\}
+\]</span>
+前面在将广义不等式和凸集的时候，我们讲过<strong>最小元</strong>和<strong>极小元</strong>的概念，这两个概念是不是已经忘得差不多啦！反正我基本全忘了......让我们来复习一下。</p>
+<blockquote>
+<p><strong>复习</strong>：最小元与极小元</p>
+<p>下面两幅图分别表示最小元和极小元</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/3-minimum.png" srcset="/img/loading.gif" lazyload
+alt="minimum and minimal" />
+<figcaption aria-hidden="true">minimum and minimal</figcaption>
+</figure>
+<p>利用对偶锥，我们可以获得<strong>最小元</strong>的等价定义，即</p>
+<blockquote>
+<p><span class="math inline">\(x\)</span> 是集合 <span
+class="math inline">\(S\)</span> 关于 <span
+class="math inline">\(\preceq_{K}\)</span> 的最小元 <span
+class="math inline">\(\iff\)</span> 对任意的 <span
+class="math inline">\(\lambda \succ_{K*} 0\)</span>，<span
+class="math inline">\(x\)</span> 为 <span
+class="math inline">\(\lambda^Tz\)</span> 在集合 <span
+class="math inline">\(S\)</span> 上的唯一最小解</p>
+</blockquote>
+<p>什么意思呢？也就是说任意的 <span class="math inline">\(\lambda\in
+K^{\star}\)</span>，实际上都代表了一个法向量，也就是一个支撑超平面。如果
+<span class="math inline">\(x\)</span> 是最小元，则意味着对任意一个
+(<span class="math inline">\(K^{\star}\)</span>所定义的)
+支撑超平面来说，<span class="math inline">\(x\)</span>
+都是支撑点，就像下面这条幅图一样</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-minimal.png" srcset="/img/loading.gif" lazyload
+alt="minimal" />
+<figcaption aria-hidden="true">minimal</figcaption>
+</figure>
+<p>而<strong>极小元</strong>的定义是什么呢？</p>
+<blockquote>
+<ul>
+<li>充分条件：若对于某些 <span class="math inline">\(\lambda \succ_{K*}
+0\)</span>，<span class="math inline">\(x\)</span> minimizes <span
+class="math inline">\(\lambda^Tz\)</span> over <span
+class="math inline">\(S\)</span>，<span
+class="math inline">\(\Longrightarrow\)</span> <span
+class="math inline">\(x\)</span> 为极小元</li>
+<li>必要条件：<span class="math inline">\(x\)</span>
+为<strong>凸集</strong> <span class="math inline">\(S\)</span>
+的极小元，<span class="math inline">\(\Longrightarrow\)</span> 存在非 0
+的 <span class="math inline">\(\lambda \succ_{K*} 0\)</span> 使得 <span
+class="math inline">\(x\)</span> minimizes <span
+class="math inline">\(\lambda^Tz\)</span> over <span
+class="math inline">\(S\)</span></li>
+</ul>
+</blockquote>
+<p>我们来看充分条件，只需要存在某一个 <span
+class="math inline">\(\lambda\in K^{\star}\)</span>，使得 <span
+class="math inline">\(x\)</span>
+为对应支撑超平面的支撑点就可以了。比如下面这幅图，蓝色的点，我们可以找到这样一个蓝色的支撑超平面，使其为支撑点，所以它就是一个极小元；而对于红色的点来说，无论如何不可能找到一个支撑超平面，使其为支撑点，因此他就有可能不是极小元，因为这只是充分条件（对这个例子来说他就不是极小元）。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-minimum.PNG" srcset="/img/loading.gif" lazyload
+alt="minimum" />
+<figcaption aria-hidden="true">minimum</figcaption>
+</figure>
+<p>简单总结一下：</p>
+<ul>
+<li>最小元：无论沿着锥 <span class="math inline">\(K^{*}\)</span>
+里边哪一个方向走，<span class="math inline">\(x\)</span>
+都是最小值点，那么他就是最小元；</li>
+<li>极小元：如果沿着其中某一个方向走，<span
+class="math inline">\(x\)</span> 是最小值点，那么他就是极小元。</li>
+</ul>
+</blockquote>
+<p>复习完了最小元和极小元，不要忘了正事。我们要考虑向量约束优化问题中的最优解
+<span class="math display">\[
+\mathcal{O}=\{f_0(x)|x \text{ feasible}\}
+\]</span> 这是一个集合，如果 <span class="math inline">\(f_0(x)\)</span>
+是关于锥 <span class="math inline">\(K\)</span> 的最小元，那么对应的
+<span class="math inline">\(x\)</span> 就被称为最优解(optimal)；如果
+<span class="math inline">\(f_0(x)\)</span> 是关于锥 <span
+class="math inline">\(K\)</span> 的极小元，那么对应的 <span
+class="math inline">\(x\)</span> 则被称为 Pareto optimal。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/10-vec-optim.PNG" srcset="/img/loading.gif" lazyload
+alt="optimal vs Pareto optimal" />
+<figcaption aria-hidden="true">optimal vs Pareto optimal</figcaption>
+</figure>
+<p><strong><em>例子</em></strong>：假如我们取 <span
+class="math inline">\(K=R_+^q\)</span>，其中 <span
+class="math display">\[
+f_0(x)=(F_1(x),...,F_q(x))
+\]</span> 相当于有 <span class="math inline">\(q\)</span> 个不同的目标
+<span class="math inline">\(F_i\)</span>，最好的情况当然是希望 <span
+class="math inline">\(F_i\)</span> 都是最小的。</p>
+<p>若 <span class="math inline">\(x^{\star}\)</span>
+为最小元（存在）就说明任意其他可行解 <span
+class="math inline">\(y\)</span> 都有 <span
+class="math inline">\(f_0(x^{\star})\le
+f(y)\)</span>，正是我们希望的；</p>
+<p>而如果只能得到极小元 <span
+class="math inline">\(x^{po}\)</span>，就有对任意可行解 <span
+class="math inline">\(y\)</span>，<span
+class="math inline">\(f_0(y)\preceq f_0(x^{po})\Longrightarrow
+f_0(x^{po})=f(y)\)</span>。这是什么意思呢？</p>
+<ol type="1">
+<li>首先不可能存在另一个 <span class="math inline">\(y\)</span>
+使得每一个元素都有 <span class="math inline">\(F_i(y)\le
+F_i(x^{po})\)</span>，要不然 <span class="math inline">\(x^{po}\)</span>
+出现在这里的意义是什么？我们直接选择 <span
+class="math inline">\(y\)</span>
+作为极小元不就好了吗？如果存在那也顶多是 <span
+class="math inline">\(F_i(y)=F_i(x^{po}),\forall i\)</span>，这种情况下
+<span class="math inline">\(y\)</span> 跟 <span
+class="math inline">\(x^{po}\)</span> 其实没什么区别了。</li>
+<li>第二点，有可能存在某些 <span
+class="math inline">\(y\)</span>，满足对一些 <span
+class="math inline">\(i\)</span> 有 <span
+class="math inline">\(F_i(y)&gt;F_i(x^{po})\)</span>，而对另一些 <span
+class="math inline">\(i\)</span> 则有 <span
+class="math inline">\(F_i(y)&lt;F_i(x^{po})\)</span>，这意味着 <span
+class="math inline">\(y\)</span> 在某些方面表现得比 <span
+class="math inline">\(x^{po}\)</span>
+差，但在另一些方面则表现得更好，这实际上体现了我们在不同因素之间的一种权衡。</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">凸优化问题</a>
+                    
+                      <a class="hover-with-bg" href="/tags/LP/">LP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SOCP/">SOCP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/QP/">QP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/SDP/">SDP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/GP/">GP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/15/fuzzy/ch7-ahp/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">模糊数学笔记 7：层次分析法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/13/fuzzy/ch6-evaluate/">
+                        <span class="hidden-mobile">模糊数学笔记 6：模糊综合评判</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

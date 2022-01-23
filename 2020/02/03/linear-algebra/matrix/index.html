@@ -1,0 +1,1498 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在网上自学矩阵分析的一些笔记，主要是总结一些结论性的东西，并没有太多证明。对于非数学专业的学生，笔者认为抛开证明的细节，从更加具象的角度理解矩阵可能会有更清晰的理解。 未完待续，更新中 ... 参考资料：知乎专栏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩阵分析学习笔记">
+<meta property="og:url" content="http://example.com/2020/02/03/linear-algebra/matrix/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="在网上自学矩阵分析的一些笔记，主要是总结一些结论性的东西，并没有太多证明。对于非数学专业的学生，笔者认为抛开证明的细节，从更加具象的角度理解矩阵可能会有更清晰的理解。 未完待续，更新中 ... 参考资料：知乎专栏">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T13:08:25.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:11:30.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="矩阵分析">
+<meta property="article:tag" content="线性代数">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>矩阵分析学习笔记 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="矩阵分析学习笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 21:08" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      17k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      146 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">矩阵分析学习笔记</h1>
+            
+            <div class="markdown-body">
+              <p>在网上自学矩阵分析的一些笔记，主要是总结一些结论性的东西，并没有太多证明。对于非数学专业的学生，笔者认为抛开证明的细节，从更加具象的角度理解矩阵可能会有更清晰的理解。</p>
+<p>未完待续，更新中 ...</p>
+<p>参考资料：<a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/matrix-learning">知乎专栏</a></p>
+<span id="more"></span>
+<hr />
+<h2 id="线性代数基础空间">1. 线性代数基础——空间</h2>
+<ul>
+<li><p>几个基本的概念</p>
+<ul>
+<li><p><strong>数域</strong>：对<strong>加减乘除</strong>四则基本<strong>运算封闭</strong>的<strong>数集</strong></p>
+<ul>
+<li>注意：首先<strong>数域</strong>的概念针对的是<strong>数集</strong>，不是向量也不是矩阵；其次要求对四则基本运算封闭。</li>
+</ul></li>
+<li><p><strong>线性空间</strong>：需满足以下条件 <span
+class="math display">\[
+\begin{alignat}{1}
+&amp;1)\ \alpha+\beta=\beta+\alpha     &amp;5)\ 1 a=\alpha\notag\\
+&amp;2)\ (\alpha+\beta)+\gamma=\alpha+(\beta+\gamma)   &amp;6)\ k(l
+\alpha)=(k l) \alpha\notag\\
+&amp;3)\ \exists 0 \in V, \forall \alpha \in V, 有 \alpha+0=\alpha
+&amp;7)\ (k+l) \alpha=k \alpha+l \alpha\notag\\
+&amp;4)\ \forall \alpha \in V, \exists \beta \in V,
+s.t.\  \alpha+\beta=0 \qquad &amp;8)\ k(\alpha+\beta)=k \alpha+l
+\beta\notag\\
+\end{alignat}\notag
+\]</span></p></li>
+<li><p><strong>子空间</strong>：</p></li>
+<li><p>空间的<strong>维数</strong>：基的个数</p></li>
+<li><p><strong>平凡子空间</strong>：V 空间的子空间只有 0 空间和 V
+空间本身</p></li>
+<li><p><strong>非平凡子空间</strong>：除了平凡子空间，其他所有子空间</p></li>
+<li><p>子空间的<strong>直和</strong>：<span class="math inline">\(V_1
+\cap V_2=\{0\}\)</span> 时，直和可定义为 <span class="math inline">\(V_1
+\bigoplus
+V_2\)</span>，主要是为了保证<strong>分解的唯一性</strong>。可以推广到多个子空间
+<span class="math inline">\(V_i (\sum_{j\ne i}V_j) = \{0\}\)</span></p>
+<ul>
+<li>注：<span class="math inline">\(V_1,V_2\)</span>
+相互可能不是正交的，比如二维平面中不正交的两个基</li>
+</ul></li>
+<li><p><strong>酉空间</strong>：欧几里得空间推广到<strong>复数域</strong></p></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="投影">2. 投影</h2>
+<ul>
+<li><strong>变换</strong>：线性空间到自身的映射 <span
+class="math inline">\(T:V(C)\to V(C)\)</span></li>
+<li><strong>线性变换</strong>：
+<ul>
+<li><span class="math inline">\(T(\alpha+\beta) =
+T(\alpha)+T(\beta)\)</span></li>
+<li><span class="math inline">\(T(k\alpha) = kT(\alpha)\)</span></li>
+</ul></li>
+<li><strong>投影</strong>：<span class="math inline">\(T\)</span> 是
+<span class="math inline">\(V(C)\)</span> 上的投影， <span
+class="math inline">\(\iff T^2=T\)</span></li>
+</ul>
+<blockquote>
+<p><strong>定理 1</strong>：设 <span class="math inline">\(T\)</span> 是
+<span class="math inline">\(V(C)\)</span> 上的投影，则 <span
+class="math inline">\(V(C) = R(T)\bigoplus N(T)\)</span></p>
+<p><strong>定理 2</strong>：设 <span class="math inline">\(V(C) =
+V_1\bigoplus V_2\)</span>，则存在投影 <span
+class="math inline">\(T\)</span> 使得 <span
+class="math inline">\(R(T)=V_1, N(T)=V_2\)</span></p>
+</blockquote>
+<blockquote>
+<p><strong>Remark</strong>：根据投影的定义 <span
+class="math inline">\(T^2=T\)</span>，可以形象理解为<strong>降维</strong>操作，也即投影过程不可逆，投影一次后即进入<strong>值域</strong>
+<span class="math inline">\(R(T)\)</span>，也即是 <span
+class="math inline">\(V(C)\)</span> 的一个低维子空间。</p>
+</blockquote>
+<ul>
+<li><p><strong>投影矩阵</strong>：投影 <span
+class="math inline">\(T\)</span> 为线性变换，可以用矩阵 <span
+class="math inline">\(A\)</span> 表示 <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/proj.jpg" srcset="/img/loading.gif" lazyload
+alt="线性变换" /></p></li>
+<li><p><strong>幂等矩阵</strong>：满足 <span
+class="math inline">\(A^2=A\)</span>，有如下性质</p>
+<ul>
+<li><span class="math inline">\(A^H\)</span> 与 <span
+class="math inline">\((E-A)\)</span> 也是幂等矩阵</li>
+<li><span class="math inline">\(A\)</span> 的特征值只有 0 和
+1，且可以对角化</li>
+<li><span class="math inline">\(rank(A)=tr(A)\)</span></li>
+<li><span class="math inline">\(A(E-A)=(E-A)A\)</span></li>
+<li><span class="math inline">\(Aa = a, \iff a\in R(A)\)</span></li>
+<li><span class="math inline">\(N(A)=R(E-A), R(A)=N(E-A)\)</span></li>
+</ul>
+<blockquote>
+<p>上面的性质均可由<strong>幂等矩阵</strong>的性质导出</p>
+</blockquote></li>
+<li><p><strong>正交投影</strong>：<span class="math inline">\(\iff
+R^{\perp}(T) = N(T) \iff A^H=A\)</span></p></li>
+</ul>
+<blockquote>
+<p><strong>Remark</strong>：</p>
+<ul>
+<li>实际上对于正交投影 <span
+class="math inline">\(A\)</span>，可以写成以下形式</li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/decom.jpg" srcset="/img/loading.gif" lazyload
+alt="正交投影分解" />
+<figcaption aria-hidden="true">正交投影分解</figcaption>
+</figure>
+<ul>
+<li>是否存在<strong>非正交投影</strong>呢？非正交投影又是什么形式呢？
+只需要将中间的对角阵换成Jordan标准型的形式？</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="jordan标准型">3. Jordan标准型</h2>
+<p>注：此部分是矩阵论的基本定理之一，非常重要！！！</p>
+<blockquote>
+<p><strong>定理 1</strong>：任意 n 阶矩阵 <span
+class="math inline">\(A\)</span>，一定存在 n 阶<strong>可逆矩阵</strong>
+P 使得 <span class="math display">\[
+P^{-1} A P=\left(\begin{array}{cccc}
+{J_{1}} &amp; {} &amp; {} &amp; {} \\
+{} &amp; {J_{2}} &amp; {} &amp; {} \\
+{} &amp; {} &amp; {\ddots} &amp; {} \\
+{} &amp; {} &amp; {} &amp; {J_{k}}
+\end{array}\right)=J \notag
+\]</span> 其中 <span class="math inline">\(J_i\)</span> 为 Jordan
+块。有以下几个结论</p>
+<ol type="1">
+<li>Jordan 块的个数是<strong>线性无关特征向量的个数</strong></li>
+<li>矩阵可<strong>对角化</strong>当且仅当 <span
+class="math inline">\(k=n\)</span></li>
+<li>对于某个特征值，Jordan 块个数为<strong>几何重数</strong>，所有
+Jordan
+块的阶数之和为<strong>代数重数</strong>（特征值多项式根的阶数即为代数重数，永远有几何重数不大于代数重数）</li>
+<li>特征值的几何重数不大于代数重数</li>
+<li>矩阵不同特征值对应的<strong>特征向量线性无关</strong></li>
+</ol>
+</blockquote>
+<hr />
+<h2 id="初等矩阵与酉矩阵">4. 初等矩阵与酉矩阵</h2>
+<h3 id="初等变换矩阵">4.1 初等变换矩阵</h3>
+<blockquote>
+<p><strong>定义</strong>：设 <span
+class="math inline">\(\boldsymbol{u,v}\in \mathbb{C}^n,\sigma\in
+\mathbb{C}\)</span>，则称 <span
+class="math inline">\(E(\boldsymbol{u,v},\sigma)=E-\sigma\boldsymbol{uv}^H\)</span>
+为<strong>初等变换矩阵</strong></p>
+</blockquote>
+<ul>
+<li><p><strong>初等变换</strong>矩阵性质</p>
+<ul>
+<li>特征向量
+<ul>
+<li>若 <span class="math inline">\(\boldsymbol{u\in
+v^{\perp}}\)</span>，设 <span
+class="math inline">\(\boldsymbol{u_1,...,u_{n-1}}\)</span> 是 <span
+class="math inline">\(v^\perp\)</span> 的一组基，则 <span
+class="math inline">\(E(\boldsymbol{u,v},\sigma)\)</span>
+的一组<strong>线性无关</strong>的特征向量为 <span
+class="math inline">\(\boldsymbol{u_1,...,u_{n-1}}\)</span></li>
+<li>若 <span class="math inline">\(\boldsymbol{u\notin
+v^{\perp}}\)</span>，设 <span
+class="math inline">\(\boldsymbol{u_1,...,u_{n-1}}\)</span> 是 <span
+class="math inline">\(v^\perp\)</span> 的一组基，则 <span
+class="math inline">\(E(\boldsymbol{u,v},\sigma)\)</span>
+的一组<strong>线性无关</strong>的特征向量为 <span
+class="math inline">\(\boldsymbol{u,u_1,...,u_{n-1}}\)</span></li>
+</ul></li>
+<li>特征值 <span
+class="math inline">\(\lambda(E(\boldsymbol{u,v},\sigma))=\{1,...,1,1-\sigma
+v^H u\}\)</span></li>
+<li>行列式 <span
+class="math inline">\(det(E(\boldsymbol{u,v},\sigma))=1-\sigma v^H
+u\)</span></li>
+<li>逆矩阵 <span class="math inline">\(E(u, v, \sigma)^{-1}=E\left(u, v,
+\frac{\sigma}{\sigma v^{H} u-1}\right),\left(1-\sigma v^{H} u \neq
+0\right)\)</span></li>
+<li>非零向量 <span
+class="math inline">\(\boldsymbol{a,b}\in\mathbb{C}^n\)</span>，存在
+<span class="math inline">\(\boldsymbol{u,v},\sigma\)</span> 使得 <span
+class="math inline">\(E(u, v, \sigma) a=b,\left(\sigma
+u=\frac{a-b}{v^{H} a}\right)\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Remarks</strong></p>
+<ol type="1">
+<li>前两个性质可以根据 <span class="math inline">\(u,v\)</span>
+的垂直关系直观想象。当 <span class="math inline">\(u\perp v\)</span>
+时，此时 <span class="math inline">\(E\)</span> 对于特征值 <span
+class="math inline">\(1\)</span> 的代数重数为 <span
+class="math inline">\(n\)</span>，而几何重数为 <span
+class="math inline">\(n-1\)</span>（注意此时出现了代数重数大于几何重数的情况！）；否则，<span
+class="math inline">\(E\)</span> 对于特征值 <span
+class="math inline">\(1\)</span> 的代数重数和几何重数为 <span
+class="math inline">\(n-1\)</span>，且有另一个特征值 <span
+class="math inline">\(1-\sigma v^H u\)</span></li>
+</ol>
+</blockquote></li>
+<li><p>所有初等变换可以用上述定义表示</p>
+<ul>
+<li>置换 <span class="math inline">\({E_{i
+j}=E-\left(e_{i}-e_{j}\right)\left(e_{i}-e_{j}\right)^{T}=E\left(e_{i}-e_{j},
+e_{i}-e_{j}, 1\right)}\)</span></li>
+<li>相消 <span class="math inline">\({E_{i j}(k)=E+k e_{j}
+e_{i}^{T}=E\left(e_{j}, e_{i},-k\right)}\)</span></li>
+<li>数乘 <span class="math inline">\({E_{i}(k)=E-(1-k) e_{i}
+e_{i}^{T}=E\left(e_{i}, e_{i}, 1-k\right)}\)</span></li>
+</ul></li>
+</ul>
+<h3 id="初等酉矩阵">4.2 初等酉矩阵</h3>
+<blockquote>
+<p><strong>定义</strong>：设 <span
+class="math inline">\(\boldsymbol{u}\in \mathbb{C}^n\)</span> 且 <span
+class="math inline">\(u^H u =1\)</span>，则称 <span
+class="math inline">\(H(U)=E(\boldsymbol{u,U},2)=E-2\boldsymbol{uu}^H\)</span>
+为<strong>初等酉矩阵</strong>，或者<strong>Householder矩阵</strong></p>
+</blockquote>
+<ul>
+<li><strong>Householder</strong>变换性质
+<ul>
+<li><span class="math inline">\(H^H=H=H^{-1}\)</span></li>
+<li><span
+class="math inline">\(H(\boldsymbol{u})(\boldsymbol{a}+r\boldsymbol{u})=\boldsymbol{a}-r\boldsymbol{u},
+\forall a\in v^\perp, r\in\mathbb{C}\)</span>（镜像变换）</li>
+<li>范数不变性：<span class="math inline">\(||Hx||=||x||\)</span></li>
+<li>保持随机向量的协方差</li>
+<li>可用于数值算法构造正交基</li>
+</ul></li>
+</ul>
+<h3 id="酉变换">4.3 酉变换</h3>
+<ul>
+<li><strong>酉变换与酉矩阵</strong>
+<ol type="1">
+<li>保持<strong>内积</strong>不变</li>
+<li>保持长度不变</li>
+<li>保持夹角不变</li>
+<li>保持形状不变</li>
+</ol></li>
+<li>内积的定义，比如连续区间中对连续函数的定义</li>
+</ul>
+<hr />
+<h2 id="欧氏空间中的度量">5. 欧氏空间中的度量（？）</h2>
+<ul>
+<li><p><strong>内积</strong>：满足 4 条性质</p>
+<ol type="1">
+<li><span class="math inline">\((x,x)\ge0,且(x,x)=0\iff
+x=0\)</span></li>
+<li><span class="math inline">\((x,y)=\overline{(y,x)},\forall x,y\in
+V(P)\)</span></li>
+<li><span class="math inline">\((\lambda x,y)=\bar{\lambda}(x,y),\forall
+\lambda\in P,\forall x,y\in V(P)\)</span></li>
+<li><span class="math inline">\((x+y,z)=(x,z)+(y,z),\forall x,y,z\in
+V(P)\)</span></li>
+</ol></li>
+<li><p><strong>线性流形</strong>：<span
+class="math inline">\(P=r_{0}+V_{1}=\left\{r_{0}+\alpha | \alpha \in
+V_{1}\right\}\)</span></p>
+<ul>
+<li>实际上就是将子空间进行平移</li>
+</ul></li>
+<li><p>n 维空间中的<strong>体积</strong></p>
+<ol type="1">
+<li><span class="math inline">\(V(\alpha_1)=||\alpha_1||\)</span></li>
+<li><span class="math inline">\(V\left(\alpha_{1}, \alpha_{2}, \cdots,
+\alpha_{n}\right)=V\left(\alpha_{1}, \alpha_{2}, \cdots,
+\alpha_{n-1}\right) \bullet h_{n}\)</span>，其中 <span
+class="math inline">\(h_n\)</span> 是 <span
+class="math inline">\(\alpha_n\)</span> 到 <span
+class="math inline">\(L(\alpha_{1}, \alpha_{2}, \cdots,
+\alpha_{n-1})\)</span> 的距离</li>
+</ol></li>
+<li><p>Gram 行列式 <span class="math display">\[
+G\left(\alpha_{1}, \cdots, \alpha_{k}\right)=\left| \begin{array}{cccc}
+{\left(\alpha_{1}, \alpha_{1}\right)} &amp; {\left(\alpha_{1},
+\alpha_{2}\right)} &amp; {\cdots} &amp; {\left(\alpha_{1},
+\alpha_{k}\right)} \\
+{\left(\alpha_{2}, \alpha_{1}\right)} &amp; {\left(\alpha_{2},
+\alpha_{2}\right)} &amp; {\cdots} &amp; {\left(\alpha_{2},
+\alpha_{k}\right)} \\
+{\cdots} &amp; {\cdots} &amp; {\cdots} &amp; {\cdots} \\
+{\left(\alpha_{k}, \alpha_{1}\right)} &amp; {\left(\alpha_{k},
+\alpha_{2}\right)} &amp; {\cdots} &amp; {\left(\alpha_{k},
+\alpha_{k}\right)}
+\end{array}\right|\notag
+\]</span></p></li>
+<li><p>将线性无关向量组 <span class="math inline">\(\alpha_{1},
+\alpha_{2}, \cdots, \alpha_{n}\)</span> 正交化之后，Gram 行列式不变，即
+<span class="math inline">\(G\left(\alpha_{1}, \alpha_{2}, \cdots,
+\alpha_{k}\right)=G\left(\beta_{1}, \beta_{2}, \cdots,
+\beta_{k}\right)\)</span></p></li>
+<li><p>体积 <span class="math inline">\(V\left(\alpha_{1}, \alpha_{2},
+\cdots, \alpha_{n}\right)=\sqrt{G\left(\alpha_{1}, \alpha_{2}, \cdots,
+\alpha_{n}\right)}\)</span></p></li>
+<li><p>定理 1：设 <span class="math inline">\(\alpha_{1}, \alpha_{2},
+\cdots, \alpha_{k}\)</span> 是 <span class="math inline">\(V_1\)</span>
+的一组基，向量 <span class="math inline">\(\alpha\)</span> 到流形 <span
+class="math inline">\(P=\alpha_0+V_1\)</span> 的距离为 <span
+class="math inline">\(d^{2}=\frac{G\left(\alpha_{1}, \cdots, \alpha_{k},
+\alpha-\alpha_{0}\right)}{G\left(\alpha_{1}, \cdots,
+\alpha_{k},\right)}\)</span></p></li>
+<li><p>定理 2：线性流形 <span
+class="math inline">\(P_1=\alpha_0+V_1\)</span> 和 <span
+class="math inline">\(P_2=\alpha_0+V_1\)</span> 之间的距离等于 <span
+class="math inline">\(\alpha_1-\alpha_2\)</span> 关于线性子空间 <span
+class="math inline">\(V=V_1+V_2\)</span> 的正交分量长度</p></li>
+</ul>
+<hr />
+<h2 id="kronecker积">6. Kronecker积</h2>
+<ul>
+<li>性质
+<ul>
+<li><span class="math inline">\(E_m\bigotimes E_n = E_{mn}\)</span></li>
+<li></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="范数">7. 范数</h2>
+<h3 id="向量范数">7.1 向量范数</h3>
+<ul>
+<li>范数：刻画向量大小的度量，需要满足以下三条性质
+<ol type="1">
+<li>正定性：<span class="math inline">\(||x||\ge0,且||x||=0\iff
+x=0\)</span></li>
+<li>齐次性：<span class="math inline">\(||\lambda x||=|\lambda|\cdot
+||x||,\lambda\in R,x\in C^n\)</span></li>
+<li>三角不等式：<span class="math inline">\(||x+y||\le
+||x||+||y||,\forall x,y\in C^n\)</span></li>
+</ol></li>
+<li>范数与内积的关系是什么？</li>
+<li>导出性质
+<ul>
+<li><span class="math inline">\(||0||=0\)</span></li>
+<li><span
+class="math inline">\(x\ne0时,||\frac{1}{||x||}x||=1\)</span></li>
+<li><span class="math inline">\(||-x||=||x||,\forall x\in
+C^n\)</span></li>
+<li><span class="math inline">\(\vert \Vert x\Vert-\Vert y\Vert \vert
+\le \Vert x-y \Vert\)</span></li>
+</ul></li>
+<li>常用范数
+<ul>
+<li>1范数：<span
+class="math inline">\(\|x\|_{1}=\sum_{i=1}^{n}\left|x_{i}\right|\)</span></li>
+<li>2范数：<span
+class="math inline">\(\|x\|_{2}=\left(\sum_{i=1}^{n}\left|x_{i}\right|^{2}\right)^{1
+/ 2}\)</span></li>
+<li><span class="math inline">\(\infty\)</span>范数：<span
+class="math inline">\(\|x\|_{\infty}=\max _{1 \leq i \leq
+n}\left|x_{i}\right|\)</span></li>
+<li>p范数(Holder范数)：<span
+class="math inline">\(\|x\|_{p}=\left(\sum_{i=1}^{n}\left|x_{i}\right|^{p}\right)^{1
+/ p} \quad 1 \leq p&lt;\infty\)</span>
+<ul>
+<li>p可取<strong>正整数</strong></li>
+<li>可验证满足三角不等式，需要用到Young不等式和Holder不等式</li>
+</ul></li>
+</ul></li>
+<li>向量序列的<strong>收敛性</strong></li>
+<li>向量范数的<strong>等价性</strong>
+<ul>
+<li><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/norm%20equality.jpg" srcset="/img/loading.gif" lazyload
+alt="范数等价性" /> 等价性表示不同范数的量级是相同的，只差一个系数</li>
+<li><strong>定理</strong>：<span class="math inline">\(V(P)\)</span>
+上的任意两个向量范数均等价</li>
+<li><strong>范数等价保证了向量序列的收敛性与范数选取无关</strong>。无穷范数收敛，其他范数一定收敛。其他范数收敛，无穷范数一定收敛。</li>
+</ul></li>
+</ul>
+<h3 id="矩阵范数">7.2 矩阵范数</h3>
+<ul>
+<li><p>矩阵可以转化为向量表示</p></li>
+<li><p>矩阵范数：<span class="math inline">\(A\in P^{m\times
+n}\)</span>，需满足以下条件</p>
+<ol type="1">
+<li>正定性：<span class="math inline">\(||A||\ge0,且||A||=0\iff
+A=0\)</span></li>
+<li>齐次性：<span class="math inline">\(||\lambda A||=|\lambda|\cdot
+||A||,\lambda\in R,A\in P^{m\times n}\)</span></li>
+<li>三角不等式：<span class="math inline">\(||A+B||\le
+||A||+||B||,\forall A,B\in P^{m\times n}\)</span></li>
+<li><strong>相容性</strong>：<span class="math inline">\(\Vert AB \Vert
+\le \Vert A\Vert\cdot \Vert B\Vert\)</span></li>
+</ol>
+<blockquote>
+<p><strong>Remarks</strong>：这里相容性的定义目的是什么呢？为了放缩方便？</p>
+</blockquote></li>
+<li><p>例如</p>
+<ul>
+<li>（自相容）<span class="math inline">\(\|A\|_{m_{1}}=\sum_{j=1}^{n}
+\sum_{i=1}^{m}\left|a_{i j}\right|\)</span></li>
+<li>（不相容）<span class="math inline">\(\|A\|_{m_{\infty}}=\max _{i,
+j}\left\{\left|a_{i j}\right|\right\} \quad 1 \leq i \leq m \quad 1 \leq
+j \leq n\)</span></li>
+<li>（自相容）Frobenius范数：<span
+class="math inline">\(\|A\|_{m_{2}}=\left(\sum_{j=1}^{n}
+\sum_{i=1}^{m}\left|a_{i j}\right|^{2}\right)^{\frac{1}{2}}\)</span>
+<ul>
+<li><span
+class="math inline">\(\|\boldsymbol{A}\|_{m_{2}}^{2}=\operatorname{tr}\left(\boldsymbol{A}^{\boldsymbol{H}}
+\boldsymbol{A}\right)=\sum_{i=1}^{n}
+\lambda_{i}\left(\boldsymbol{A}^{\boldsymbol{H}}
+\boldsymbol{A}\right)\)</span></li>
+<li>对任意酉矩阵<span class="math inline">\(U,V\)</span>，<span
+class="math inline">\(\|\boldsymbol{A}\|_{m_{2}}^{2}=\left\|\boldsymbol{U}^{\boldsymbol{H}}
+\boldsymbol{A} \boldsymbol{V}\right\|_{m_{2}}^{2}=\left\|\boldsymbol{U}
+\boldsymbol{A}
+\boldsymbol{V}^{\boldsymbol{H}}\right\|_{m_{2}}^{2}\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="算子范数">7.3 算子范数</h3>
+<ul>
+<li><p>向量范数与矩阵范数的相容性：<span class="math inline">\(\|A
+x\|_{m} \leq\|A\|_{m}\|x\|_{m}\)</span> 是否成立</p>
+<ul>
+<li><strong>定义</strong>：设 <span
+class="math inline">\(\|\cdot\|_a\)</span> 是 <span
+class="math inline">\(P^n\)</span> 上的向量范数，<span
+class="math inline">\(\|\cdot\|_m\)</span> 是 <span
+class="math inline">\(P^{n\times n}\)</span> 上的矩阵范数，且 <span
+class="math display">\[
+\|A x\|_{a} \leq\|A\|_{m}\|x\|_{a}\notag
+\]</span> 则称 <span class="math inline">\(\|\cdot\|_m\)</span>
+为与向量范数 <span class="math inline">\(\|\cdot\|_a\)</span>
+相容的矩阵范数</li>
+</ul></li>
+<li><p>算子范数</p>
+<ul>
+<li><p>设 <span class="math inline">\(\|\cdot\|_a\)</span> 是 <span
+class="math inline">\(P^n\)</span> 上的向量范数，<span
+class="math inline">\(A\in P^{n\times n}\)</span>，则 <span
+class="math display">\[
+\|\boldsymbol{A}\|_{a}=\underset{\boldsymbol{x} \neq
+\boldsymbol{\theta}}{\max } \frac{\|\boldsymbol{A}
+\boldsymbol{x}\|_{a}}{\|\boldsymbol{x}\|_{a}}\left(=\max
+_{\|u\|_{a}=1}\|A u\|_{a}\right) \notag
+\]</span> 是与向量范数 <span class="math inline">\(\|\cdot\|_a\)</span>
+相容的矩阵范数</p></li>
+<li><p>推论：算子范数也是相容的矩阵范数，即 <span
+class="math inline">\(\|AB\|_a\le\|A\|_a\|B\|_a\)</span></p></li>
+</ul></li>
+<li><p>常用算子范数</p>
+<ul>
+<li>极大列和范数：<span
+class="math inline">\(\|\boldsymbol{A}\|_{\mathbf{1}}=\mathbf{m}_{\boldsymbol{j}}
+\mathbf{x}\left(\sum_{\boldsymbol{i}=1}^{\boldsymbol{n}}\left|\boldsymbol{a}_{i
+j}\right|\right)\)</span></li>
+<li>极大行和范数：<span class="math inline">\(\|A\|_{\infty}=\max
+_{i}\left(\sum_{j=1}^{n}\left|a_{i j}\right|\right)\)</span></li>
+<li>谱范数：<span
+class="math inline">\(\|\boldsymbol{A}\|_{2}=\sqrt{r\left(\boldsymbol{A}^{\boldsymbol{H}}
+\boldsymbol{A}\right)}\)</span>
+<ul>
+<li>谱半径：<span class="math inline">\(r(A)=\max
+_{i}\left|\lambda_{i}\right|\)</span></li>
+<li><span
+class="math inline">\(\|A\|_{2}=\left\|A^{H}\right\|_{2}=\left\|A^{T}\right\|_{2}=\|\bar{A}\|_{2}\)</span></li>
+<li><span class="math inline">\(\left\|A^{H} A\right\|_{2}=\left\|A
+A^{H}\right\|_{2}=\|A\|_{2}^{2}\)</span></li>
+<li>对任意酉矩阵<span class="math inline">\(U,V\)</span>，<span
+class="math inline">\(\|\boldsymbol{U}
+\boldsymbol{A}\|_{2}=\|\boldsymbol{A}
+\boldsymbol{V}\|_{2}=\|\boldsymbol{U} \boldsymbol{A}
+\boldsymbol{V}\|_{2}=\|\boldsymbol{A}\|_{2}\)</span></li>
+</ul></li>
+</ul></li>
+<li><p>定理</p>
+<ul>
+<li><span class="math inline">\(\|\boldsymbol{A}\|_{2}=\max
+_{\|x\|_{2}=\|y\|_{2}=\mathbf{1}}\left|\boldsymbol{y}^{\boldsymbol{H}}
+\boldsymbol{A} \boldsymbol{x}\right|\)</span></li>
+<li><span class="math inline">\(\|\boldsymbol{A}\|_{2}^{2}
+\leq\|\boldsymbol{A}\|_{1}\|\boldsymbol{A}\|_{\infty}\)</span></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="矩阵分解">8. 矩阵分解</h2>
+<h3 id="三角分解">8.1 三角分解</h3>
+<ul>
+<li>三角矩阵
+<ul>
+<li>逆矩阵仍然是三角矩阵</li>
+<li>三角矩阵的积仍是三角矩阵</li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>定理(LU分解)</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span>，则 <span class="math inline">\(A\)</span>
+可<strong>唯一的</strong>分解为 <span class="math display">\[
+A=U_1 R \notag
+\]</span> 其中 <span class="math inline">\(U_1\)</span> 为酉矩阵，<span
+class="math inline">\(R\)</span> 为正线上三角矩阵；或者 A
+可以<strong>唯一的</strong>分解为 <span class="math display">\[
+A = L U_2 \notag
+\]</span> 其中 <span class="math inline">\(U_2\)</span> 为酉矩阵，<span
+class="math inline">\(L\)</span> 为正线下三角矩阵。</p>
+<p><strong>推论 1</strong>：对于实数域，则有类似的
+<strong>QR分解</strong></p>
+<p><strong>推论
+2.1</strong>：对于<strong>实对称</strong>矩阵，存在唯一上三角实矩阵
+<span class="math display">\[
+A = R^T R \notag
+\]</span> <strong>推论 2.2</strong>：正定 <strong>Hermite</strong>
+矩阵，存在唯一上三角复矩阵 <span class="math display">\[
+A = R^H R \notag
+\]</span></p>
+</blockquote>
+<ul>
+<li>任意矩阵的三角分解（非方阵）</li>
+</ul>
+<h3 id="谱分解">8.2 谱分解</h3>
+<ul>
+<li><strong>单纯矩阵</strong>：代数重数等于几何重数</li>
+</ul>
+<blockquote>
+<p><strong>定理</strong>：设 <span class="math inline">\(A\in C^{n\times
+n}\)</span> 是<strong>单纯矩阵</strong>，则 <span
+class="math inline">\(A\)</span>
+可以分解为一系列<strong>幂等矩阵</strong> <span
+class="math inline">\(A_i\)</span> 的加权和 <span
+class="math display">\[
+A = \sum_{i=1}^n \lambda_i A_i \notag
+\]</span> 其中 <span class="math inline">\(\lambda_i\)</span> 是 <span
+class="math inline">\(A\)</span> 的特征值</p>
+<p><strong>证明</strong>：由单纯矩阵可知 <span class="math display">\[
+A=P\Lambda P^{-1}=\left(v_{1}, v_{2}, \cdots,
+v_{n}\right)\left[\begin{array}{cccc}{\lambda_{1}} &amp; {0} &amp;
+{\cdots} &amp; {0} \\{0} &amp; {\lambda_{2}} &amp; {\cdots} &amp; {0}
+\\{\cdots} &amp; {\cdots} &amp; {\cdots} &amp; {\cdots} \\{0} &amp; {0}
+&amp; {\cdots} &amp;
+{\lambda_{n}}\end{array}\right]\left(\begin{array}{c}{\omega_{1}^{T}}
+\\{\omega_{2}^{T}} \\{\vdots} \\{\omega_{n}^{T}}\end{array}\right)
+\notag
+\]</span> 取 <span class="math inline">\(A_i = v_i w_i^T\)</span>，<span
+class="math inline">\(A_i\)</span> 的性质：</p>
+<ul>
+<li>幂等性：<span class="math inline">\(A_i^2=A_i\)</span></li>
+<li>分离性：<span class="math inline">\(A_i A_j=0(i\ne0)\)</span></li>
+<li>可加性：<span class="math inline">\(\sum_{i=1}^n A_i =
+E_n\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Remarks</strong></p>
+<p>这里的幂等矩阵 <span class="math inline">\(A_i\)</span>
+可以看作是正交<strong>基</strong>的概念</p>
+<p>由前面投影矩阵的定义可知，<strong>每一个 <span
+class="math inline">\(A_i\)</span>
+都是一个投影矩阵</strong>，将任意一个向量 <span
+class="math inline">\(x\)</span> 投影到 <span
+class="math inline">\(v_i\)</span> 张成的子空间 <span
+class="math inline">\(L(v_i)\)</span>
+上。因此上面的幂等矩阵分解实际上可以理解为“<strong>特征空间分解</strong>”（笔者瞎想的名词），如何理解呢？把<strong>每个
+<span class="math inline">\(A_i\)</span> 看作是矩阵 <span
+class="math inline">\(A\)</span>
+的一个特征子空间（的投影基）</strong>，<span
+class="math inline">\(Ax\)</span> 实际上就是把 <span
+class="math inline">\(x\)</span>
+投影到各个特征子空间中，然后根据对应的<strong>特征值</strong>进行伸缩，最后再合成一个作用后的向量，即表示
+<span class="math inline">\(A\)</span> 对 <span
+class="math inline">\(x\)</span> 的线性变换。</p>
+</blockquote>
+<p><strong>定理</strong>：设 <span class="math inline">\(A\in C^{n\times
+n}\)</span>，有 <span class="math inline">\(k\)</span> 个相异的特征值
+<span class="math inline">\(\lambda_i(i=1,...,k)\)</span>，则 <span
+class="math inline">\(A\)</span>
+是<strong>单纯矩阵</strong>的充要条件是，存在 <span
+class="math inline">\(k\)</span> 个矩阵矩阵 <span
+class="math inline">\(A_i\)</span> 满足</p>
+<ol type="1">
+<li><span class="math inline">\(A_{i}
+A_{j}=\left\{\begin{array}{ll}{A_{i}} &amp; {i=j} \\ {0} &amp; {i \neq
+j}\end{array}\right.\)</span></li>
+<li><span class="math inline">\(\sum_{i=1}^k A_i = E_n\)</span></li>
+<li><span class="math inline">\(A = \sum_{i=1}^k \lambda_i
+A_i\)</span></li>
+</ol>
+</blockquote>
+<ul>
+<li><strong>正规矩阵</strong>：满足 <span
+class="math inline">\(A^HA=AA^H\)</span> 的矩阵 <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/normal%20matrix.jpg" srcset="/img/loading.gif" lazyload
+alt="正规矩阵" /></li>
+</ul>
+<blockquote>
+<p><strong>引理</strong>：设 <span class="math inline">\(A\)</span>
+为正规矩阵，<span class="math inline">\(A\)</span> 与 <span
+class="math inline">\(B\)</span> <strong>酉相似</strong>，则 <span
+class="math inline">\(B\)</span> 为正规矩阵</p>
+<blockquote>
+<p><strong>定理</strong>：任意矩阵 <span class="math inline">\(A\in
+C^{n\times n}\)</span>，存在酉矩阵 <span
+class="math inline">\(U\)</span> 使得 <span class="math display">\[
+A=URU^H \notag
+\]</span> 其中 <span class="math inline">\(R\)</span>
+为<strong>上三角矩阵</strong>且主对角线元素为 <span
+class="math inline">\(A\)</span> 的特征值</p>
+</blockquote>
+<p><strong>引理</strong>：设 <span class="math inline">\(A\)</span>
+为正规矩阵且为三角矩阵，则 <span class="math inline">\(A\)</span>
+为对角矩阵</p>
+<blockquote>
+<p><strong>Remarks</strong>：</p>
+<p><strong>任意矩阵 <span class="math inline">\(A\)</span> 都与三角阵
+<span class="math inline">\(R\)</span> 酉相似</strong>，因此若矩阵 <span
+class="math inline">\(A\)</span> 为正规阵，则 <span
+class="math inline">\(R\)</span>
+既是正规阵，又是三角阵，则一定是对角阵。</p>
+<p>因此，<strong>正规阵一定可以对角化</strong>，由下面的定理可知，可以<strong>酉对角化</strong>的矩阵一定是正规矩阵。</p>
+<p>这与普通的可对角化矩阵的区别是什么呢？普通矩阵可对角化的充要条件是代数重数等于几何重数，也即只需要
+<strong>n 个线性无关的特征向量</strong>即可(<span
+class="math inline">\(A=PJP^{-1}\)</span>)。而正规矩阵则要求<strong>所有特征向量正交</strong>(<span
+class="math inline">\(A=U\Lambda U^H\)</span>)！</p>
+</blockquote>
+<blockquote>
+<p><strong>Remarks</strong></p>
+<p>那么<strong>正定矩阵</strong>与<strong>正规矩阵</strong>的区别是什么呢？先看正定矩阵的定义：特征值全部为正数。区别很明显了，一个是从特征值角度，另一个是从特征向量角度，牢记这一点就不会弄混两者了。</p>
+<p>凡是具有 <span class="math inline">\(A^HA\)</span>
+形式的矩阵，既是<strong>正规矩阵</strong>，又是<strong>正定矩阵</strong>！</p>
+</blockquote>
+<p><strong>定理</strong>：<span class="math inline">\(A\)</span>
+为正规矩阵的充要条件是存在酉矩阵 <span class="math inline">\(U\)</span>
+使 <span class="math display">\[
+A = U \text{diag}(\lambda_1,...,\lambda_n)U^H \notag
+\]</span> 其中 <span class="math inline">\(\lambda_i\)</span> 是 <span
+class="math inline">\(A\)</span> 的特征值</p>
+<p><strong>定理</strong>：<span class="math inline">\(A\)</span> 有
+<span class="math inline">\(k\)</span> 个相异特征值，则 <span
+class="math inline">\(A\)</span> 是正规矩阵的充要条件是存在 <span
+class="math inline">\(k\)</span> 个矩阵 <span
+class="math inline">\(A_i\)</span> 满足</p>
+<ol type="1">
+<li><span class="math inline">\(A_{i}
+A_{j}=\left\{\begin{array}{ll}{A_{i}} &amp; {i=j} \\ {0} &amp; {i \neq
+j}\end{array}\right.\)</span></li>
+<li><span class="math inline">\(\sum_{i=1}^k A_i = E_n\)</span></li>
+<li><span class="math inline">\(A = \sum_{i=1}^k \lambda_i
+A_i\)</span></li>
+<li><span class="math inline">\(A_i^H = A_i(i=1,...,k)\)</span></li>
+</ol>
+</blockquote>
+<h3 id="最大秩分解">8.3 最大秩分解</h3>
+<ul>
+<li><strong>定理</strong>：设 <span class="math inline">\(A\in
+C^{m\times n}_r\)</span>，则存在矩阵 <span class="math inline">\(B\in
+C^{m\times r}_r, D\in C^{r\times n}_r\)</span>，使得 <span
+class="math inline">\(A=BD\)</span>
+<ul>
+<li>注：可以理解为 <span class="math inline">\(B\)</span> 取出了 <span
+class="math inline">\(r\)</span> 线性无关的列向量，或者 <span
+class="math inline">\(D\)</span> 取出了 <span
+class="math inline">\(r\)</span> 个线性无关的行向量</li>
+<li><span class="math inline">\((B^HB)^{-1}B^HB=E_r\)</span>，可以用于求
+<span class="math inline">\(B\)</span> 的左逆，<span
+class="math inline">\(D\)</span> 同理</li>
+</ul></li>
+</ul>
+<h3 id="奇异值分解">8.4 奇异值分解</h3>
+<ul>
+<li><strong>奇异值</strong>：设 <span class="math inline">\(A\in
+C^{m\times n}_r\)</span>，<span class="math inline">\(A^HA\)</span>
+的特征值为 <span class="math inline">\(\lambda_{1} \geq \lambda_{2} \geq
+\cdots \geq
+\lambda_{r}&gt;\lambda_{r+1}=\cdots=\lambda_{n}=\mathbf{0}\)</span>，则称
+<span class="math inline">\(\sigma_{i}=\sqrt{\lambda_{i}}(i=1,2, \cdots,
+r)\)</span> 为 <span class="math inline">\(A\)</span>
+的正奇异值（实际上就相当于 A 的“绝对特征值”）</li>
+<li><strong>定理</strong>：设 <span class="math inline">\(A\in
+C^{m\times n}_r\)</span>，则有
+<ol type="1">
+<li><span
+class="math inline">\(rank(A)=rank(A^HA)=rank(AA^H)\)</span></li>
+<li><span class="math inline">\(A^HA,AA^H\)</span>
+的特征值均为非负实数</li>
+<li><span class="math inline">\(A^HA,AA^H\)</span> 的特征值相同</li>
+</ol></li>
+<li><strong>酉等价</strong>：<span class="math inline">\(A,B\in
+C^{m\times n}\)</span>，存在酉矩阵 <span
+class="math inline">\(U,V\)</span> 使得 <span
+class="math inline">\(A=UBV\)</span></li>
+<li><strong>定理</strong>：若 <span class="math inline">\(A,B\)</span>
+酉等价，则它们有相同的奇异值</li>
+</ul>
+<blockquote>
+<p><strong>定理</strong>：设 <span class="math inline">\(A\in C^{m\times
+n}_r\)</span>，<span
+class="math inline">\(\sigma_1,...,\sigma_r\)</span> 是 <span
+class="math inline">\(A\)</span> 的 <span
+class="math inline">\(r\)</span> 个奇异值，则存在酉矩阵 <span
+class="math inline">\(U\in C^{m\times m},V\in C{n\times
+n}\)</span>，使得 <span class="math display">\[
+A=U\left[\begin{array}{ll}{D} &amp; {0} \\ {0} &amp;
+{0}\end{array}\right] V \notag
+\]</span> 其中 <span
+class="math inline">\(\boldsymbol{D}=\operatorname{diag}\left(\delta_{1},
+\delta_{2}, \cdots,
+\delta_{r}\right),\left|\delta_{i}\right|=\sigma_{i}\)</span></p>
+</blockquote>
+<hr />
+<h2 id="特征值估计">9. 特征值估计</h2>
+<h3 id="几个不等式">9.1 几个不等式</h3>
+<ul>
+<li><strong>定理 1(Schur 不等式)</strong>：设 <span
+class="math inline">\(A\in C^{n\times n}\)</span> 的特征值为 <span
+class="math inline">\(\lambda_1,...,\lambda_n\)</span>，则 <span
+class="math inline">\(\sum_{i=1}^{n}\left|\lambda_{i}\right|^{2} \leq
+\sum_{i=1}^{n} \sum_{j=1}^{n}\left|a_{i
+j}\right|^{2}=\|A\|_{F}^{2}\)</span>，等号成立当且仅当 <span
+class="math inline">\(A\)</span> 为正规矩阵</li>
+<li><strong>定理 2(Hirsch)</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span>，记 <span
+class="math inline">\(B=\frac{A+A^H}{2},C=\frac{A-A^H}{2}\)</span>，<span
+class="math inline">\(A,B,C\)</span> 特征值分别为 <span
+class="math inline">\(\{\lambda_i\},\{\mu_i\},\{i\gamma_i\}\)</span>，均从大到小排列。则有
+<ol type="1">
+<li><span class="math inline">\(\left|\lambda_{i}\right| \leq n \max
+_{i, j}\left|a_{i j}\right|\)</span></li>
+<li><span class="math inline">\(\left|\mathbf{R e} \lambda_{i}\right|
+\leq n \max _{i, j}\left|b_{i j}\right|\)</span></li>
+<li><span class="math inline">\(\left|\mathbf{I m} \lambda_{i}\right|
+\leq \boldsymbol{n} \max _{i, j}\left|\boldsymbol{c}_{i
+j}\right|\)</span></li>
+</ol></li>
+<li><strong>定理 3(Bendixson)</strong>：设 <span
+class="math inline">\(A\in R^{n\times n}\)</span>，则 <span
+class="math inline">\(A\)</span> 的任一特征值满足 <span
+class="math inline">\(\left|\mathbf{I m} \lambda_{i}\right| \leq
+\sqrt{\frac{n(n-1)}{2}} \max _{i, j}\left|c_{i j}\right|\)</span></li>
+</ul>
+<h3 id="盖尔圆盘定理">9.2 盖尔圆盘定理</h3>
+<ul>
+<li><strong>定义 1</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span>
+<ul>
+<li>行盖尔圆盘：<span class="math inline">\(S_{i}=\left\{z \in
+C:\left|z-a_{i i}\right| \leq R_{i}=\sum_{j \neq i}\left|a_{i
+j}\right|\right\}\)</span></li>
+<li>列盖尔圆盘：<span class="math inline">\(G_{i}=\left\{z \in
+C:\left|z-a_{i i}\right| \leq C_{i}=\sum_{j \neq i}\left|a_{j
+i}\right|\right\}\)</span></li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>定理 1(圆盘定理)</strong>：设 <span
+class="math inline">\(A\in C^{n\times n}\)</span>，则 <span
+class="math inline">\(A\)</span> 的任一特征值 <span
+class="math display">\[
+\lambda_{i} \in \boldsymbol{S}=\bigcup_{j=1}^{n} \boldsymbol{S}_{j}
+\quad(\boldsymbol{i}=\mathbf{1}, 2, \cdots, \boldsymbol{n}) \notag
+\]</span> 类似的，有 <span class="math display">\[
+\lambda_{i} \in \left(\bigcup_{j=1}^{n} \boldsymbol{S}_{j}\right)
+\bigcap \left(\bigcup_{j=1}^{n} \boldsymbol{G}_{j}\right)
+\quad(\boldsymbol{i}=\mathbf{1}, 2, \cdots, \boldsymbol{n}) \notag
+\]</span> <strong>定理 2</strong>：设 <span
+class="math inline">\(n\)</span> 阶方阵 <span
+class="math inline">\(A\)</span> 的 <span
+class="math inline">\(n\)</span> 个盖尔圆盘中有 <span
+class="math inline">\(k\)</span>
+个圆盘的并形成一个<strong>连通区域</strong> <span
+class="math inline">\(G\)</span>（圆盘相切也算连通），且它与余下的 <span
+class="math inline">\(n-k\)</span> 个圆盘都不相交，则在该区域中恰好有
+<span class="math inline">\(A\)</span> 的 <span
+class="math inline">\(k\)</span> 个特征值</p>
+<p><strong>证明</strong>：取 <span
+class="math inline">\(A_{\varepsilon}=D+\varepsilon B,\ \varepsilon
+\in[0,1]\)</span>，而 <span class="math inline">\(A_\varepsilon\)</span>
+的特征值 <span class="math inline">\(\lambda_i(A_\varepsilon) =
+\lambda_i(\varepsilon)\)</span> 时关于 <span
+class="math inline">\(\varepsilon\)</span>
+的<strong>连续函数</strong>，在圆盘随着 <span
+class="math inline">\(\varepsilon\)</span>
+扩大过程中，特征值一直都处于圆盘内部</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/gerschgorin.jpg" srcset="/img/loading.gif" lazyload
+alt="gerschgorin" />
+<figcaption aria-hidden="true">gerschgorin</figcaption>
+</figure>
+<p><strong>推论 1</strong>：设 <span class="math inline">\(n\)</span>
+阶方阵 <span class="math inline">\(A\)</span> 的 <span
+class="math inline">\(n\)</span> 个盖尔圆盘两两互不相交，则 <span
+class="math inline">\(A\)</span> 相似于对角阵</p>
+<p><strong>推论 2</strong>：设 <span class="math inline">\(n\)</span>
+阶<strong>实矩阵</strong> <span class="math inline">\(A\)</span> 的
+<span class="math inline">\(n\)</span> 个盖尔圆盘两两互不相交，则 <span
+class="math inline">\(A\)</span> 的特征值全部为实数</p>
+<p><strong>改进</strong>：可以取 <span
+class="math inline">\(D=diag(p_1,...,p_n),\ \ p_i&gt;0\)</span>，则有
+<span class="math inline">\(D^{-1}AD\)</span> 与 <span
+class="math inline">\(A\)</span>
+<strong>相似</strong>，因此他们有相同的特征值，可以用 <span
+class="math inline">\(D^{-1}AD\)</span> 的特征值来估计 <span
+class="math inline">\(A\)</span>。此时可以将某些盖尔圆变小，但是代价就是其他盖尔圆会变大。</p>
+</blockquote>
+<ul>
+<li><strong>行对角占优</strong>：<span
+class="math inline">\(\left|a_{ii}\right| \geq R_{i}=\sum_{j=1, j \ne
+i}^{n}\left|a_{i j}\right| \quad(i=1,2, \cdots, n)\)</span></li>
+<li><strong>列对角占优</strong>：<span
+class="math inline">\(\left|a_{ii}\right| \geq C_{i}=\sum_{j=1, j \ne
+i}^{n}\left|a_{ji}\right| \quad(i=1,2, \cdots, n)\)</span></li>
+</ul>
+<blockquote>
+<p><strong>定理 3</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span> <strong>严格</strong>行对角占优，则</p>
+<ol type="1">
+<li><span class="math inline">\(A\)</span> 可逆</li>
+<li>若 <span class="math inline">\(A\)</span> 所有主对角元都为正数，则
+<span class="math inline">\(A\)</span> 的特征值都有正实部</li>
+<li>若 <span class="math inline">\(A\)</span> 为 Hermite
+矩阵，且所有主对角元都为正数，则 <span class="math inline">\(A\)</span>
+的特征值都为正数</li>
+</ol>
+</blockquote>
+<h3 id="hermite矩阵特征值的变分特性">9.3
+Hermite矩阵特征值的变分特性</h3>
+<p>因为Hermite矩阵 <span class="math inline">\(A\in C^{n\times
+n}\)</span> 的特征值均为实数，所以可以把他们记作（按照大小进行排序）：
+<span class="math display">\[
+\lambda_{\min }=\lambda_{n} \leq \lambda_{n-1} \ldots \leq \lambda_{2}
+\leq \lambda_{1}=\lambda_{\max } \notag
+\]</span></p>
+<ul>
+<li><strong>Rayleigh 商</strong>：<span
+class="math inline">\(R(x)=\frac{x^{H} A x}{x^{H} x} \quad x \neq
+0\)</span>
+<ul>
+<li><span class="math inline">\(\lambda_{n} x^{H} x \leq x^{H} A x \leq
+\lambda_{1} x^{H} x \quad\left(\forall x \in C^{n}\right)\)</span></li>
+<li><span class="math inline">\(\lambda_{\max }=\lambda_{1}=\max _{x
+\neq 0} R(x)=\max _{x^{H}} x^{H} A x\)</span></li>
+<li><span class="math inline">\(\lambda_{\min }=\lambda_{n}=\min _{x
+\neq 0} R(x)=\min _{x^{H} x=1} x^{H} A x\)</span></li>
+</ul></li>
+<li><strong>定理(Courant-Fischer)</strong>：设特征值 <span
+class="math inline">\(\lambda_1 \le \lambda_2 \le \cdots \le
+\lambda_n\)</span>，则
+<ul>
+<li><span class="math inline">\(\begin{array}{ccc}{\min } &amp; {\max }
+&amp; {R(x)=\lambda_{k}} \\ {\omega_{1}, \omega_{2}, \cdots,
+\omega_{n-k} \in C^{n}} &amp; {x \neq 0, x \in C^{n} \atop {x \perp
+\omega_{1}, \omega_{2}, \cdots, \omega_{n-k}}} &amp; {}
+\end{array}\)</span></li>
+<li><span class="math inline">\(\begin{array}{ccc}{\max } &amp; {\min }
+&amp; {R(x)=\lambda_{k}} \\ {\omega_{1}, \omega_{2}, \cdots,
+\omega_{n-k} \in C^{n}} &amp; {x \neq 0, x \in C^{n} \atop {x \perp
+\omega_{1}, \omega_{2}, \cdots, \omega_{n-k}}} &amp; {}
+\end{array}\)</span></li>
+</ul></li>
+<li><strong>定理(Weyl)</strong>：<span
+class="math inline">\(\lambda_k(A)+\lambda_n(B)\le\lambda_k(A+B)\le\lambda_k(A)+\lambda_1(B)\)</span></li>
+</ul>
+<hr />
+<h2 id="矩阵分析">10. 矩阵分析</h2>
+<h3 id="矩阵序列与矩阵级数">10.1 矩阵序列与矩阵级数</h3>
+<ul>
+<li>矩阵序列
+<ul>
+<li><strong>定理</strong>：设 <span
+class="math inline">\(\Vert\cdot\Vert\)</span> 是 <span
+class="math inline">\(C^{m\times n}\)</span> 上的任一矩阵范数，矩阵序列
+<span class="math inline">\(\{A^{(k)}\}\)</span> 收敛于 <span
+class="math inline">\(A\)</span> 的充要条件是 <span
+class="math inline">\(\lim _{k
+\rightarrow+\infty}\left\|A^{(k)}-A\right\|=0\)</span></li>
+<li><strong>定理</strong>：设 <span class="math inline">\(\lim _{k
+\rightarrow+\infty} A^{(k)}=A, \lim _{k \rightarrow+\infty} B^{(k)}=B .
+\alpha, \beta \in C\)</span>，则
+<ul>
+<li><span class="math inline">\(\lim _{k \rightarrow+\infty}\left(\alpha
+A^{(k)}+\beta B^{(k)}\right)=\alpha A+\beta B\)</span></li>
+<li><span class="math inline">\(\lim _{k \rightarrow+\infty} A^{(k)}
+B^{(k)}=A B\)</span></li>
+<li>当 <span class="math inline">\(A^{(k)}\)</span> 与 <span
+class="math inline">\(A\)</span> 都可逆时，<span
+class="math inline">\(\lim _{k
+\rightarrow+\infty}\left(A^{(k)}\right)^{-1}=A^{-1}\)</span></li>
+</ul></li>
+</ul></li>
+<li><strong>收敛矩阵</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span>，若 <span class="math inline">\(\lim _{k
+\rightarrow \infty} A^{k}=0\)</span>，则称 <span
+class="math inline">\(A\)</span> 为收敛矩阵
+<ul>
+<li><strong>定理</strong>：设 <span class="math inline">\(A\in
+C^{n\times n}\)</span>，则 <span class="math inline">\(A\)</span>
+为收敛矩阵的充要条件是 <span
+class="math inline">\(r(A)&lt;1\)</span></li>
+</ul></li>
+<li><strong>矩阵级数</strong>：<span
+class="math inline">\(\sum_{k=1}^{\infty}
+A^{(k)}=A^{(1)}+A^{(2)}+\cdots+A^{(k)}+\cdots\)</span>，称 <span
+class="math inline">\(\boldsymbol{S}^{(\boldsymbol{N})}=\sum_{\boldsymbol{k}=1}^{\boldsymbol{N}}
+\boldsymbol{A}^{(\boldsymbol{k})}\)</span> 为矩阵级数的部分和，若 <span
+class="math inline">\(\lim _{N \rightarrow \infty} S^{(N)}=S\)</span>
+则称级数<strong>收敛</strong>
+<ul>
+<li><strong>定理</strong>：在 <span class="math inline">\(C^{n\times
+n}\)</span> 中，<span class="math inline">\(\sum_{k=1}^{\infty}
+A^{(k)}\)</span> 绝对收敛的充要条件是正项级数 <span
+class="math inline">\(\sum_{k=1}^{\infty}\left\|A^{(k)}\right\|\)</span>
+收敛</li>
+<li><strong>定理</strong>：方阵 <span class="math inline">\(A\)</span>
+的 Neumann 级数 <span class="math inline">\(\sum_{k=0}^{\infty}
+A^{k}=I+A+A^{2}+\cdots+A^{k}+\cdots\)</span> 收敛的充要条件是 <span
+class="math inline">\(r(A)&lt;1\)</span>，且收敛时，其和为 <span
+class="math inline">\((I-A)^{-1}\)</span></li>
+</ul></li>
+</ul>
+<h3 id="矩阵函数">10.2 矩阵函数</h3>
+<ul>
+<li><p>幂级数：设幂级数 <span class="math inline">\(\sum_{k=0}^{\infty}
+c_{k} z^{k}\)</span> 收敛半径为 <span
+class="math inline">\(r\)</span>，且当 <span
+class="math inline">\(|z|&lt;r\)</span> 时，幂级数收敛于函数 <span
+class="math inline">\(f(z)\)</span>，即 <span
+class="math inline">\(f(z)=\sum_{k=0}^{\infty} c_{k} z^{k},
+\quad|z|&lt;r\)</span></p></li>
+<li><p>矩阵幂级数：如果 <span class="math inline">\(A\in C^{n\times
+n}\)</span> 满足 <span
+class="math inline">\(r(A)&lt;r\)</span>，则称收敛矩阵的矩阵幂级数 <span
+class="math inline">\(\sum_{k=0}^{\infty} a_{k} A^{k}\)</span>
+为矩阵函数，记为 <span class="math inline">\(f(A)\)</span>，即 <span
+class="math inline">\(f(A)=\sum_{k=0}^{\infty} c_{k}
+A^{k}\)</span>，考虑参数 <span class="math inline">\(t\)</span>，有
+<span class="math inline">\(f(At)=\sum_{k=0}^{\infty} c_{k}
+(At)^{k}\)</span></p>
+<ul>
+<li>常用矩阵函数：</li>
+<li><span class="math inline">\(e^{A}=\sum_{k=0}^{\infty} \frac{1}{k !}
+A^{k}, \quad A \in C^{n \times n}\)</span></li>
+<li><span class="math inline">\(\sin A=\sum_{k=0}^{\infty}
+\frac{(-1)^{k}}{(2 k+1) !} A^{2 k+1}, \quad A \in C^{n \times
+n}\)</span></li>
+<li><span class="math inline">\(\cos A=\sum_{k=0}^{\infty}
+\frac{(-1)^{k}}{(2 k) !} A^{2 k}, \quad A \in C^{n \times
+n}\)</span></li>
+<li><span class="math inline">\((E-A)^{-1}=\sum_{k=0}^{\infty} A^{k},
+\quad r(A)&lt;1\)</span></li>
+<li><span class="math inline">\(\ln (E+A)=\sum_{k=0}^{\infty}
+\frac{(-1)^{k}}{k+1} A^{k+1}, \quad r(A)&lt;1\)</span></li>
+</ul></li>
+<li><p>矩阵函数值计算</p>
+<ul>
+<li><p>相似对角化：设 <span
+class="math inline">\(P^{-1}AP=diag(\lambda_1,...,\lambda_n)=D\)</span>，则
+<span class="math inline">\(f(At) = P\cdot diag(f(\lambda_1
+t),...,f(\lambda_n t))\cdot P^{-1}\)</span></p></li>
+<li><p>Jordan标准型：设 <span
+class="math inline">\(P^{-1}AP=diag(J_1,...,J_s)\)</span>，则 <span
+class="math display">\[
+f(A)=P\left(\begin{array}{ccc}
+{f\left(J_{1}\right)} &amp; {} &amp; {} \\
+{} &amp; {\ddots} &amp; {} \\
+{} &amp; {} &amp; {f\left(J_{s}\right)}
+\end{array}\right) P^{-1} \notag
+\]</span></p></li>
+</ul></li>
+<li><p>矩阵函数性质</p>
+<ul>
+<li>如果 <span class="math inline">\(AB=BA\)</span>，则
+<ul>
+<li><span class="math inline">\(e^{A} e^{B}=e^{B}
+e^{A}=e^{A+B}\)</span></li>
+<li><span class="math inline">\(\cos (A+B)=\cos A \cos B-\sin A \sin
+B\)</span></li>
+<li><span class="math inline">\(\sin (A+B)=\sin A \cos B+\cos A \sin
+B\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="矩阵求逆">11 矩阵求逆</h2>
+<hr />
+<h2 id="hermite矩阵的性质">Hermite矩阵的性质</h2>
+<ul>
+<li>一般 Hermite 矩阵
+<ul>
+<li>Hermite
+矩阵本身就是<strong>正规矩阵</strong>，因此可以对角化(几何重数等于代数重数)，不同特征向量<strong>正交</strong></li>
+<li>特征值均为<strong>实数</strong>（反 Hermite
+矩阵的特征值全为虚数）</li>
+</ul></li>
+<li>正定 Hermite 矩阵
+<ul>
+<li>主对角线元素全部大于 0</li>
+<li>存在正定 Hermite 矩阵 <span class="math inline">\(B\)</span> 使得
+<span class="math inline">\(A=B^2\)</span>（可以无穷分解）</li>
+<li><span class="math inline">\(A\)</span> 的任意 k 行和对应的 k
+列组成的主子阵是正定的</li>
+</ul></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Linear-Algebra/">Linear Algebra</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%9F%A9%E9%98%B5%E5%88%86%E6%9E%90/">矩阵分析</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/09/tools/laptop/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">笔记本选购指南</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch11_Sumproduct/">
+                        <span class="hidden-mobile">统计推断(十一)  Sum-product algorithm</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

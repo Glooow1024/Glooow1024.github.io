@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="指数族">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(三) Exponential Family">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch3_ExponentialFamily/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="指数族">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T11:57:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:04:20.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="指数族">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(三) Exponential Family - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(三) Exponential Family">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 19:57" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(三) Exponential Family</h1>
+            
+            <div class="markdown-body">
+              <p>指数族</p>
+<span id="more"></span>
+<h2 id="exponential-family">1. Exponential family</h2>
+<ul>
+<li><p>Definition</p>
+<ul>
+<li>PDF: <span class="math inline">\(p(y;x)=\exp(\lambda(x)^T
+t(y)-\alpha(x)+\beta(y))\)</span> <span class="math inline">\(y\sim
+\varepsilon(x;\lambda(\cdot),t(\cdot),\beta(\cdot))\)</span></li>
+<li>nature statistic: <span class="math inline">\(t(y)\)</span></li>
+<li>nature parameter: <span
+class="math inline">\(\lambda(x)\)</span></li>
+<li>log-partition function: <span
+class="math inline">\(\alpha(x)\)</span></li>
+<li>partition function: <span
+class="math inline">\(Z(x)=\exp(\alpha(x))\)</span></li>
+<li>distribution: <span
+class="math inline">\(\exp(\beta(y))\)</span></li>
+</ul></li>
+<li><p><strong>正则条件(regular)</strong>：若分布族中的任意一个分布
+<span class="math inline">\(p(y;x)\)</span> 都有其支集(support)与 x
+无关，则为正则</p>
+<ul>
+<li>实质上是要求 CRB 正则条件中<strong>求导和积分可换序</strong> <span
+class="math display">\[
+\mathbb{E}\left[\frac{\partial}{\partial x}\ln
+p(y;x)\right]=\int\frac{\partial}{\partial x}p(y;x)dy =
+\frac{\partial}{\partial x}\int_a^b p(y;x)dy = 0
+\]</span></li>
+</ul></li>
+<li><p>指数分布族可以有多种获得方式</p>
+<ul>
+<li><p>很多分布本身可以写成指数分布族形式</p>
+<ul>
+<li>Bernulli distribution: <span class="math inline">\(y\sim
+\mathcal{B}(x)\)</span></li>
+</ul>
+<p><span class="math display">\[
+p(y;x)=x^y (1-x)^{(1-y)} \\
+\ln p(y;x)=\left(\ln(\frac{x}{1-x})\right)y-(-\ln(1-x))
+\]</span></p>
+<ul>
+<li>Gaussian <span class="math inline">\(y=[y_1,y_2]^T\sim
+\mathcal{N}(x,1)\)</span> <span class="math display">\[
+p(y;x)=\frac{1}{\sqrt{2\pi}}\exp\left((y_1+y_2)x-x^2-\frac{y_1^2+y_2^2}{2}\right)
+\]</span></li>
+</ul></li>
+<li><p>多个分布的<strong>几何均值</strong> <span class="math display">\[
+p(y;x)=\frac{p_1^x(y)*p_2^{(1-x)}(y)}{Z(x)} \\
+\ln p(y;x)=x\ln\left(\frac{p_1(y)}{p_2(y)}\right)-\ln Z(x)+\ln p_2(y)
+\]</span></p>
+<ul>
+<li>例如 <span class="math inline">\(p_1(y)\sim
+\mathcal{B}(\frac{1}{1+e^{-1}}), p_2(y)\sim \mathcal{B}(1/2)\)</span>
+<span class="math display">\[
+p(y;x)=(\frac{1}{1+e^{-1}})^{xy}(\frac{e^{-1}}{1+e^{-1}})^{x(1-y)}(1/2)^{(1-x)}\sim
+\mathcal{B}(\frac{1}{1+e^{-x}}) \\
+\frac{p(y=1;x)}{p(y=0;x)}=e^x
+\]</span></li>
+</ul></li>
+<li><p><strong>Tilting</strong> <span class="math display">\[
+p(y;x)=\frac{p(y)e^{xy}}{Z(x)} \\
+\ln p(y;x)=xy - \ln Z(x) + \ln p(y)
+\]</span></p>
+<ul>
+<li>例如 <span class="math inline">\(p(y)\sim
+\mathcal{N}(0,1)\)</span>，<span class="math inline">\(p(y;x)\sim
+\mathcal{N}(x,1)\)</span></li>
+</ul></li>
+</ul></li>
+<li><p><strong>linear exponential family</strong></p>
+<ul>
+<li>定义：<span class="math inline">\(t(x)=x\)</span>，<span
+class="math inline">\(\ln p(y;x)=x\ t(y) -
+\alpha(x)+\beta(y)\)</span></li>
+<li>性质：<span class="math inline">\(\dot{\alpha}(x)=\mathbb{E}[t(y)],
+\ \
+\dot{\dot{\alpha}}(x)=\mathbb{E}[t^2(y)]-\mathbb{E}[t(y)]^2=Var(t(y)) =
+J_y(x)\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Proof</strong>： <span class="math display">\[
+\begin{align}
+Z(x) &amp;= e^{\alpha(x)}=\int e^{x t(y)+\beta(y)}dy \\
+\frac{\partial}{\partial x}Z(x) &amp;= e^{\alpha(x)}\cdot \dot\alpha(x)
+= \int t(y)e^{xt(y)+\beta(y)}dy \\
+\dot{\alpha}(x) &amp;= \int t(y)p(y;x)dy = \mathbb{E}[t(y)]
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+\dot{\dot{\alpha}}(x)=\int t(y)\cdot p(y;x)\cdot
+(t(y)-\dot{\alpha}(x))dy \\
+J_y(x) = \mathbb{E}\left[-\frac{\partial^2}{\partial x^2} \ln
+p(y;x)\right]=\dot{\dot{\alpha}}(x)
+\]</span></p>
+</blockquote></li>
+<li><p>指数族分布与有效统计量(efficient statistics)</p>
+<ul>
+<li><strong>必要条件</strong>：若有效统计量存在，则可以写成指数族分布形式，且有
+<span class="math display">\[
+t(x)=\int^x J_y(u)du, \ \ \ \alpha(x)=\int^x u J_y(u) du
+\]</span></li>
+</ul>
+<blockquote>
+<p><strong>Proof</strong>： <span class="math display">\[
+\begin{align}
+\hat {x}_{eff}(y) &amp;= x+\frac{1}{J_y(x)}\frac{\partial}{\partial
+x}\ln p(y;x) \\
+\frac{\partial}{\partial x}\ln p(y;x) &amp;= J_y(x)\hat{x}_{eff}(y) - x
+J_y(x) \\
+\ln p(y;x) &amp;= \int^x J_y(u)du \cdot \hat{x}_{ML}(y) - \int^x u
+J_y(u) du
+\end{align}
+\]</span></p>
+</blockquote>
+<ul>
+<li><strong>充分条件</strong>：对于<strong>线性指数分布族</strong>，若有
+<span class="math inline">\(J_y(x)\)</span> 不依赖于 x，也即 <span
+class="math inline">\(J_y(x)\)</span>
+等于一个常数时，有效统计量存在</li>
+</ul>
+<blockquote>
+<p><strong>Proof</strong>：<span class="math inline">\(J_y(x)=J\)</span>
+<span class="math display">\[
+\dot{\dot{\alpha}}(x)=J, \ \ \ \dot{\alpha}(x)=Jx-c \\
+\hat x_{eff}(y) = x + \frac{1}{J}\frac{\partial}{\partial x}\ln p(y;x) =
+x + \frac{1}{J} (t(y)-\dot{\alpha}(x)) = x +
+\frac{1}{J}(t(y)-Jx+c)=\frac{t(y)}{J}+\frac{c}{J}
+\]</span> 由于 <span class="math display">\[
+\frac{\partial}{\partial x}\ln p(y;x)|_{x=\hat x_{ML}} = 0 = t(y) -
+\dot{\alpha}(x)|_{x=\hat x_{ML}}
+\]</span> 有 <span class="math display">\[
+\hat x_{eff}(y) = c/J + \frac{1}{J}\dot{\alpha}(x)|_{x=\hat x_{ML}} =
+\hat x_{ML}(y)
+\]</span></p>
+</blockquote></li>
+</ul>
+<h2 id="sufficient-statistics">2. Sufficient statistics</h2>
+<h3 id="non-bayesian-case">2.1 Non-Bayesian case</h3>
+<ul>
+<li>Definition：t(y) 是关于分布 <span
+class="math inline">\(p_{\mathsf{y}}(\cdot;x)\)</span>
+的充分统计量，如果 <span class="math inline">\(p(y|t(y);x)\)</span> 与 x
+无关</li>
+</ul>
+<blockquote>
+<p><strong>Theorem 1</strong>(likelihood characterization)：</p>
+<p><span class="math inline">\(t(y)\)</span> is sufficient w.r.t <span
+class="math inline">\(p(y;x)\)</span> <span class="math inline">\(\iff \
+\frac{p_{y}(y;x)}{p_t(t(y);x)}\)</span> doesn't depend on x, for all x
+and y</p>
+<p><strong>Proof</strong>：omit...</p>
+<p><strong>Theorem 2</strong>(Neyman Factorization theorem)：</p>
+<p><span class="math inline">\(t(y)\)</span> is sufficient w.r.t <span
+class="math inline">\(p(y;x)\)</span> <span class="math inline">\(\iff \
+存在a(\cdot,\cdot)和b(\cdot)使得 \ \  p(y;x)=a\left(t(y),x\right) \cdot
+b(y)\)</span></p>
+<p><strong>Proof</strong>：omit...</p>
+</blockquote>
+<ul>
+<li><strong>minimum sufficient statistic</strong>：<span
+class="math inline">\(t^*\)</span> 是 minimal
+的，如果对任意其他充分统计量 t ，都存在 g() 使得 <span
+class="math inline">\(t^*=g(t)\)</span></li>
+<li><strong>complete</strong>：<span class="math inline">\(t^*\)</span>
+是 complete 的如果对任意函数 <span
+class="math inline">\(\phi(\cdot)\)</span>，有 <span
+class="math inline">\(E[\phi(t^*(y))]=0 \ \ \forall x \iff \phi(\cdot)
+\equiv 0\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Theorem</strong>：complete <span
+class="math inline">\(\Longrightarrow\)</span> minimal</p>
+<p><strong>Proof</strong>：假设 t 为complete，s 为 minimal，存在 <span
+class="math inline">\(s=g(t)\)</span>，<span
+class="math inline">\(E[t]=E\left[E\left[t|s=s\right]\right]\)</span></p>
+<p><span
+class="math inline">\(E[t|s=s]=f(s)=f(g(t))=\tilde{f}(t)\)</span></p>
+<p>取 <span class="math inline">\(\phi(t)=t-\tilde{f}(t)\)</span>，有
+<span class="math inline">\(E[\phi(t)] = 0\)</span></p>
+<p>根据 complete 的定义，有 <span class="math inline">\(\phi(t)\equiv0
+\Longrightarrow t = \tilde{f}(t)=f(s)\)</span></p>
+<p>故 t 也是 minimal</p>
+</blockquote>
+<h3 id="bayesian-case">2.2 Bayesian case</h3>
+<ul>
+<li>Definition：t(y) 是关于分布 <span
+class="math inline">\(p_{\mathsf{y,x}}(\cdot,\cdot)\)</span>
+的充分统计量，如果 <span
+class="math inline">\(p_{\mathsf{y|t,x}}(y|t(y),x)=p_\mathsf{y|t}(y|t(y))\)</span>
+与 x 无关</li>
+</ul>
+<blockquote>
+<p><strong>Theorem</strong>(Belief characterization)：</p>
+<p><span class="math inline">\(t(y)\)</span> is sufficient w.r.t <span
+class="math inline">\(p(y,x)\)</span> <span class="math inline">\(\iff \
+p(x|y)=p(x|t(y))\)</span>, for all x and y</p>
+<p><strong>Proof</strong>：omit...</p>
+<p><strong>Theorem</strong>(Neyman Factorization theorem)：</p>
+<p><span class="math inline">\(t(y)\)</span> is sufficient w.r.t <span
+class="math inline">\(p(y,x)\)</span> <span class="math inline">\(\iff \
+p(y|x)=p(t(y)|x)\cdot p(y|t(y))\)</span>, for all x and y</p>
+<p><strong>Proof</strong>：omit...</p>
+</blockquote>
+<h2 id="conjugate-priors">3. Conjugate priors</h2>
+<ul>
+<li>Idea: Given a model <span
+class="math inline">\(p_\mathsf{y|x}\)</span>, look for a family of
+prior <span class="math inline">\(p_\mathsf{x}\)</span> such that the
+induced posterior <span class="math inline">\(p_\mathsf{x|y}\)</span>
+also in this family</li>
+<li>Definition: a family of distribution <span
+class="math inline">\(q(\cdot;\theta)\)</span> is
+<strong>conjugate</strong> to a model <span
+class="math inline">\(p_{y|x}\)</span> if
+<ul>
+<li><span class="math inline">\(p_{y|x}(y_1,...,y_N|x) \propto
+q(x;\theta)\)</span></li>
+<li><span class="math inline">\(q(x;\theta_1)q(x;\theta_2)\propto
+q(x;\theta_3)\)</span></li>
+</ul></li>
+<li><strong>Theorem</strong>: 对于采样数 N，联合分布 <span
+class="math inline">\(p^N_{y|x}()\)</span>
+有充分统计量，且其维度不依赖于 N，则对该模型存在共轭先验分布</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8C%87%E6%95%B0%E6%97%8F/">指数族</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch4_InformationGeometry/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(四) Information Geometry</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch2_Estimation/">
+                        <span class="hidden-mobile">统计推断(二) Estimation Problem</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

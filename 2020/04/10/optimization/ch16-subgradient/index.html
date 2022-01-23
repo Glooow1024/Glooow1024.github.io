@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面讲了梯度下降的方法，关键在于步长的选择：固定步长、线搜索、BB方法等，但是如果优化函数本身存在不可导的点，就没有办法计算梯度了，这个时候就需要引入次梯度(Subgradient)，这一节主要关注次梯度的计算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记16：次梯度 Subgradient">
+<meta property="og:url" content="http://example.com/2020/04/10/optimization/ch16-subgradient/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面讲了梯度下降的方法，关键在于步长的选择：固定步长、线搜索、BB方法等，但是如果优化函数本身存在不可导的点，就没有办法计算梯度了，这个时候就需要引入次梯度(Subgradient)，这一节主要关注次梯度的计算。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-10T13:27:36.000Z">
+<meta property="article:modified_time" content="2020-04-10T13:51:14.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="次梯度">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记16：次梯度 Subgradient - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记16：次梯度 Subgradient">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-10 21:27" pubdate>
+        April 10, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      77 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记16：次梯度 Subgradient</h1>
+            
+            <div class="markdown-body">
+              <p>前面讲了梯度下降的方法，关键在于步长的选择：固定步长、线搜索、BB方法等，但是如果优化函数本身存在不可导的点，就没有办法计算梯度了，这个时候就需要引入<strong>次梯度(Subgradient)</strong>，这一节主要关注次梯度的计算。</p>
+<span id="more"></span>
+<h2 id="次梯度">1. 次梯度</h2>
+<p><strong>次梯度(subgradient)</strong>的定义为 <span
+class="math display">\[
+\partial f(x)= \{g|f(y)\ge f(x)+g^T(y-x),\forall y\in\text{dom} f \}
+\]</span> 该如何理解次梯度 <span class="math inline">\(g\)</span>
+呢？实际上经过变换，我们可以得到 <span class="math display">\[
+\left[\begin{array}{c}
+g \\
+-1
+\end{array}\right]^{\top}\left(\left[\begin{array}{l}
+y \\
+t
+\end{array}\right]-\left[\begin{array}{c}
+x \\
+f(x)
+\end{array}\right]\right) \leq 0, \forall(y, t) \in \operatorname{epi}f
+\]</span> 实际上这里 <span class="math inline">\([g^T \ -1]^{T}\)</span>
+定义了 <strong>epigraph
+的一个支撑超平面</strong>，并且这个支撑超平面是<strong>非垂直的</strong>，如下面的图所示</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>光滑函数</th>
+<th>非光滑函数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-subgradient.PNG" srcset="/img/loading.gif" lazyload
+alt="subgradient" /></td>
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-subgradient2.PNG" srcset="/img/loading.gif" lazyload
+alt="subgradient2" /></td>
+</tr>
+</tbody>
+</table>
+<p>而对于任意的下水平集 <span class="math inline">\(\{y|f(y)\le
+f(x)\}\)</span>，都有 <span class="math display">\[
+f(y)\le f(x) \Longrightarrow g^T(y-x)\le0
+\]</span> 这说明次梯度 <span class="math inline">\(g\)</span>
+实际上也是下水平集的一个支撑超平面</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-subgradient3.PNG" srcset="/img/loading.gif" lazyload
+alt="subgradient3" />
+<figcaption aria-hidden="true">subgradient3</figcaption>
+</figure>
+<p><strong>Remarks</strong>：很有意思的一件事是函数的<strong>梯度 <span
+class="math inline">\(\nabla f\)</span></strong>
+包含有大量的信息，他的<strong>方向</strong>代表了函数下降最快的方向，也就是下水平集的法线方向；而他的<strong>模长</strong>代表了下降的速度，<span
+class="math inline">\([\nabla f\ -1]^T\)</span> 是 epigraph
+的法线方向，可以直观想象，如果 <span class="math inline">\(\Vert \nabla
+f\Vert\)</span> 越大，那么这个法线方向越趋向于水平，也就是说 epigraph
+的标面越趋近于竖直，函数下降速度当然也越快。</p>
+<p>每个点的次梯度 <span class="math inline">\(\partial f(x)\)</span>
+实际上是一个<strong>集合</strong>，我们先来看这个集合有什么性质呢？我们先列出来然后一一解释：</p>
+<ol type="1">
+<li>次梯度映射是单调算子</li>
+<li>如果 <span class="math inline">\(x\in\text{ri dom}f\)</span>，则
+<span class="math inline">\(\partial f(x)\ne
+\varnothing\)</span>，而且是<strong>有界、闭的凸集</strong></li>
+<li><span class="math inline">\(x^\star= \arg\min f(x) \iff 0\in
+\partial f(x^\star)\)</span></li>
+</ol>
+<p>首先，他是一个 set-valued
+mapping，而且是一个<strong>单调算子</strong>，也即 <span
+class="math display">\[
+(u-v)^T(y-x)\ge0,\forall u\in\partial f(y),v\in\partial f(x)
+\]</span> 这个性质很容易由定义导出。</p>
+<p>其次，内点处的次梯度总是非空的闭凸集，且有界。</p>
+<p>首先可以证明其<strong>非空</strong>，(默认我们考虑的 <span
+class="math inline">\(f\)</span> 为凸函数)因为函数 <span
+class="math inline">\(f\)</span> 是凸的，其 epigraph 在 <span
+class="math inline">\((x,f(x))\)</span> 一定存在一个支撑超平面 <span
+class="math display">\[
+\exists(a, b) \neq 0, \quad\left[\begin{array}{l}
+a \\
+b
+\end{array}\right]^{T}\left(\left[\begin{array}{l}
+y \\
+t
+\end{array}\right]-\left[\begin{array}{c}
+x \\
+f(x)
+\end{array}\right]\right) \leq 0 \quad \forall(y, t) \in \text { epi } f
+\]</span> 由于 <span class="math inline">\(t\)</span> 可以趋于 <span
+class="math inline">\(+\infty\)</span>，因此 <span
+class="math inline">\(b\le0\)</span>，如果 <span
+class="math inline">\(b=0\)</span>，由于 <span
+class="math inline">\(x\)</span> 为内点，也很容易导出矛盾，因此可以证明
+<span class="math inline">\(b&lt;0\)</span>，于是就可以得到 <span
+class="math inline">\(g=a/|b|\)</span>。</p>
+<p>其次可以证明其为<strong>闭凸集</strong>，次梯度还可以表示为 <span
+class="math display">\[
+\begin{aligned}
+\partial f(x)&amp;= \{g|f(y)\ge f(x)+g^T(y-x),\forall y\in\text{dom} f
+\} \\
+&amp;= \bigcap_{y\in \text{dom}f} \{g|g^T(y-x)\le f(y)-f(x) \}
+\end{aligned}
+\]</span> 这是很多个半空间的交集，因此 <span
+class="math inline">\(\partial f(x)\)</span> 是一个闭的凸集。</p>
+<p>最后可以证明次梯度集合是<strong>有界的</strong>，为了证明他有界，只需证明他的
+<span class="math inline">\(l_\infty\)</span> 范数有界即可。可以取 <span
+class="math display">\[
+B=\left\{x \pm r e_{k} | k=1, \ldots, n\right\} \subset
+\operatorname{dom} f
+\]</span> 定义 <span class="math inline">\(M=\max _{y \in B}
+f(y)&lt;\infty\)</span>，应用次梯度的定义就可以得到 <span
+class="math display">\[
+\|g\|_{\infty} \leq \frac{M-f(x)}{r} \quad \text { for all } g \in
+\partial f(x)
+\]</span> 注意上面的非空、有界、闭凸集都要求 <span
+class="math inline">\(x\)</span>
+为定义域的内点，如果是边界上则无法保证。</p>
+<p><strong><em>例子 1</em></strong>：对于凸集 <span
+class="math inline">\(C\)</span>，定义函数 <span
+class="math inline">\(\delta_C(x)=\begin{cases}0,&amp;x\in
+C\\+\infty,&amp;x\notin C\end{cases}\)</span>，那么次梯度为 <span
+class="math display">\[
+\begin{aligned}
+g\in\partial \delta_C(x) &amp;\iff \delta_C(y)\ge
+\delta_C(x)+g^T(y-x),\forall y\in C \\
+&amp;\iff g^T(y-x)\le0, \forall y\in C \\
+&amp;\iff g\in N_C(x) \quad \text{ (normal cone at $x$)}
+\end{aligned}
+\]</span> <strong>Remarks</strong>：集合 <span
+class="math inline">\(C\)</span> 的 normal cone 的定义为 <span
+class="math display">\[
+\forall x\in C,\quad N_C(x)=\{g| g^T(y-x)\le0,\forall y\in C\}
+\]</span> <strong><em>例子 2</em></strong>：函数 <span
+class="math inline">\(f(x)=\vert x\vert,\partial
+f(x)=\begin{cases}1,&amp;x&gt;0\\ [-1,1],&amp;x=0\\
+-1&amp;x&lt;0\end{cases}\)</span></p>
+<p><strong><em>例子 3</em></strong>：函数 <span
+class="math inline">\(f(x)=\Vert x\Vert_2,\partial f(0)=\{g|\Vert
+g\Vert_2\le1\}\)</span></p>
+<p><strong><em>例子 4</em></strong>：对于任意范数 <span
+class="math inline">\(f(x)=\Vert x\Vert\)</span> <span
+class="math display">\[
+\partial f(x)=\{y|\Vert y\Vert_*\le1,\left&lt;y,x\right&gt;=\Vert x\Vert
+\}
+\]</span> 证明：<span class="math inline">\(\forall g\in\partial
+f(x)\)</span>，需要 <span class="math inline">\(\Vert y\Vert \ge \Vert
+x\Vert+ g^T(y-x)\quad(\Delta)\)</span></p>
+<p>可以取 <span class="math inline">\(y=2x \Longrightarrow \Vert x\Vert
+\ge g^Tx\)</span>，也可以取 <span
+class="math inline">\(y=0\Longrightarrow 0\ge \Vert
+x\Vert-g^Tx\)</span>，因此有 <span class="math inline">\(g^Tx=\Vert
+x\Vert\)</span></p>
+<p>由 <span class="math inline">\((\Delta)\)</span> 式可知应有 <span
+class="math inline">\(\Vert y\Vert \ge g^Ty \iff \Vert
+g\Vert_*\le1\)</span>。</p>
+<h2 id="次梯度计算">2. 次梯度计算</h2>
+<p>每个点的次梯度是一个集合，这里有两个概念</p>
+<p><strong>Weak subgradient
+calculus</strong>：只需要计算其中一个次梯度就够了；</p>
+<p><strong>Strong subgradient calculus</strong>：要计算出 <span
+class="math inline">\(\partial f(x)\)</span> 中的所有元素。</p>
+<p>要想计算出所有的次梯度是很难的，所以大多数时候只需要得到一个次梯度就够了，也就是
+Weak subgradient
+calculus。不过，对于下面这几种特殊情况，我们可以得到完整的次梯度描述(也即
+Strong subgradient calculus)，他们是：</p>
+<ol type="1">
+<li>如果 <span class="math inline">\(f\)</span> 在 <span
+class="math inline">\(x\)</span> 是可微的，那么 <span
+class="math inline">\(\partial f(x)=\{\nabla f(x)\}\)</span></li>
+<li>非负线性组合：<span class="math inline">\(f(x)=\alpha_1
+f_1(x)+\alpha_2 f_2(x)\)</span>，那么 <span
+class="math inline">\(\partial f(x)=\alpha_1 \partial f_1(x)+\alpha_2
+\partial f_2(x)\)</span>，第二个式子是集合的加法；</li>
+<li>仿射变换：<span class="math inline">\(f(x)=h(Ax+b)\)</span>，那么
+<span class="math inline">\(\partial f(x)=A^T h(Ax+b)\)</span></li>
+</ol>
+<p>对于第一条的证明，我们可以取 <span
+class="math inline">\(y=x+r(p-\nabla f(x)),p\in\partial
+f(x)\)</span>，那么根据次梯度的定义就有 <span
+class="math inline">\(\Vert p-\nabla f(x)\Vert^2\le
+\frac{O(r^2)}{r}\to0\)</span> 随着 <span
+class="math inline">\(r\to0\)</span>，因此就有 <span
+class="math inline">\(\nabla f(x)=p\)</span>。</p>
+<p>对于第三条的证明，只需要分别证明 <span class="math inline">\(A^T
+h(Ax+b) \subseteq \partial f(x)\)</span> 和 <span
+class="math inline">\(\partial f(x) \subseteq A^T
+h(Ax+b)\)</span>，前者很容易，主要是后者。由于次梯度 <span
+class="math inline">\(d\in \partial f(x)\)</span> 需要满足 <span
+class="math inline">\(f(z)\ge f(x)+d^T(z-x) \iff h(Az+b)-d^Tz\ge
+h(Ax+b)-d^Tx\)</span>，也就是说 <span
+class="math inline">\((x,Ax+b)\)</span> 实际上是如下问题的最优解 <span
+class="math display">\[
+\begin{aligned}
+\min \quad&amp; h(z)-d^Ty \\
+\text{s.t.}\quad&amp; Ay+b = z,\quad z\in\text{dom}h
+\end{aligned}
+\]</span> 如果 <span class="math inline">\((Range(A)+b)\cap \text{ri
+dom}h \ne \varnothing\)</span>，说明 SCQ
+成立，则强对偶性成立，于是根据拉格朗日对偶原理有 <span
+class="math display">\[
+\exists \lambda,\text{ s.t. }(x,Ax+b) \in \arg\min
+\{h(z)-d^Ty+\lambda^T(Ay+b-z)\} \\
+\Longrightarrow
+\begin{cases}
+\nabla_y L(y,z,\lambda)=0 \Longrightarrow 0\in \partial h(z)-\lambda \\
+\nabla_z L(y,z,\lambda)=0 \Longrightarrow d=A^T\lambda
+\end{cases}
+\]</span> <strong>推论</strong>：根据第 3 条，可以得到：如果考虑函数
+<span class="math inline">\(F(x)=f_1(x)+...+f_m(x)\)</span>，且 $_i
+f_i$，则 <span class="math inline">\(\partial F(x)=\partial f_1(x)+... +
+\partial
+f_m(x)\)</span>。（这个实际上可以直接右上面的第二条得到，这里只不过又验证了一次）</p>
+<p><strong>证明</strong>：我们可以考虑函数 <span
+class="math inline">\(f(x)=f_1(x_1)+...+f_m(x_m)\)</span>，在定义 <span
+class="math inline">\(A=[I,...,I]^T\)</span>，那么就有 <span
+class="math inline">\(F(x)=f(Ax)\)</span>，所以 <span
+class="math inline">\(\partial F(x)=A^T \partial f(Ax)=[I\ ...\
+I][\partial f_1(x),...,\partial f_m(x)]^T = \partial f_1(x)+... +
+\partial f_m(x)\)</span>。</p>
+<p>上面是能获得 Strong subgradient calculus
+的几个原则，对于其他情况，我们考虑找到一个次梯度就够了。下面给出一些常见的情况。</p>
+<p><strong>点点最大值</strong>：<span
+class="math inline">\(f(x)=\max\{f_1(x),...,f_m(x) \}\)</span>，可以定义
+<span
+class="math inline">\(I(x)=\{i|f_i(x)=f(x)\}\)</span>，那么他的</p>
+<ul>
+<li><strong>weak result</strong>：choose any <span
+class="math inline">\(g\in\partial f_k(x)\)</span>，其中 <span
+class="math inline">\(k\in I(x)\)</span></li>
+<li><strong>strong result</strong>：<span class="math inline">\(\partial
+f(x)=\text{conv}\bigcup_{i\in I(x)}\partial f_i(x)\)</span></li>
+</ul>
+<p><strong>点点上确界</strong>：<span
+class="math inline">\(f(x)=\sup_{\alpha\in \mathcal{A}} f_\alpha
+(x)\)</span>，其中 <span class="math inline">\(f_\alpha(x)\)</span> 关于
+<span class="math inline">\(x\)</span> 是凸的，定义 <span
+class="math inline">\(I(x)=\{\alpha\in\mathcal{A}|f_\alpha(x)=f(x)\}\)</span>，那么</p>
+<ul>
+<li><strong>weak result</strong>：choose any <span
+class="math inline">\(g\in\partial f_\beta (\hat{x})\)</span>，其中
+<span class="math inline">\(f(\hat{x})=f_\beta(\hat{x})\)</span></li>
+<li><strong>strong result</strong>：<span
+class="math inline">\(\text{conv}\bigcup_{\alpha\in I(x)}\partial
+f_\alpha(x) \subseteq \partial
+f(x)\)</span>，如果要取等号，需要额外的条件</li>
+</ul>
+<p><strong>下确界</strong>：<span class="math inline">\(f(x)=\inf_y
+h(x,y)\)</span>，其中 <span class="math inline">\(h(x,y)\)</span> 关于
+<span class="math inline">\((x,y)\)</span> 是联合凸的，那么</p>
+<ul>
+<li><strong>weak result</strong>：<span class="math inline">\((g,0)\in
+\partial h(\hat{x},\hat{y})\)</span>，其中 <span
+class="math inline">\(\hat{y}=\arg\min h(\hat{x},y)\)</span></li>
+</ul>
+<p><strong>复合函数</strong>：<span
+class="math inline">\(f(x)=h(f_1(x),...,f_k(x))\)</span>，其中 <span
+class="math inline">\(h\)</span> 为单调不减的凸函数，<span
+class="math inline">\(f_i\)</span> 为凸函数</p>
+<ul>
+<li><strong>weak result</strong>：<span
+class="math inline">\(g=z_1g_1+...+z_kg_k,z\in\partial
+h(f_1(x),...,f_k(x)),g_i\in \partial f_i(x)\)</span></li>
+</ul>
+<p><strong>期望</strong>：<span
+class="math inline">\(f(x)=\mathbb{E}h(x,u)\)</span>，其中 <span
+class="math inline">\(u\)</span> 为随机变量，<span
+class="math inline">\(h\)</span> 对任意的 <span
+class="math inline">\(u\)</span> 关于 <span
+class="math inline">\(x\)</span> 都是凸的</p>
+<ul>
+<li><strong>weak result</strong>：选择函数 <span
+class="math inline">\(u\mapsto g(u),g(u)\in \partial_x
+h(\hat{x},u)\)</span>，则 <span class="math inline">\(g=\mathbb{E}_u
+g(u) \in \partial f(\hat{x})\)</span></li>
+</ul>
+<p><strong><em>例子 1</em></strong>：picewise-linear function <span
+class="math inline">\(f(x)=\max_{i=1,...,m}(a_i^Tx+b_i),\partial
+f(x)=\text{conv}\{a_i|i\in I(x)\}\)</span></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-picewise-linear.PNG" srcset="/img/loading.gif" lazyload
+alt="picewise-linear" />
+<figcaption aria-hidden="true">picewise-linear</figcaption>
+</figure>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\(l_1\)</span> 范数 <span
+class="math inline">\(f(x)=\Vert x\Vert_1=|x_1|+...+|x_n|,\partial
+f(x)=J_1\times \cdots \times J_n\)</span>，其中 <span
+class="math inline">\(J_k=\begin{cases}[-1,1]&amp;x_k=0\\
+{1}&amp;x_k&gt;0\\ {-1}&amp;x_k&lt;0 \end{cases}\)</span></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-l1-norm.PNG" srcset="/img/loading.gif" lazyload
+alt="l1-norm" />
+<figcaption aria-hidden="true">l1-norm</figcaption>
+</figure>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\(f(x)=\lambda_{\max}(A(x))=\sup_{\Vert
+y\Vert_2=1}y^TA(x)y\)</span>，其中 <span
+class="math inline">\(A(x)=A_0+x_1A_1+\cdots +x_nA_n\)</span>，则取
+<span class="math inline">\(\lambda_{\max}(A(\hat{x}))\)</span>
+对应的单位特征向量 <span
+class="math inline">\(y\)</span>，次梯度可以表示为 <span
+class="math inline">\((y^TA_1y,...,y^TA_ny)\in \partial
+f(\hat{x})\)</span></p>
+<p><strong><em>例子 4</em></strong>：到凸集的欧氏距离 <span
+class="math inline">\(f(x)=\inf_{y\in C}\Vert x-y\Vert_2=\inf_{y}
+h(x,y)\)</span>，其中集合 <span class="math inline">\(C\)</span>
+为凸集，函数 <span class="math inline">\(h\)</span> 关于 <span
+class="math inline">\((x,y)\)</span> 是联合凸的。 <span
+class="math display">\[
+g=\begin{cases}0&amp;\hat{x}\in C\\
+\frac{1}{\|\hat{y}-\hat{x}\|_{2}}(\hat{x}-\hat{y})=\frac{1}{\|\hat{x}-P(\hat{x})\|_{2}}(\hat{x}-P(\hat{x}))
+&amp; \hat{x}\notin C \end{cases}
+\]</span> <strong><em>例子 5</em></strong>：定义如下凸优化问题的最优解为
+<span class="math inline">\(f(u,v)\)</span> <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f_{0}(x) \\
+\text{subject to}\quad&amp; f_{i}(x) \leq u_{i}, \quad i=1, \ldots, m\\
+&amp;A x=b+v
+\end{aligned}
+\]</span> 如果假设 <span
+class="math inline">\(f(\hat{u},\hat{v})\)</span>
+有界且强对偶性成立，那么对于对偶问题如下对偶问题 <span
+class="math display">\[
+\begin{aligned}
+\text{maximize} \quad&amp; \inf _{x}\left(f_{0}(x)+\sum_{i}
+\lambda_{i}\left(f_{i}(x)-\hat{u}_{i}\right)+v^{T}(A x-b-\hat{v})\right)
+\\
+\text{subject to}\quad&amp; \lambda\succeq 0
+\end{aligned}
+\]</span> 若其最优解为 <span
+class="math inline">\((\hat\lambda,\hat\nu)\)</span>，则有 <span
+class="math inline">\((-\hat\lambda,-\hat\nu)\in \partial
+f(\hat{u},\hat{v})\)</span>。</p>
+<h2 id="对偶原理与最优解条件">3. 对偶原理与最优解条件</h2>
+<p>前面我们对于可导函数获得了对偶原理以及 KKT
+条件，那如果是不可导的函数呢？我们有 <span class="math display">\[
+f(y) \geq f\left(x^{\star}\right)+0^{T}\left(y-x^{\star}\right) \quad
+\text { for all } y \quad \Longleftrightarrow \quad 0 \in \partial
+f\left(x^{\star}\right)
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-optimal.PNG" srcset="/img/loading.gif" lazyload
+alt="optimal" /></p>
+<p><strong><em>例子</em></strong>：对于优化问题 <span
+class="math inline">\(\min f(x),\text{s.t. }x\in C \iff \min
+f(x)+\delta_C(x)=F(x)\)</span>，因此 <span class="math display">\[
+0\in \partial f(x^\star)+\partial \delta_C(x^\star) \Longrightarrow
+\exists p\in\partial f(x^\star),\quad\text{s.t.}-p\in
+\partial\delta_C(x^\star)=N_C(x^\star)
+\]</span> 如果 <span class="math inline">\(f\in C^1\)</span>，则有 <span
+class="math inline">\(-\nabla f(x^\star)\in N_C(x^\star)\)</span>。</p>
+<p>KKT 条件怎么变呢？只需要修改一下梯度条件：</p>
+<ol type="1">
+<li>原问题可行性 <span class="math inline">\(x^\star\)</span> is primal
+feasible</li>
+<li>对偶问题可行性 <span class="math inline">\(\lambda^\star
+\succeq0\)</span></li>
+<li>互补性条件 <span class="math inline">\(\lambda_i^\star
+f_i(x^\star)=0,i=1,...,m\)</span></li>
+<li>梯度条件 <span class="math inline">\(0\in \partial
+f_0(x^\star)+\sum_i \lambda_i^\star \partial f_i(x^\star)\)</span></li>
+</ol>
+<h2 id="方向导数">4. 方向导数</h2>
+<p><strong>方向导数(directional derivative)</strong>的定义为 <span
+class="math display">\[
+\begin{aligned}
+f^{\prime}(x ; y) &amp;=\lim _{\alpha \searrow 0} \frac{f(x+\alpha
+y)-f(x)}{\alpha} \\
+&amp;=\lim _{t \rightarrow \infty}\left(tf\left(x+\frac{1}{t} y\right)-t
+f(x)\right)
+\end{aligned}
+\]</span> 方向导数是<strong>齐次</strong>的，也即 <span
+class="math display">\[
+f&#39;(x;\lambda y)=\lambda f&#39;(x;y) \quad \text{for }\lambda\ge0
+\]</span> 对于<strong>凸函数</strong>，方向导数也可以定义为 <span
+class="math display">\[
+\begin{aligned}
+f^{\prime}(x ; y) &amp;=\inf _{\alpha &gt; 0} \frac{f(x+\alpha
+y)-f(x)}{\alpha} \\
+&amp;=\inf _{t &gt;0}\left(tf\left(x+\frac{1}{t} y\right)-t f(x)\right)
+\end{aligned}
+\]</span> 要证明的话，只需要证明 <span
+class="math inline">\(g(\alpha)=\frac{f(x+\alpha
+y)-f(x)}{\alpha}\)</span> 随着 <span
+class="math inline">\(\alpha\)</span> 单调递减有下界。</p>
+<p>实际上方向导数定义了沿着 <span class="math inline">\(y\)</span>
+方向的函数下界，也即 <span class="math display">\[
+f(x+\alpha y) \geq f(x)+\alpha f^{\prime}(x ; y) \quad \text { for all }
+\alpha \geq 0
+\]</span> 对于凸函数，<span class="math inline">\(x\in\text{int
+dom}f\)</span>，也有 <span class="math display">\[
+f^{\prime}(x ; y)=\sup _{g \in \partial f(x)} g^{T} y
+\]</span> 也即 <span class="math inline">\(f&#39;(x;y)\)</span> 是 <span
+class="math inline">\(\partial f(x)\)</span> 的支撑函数</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-directional-derivate.PNG" srcset="/img/loading.gif" lazyload
+alt="directional-derivate" />
+<figcaption aria-hidden="true">directional-derivate</figcaption>
+</figure>
+<p><strong>Remarks</strong>：需要注意的是<strong>负的次梯度方向</strong>不一定是函数值下降方向，而只有<strong>方向导数
+&lt;0 的方向</strong>才是函数值下降方向。反例如下图</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-directional-derivate2.PNG" srcset="/img/loading.gif" lazyload
+alt="directional-derivate2" />
+<figcaption aria-hidden="true">directional-derivate2</figcaption>
+</figure>
+<p>如果我们想找到下降最快的方向(Steepest descent direction)，则需要
+<span class="math display">\[
+\Delta x_{\mathrm{nsd}}=\underset{\|y\|_{2} \leq
+1}{\operatorname{argmin}} f^{\prime}(x ; y)
+\]</span> 根据前面的式子我们知道 <span class="math inline">\(\min
+f&#39;(x;y)=\min_{\Vert y\Vert_2\le1}\sup_{g\in\partial
+f(x)}g^Ty\)</span>，如果假设极大极小可以换序，则可以等价为 <span
+class="math inline">\(\sup_g \inf_y g^Ty = \sup_{g\in\partial f(x)}
+-\Vert g\Vert_2\)</span>，上面过程可以表述为原问题与对偶问题 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f&#39;(x;y) \\
+\text{subject to}\quad&amp; \|y\|_{2} \leq 1
+\end{aligned}
+\qquad
+\begin{aligned}
+\text{minimize} \quad&amp; -\|g\|_{2} \\
+\text{subject to}\quad&amp; g \in \partial f(x)
+\end{aligned}
+\]</span> 于是就有 <span class="math inline">\(f^{\prime}\left(x ;
+\Delta
+x_{\mathrm{nsd}}\right)=-\left\|g^{\star}\right\|_{2}\)</span>，<span
+class="math inline">\(\text { if } 0 \notin \partial f(x), \Delta
+x_{\mathrm{nsd}}=-g^{\star}
+/\left\|g^{\star}\right\|_{2}\)</span>，如下图所示</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/16-steepest-descent.PNG" srcset="/img/loading.gif" lazyload
+alt="16-steepest-descent" />
+<figcaption aria-hidden="true">16-steepest-descent</figcaption>
+</figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/10/optimization/ch17-subgradient-descent/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记17：次梯度下降</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/08/tools/matlab-parpool/">
+                        <span class="hidden-mobile">MATLAB R2016a 无法启动并行池</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="上一小节讲了拉格朗日函数，可以把原始问题转化为对偶问题，并且对偶问题是凸的。我们还得到了弱对偶性和强对偶性的概念，并且提到了 Slater Condition 保证凸问题的强对偶性成立，并且给出了一些几何的直观解释。那么在这一节，我们将引出著名的 KKT 条件，它给出了最优解需要满足的必要条件，是求解优化问题最优解的一个重要方式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记12：KKT 条件">
+<meta property="og:url" content="http://example.com/2020/03/26/optimization/ch12-kkt/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="上一小节讲了拉格朗日函数，可以把原始问题转化为对偶问题，并且对偶问题是凸的。我们还得到了弱对偶性和强对偶性的概念，并且提到了 Slater Condition 保证凸问题的强对偶性成立，并且给出了一些几何的直观解释。那么在这一节，我们将引出著名的 KKT 条件，它给出了最优解需要满足的必要条件，是求解优化问题最优解的一个重要方式。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-26T06:34:22.000Z">
+<meta property="article:modified_time" content="2020-04-23T12:15:14.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="对偶原理">
+<meta property="article:tag" content="拉格朗日函数">
+<meta property="article:tag" content="KKT条件">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记12：KKT 条件 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记12：KKT 条件">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-26 14:34" pubdate>
+        March 26, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      53 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记12：KKT 条件</h1>
+            
+            <div class="markdown-body">
+              <p>上一小节讲了拉格朗日函数，可以把原始问题转化为对偶问题，并且对偶问题是凸的。我们还得到了弱对偶性和强对偶性的概念，并且提到了
+Slater Condition
+保证凸问题的强对偶性成立，并且给出了一些几何的直观解释。那么在这一节，我们将引出著名的
+<strong>KKT
+条件</strong>，它给出了最优解需要满足的必要条件，是求解优化问题最优解的一个重要方式。</p>
+<span id="more"></span>
+<h2 id="kkt-条件">1. KKT 条件</h2>
+<p>我们首先回顾一下拉格朗日函数，考虑下面的优化问题 <span
+class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;h_{i}(x)=0, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 那么他的拉格朗日函数就是 <span class="math display">\[
+L(x,\lambda,\nu)=f_0(x)+\lambda^Tf(x)+\nu^Th(x)
+\]</span> 首先，我们看对偶函数 <span class="math display">\[
+g(\lambda,\nu)=\inf_{x\in\mathcal{D}}\left(f_0(x)+\lambda^Tf(x)+\nu^Th(x)\right)
+\]</span> 对偶问题实际上就是 <span class="math display">\[
+d^\star = \sup_{\lambda,\nu}g(\lambda,\nu)=\sup_{\lambda,\nu}\inf_x
+L(x,\lambda,\nu)
+\]</span> 然后我们再看原问题，由于 <span
+class="math inline">\(\lambda\succeq0,f(x)\preceq0\)</span>，我们有
+<span class="math display">\[
+f_0(x)=\sup_{\lambda,\nu}L(x,\lambda,\nu)
+\]</span> 原问题的最优解实际上就是 <span class="math display">\[
+p^\star=\inf_x f_0(x)= \inf_x \sup_{\lambda,\nu}L(x,\lambda,\nu)
+\]</span> <strong>弱对偶性</strong> <span class="math inline">\(p^\star
+\ge d^\star\)</span> 实际上说的是什么呢？就是 <strong>max-min
+不等式</strong> <span class="math display">\[
+\inf_x \sup_{\lambda,\nu}L(x,\lambda,\nu) \ge \sup_{\lambda,\nu}\inf_x
+L(x,\lambda,\nu)
+\]</span> <strong>强对偶性</strong>说的又是什么呢？就是上面能够取等号
+<span class="math display">\[
+\inf_x \sup_{\lambda,\nu}L(x,\lambda,\nu) = \sup_{\lambda,\nu}\inf_x
+L(x,\lambda,\nu) = L({x}^\star,{\lambda}^\star,{\nu}^\star)
+\]</span> 实际上 <span
+class="math inline">\({x}^\star,{\lambda}^\star,{\nu}^\star\)</span>
+就是<strong>拉格朗日函数的鞍点</strong>！！！（数学家们真实太聪明了！！！妙啊！！！）那么也就是说<strong>强对偶性成立等价于拉格朗日函数存在鞍点(在定义域内)</strong>。</p>
+<p>好，如果存在鞍点的话，我们怎么求解呢？还是看上面取等的式子 <span
+class="math display">\[
+\begin{aligned}
+f_0({x}^\star) = g(\lambda^\star,\nu^\star) &amp;= \inf_x \left(
+f_0(x)+\lambda^{\star T}f(x)+\nu^{\star T}h(x) \right) \\
+&amp; \le f_0(x^\star)+\lambda^{\star T}f(x^\star)+\nu^{\star
+T}h(x^\star) \\
+&amp; \le f_0(x^\star)
+\end{aligned}
+\]</span> 这两个不等号必须要取到等号，而第一个不等号取等条件应为 <span
+class="math display">\[
+\nabla_x \left( f_0(x)+\lambda^{\star T}f(x)+\nu^{\star T}h(x) \right)
+=0
+\]</span> 第二个不等号取等条件为 <span class="math display">\[
+\lambda^\star_i f_i(x^\star)=0,\forall i
+\]</span> 同时，由于 <span
+class="math inline">\({x}^\star,{\lambda}^\star,{\nu}^\star\)</span>
+还必须位于定义域内，需要满足约束条件，因此上面的几个条件共同构成了 KKT
+条件。</p>
+<blockquote>
+<p><strong>KKT 条件</strong></p>
+<ol type="1">
+<li>原始约束 <span class="math inline">\(f_i(x)\le0,i=1,...,m, \quad
+h_i(x)=0,i=1,...,p\)</span></li>
+<li>对偶约束 <span class="math inline">\(\lambda\succeq0\)</span></li>
+<li>互补性条件(complementary slackness) <span
+class="math inline">\(\lambda_i f_i(x)=0,i=1,...,m\)</span></li>
+<li>梯度条件</li>
+</ol>
+<p><span class="math display">\[
+\nabla f_{0}(x)+\sum_{i=1}^{m} \lambda_{i} \nabla
+f_{i}(x)+\sum_{i=1}^{p} \nu_{i} \nabla h_{i}(x)=0
+\]</span></p>
+</blockquote>
+<h2 id="kkt-条件与凸问题">2. KKT 条件与凸问题</h2>
+<blockquote>
+<p><strong>Remarks(重要结论)</strong></p>
+<ol type="1">
+<li>前面推导没有任何凸函数的假设，因此不论是否为凸问题，<strong>如果满足强对偶性，那么最优解一定满足
+KKT 条件</strong>。</li>
+<li>但是反过来不一定成立，也即 <strong>KKT
+条件的解不一定是最优解</strong>，因为如果 <span
+class="math inline">\(L(x,\lambda^\star,\nu^\star)\)</span>
+不是凸的，那么 <span class="math inline">\(\nabla_x L=0\)</span>
+并不能保证 <span class="math inline">\(g(\lambda^\star,\nu^\star)=\inf_x
+L(x,\lambda^\star,\nu^\star)\ne
+L(x^\star,\lambda^\star,\nu^\star)\)</span>，也即不能保证 <span
+class="math inline">\({x}^\star,{\lambda}^\star,{\nu}^\star\)</span>
+就是鞍点。</li>
+</ol>
+</blockquote>
+<p>但是如果我们假设原问题为凸问题的话，那么 <span
+class="math inline">\(L(x,\lambda^\star,\nu^\star)\)</span>
+就是一个凸函数，由梯度条件 <span class="math inline">\(\nabla_x
+L=0\)</span> 我们就能得到 <span
+class="math inline">\(g(\lambda^\star,\nu^\star)=L(x^\star,\lambda^\star,\nu^\star)=\inf_x
+L(x,\lambda^\star,\nu^\star)\)</span>，另一方面根据互补性条件我们有此时
+<span
+class="math inline">\(f_0(x^\star)=L(x^\star,\lambda^\star,\nu^\star)\)</span>，因此我们可以得到一个结论</p>
+<blockquote>
+<p><strong>Remarks(重要结论)</strong>：</p>
+<ol type="1">
+<li>考虑原问题为凸的，那么若 KKT 条件有解 <span
+class="math inline">\(\tilde{x},\tilde{\lambda},\tilde{\nu}\)</span>，则原问题一定满足强对偶性，且他们就对应原问题和对偶问题的最优解。</li>
+<li>但是需要注意的是，KKT
+条件可能无解！此时就意味着原问题不满足强对偶性！</li>
+</ol>
+</blockquote>
+<p>假如我们考虑上一节提到的 SCQ 条件，如果凸优化问题满足 SCQ
+条件，则意味着强对偶性成立，则此时有结论</p>
+<blockquote>
+<p><strong>Remarks(重要结论)</strong>：</p>
+<p>如果 SCQ 满足，那么 <span class="math inline">\(x\)</span>
+为最优解<strong>当且仅当</strong>存在 <span
+class="math inline">\(\lambda,\nu\)</span> 满足 KKT 条件！</p>
+</blockquote>
+<p><strong><em>例子 1</em></strong>：等式约束的二次优化问题 <span
+class="math inline">\(P\in S_+^n\)</span> <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; (1/2)x^TPx+q^Tx+r \\
+\text { subject to } \quad&amp; Ax=b
+\end{aligned}
+\]</span> 那么经过简单计算就可以得到 KKT 条件为 <span
+class="math display">\[
+\left[\begin{array}{cc}
+P &amp; A^{T} \\
+A &amp; 0
+\end{array}\right]\left[\begin{array}{l}
+x^{\star} \\
+\nu^{\star}
+\end{array}\right]=\left[\begin{array}{c}
+-q \\
+b
+\end{array}\right]
+\]</span> <strong><em>例子 2</em></strong>：注水问题 <span
+class="math display">\[
+\begin{aligned}
+&amp;\text { minimize } \quad-\sum_{i=1}^{n} \log
+\left(\alpha_{i}+x_{i}\right)\\
+&amp;\text { subject to } \quad x \succeq 0, \quad \mathbf{1}^{T} x=1
+\end{aligned}
+\]</span> 根据上面的结论，<span class="math inline">\(x\)</span>
+是最优解当且仅当 <span class="math inline">\(x\succeq0,\mathbf{1}^{T}
+x=1\)</span>，且存在 <span class="math inline">\(\lambda,\nu\)</span>
+满足 <span class="math display">\[
+\lambda \succeq 0, \quad \lambda_{i} x_{i}=0, \quad
+\frac{1}{x_{i}+\alpha_{i}}+\lambda_{i}=\nu
+\]</span> 根据互补性条件 <span class="math inline">\(\lambda_i
+x_i=0\)</span> 分情况讨论可以得到</p>
+<ul>
+<li>如果 <span class="math inline">\(\nu&lt;1/\alpha_i\)</span>：<span
+class="math inline">\(\lambda_i=0,x_i=1/\nu-\alpha_i\)</span></li>
+<li>如果 <span class="math inline">\(\nu\ge1/\alpha_i\)</span>：<span
+class="math inline">\(\lambda_i=\nu-1/\alpha_i,x_i=0\)</span></li>
+</ul>
+<p>整理就可以得到 <span class="math inline">\(\mathbf{1}^{T}
+x=\sum_i\max\{0,1/\nu-\alpha_i\}\)</span>，这个式子怎么理解呢？就像向一个池子里注水一样</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/12-water.png" srcset="/img/loading.gif" lazyload
+alt="water filling" />
+<figcaption aria-hidden="true">water filling</figcaption>
+</figure>
+<h2 id="扰动与敏感性分析">3. 扰动与敏感性分析</h2>
+<p>现在我们再回到原始问题 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq 0, \quad i=1, \ldots, m\\
+&amp;h_{i}(x)=0, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 我们引入了对偶函数 <span
+class="math inline">\(g(\lambda,\nu)\)</span>，那这两个参数 <span
+class="math inline">\(\lambda,\nu\)</span>
+有什么含义吗？假如我们把原问题放松一下 <span class="math display">\[
+\begin{aligned}
+\text { minimize } \quad&amp; f_{0}(x)\\
+\text { subject to } \quad&amp; f_{i}(x) \leq u_i, \quad i=1, \ldots,
+m\\
+&amp;h_{i}(x)=v_i, \quad i=1, \ldots, p
+\end{aligned}
+\]</span> 记最优解为 <span class="math inline">\(p^\star(u,v)=\min
+f_0(x)\)</span>，现在对偶问题变成了 <span class="math display">\[
+\begin{aligned}
+\max \quad&amp;  g(\lambda,\nu)-u^T\lambda -v^T\nu\\
+\text{s.t.} \quad&amp; \lambda\succeq0
+\end{aligned}
+\]</span> 假如说原始对偶问题的最优解为 <span
+class="math inline">\(\lambda^\star,\nu^\star\)</span>，松弛后的对偶问题最优解为
+<span
+class="math inline">\(\tilde{\lambda},\tilde{\nu}\)</span>，那么根据弱对偶性原理，有
+<span class="math display">\[
+\begin{aligned}
+p^\star(u,v) &amp;\ge g(\tilde\lambda,\tilde\nu)-u^T\tilde\lambda
+-v^T\tilde\nu \\
+&amp;\ge g(\lambda^\star,\nu^\star)-u^{T}\lambda^\star -v^{T}\nu^\star
+\\
+&amp;= p^\star(0,0) - u^{T}\lambda^\star -v^{T}\nu^\star
+\end{aligned}
+\]</span> 这像不像关于 <span class="math inline">\(u,v\)</span>
+的一阶近似？太像了！实际上，我们有 <span class="math display">\[
+\lambda_{i}^{\star}=-\frac{\partial p^{\star}(0,0)}{\partial u_{i}},
+\quad \nu_{i}^{\star}=-\frac{\partial p^{\star}(0,0)}{\partial v_{i}}
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/12-sensitivity.PNG" srcset="/img/loading.gif" lazyload
+alt="sensitivity" /></p>
+<h2 id="reformulation">4. Reformulation</h2>
+<p>前面将凸优化问题的时候，我们提到了Reformulation的几个方法来简化原始问题，比如消去等式约束，添加等式约束，添加松弛变量，epigraph等等。现在当我们学习了对偶问题，再来重新看一下这些方法。</p>
+<h3 id="引入等式约束">4.1 引入等式约束</h3>
+<p><strong><em>例子 1</em></strong>：考虑无约束优化问题 <span
+class="math inline">\(\min
+f(Ax+b)\)</span>，他的对偶问题跟原问题是一样的。如果我们引入等式约束，原问题和对偶问题变为
+<span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; f_{0}(y) \quad \\
+\text{subject to} \quad&amp; A x+b-y=0
+\end{aligned}
+\quad\qquad
+\begin{aligned}
+\text{minimize} \quad&amp; b^{T} \nu-f_{0}^{*}(\nu) \\
+\text{subject to} \quad&amp; A^{T} \nu=0
+\end{aligned}
+\]</span> <strong><em>例子 2</em></strong>：考虑无约束优化 <span
+class="math inline">\(\min \Vert
+Ax-b\Vert\)</span>，类似的引入等式约束后，对偶问题变为 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; b^{T} \nu \\
+\text{subject to} \quad&amp; A^{T} \nu=0,\quad \Vert\nu\Vert_*\le1
+\end{aligned}
+\]</span></p>
+<h3 id="显示约束与隐式约束的相互转化">4.2
+显示约束与隐式约束的相互转化</h3>
+<strong><em>例子
+3</em></strong>：考虑原问题如下，可以看出来对偶问题非常复杂 $$
+<span class="math display">\[\begin{aligned}
+\text{minimize} \quad&amp; c^{T} x \\
+\text{subject to} \quad&amp; A x=b \\
+\quad&amp; -1 \preceq x \preceq 1
+\end{aligned}\]</span>
+<span class="math display">\[\begin{aligned}
+\text{maximize} \quad&amp; -b^{T} \nu-\mathbf{1}^{T}
+\lambda_{1}-\mathbf{1}^{T} \lambda_{2} \\
+\text{subject to} \quad&amp; c+A^{T} \nu+\lambda_{1}-\lambda_{2}=0 \\
+\quad&amp; \lambda_{1} \succeq 0, \quad \lambda_{2} \succeq 0
+\end{aligned}\]</span>
+<span class="math display">\[
+如果我们原问题的不等式约束条件转化为隐式约束，则有
+\]</span>
+<span class="math display">\[\begin{aligned}
+\text{minimize} \quad&amp; f_{0}(x)=\left\{\begin{array}{ll}c^{T} x
+&amp; \Vert x\Vert_\infty \preceq 1 \\ \infty &amp; \text { otherwise
+}\end{array}\right. \\
+\text{subject to} \quad&amp; A x=b
+\end{aligned}\]</span>
+<p><span class="math display">\[
+然后对偶问题就可以转化为无约束优化问题
+\]</span> -b<sup>T-A</sup>T+c_1 $$</p>
+<h3 id="转化目标函数与约束函数">4.3 转化目标函数与约束函数</h3>
+<p><strong><em>例子 4</em></strong>：还考虑上面提到的无约束优化问题
+<span class="math inline">\(\min \Vert
+Ax-b\Vert\)</span>，我们可以把目标函数平方一下，得到 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; (1/2)\Vert y\Vert^2 \\
+\text{subject to} \quad&amp; Ax-b=y
+\end{aligned}
+\]</span> 然后对偶问题就可以转化为 <span class="math display">\[
+\begin{aligned}
+\text{minimize} \quad&amp; (1/2)\Vert \nu\Vert_*^2+ b^T\nu \\
+\text{subject to} \quad&amp; A^T\nu=0
+\end{aligned}
+\]</span></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">对偶原理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/KKT%E6%9D%A1%E4%BB%B6/">KKT条件</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/27/optimization/ch13-complementary/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记13：互补性条件</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/18/optimization/ch11-dual/">
+                        <span class="hidden-mobile">凸优化笔记 11：对偶原理 & 拉格朗日函数</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

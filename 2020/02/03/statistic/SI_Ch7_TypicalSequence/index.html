@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="典型集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(七)  Typical Sequence">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch7_TypicalSequence/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="典型集">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T12:01:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:05:34.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="典型集">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(七)  Typical Sequence - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(七)  Typical Sequence">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 20:01" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      57 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(七)  Typical Sequence</h1>
+            
+            <div class="markdown-body">
+              <p>典型集</p>
+<span id="more"></span>
+<h2 id="一些定理">1. 一些定理</h2>
+<blockquote>
+<p><strong>Markov inequality</strong>: <span class="math inline">\(r.v.
+\ \ \mathsf{x}\ge0\)</span> <span class="math display">\[
+\mathbb{P}(x\ge\mu)\le \frac{\mathbb{E}[x]}{\mu}
+\]</span> <strong>Proof</strong>: omit...</p>
+<p><strong>Weak law of large numbers(WLLN)</strong>: <span
+class="math inline">\(\vec{y}=[y_1,y_2,...,y_N]^T, \ \ \ \ y_i \sim p \
+\ \ i.i.d\)</span> <span class="math display">\[
+\lim_{N\to\infty}\mathbb{P}(|L_p(\vec{y})+H(p)|&gt;\varepsilon)=0, \ \
+\forall \varepsilon&gt;0
+\]</span> <strong>Proof</strong>: omit...</p>
+</blockquote>
+<h2 id="typical-set">2. Typical set</h2>
+<ul>
+<li><p>Definition: <span
+class="math inline">\(\mathcal{T}_\varepsilon(p;N)=\{\vec{y}\in\mathcal{Y}^N:|L_p(\vec{y})+H(p)|&lt;\varepsilon\}\)</span></p></li>
+<li><p>Properties</p>
+<ul>
+<li>WLLN <span class="math inline">\(\Longrightarrow
+P\left(\vec{y}\in\mathcal{T}_\varepsilon(p;N)\right)\simeq1\)</span>,
+<span class="math inline">\(N\)</span> large</li>
+<li><span class="math inline">\(L_p(\vec{y})\simeq H(p) \Longrightarrow
+p_y(\vec{y})\simeq 2^{-NH(p)}\)</span></li>
+<li><span class="math inline">\(\Longrightarrow
+|\mathcal{T}_\varepsilon(p;N)|\simeq 2^{NH(p)}\)</span></li>
+<li>当 p 不是均匀分布的时候，<span
+class="math inline">\(\frac{|\mathcal{T}_\varepsilon(p;N)|}{|\mathcal{Y}^N|}\to0\)</span>，也就是说典型集中元素(序列)个数在所有可能的元素(序列)中所占比例趋于
+0，但是典型集中元素概率的和却趋近于 1</li>
+</ul></li>
+<li><p>Theorem</p></li>
+</ul>
+<blockquote>
+<p><strong>Asymptotic Equipartition Property(AEP)</strong></p>
+<ul>
+<li><span class="math display">\[
+\lim_{N\to\infty}P(\mathcal{T}_\varepsilon(p;N))=1 \\
+\]</span> <span class="math display">\[
+2^{-N(H(p)+\epsilon)} \leq p_{\mathrm{y}}(\boldsymbol{y}) \leq
+2^{-N(H(p)-\epsilon)}, \forall \boldsymbol{y} \in
+\mathcal{T}_{\epsilon}(p ; N)
+\]</span></li>
+<li>for a sufficient large <span class="math inline">\(N\)</span> <span
+class="math display">\[
+(1-\epsilon) 2^{N(H(p)-\epsilon)} \leq\left|\mathcal{T}_{\epsilon}(p ;
+N)\right| \leq 2^{N(H(p)+\epsilon)}
+\]</span> <strong>Proof</strong>: <span class="math display">\[
+\begin{aligned}\left|\mathcal{T}_{\epsilon}(p ; N)\right|
+&amp;=\sum_{\boldsymbol{y} \in \mathcal{T}_{\epsilon}(p ; N)} 1 \\
+&amp;=2^{N(H(p)+\epsilon)} \sum_{\boldsymbol{y} \in
+\mathcal{T}_{\epsilon}(p ; N)} 2^{-N(H(p)+\epsilon)} \\ &amp; \leq
+2^{N(H(p)+\epsilon)} \sum_{\boldsymbol{y} \in \mathcal{T}_{\epsilon}(p ;
+N)} p_{\mathbf{y}}(\boldsymbol{y}) \\ &amp;=2^{N(H(p)+\epsilon)}
+P\left\{\mathcal{T}_{\epsilon}(p ; N)\right\} \\ &amp; \leq
+2^{N(H(p)+\epsilon)} \end{aligned}
+\]</span></li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/typical_set.PNG" srcset="/img/loading.gif" lazyload
+alt="typical_set" />
+<figcaption aria-hidden="true">typical_set</figcaption>
+</figure>
+</blockquote>
+<h2 id="divergence-varepsilon-typical-set">3. <strong>Divergence <span
+class="math inline">\(\varepsilon\)</span>-typical set</strong></h2>
+<ul>
+<li><p>WLLN: <span class="math inline">\(\vec{y}=[y_1,y_2,...,y_N]^T, \
+\ \ \ y_i \sim p \ \ \ i.i.d\)</span> $$ L_{p | q}()= = _{n=1}^{N} \</p>
+<p><em>{N } (|L</em>{p | q}()-D(p | q)|&gt;)=0 $$
+<strong>Remarks</strong>:
+前面只考虑的均值，这里还考虑了另一个分布</p></li>
+<li><p>Definition: <span
+class="math inline">\(\vec{\boldsymbol{y}}=[y_1,y_2,...,y_N]^T, \ \ \ \
+y_i \sim p \ \ \ i.i.d\)</span> <span class="math display">\[
+\mathcal{T}_{\epsilon}(p | q ; N)=\left\{\boldsymbol{y} \in
+\mathcal{Y}^{N}:\left|L_{p | q}(\boldsymbol{y})-D(p \| q)\right| \leq
+\epsilon\right\}
+\]</span></p></li>
+<li><p>Properties</p>
+<ul>
+<li>WLLN <span class="math inline">\(\Longrightarrow
+q_{\mathbf{y}}(\boldsymbol{y}) \approx p_{\mathbf{y}}(\boldsymbol{y})
+2^{-N D(p \| q)}\)</span></li>
+<li><span class="math inline">\(Q\left\{\mathcal{T}_{\epsilon}(p | q ;
+N)\right\} \approx 2^{-N D(p \| q)} \to0\)</span></li>
+<li><strong>Remarks</strong>: p 的典型集可能是 q 的非典型集，在 <span
+class="math inline">\(N\)</span> 很大的时候，不同分布的 typical set
+是正交的</li>
+</ul></li>
+<li><p>Theorem <span class="math display">\[
+(1-\epsilon) 2^{-N(D(p \| q)+\epsilon)} \leq
+Q\left\{\mathcal{T}_{\epsilon}(p \| q ; N)\right\} \leq 2^{-N(D(p \|
+q)-\epsilon)}
+\]</span></p></li>
+</ul>
+<h2 id="large-deviation-of-sample-averages">4. Large deviation of sample
+averages</h2>
+<blockquote>
+<p><strong>Theorem (Cram´er’s Theorem)</strong>: <span
+class="math inline">\(\vec{\boldsymbol{y}}=[y_1,y_2,...,y_N]^T, \ \ \
+y_i \sim q \ \ \ i.i.d\)</span> with mean <span
+class="math inline">\(\mu&lt;\infty\)</span> and <span
+class="math inline">\(\gamma&gt;\mu\)</span> <span
+class="math display">\[
+\lim _{N \rightarrow \infty}-\frac{1}{N} \log
+\mathbb{P}\left(\frac{1}{N} \sum_{n=1}^{N} y_{n} \geq
+\gamma\right)=E_{C}(\gamma)
+\]</span> where <span class="math inline">\(E_C(\gamma)\)</span> is
+referred as <strong>Chernoﬀ exponent</strong> <span
+class="math display">\[
+E_{C}(\gamma) \triangleq D(p(\cdot ; x) \| q),\ \ \ p(\cdot ; x)=q(y)
+e^{x y-\alpha(x)}
+\]</span> and with <span class="math inline">\(x&gt;0\)</span> chosen
+such that <span class="math display">\[
+\mathbb{E}_{p(\cdot;x)}[y]=\gamma
+\]</span> <strong>Proof</strong>:</p>
+<ol type="1">
+<li><span class="math inline">\(\begin{aligned}
+\mathbb{P}\left(\frac{1}{N} \sum_{n=1}^{N} y_{n} \geq \gamma\right)
+&amp;=\mathbb{P}\left(e^{x \sum_{n=1}^{N} y_{n}} \geq e^{N x
+\gamma}\right) \\ &amp; \leq e^{-N x \gamma} \mathbb{E}\left[e^{x
+\sum_{n=1}^{N} y_{n}}\right] \\ &amp;=e^{-N x
+\gamma}\left(\mathbb{E}\left[e^{x y}\right]\right)^{N} \\ &amp; \leq
+e^{-N\left(x_{*} \gamma-\alpha\left(x_{*}\right)\right)}
+\end{aligned}\)</span></li>
+<li><span class="math inline">\(\varphi(x)=x\gamma-\alpha(x)\)</span>
+是凸的，最大值取在 <span class="math inline">\(\mathbb{E}_{p\left(\cdot
+; x_{*}\right)}[y]=\dot{\alpha}\left(x_{*}\right)=\gamma\)</span></li>
+<li>可以证明 <span class="math inline">\(x_{*}
+\gamma-\alpha\left(x_{*}\right)=x_{*}
+\dot{\alpha}\left(x_{*}\right)-\alpha\left(x_{*}\right)=D\left(p\left(\cdot
+; x_{*}\right) \| q\right)\)</span></li>
+<li>于是有 <span class="math inline">\(\mathbb{P}\left(\frac{1}{N}
+\sum_{n=1}^{N} y_{n} \geq \gamma\right) \leq e^{-N
+E_{C}(\gamma)}\)</span></li>
+<li><em>下界的证明，暂时略...</em></li>
+</ol>
+<blockquote>
+<p>用到的两个事实：<span
+class="math inline">\(p(y;x)=q(y)\exp(xy-\alpha(x))\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(D(p(y;x)||q(y))\)</span> 随着 x
+单调增加</li>
+<li><span class="math inline">\(\mathbb{E}_{p(;x)}[y]\)</span> 随着 x
+单调增加</li>
+</ol>
+</blockquote>
+<p><strong>Remarks</strong>:</p>
+<ol type="1">
+<li>这个定理也相当于表达了 <span
+class="math inline">\(\mathbb{P}\left(\frac{1}{N} \sum_{n=1}^{N} y_{n}
+\geq \gamma\right) \cong 2^{-N E_{\mathrm{C}}(\gamma)}\)</span></li>
+<li>相当于是分布 <strong>q</strong> 向由 <span
+class="math inline">\(\mathbb{E}[y]=\sum_{n=1}^{N} y_{n} \geq
+\gamma\)</span> 所定义的一个凸集中投影，恰好投影到边界(线性分布族) <span
+class="math inline">\(\mathbb{E}[y]=\gamma\)</span> 上，而 <span
+class="math inline">\(q\)</span> 向线性分布族的投影恰好就是 (10)
+中的指数族表达式</li>
+</ol>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/cramer_thm.PNG" srcset="/img/loading.gif" lazyload
+alt="cramer_thm" />
+<figcaption aria-hidden="true">cramer_thm</figcaption>
+</figure>
+</blockquote>
+<h2 id="types-and-type-classes">5. Types and type classes</h2>
+<ul>
+<li><p>Definition: <span
+class="math inline">\(\vec{\boldsymbol{y}}=[y_1,y_2,...,y_N]^T\)</span>
+(不关心真实服从的是哪个分布)</p>
+<ul>
+<li><strong>type</strong>(实质上就是一个<strong>经验分布</strong>)定义为</li>
+</ul>
+<p><span class="math display">\[
+\hat{p}(b ; \mathbf{y})=\frac{1}{N} \sum_{n=1}^{N}
+\mathbb{1}_{b}\left(y_{n}\right)=\frac{N_{b}(\mathbf{y})}{N}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\mathcal{P}_{N}^{y}\)</span> 表示长度为
+<span class="math inline">\(N\)</span> 的序列所有可能的 types</li>
+<li><strong>type class</strong>: <span
+class="math inline">\(\mathcal{T}_{N}^{y}(p)=\left\{\mathbf{y} \in
+y^{N}: \hat{p}(\cdot ; \mathbf{y}) \equiv p(\cdot)\right\},\ \ \
+p\in\mathcal{P}_{N}^{y}\)</span></li>
+</ul></li>
+<li><p>Exponential Rate Notation: <span class="math inline">\(f(N)
+\doteq 2^{N \alpha}\)</span> <span class="math display">\[
+\lim _{N \rightarrow \infty} \frac{\log f(N)}{N}=\alpha
+\]</span> <strong>Remarks</strong>: <span
+class="math inline">\(\alpha\)</span> 表示了指数上面关于 <span
+class="math inline">\(N\)</span> 的阶数(log、线性、二次 ...)</p></li>
+<li><p>Properties</p>
+<ul>
+<li><span class="math inline">\(\left|\mathcal{P}_{N}^{y}\right|
+\leq(N+1)^{|y|}\)</span></li>
+<li><span class="math inline">\(q^{N}(\mathbf{y})=2^{-N(D(\hat{p}(\cdot
+\mathbf{y}) \| q)+H(\hat{p}(\cdot ; \mathbf{y})))}\)</span> <span
+class="math inline">\(p^{N}(\mathbf{y})=2^{-N H(p)} \quad \text { for }
+\mathbf{y} \in \mathcal{T}_{N}^{y}(p)\)</span></li>
+<li><span class="math inline">\(c N^{-|y|} 2^{N H(p)}
+\leq\left|\mathcal{T}_{N}^{y}(p)\right| \leq 2^{N H(p)}\)</span></li>
+</ul></li>
+<li><p>Theorem <span class="math display">\[
+c N^{-|y|} 2^{-N D(p \| q)} \leq Q\left\{\mathcal{T}_{N}^{y}(p)\right\}
+\leq 2^{-N D(p \| q)} \\
+Q\left\{\mathcal{T}_{N}^{y}(p)\right\} \doteq 2^{-N D(p \| q)}
+\]</span></p></li>
+</ul>
+<h2 id="large-deviation-analysis-via-types">6. Large Deviation Analysis
+via Types</h2>
+<ul>
+<li>Definition: <span
+class="math inline">\(\mathcal{R}=\left\{\mathbf{y} \in y^{N}:
+\hat{p}(\cdot ; \mathbf{y}) \in \mathcal{S} \cap
+\mathcal{P}_{N}^{y}\right\}\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Sanov’s Theorem</strong>: <span class="math display">\[
+Q\left\{\mathrm{S} \cap \mathcal{P}_{N}^{y}\right\} \leq(N+1)^{|y|}
+2^{-N D\left(p_{*} \| q\right)} \\
+Q\left\{\mathrm{S} \cap \mathcal{P}_{N}^{y}\right\} \dot\leq 2^{-N
+D\left(p_{*} \| q\right)} \\
+p_{*}=\underset{p \in \mathcal{S}}{\arg \min } D(p \| q)
+\]</span></p>
+</blockquote>
+<h2 id="asymptotics-of-hypothesis-testing">7. Asymptotics of hypothesis
+testing</h2>
+<ul>
+<li>LRT: <span class="math inline">\(L(\boldsymbol{y})=\frac{1}{N} \log
+\frac{p_{1}^{N}(\boldsymbol{y})}{p_{0}^{N}(\boldsymbol{y})}=\frac{1}{N}
+\sum_{n=1}^{N} \log
+\frac{p_{1}\left(y_{n}\right)}{p_{0}\left(y_{n}\right)}
+\frac{&gt;}{&lt;} \gamma\)</span></li>
+<li><span class="math inline">\(P_{F}=\mathbb{P}_{0}\left\{\frac{1}{N}
+\sum_{n=1}^{N} t_{n} \geq \gamma\right\} \approx 2^{-N D\left(p^{*} \|
+p_{0}^{\prime}\right)}\)</span></li>
+<li><span class="math inline">\(P_{M}=1-P_{D} \approx 2^{-N D\left(p^{*}
+\| p_{1}^{\prime}\right)}\)</span></li>
+<li><span class="math inline">\(D\left(p^{*} \|
+p_{0}^{\prime}\right)-D\left(p^{*} \| p_{1}^{\prime}\right)=\int
+p^{*}(t) \log \frac{p_{1}^{\prime}(t)}{p_{0}^{\prime}(t)} \mathrm{d}
+t=\int p^{*}(t) t \mathrm{d}
+t=\mathbb{E}_{p^{*}}[\mathrm{t}]=\gamma\)</span></li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/asymptotic.PNG" srcset="/img/loading.gif" lazyload
+alt="asymptotic" />
+<figcaption aria-hidden="true">asymptotic</figcaption>
+</figure>
+<h2 id="asymptotics-of-parameter-estimation">8.Asymptotics of parameter
+estimation</h2>
+<blockquote>
+<p><strong>Strong Law of Large Numbers(SLLN)</strong>: <span
+class="math display">\[
+\mathbb{P}\left(\lim _{N \rightarrow \infty} \frac{1}{N} \sum_{n=1}^{N}
+w_{n}=\mu\right)=1
+\]</span> <strong>Central Limit Theorem(CLT)</strong>: <span
+class="math display">\[
+\lim _{N \rightarrow \infty} \mathbb{P}\left(\frac{1}{\sqrt{N}}
+\sum_{n=1}^{N}\left(\frac{w_{n}-\mu}{\sigma}\right) \leq
+b\right)=\Phi(b)
+\]</span> 以下三个强度依次递减</p>
+<ol type="1">
+<li><p>依概率 1 收敛(SLLN)：<span class="math inline">\(\mathsf{x}_{N}
+\stackrel{w . p .1}{\longrightarrow} a\)</span></p></li>
+<li><p>概率趋于 0(WLLN):</p></li>
+<li><p>依分布收敛: <span class="math inline">\(\mathsf{x}_{N}
+\stackrel{d}{\longrightarrow} p\)</span></p></li>
+</ol>
+</blockquote>
+<ul>
+<li><p>Asymptotics of ML Estimation</p>
+<blockquote>
+<p><strong>Theorem</strong>: <span class="math display">\[
+\hat{x}_{N}=\arg \max _{x} L_{N}(x ; \mathbf{y})
+\]</span> 在满足某些条件下(mild conditions)，有 <span
+class="math display">\[
+\begin{array}{c}{\hat{x}_{N} \stackrel{w \cdot p \cdot
+1}{\longrightarrow} x_{0}} \\
+{\sqrt{N}\left(\hat{x}_{N}-x_{0}\right) \stackrel{d}{\longrightarrow}
+\mathcal{N}\left(0, J_{y}\left(x_{0}\right)^{-1}\right)}\end{array}
+\]</span></p>
+</blockquote></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%85%B8%E5%9E%8B%E9%9B%86/">典型集</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch8_ModelSelection/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(八) Model Selection</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch6_Modeling/">
+                        <span class="hidden-mobile">统计推断(六) Modeling</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

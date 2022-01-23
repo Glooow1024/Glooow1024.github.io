@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 拟凸函数定义 拟凸函数(quasiconvex function)的定义为：若 \(\text{dom}f\) 为凸集，且对任意的 \(\alpha\)，其下水平集 \[ S_\alpha &#x3D; \{x\in\text{dom}f | f(x)\le\alpha\} \] 都是凸集，则 \(f\) 为拟凸函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记 7：拟凸函数 Quasiconvex Function">
+<meta property="og:url" content="http://example.com/2020/03/06/optimization/ch7-quasicvx/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. 拟凸函数定义 拟凸函数(quasiconvex function)的定义为：若 \(\text{dom}f\) 为凸集，且对任意的 \(\alpha\)，其下水平集 \[ S_\alpha &#x3D; \{x\in\text{dom}f | f(x)\le\alpha\} \] 都是凸集，则 \(f\) 为拟凸函数。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-06T09:36:26.000Z">
+<meta property="article:modified_time" content="2020-03-27T09:58:56.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="拟凸函数">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记 7：拟凸函数 Quasiconvex Function - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记 7：拟凸函数 Quasiconvex Function">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-06 17:36" pubdate>
+        March 6, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记 7：拟凸函数 Quasiconvex Function</h1>
+            
+            <div class="markdown-body">
+              <h2 id="拟凸函数定义">1. 拟凸函数定义</h2>
+<p><strong>拟凸函数(quasiconvex function)</strong>的定义为：若 <span
+class="math inline">\(\text{dom}f\)</span> 为凸集，且对任意的 <span
+class="math inline">\(\alpha\)</span>，其下水平集 <span
+class="math display">\[
+S_\alpha = \{x\in\text{dom}f | f(x)\le\alpha\}
+\]</span> 都是凸集，则 <span class="math inline">\(f\)</span>
+为拟凸函数。</p>
+<span id="more"></span>
+<p>类似的有<strong>拟凹函数(quasiconcave)</strong>的定义。如果一个函数既是拟凸的，又是拟凹的，那么它是<strong>拟线性(quasilinear)</strong>的。</p>
+<blockquote>
+<p><strong>Reamrks</strong>：对于拟线性函数，要求其上水平集和下水平集同时是凸集，因此简单理解，其在某种意义上具有“单调性”。比如
+<span class="math inline">\(e^x,\log x\)</span> 等。</p>
+</blockquote>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>拟凸函数</th>
+<th>各种函数的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/7-quasicvx.PNG" srcset="/img/loading.gif" lazyload
+alt="quasiconvex function" /></td>
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/7-quasi.PNG" srcset="/img/loading.gif" lazyload
+alt="functions" /></td>
+</tr>
+</tbody>
+</table>
+<p>一些常见的拟凸/拟凹/拟线性函数比如</p>
+<p><strong><em>拟凸函数</em></strong></p>
+<ul>
+<li><span class="math inline">\(f(x)=\sqrt{|x|}\)</span></li>
+<li><span class="math inline">\(f(x)=\frac{\Vert x-a\Vert_2}{\Vert
+x-b\Vert_2},\text{dom}f=\{x|\Vert x-a\Vert_2 \le \Vert
+x-b\Vert_2\}\)</span></li>
+</ul>
+<p><strong><em>拟凹函数</em></strong></p>
+<ul>
+<li><span class="math inline">\(f(x)=x_1x_2\)</span> on <span
+class="math inline">\(R^2\)</span></li>
+</ul>
+<p><strong><em>拟线性函数</em></strong></p>
+<ul>
+<li><span class="math inline">\(\text{ceil}(x)=\inf\{z\in Z|z\ge
+x\}\)</span></li>
+<li><span class="math inline">\(\log x\)</span> on <span
+class="math inline">\(R_{++}\)</span></li>
+<li><span
+class="math inline">\(f(x)=\frac{a^Tx+b}{c^Tx+d},\text{dom}f=\{c^Tx+d
+&gt;0\}\)</span> (注意 <span class="math inline">\(f\)</span>
+本身不是凸函数，但是是一个保凸变换)</li>
+</ul>
+<h2 id="拟凸函数的判定等价定义">2. 拟凸函数的判定/等价定义</h2>
+<p>对于普通凸函数，有一些等价定义，比如</p>
+<ul>
+<li>Jensen 不等式 / 凸函数原生定义：<span class="math inline">\(f(\theta
+x+(1-\theta)y)\le \theta f(x)+(1-\theta)f(y)\)</span></li>
+<li>“降维打击”：<span class="math inline">\(g(t)=f(x+tv)\)</span> convex
+<span class="math inline">\(\iff f(x)\)</span> convex</li>
+<li>一阶条件：<span class="math inline">\(f(x)\)</span> convex <span
+class="math inline">\(\iff f(y)\ge \nabla f^T(x)(y-x)\)</span></li>
+<li>二阶条件：<span class="math inline">\(f(x)\)</span> convex <span
+class="math inline">\(\iff \nabla f^2(x)\succeq 0\)</span></li>
+<li>epigraph：<span class="math inline">\(f(x)\)</span> convex <span
+class="math inline">\(\iff \text{epi}f\)</span> convex</li>
+</ul>
+<h3 id="jensen-不等式">2.1 Jensen 不等式</h3>
+<blockquote>
+<p><strong>等价定义 1</strong>：函数 <span
+class="math inline">\(f\)</span>
+为拟凸的<strong>等价于</strong>：定义域为凸集，且 <span
+class="math display">\[
+0\le\theta\le1 \Longrightarrow f(\theta
+x+(1-\theta)y)\le\max\{f(x),f(y)\}
+\]</span> 证明可以直接用定义。</p>
+</blockquote>
+<h3 id="降维打击">2.1 “降维打击”</h3>
+<blockquote>
+<p><strong>等价定义 2</strong>：<span
+class="math inline">\(g(t)=f(x+tv)\)</span> quasiconvex <span
+class="math inline">\(\iff f(x)\)</span> quasiconvex</p>
+<p>证明可以直接用定义。</p>
+<p><strong>Reamrks</strong>：这种“降维打击”的定义方式实际上就是要求
+<span class="math inline">\(f\)</span>
+沿着任意一个方向都是(拟)凸的，对于一些高维空间中难以判定凸性，而其一维形式又比较简单的函数来说较适用，比如下面的二阶条件的证明。</p>
+</blockquote>
+<h3 id="一阶条件">2.2 一阶条件</h3>
+<blockquote>
+<p><strong>等价定义 3</strong>：<span
+class="math inline">\(f(x)\)</span> quasiconvex
+<strong>等价于</strong>：定义域为凸集，且 <span class="math display">\[
+f(y)\le f(x) \Longrightarrow \nabla f^T(x)(y-x)\le0
+\]</span> <strong>Remarks</strong>：该定义实际上是指 <span
+class="math inline">\(\nabla f(x)\)</span> 定义了一个 <span
+class="math inline">\(R^n\)</span>
+空间中的超平面(作为法向量)，该超平面就是某一个下水平集的支撑超平面 <span
+class="math display">\[
+S_\alpha = \{y| f(y)\le f(x)=\alpha \}\subseteq R^n
+\]</span> 需要注意的是，前面讲的对于凸函数来说 <span
+class="math inline">\(\left[\nabla f^T(x)\ \ -1\right]^T\)</span>
+定义了一个 <span class="math inline">\(R^{n+1}\)</span>
+空间中的支撑超平面。注意二者的不同！！！前者是<strong>下水平集的支撑超平面</strong>，后者是<strong>凸函数
+surface 的支撑超平面</strong>，二者相差一个维度。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/7-quasi_support.PNG" srcset="/img/loading.gif" lazyload
+alt="support hyperplane" />
+<figcaption aria-hidden="true">support hyperplane</figcaption>
+</figure>
+<p>上图中三条封闭曲线代表三个水平集，而 <span
+class="math inline">\(\nabla f(x)\)</span>
+就是其中一个水平集的支撑超平面。这可以联想梯度下降法（牛顿下山法），想象这是一个山谷，每一条线都是一个等高线，<span
+class="math inline">\(\left[\nabla f^T(x)\ \
+-1\right]^T\)</span>是山坡地面的法向量，指向空中，而<span
+class="math inline">\(\nabla
+f(x)\)</span>则在这个等高线所在的平面内，且指向山体内部，与等高线相切。。</p>
+</blockquote>
+<h3 id="二阶条件">2.3 二阶条件</h3>
+<p>对于拟凸函数来说，没有二阶的充分必要条件，有充分条件和必要条件。</p>
+<blockquote>
+<p><strong>必要条件</strong>：<span class="math inline">\(f(x)\)</span>
+quasiconvex <span class="math inline">\(\Longrightarrow\)</span> 对任意
+<span class="math inline">\(x\in\text{dom}f,y\in R^n\)</span> <span
+class="math display">\[
+\text{if }\quad  y^T \nabla f(x)=0 \Longrightarrow y^T\nabla^2f(x)y\ge0
+\]</span> 对于一维函数，只需要 <span class="math inline">\(f&#39;(x)=0
+\Longrightarrow f&#39;&#39;(x)\ge0\)</span></p>
+<p><strong>充分条件</strong>：<span class="math inline">\(f(x)\)</span>
+quasiconvex <span class="math inline">\(\Longleftarrow\)</span> 对任意
+<span class="math inline">\(x\in\text{dom}f,y\in R^n,y\ne0\)</span>
+<span class="math display">\[
+\text{if }\quad  y^T \nabla f(x)=0 \Longrightarrow y^T\nabla^2f(x)y&gt;0
+\]</span> 证明：注意这里对于一维函数 <span class="math inline">\(f:R\to
+R\)</span> 较简单，因此可以应用“降维打击”的等价定义进行证明。</p>
+</blockquote>
+<h2 id="拟凸函数的保凸变换">3. 拟凸函数的保凸变换</h2>
+<p>先来复习一下凸函数的保凸变换</p>
+<ul>
+<li>正权重求和</li>
+<li>与仿射变换复合</li>
+<li>最大值/上确界</li>
+<li>单调凸函数与凸函数的复合</li>
+<li>下确界</li>
+<li>透射变换</li>
+</ul>
+<p>拟凸函数的也是类似的，主要少了第一个和最后一个，也即拟凸函数的正权重求和不一定是拟凸的，也没有透射变换的定义。</p>
+<h3 id="与仿射变换复合">3.1 与仿射变换复合</h3>
+<blockquote>
+<p>若 <span class="math inline">\(f\)</span> 拟凸，则 <span
+class="math inline">\(g(x)=f(Ax+b)\)</span> 也是拟凸的</p>
+</blockquote>
+<p>这个也很简单，因为 <span class="math inline">\(g(x)\)</span>
+的下水平集就是 <span class="math inline">\(f(y)\)</span>
+的下水平集外加仿射变换 <span
+class="math inline">\(y=Ax+b\)</span>，仿射变换不改变凸性。</p>
+<h3 id="最大值上确界">3.2 最大值/上确界</h3>
+<blockquote>
+<p><strong>离散情况</strong>：<span
+class="math inline">\(f=\max\{\omega_1 f_1,...,\omega_m
+f_m\},\omega_i\ge0\)</span></p>
+<p><strong>连续情况</strong>：<span
+class="math inline">\(g(x)=\sup\{w(y)f(x,y),\omega(y)\ge0\}\)</span>
+是拟凸的，如果 <span class="math inline">\(f(\cdot,y)\)</span>
+是拟凸的</p>
+</blockquote>
+<p>证明很简单，因为导出函数的下水平集就是多个拟凸函数下水平集的交集，当然也是凸集。</p>
+<h3 id="复合函数">3.3 复合函数</h3>
+<blockquote>
+<p>如果 <span class="math inline">\(g\)</span> 为拟凸函数，且 <span
+class="math inline">\(h\)</span> 单调递增，则 <span
+class="math inline">\(f=h\circ g\)</span> 是拟凸的</p>
+</blockquote>
+<p>证明的话也可以从下水平集的角度理解。</p>
+<p><strong><em>例</em></strong>：若 <span
+class="math inline">\(f\)</span> 是拟凸的，则 <span
+class="math inline">\(g(x)=f(Ax+b)\)</span> 是拟凸的，且 <span
+class="math inline">\(\tilde{g}(x)=f((Ax+b)/(c^Tx+d))\)</span>
+也是拟凸的，其中 <span class="math display">\[
+\{x|c^Tx+d&gt;0,(Ax+b)/(c^Tx+d)\in\text{dom}f\}
+\]</span> 原因很简单，<span class="math inline">\(\tilde{g}(x)\)</span>
+的下水平集就是 <span class="math inline">\(f(y)\)</span>
+的下水平集外加一个线性分式变换 <span
+class="math inline">\(y=(Ax+b)/(c^Tx+d)\)</span>，而线性分式函数也不改变凸性。</p>
+<h3 id="下确界">3.4 下确界</h3>
+<blockquote>
+<p><span class="math inline">\(f(x,y)\)</span> 对于 <span
+class="math inline">\((x,y)\)</span> 是拟凸的，则 <span
+class="math inline">\(g(x)=\inf_{y\in C}f(x,y)\)</span> 是拟凸的</p>
+</blockquote>
+<p>证明可以应用 Jensen 不等式。</p>
+<blockquote>
+<p><strong>Reamrks</strong>：这些保凸变换，前三个都可以直接从下水平集的角度来理解和证明，变换后函数的下水平集都是原始函数下水平集外加一个集合保凸变换，最后一个则不太直观，不过也可以由
+Jensen
+不等式直接导出。看来要理解拟凸函数，还是要多从下水平集的角度来看，并且集合的保凸变换也是很重要的！</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8B%9F%E5%87%B8%E5%87%BD%E6%95%B0/">拟凸函数</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/07/fuzzy/ch5-clustering/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">模糊数学笔记 5：模糊聚类</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/04/optimization/ch6-conjugate-func/">
+                        <span class="hidden-mobile">凸优化笔记 6：共轭函数 Conjugate Function</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,854 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="若无特殊说明，本章均考虑平稳过程。 严平稳过程 + 一阶矩、二阶矩均存在 \(\Longrightarrow\) 宽平稳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】平稳过程与二阶矩过程">
+<meta property="og:url" content="http://example.com/2021/10/02/stochastic-process-2/ch2-stationary/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="若无特殊说明，本章均考虑平稳过程。 严平稳过程 + 一阶矩、二阶矩均存在 \(\Longrightarrow\) 宽平稳">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-02T14:40:49.000Z">
+<meta property="article:modified_time" content="2021-10-02T14:55:14.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="宽平稳">
+<meta property="article:tag" content="相关函数">
+<meta property="article:tag" content="随机连续性">
+<meta property="article:tag" content="功率谱">
+<meta property="article:tag" content="遍历性">
+<meta property="article:tag" content="抽样定理">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】平稳过程与二阶矩过程 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】平稳过程与二阶矩过程">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-02 22:40" pubdate>
+        October 2, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      63 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】平稳过程与二阶矩过程</h1>
+            
+            <div class="markdown-body">
+              <p>若无特殊说明，本章均考虑平稳过程。</p>
+<p>严平稳过程 + 一阶矩、二阶矩均存在 <span
+class="math inline">\(\Longrightarrow\)</span> 宽平稳</p>
+<span id="more"></span>
+<h2 id="相关函数">1. 相关函数</h2>
+<ul>
+<li><strong>互相关</strong>：<span
+class="math inline">\(R_{xy}(\tau)={\mathbb
+E}[X(t)Y^{\star}(t-\tau)]\)</span></li>
+<li><strong>自相关</strong>：<span
+class="math inline">\(R_x(\tau)={\mathbb
+E}[X(t)X^{\star}(t-\tau)]\)</span>
+<ul>
+<li>共轭对称性 <span
+class="math inline">\(R(-\tau)=R^{\star}(\tau)\)</span></li>
+<li><span class="math inline">\(R_x(0) \ge |R_x(\tau)|, \tau\in {\mathbb
+R}\)</span></li>
+<li>若 <span class="math inline">\(R(\tau)\)</span> 在 <span
+class="math inline">\(0\)</span> 处连续，则 <span
+class="math inline">\(R(\tau)\)</span> 连续</li>
+<li>若 <span class="math inline">\(R(\tau)\)</span> 在 <span
+class="math inline">\(0\)</span> 处可导，则有 <span
+class="math inline">\(R&#39;(0)=0\)</span></li>
+<li>若存在 <span class="math inline">\(\tau_0\ne0\)</span> 使得 <span
+class="math inline">\(R(\tau_0)=R(0)\)</span>，则 <span
+class="math inline">\(R(\tau)\)</span> 是周期的</li>
+<li><span class="math inline">\(R_{xy}^2(\tau) \le {R_{xx}(0)
+R_{yy}(0)}\)</span></li>
+<li><span class="math inline">\(2|R_{xy}(\tau)| \le R_{xx}(0) +
+R_{yy}(0)\)</span></li>
+<li>若 <span class="math inline">\(X,Y\)</span> 独立，<span
+class="math inline">\(W(t)=X(t)Y(t)\)</span>，则 <span
+class="math inline">\(R_{ww}(\tau)=R_{xx}(\tau)R_{yy}(\tau)\)</span></li>
+</ul></li>
+</ul>
+<p><strong><em>栗子 2.1</em></strong>：<span
+class="math inline">\(X(t)=a\cos(wt) + b\sin(wt), a,b\sim {\mathcal
+N}(0,\sigma^2)\)</span>，那么可以验证其为宽平稳过程，<span
+class="math inline">\(R(t_1,t_2)=\sigma^2\cos w(t_1-t_2)\)</span></p>
+<p><strong><em>栗子 2.2</em></strong>：AR(1) 模型渐进平稳，MA(<span
+class="math inline">\(q\)</span>) 模型平稳。</p>
+<p><strong>性质</strong>：对于实过程的自相关函数，有 <span
+class="math inline">\(R(0)-R(\tau) \ge
+\frac{1}{4^n}(R(0)-R(2^n\tau))\)</span>。</p>
+<p>证明：只需要证明 <span class="math inline">\(R(0)-R(\tau) \ge 1/4
+(R(0)-R(2\tau))\)</span>，这只需要验证 <span
+class="math inline">\({\mathbb
+E}[(X(t+2\tau)-2X(t+\tau)+X(t))^2]\ge0\)</span> 即可。证毕。</p>
+<h2 id="功率谱">2. 功率谱</h2>
+<h3 id="定义">2.1 定义</h3>
+<p>平稳随机过程的功率谱定义为其自相关函数的傅里叶变换，即 <span
+class="math display">\[
+\begin{aligned}
+S(w) &amp;= \int R(\tau) e^{-jw\tau} d\tau \\
+R(\tau) &amp;= \frac{1}{2\pi}\int S(w)e^{jw\tau} dw
+\end{aligned}
+\]</span> 特别的，若 <span class="math inline">\(X(t)\)</span>
+是实过程，那么 <span class="math inline">\(R(\tau)\)</span>
+也是实的偶函数，<span class="math inline">\(S(w)\)</span>
+也是实的偶函数，有 <span class="math display">\[
+\begin{aligned}
+S(w) &amp;= \int R(\tau) \cos(w\tau) d\tau \\
+R(\tau) &amp;= \frac{1}{2\pi}\int \cos(w\tau) dw
+\end{aligned}
+\]</span> 定义两个过程 <span class="math inline">\(X(t),Y(t)\)</span>
+的<strong>交叉功率谱</strong>为互相关的傅里叶变换，即 <span
+class="math display">\[
+\begin{aligned}
+S_{xy}(w) &amp;= \int R_{xy}(\tau) e^{-jw\tau} d\tau \\
+R_{xy}(\tau) &amp;= \frac{1}{2\pi}\int S_{xy}(w)e^{jw\tau} dw
+\end{aligned}
+\]</span></p>
+<p>性质：</p>
+<ul>
+<li>首先由于 <span class="math inline">\(R(\tau)\)</span>
+总是共轭对称的，因此可以验证 <span class="math inline">\(S(w)\)</span>
+总是实的；</li>
+<li>功率谱密度总是正的，也就是说 <span
+class="math inline">\(S(w)\ge0\)</span>（注意交叉功率谱没有这个性质）；</li>
+</ul>
+<p>上面的第二个性质很符合直观，功率总不能是负的吧；对于确定性信号也很好理解，因为对于确定性信号有
+<span
+class="math inline">\(S(w)=|X(w)|^2\)</span>，自然满足。但是对于随机信号不能这做，因为随机信号的一次实现做傅里叶变换是没有意义的，甚至可能不收敛导致本身就无法做傅里叶变换，上面的式子也无从谈起了。</p>
+<p>如果从信号处理的角度解释这个问题，不妨假设存在某个点使得 <span
+class="math inline">\(S(w_0)&lt;0\)</span>，由于 <span
+class="math inline">\(S(w)\)</span>
+连续，那么就一定存在一个小的邻域，是的这个区间上都有 <span
+class="math inline">\(S(w)&lt;0\)</span>，对于这样一个信号，如果我们通过一个带通滤波器，得到了输出信号，那么输出信号的功率谱就全是负的，在傅里叶反变换回去就会发现
+<span class="math inline">\(R(0)&lt;0\)</span>，这显然是不对的。因此总有
+<span class="math inline">\(S(w)\ge0\)</span>。</p>
+<h3 id="功率谱与时域平均">2.2 功率谱与时域平均</h3>
+<p>上面将功率谱定义为相关函数的傅里叶变换，那么这种定义是否合理呢？</p>
+<p>其实功率谱的定义还有下面这一种，这种定义方式能够自然导出 <span
+class="math inline">\(S(w)\ge0\)</span>
+的性质，也能更好的理解功率谱的概念。</p>
+<p>首先定义 <span class="math inline">\((-T,T)\)</span>
+时间段内的<strong>平均随机功率</strong>： <span class="math display">\[
+S_T(w) = \frac{1}{2T} \bigg| \int_{-T}^T X(t)e^{-jwt} dt \bigg|
+\]</span> <strong>定理 2.1</strong>：若 <span
+class="math inline">\(\int_{-\infty}^\infty |\tau R(\tau)|d\tau &lt;
+\infty\)</span>，则 <span class="math display">\[
+\lim_{T\to \infty} {\mathbb E}[S_T(w)] = S(w)
+\]</span> 证明：略。</p>
+<h2 id="线性系统">3. 线性系统</h2>
+<p>考虑一个线性系统，脉冲响应记为 <span
+class="math inline">\(h(t)\)</span>，频域响应为 <span
+class="math inline">\(H(w)\)</span></p>
+<pre><code class=" mermaid">graph LR
+  input(&quot; &quot;) ==&quot;X(t)&quot;==&gt; system(&quot;线性系统 h(t)&quot;)
+  system ==&quot;Y(t)&quot;==&gt; output(&quot; &quot;)
+  style input fill: #ffffff, stroke: #ffffff
+  style output fill: #ffffff, stroke: #ffffff
+</code></pre>
+<p>那么我们有 <span class="math inline">\(Y(t)=\int_{-\infty}^{\infty}
+X(t-a)h(a) da\)</span>，对于可实现系统（因果系统），应有 <span
+class="math display">\[
+Y(t)=\int_{0}^{\infty} X(t-a)h(a) da = \int_{-\infty}^t X(a) h(t-a) da
+\]</span> 对于输出信号的统计特性</p>
+<ul>
+<li><span class="math inline">\(R_{yx}(\tau)=R_{xx}(\tau) *
+h(\tau)\)</span>（卷积）</li>
+<li><span class="math inline">\(R_{yy}(\tau) = R_{xx}(\tau) { \ast }
+h(\tau) { \ast} h(-\tau)\)</span>（卷积）<span
+class="math inline">\(\Longrightarrow S_{yy}(w) =
+S_{xx}(w)|H(w)|^2\)</span></li>
+</ul>
+<p>根据上面的第一个性质，如果输入信号为白噪声，即 <span
+class="math inline">\(R_{xx}(\tau) =
+\sigma^2\delta(\tau)\)</span>，那么就有输入信号和输出信号的互相关函数满足
+<span class="math inline">\(R_{xy}(\tau)=h(-\tau)\approx
+\frac{1}{T}\int_0^T X(t+\tau)Y(t)dt\)</span>。只考虑因果系统的时候，对于
+<span class="math inline">\(\tau&gt;0\)</span> 有 <span
+class="math inline">\(R_{xy}(\tau)=0\)</span>，也就是 <span
+class="math inline">\(X(t+\tau)\)</span> 与 <span
+class="math inline">\(Y(t)\)</span> 是正交的，符合直观；对于 <span
+class="math inline">\(\tau&lt;0\)</span>，如果取得 <span
+class="math inline">\(T\)</span>
+足够大，那么我们可以用这个方法来估计系统冲激响应 <span
+class="math inline">\(h(t)\)</span>。</p>
+<h2 id="随机连续性与随机微积分">4. 随机连续性与随机微积分</h2>
+<p>确定性函数的连续性定义不能直接应用到随机过程中，并且如果从确定性函数的角度来看，随机过程的任意一个实现很可能就是不连续的，比如泊松过程的轨迹是一个阶梯状的函数。为了将分析的工具应用到随机过程的讨论当中，需要给一个定义，比如绝对值连续、以概率1连续、平均值连续等，但这些定义同样存在一些问题。</p>
+<h3 id="随机连续性">4.1 随机连续性</h3>
+<p>我们用的比较多的是<strong>均方连续</strong>，定义为 <span
+class="math display">\[
+{\mathbb E}[(X(t+h)-X(t))^2] \to 0 \quad (h\to0)
+\]</span> <strong>推论 2.1</strong>：均方连续 <span
+class="math inline">\(\Longrightarrow\)</span> 平均值连续。</p>
+<p><strong>定理 2.2</strong>：平稳过程连续 <span
+class="math inline">\(\iff\)</span> 自相关函数 <span
+class="math inline">\(R(\tau)\)</span> 在 <span
+class="math inline">\(\tau=0\)</span> 处连续。</p>
+<h3 id="随机微分均方意义">4.2 随机微分（均方意义）</h3>
+<p><strong>定义</strong>：过程 <span class="math inline">\(X(t)\)</span>
+对 <span class="math inline">\(t\)</span> 有均方导数，如果能找到一个过程
+<span class="math inline">\(X&#39;(t)\)</span> 满足 <span
+class="math display">\[
+\lim_{h\to 0} {\mathbb E}\left[ \frac{X(t+h) - X(t)}{h} - X&#39;(t)
+\right]^2 = 0
+\]</span> <strong>柯西准则</strong>（实际并不常用）： <span
+class="math display">\[
+\lim_{h_1\to 0,h_2\to0} {\mathbb E}\left[ \frac{X(t+h_1) - X(t)}{h_1} -
+\frac{X(t+h_2) - X(t)}{h_2} \right]^2 = 0
+\]</span> <strong>定理 2.3</strong>： 平稳过程 <span
+class="math inline">\(X(t)\)</span>，若自相关函数 <span
+class="math inline">\(R(\tau)\)</span> 具有二阶导数且在 <span
+class="math inline">\(\tau=0\)</span>
+处连续，则在均方意义下可微，反之亦然。</p>
+<p>微分运算的一些性质：</p>
+<ol type="1">
+<li><span class="math inline">\({\mathbb E}[X&#39;(t)] = {d {\mathbb
+E}[X(t)]}/{dt}\)</span>；</li>
+<li><span class="math inline">\(R_{x&#39;x&#39;}(t_1,t_2) = {\mathbb
+E}[X&#39;(t_1)X&#39;(t_2)] = \partial^2 R_{xx}(t_1,t_2) / \partial t_1
+\partial t_2\)</span>；对平稳过程有 <span
+class="math inline">\(R_{x&#39;x&#39;}(\tau) = -d^2R_{xx}(\tau) /
+d\tau^2\)</span>；</li>
+<li><span class="math inline">\({\mathbb E}[X^{(n)}(t)] = {d^n {\mathbb
+E}[X(t)]}/{dt^n}\)</span>；</li>
+<li><span class="math inline">\(R_{x^{(n)}y^{(m)}}(t_1,t_2) = {\mathbb
+E}[X^{(n)}(t_1)Y^{(m)}(t_2)] = \partial^{n+m} R_{xy}(t_1,t_2) / \partial
+t_1^n \partial t_2^m\)</span>；对平稳过程有 <span
+class="math inline">\(R_{x^{(n)}y^{(m)}}(\tau) = (-1)^m
+d^{m+n}R_{xy}(\tau) / d\tau^{m+n}\)</span>。</li>
+</ol>
+<h3 id="taylor-级数">4.3 Taylor 级数</h3>
+<p><strong>定理 2.4</strong>：平稳过程 <span
+class="math inline">\(X(t)\)</span>，若 <span
+class="math inline">\(R(\tau)\)</span>
+是解析的，即存在无穷阶导数，且满足 <span class="math inline">\(R(\tau) =
+\sum_{n=0}^{\infty} R^{(n)}(0) \tau^n/n!\)</span>，则 <span
+class="math inline">\(X(t)\)</span> 可以展开成 Taylor 级数 <span
+class="math display">\[
+X(t+h) = \sum_{n=0}^{\infty} X^{(n)}(t) \frac{h^n}{n!}
+\]</span> <strong>注</strong>：这个式子很难应用，因为导数 <span
+class="math inline">\(X^{(n)}(t)\)</span>
+不好计算；不过根据这个式子，可以理解为把 <span
+class="math inline">\(X(t+h)\)</span> 投影到多项式基底上。</p>
+<h3 id="随机微分方程">4.4 随机微分方程</h3>
+<p>对于随机微分方程 <span class="math inline">\(a_n Y^{(n)}(t) + a_{n-1}
+Y^{(n-1)}(t) + \cdots + a_0 Y(t) =
+0\)</span>，先求均值/自相关，然后按确定性函数求解。</p>
+<h3 id="随机积分">4.5 随机积分</h3>
+<p>略。</p>
+<h2 id="遍历性">5. 遍历性</h2>
+<p>我们将随机过程看作每一个时刻都是一个随机变量 <span
+class="math inline">\(X(t)\)</span>，但是问题是时间是不停流逝的，对于某个时刻的随机变量我们可能只能获得一个采样，那么怎么去获得其统计特性呢？这个时候就需要引入遍历性这一概念。</p>
+<p>如果一个随机过程的<strong>某个统计量</strong>的时间平均等于总体平均，那么称这个统计量具有<strong>遍历性</strong>。</p>
+<h3 id="均值的遍历性">5.1 均值的遍历性</h3>
+<p><strong>定理 2.5</strong>：给定平稳过程 <span
+class="math inline">\(X(t)\)</span>，其时间平均 <span
+class="math inline">\(\lim_{T\to\infty} \frac{1}{2T}\int_{-T}^{T}X(t) dt
+= {\mathbb E}[X(t)]=\eta\)</span> 的<strong>充要条件</strong>是 <span
+class="math display">\[
+\begin{aligned}
+\lim_{T\to\infty}\int_0^{2T} (1-\frac{\tau}{2T})[R(\tau)-\eta^2] d\tau =
+0 \\
+\iff \lim_{T\to\infty} \frac{1}{2T}\int_{-T}^T R(\tau) d\tau = \eta^2
+\end{aligned}
+\]</span> 注：上面两个判断条件数学上完全等价，
+第一个相当于加了三角窗，实际当中王王只存在有限个样本，因此采用加窗的方法更好。</p>
+<p><strong>推论 2.5.1</strong>：给定实平稳过程 <span
+class="math inline">\(X(t)\)</span>，记 <span
+class="math inline">\(C(\tau)=R(\tau)-\eta^2\)</span></p>
+<ol type="1">
+<li>若 <span class="math inline">\(\int_0^\infty C(\tau d\tau) &lt;
+\infty\)</span>，则 <span class="math inline">\(X(t)\)</span>
+为均值遍历的；</li>
+<li>若 <span class="math inline">\(\lim_{\tau\to\infty}
+C(\tau)=0\)</span>，则 <span class="math inline">\(X(t)\)</span>
+为均值遍历的。</li>
+</ol>
+<p>证明：只需要得到 <span class="math inline">\(R(\tau)\to \eta^2 ~
+(\tau\to\infty)\)</span>，略。</p>
+<h3 id="自相关的遍历性">5.2 自相关的遍历性</h3>
+<p>首先回顾自相关的定义 <span class="math inline">\(R(\tau) = {\mathbb
+E}[X(t+\tau)X^{\star}(t)]\)</span>，那么实际上中我们只有每个时刻的采样值，用这些采样值相乘得到的所谓的“自相关”其实也是一个随机变量，可以定义为
+<span class="math inline">\(Z_{\tau}(t) =
+X(t+\tau)X^{\star}(t)\)</span>，那么 <span
+class="math inline">\(Z_\tau(t)\)</span>
+的时间平均是否等于其期望值呢？其时间平均可以定义为 <span
+class="math inline">\(R_T(\tau) = \frac{1}{2T}\int_{-T}^{T} Z(t) dt =
+\frac{1}{2T}\int_{-T}^{T} X(t+\tau)X^{\star}(t)
+dt\)</span>，显然有其均值为 <span class="math inline">\({\mathbb
+E}[R_T(\tau)] = R(\tau)\)</span>，自相关为 <span class="math display">\[
+R_{zz}(\lambda) = {\mathbb E}[ X(t+\tau+\lambda)X^{\star}(t+\lambda)
+X^{\star}(t+\tau)X(t) ]
+\]</span> <strong>定理 2.6</strong>：对于给定的 <span
+class="math inline">\(\tau\)</span>，时间平均等于期望，即 <span
+class="math inline">\(\lim_{T\to\infty} \int_{-T}^T
+X(t+\tau)X^{\star}(t)dt = {\mathbb E}[X(t+\tau)X^{\star}(t)] =
+R(\tau)\)</span>，的<strong>充要条件</strong>是 <span
+class="math display">\[
+\lim_{T\to\infty} \frac{1}{T} _0^{2T}(1-\frac{\tau}{2T})[R_{zz}(\lambda)
+- R^{2}(\tau)] = 0
+\]</span></p>
+<h3 id="分布函数的遍历性">5.3 分布函数的遍历性</h3>
+<p>随机变量的一阶分布函数定义为 <span class="math inline">\(F(x) =
+P(X(t)\le
+x)\)</span>，（不严谨的说）分布函数和随机变量是一一对应的，也就是两者可以认为是同一件事物的两种等价定义。那么如何研究分布函数的遍历性呢？就把它也转换成一个随机变量，定义一个新的过程。</p>
+<p>假定 <span class="math inline">\(x\)</span> 为固定常数，定义 <span
+class="math display">\[
+Y(t) = \begin{cases}
+1,&amp; X(t)\le x \\
+0,&amp; X(t) &gt; x
+\end{cases}
+\]</span> 其平均值为 <span class="math inline">\({\mathbb E}[Y(t)] =
+P(X(t)\le x)\)</span>，自相关为 <span class="math inline">\({\mathbb
+E}[Y(t+\tau)Y^{\star}(t)] = P(X(t+\tau)\le x), X(t\le x) = F(x,x ;
+\tau)\)</span>，这里 <span
+class="math inline">\(F(x_1,x_2;\tau)\)</span> 是 <span
+class="math inline">\(X(t)\)</span>
+的二阶分布。类似前面两小节，其时间平均等于总体平均的充要条件是什么呢？</p>
+<p><strong>定理 2.7</strong>：对于给定的 <span
+class="math inline">\(x\)</span>，<span
+class="math inline">\(\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T} Y(t) dt
+= F(x)\)</span> 成立的<strong>充要条件</strong>是 <span
+class="math display">\[
+\lim_{T\to\infty}\frac{1}{2T}\int_{0}^{2T} (1-\frac{\tau}{2T})
+[F(x,x;\tau) - F^2(x)] dt = 0
+\]</span></p>
+<blockquote>
+<p><strong>注</strong>：从遍历性讨论得知，假如 <span
+class="math inline">\(X(t)\)</span> 具有遍历性，如果 <span
+class="math inline">\(\lim_{\tau\to\infty} R(\tau)\)</span> 存在，那么有
+<span class="math inline">\(\lim_{\tau\to\infty} R(\tau) =
+\eta^2\)</span>，这表明随着 <span class="math inline">\(\tau\)</span>
+的增加，<span class="math inline">\(X(t+\tau)\)</span> 与 <span
+class="math inline">\(X(t)\)</span> 的相关性减弱，特别的，在 <span
+class="math inline">\(\tau\to\infty\)</span> 时，随机变量 <span
+class="math inline">\(X(t+\tau)\)</span> 与 <span
+class="math inline">\(X(t)\)</span> 不相关。</p>
+<p>对于分布函数的遍历性而言，有 <span
+class="math inline">\(\lim_{\tau\to\infty} F(x,x;\tau) =
+F^2(x)\)</span>，也就是 <span
+class="math inline">\(\tau\to\infty\)</span> 时 <span
+class="math inline">\(X(t+\tau)\)</span> 与 <span
+class="math inline">\(X(t)\)</span> 相互独立。</p>
+</blockquote>
+<h2 id="抽样定理与随机预测">6. 抽样定理与随机预测</h2>
+<h3 id="随机过程抽样定理">6.1 随机过程抽样定理</h3>
+<p>抽样定理描述了连续随机过程和离散随机过程自相关函数之间的关系。首先定义一个过程
+<span class="math inline">\(X(t)\)</span> 为低通的，若其功率谱 <span
+class="math inline">\(S(w)\)</span> 满足 <span
+class="math inline">\(S(w=0),\forall |w|&gt;w_c\)</span>。</p>
+<p><strong>定理 2.8</strong>：对于带限过程 <span
+class="math inline">\(X(t)\)</span>，有（<span
+class="math inline">\(T=\pi/w_c\)</span>） <span class="math display">\[
+R(\tau) = \sum_{n=-\infty}^{\infty} R(nT) \frac{\sin(w_ct - n\pi)}{w_c
+t- n\pi}
+\]</span> 注：这从信号与系统的角度很好理解，<span
+class="math inline">\(X(nT)\)</span> 是对 <span
+class="math inline">\(X(\tau)\)</span>
+做了周期采样，因此其频谱是后者的周期延拓，由于连续信号的频谱是低通带限的，因此要想用
+<span class="math inline">\(X(nT)\)</span> 恢复出 <span
+class="math inline">\(X(\tau)\)</span>，就要加一个低通矩形窗，这在时域就表现为与
+Sa 脉冲做卷积。</p>
+<p><strong>定理 2.9（抽样定理）</strong>：对于带限过程 <span
+class="math inline">\(X(t)\)</span>，有（<span
+class="math inline">\(T=\pi/w_c\)</span>） <span class="math display">\[
+X(t) = \sum_{n=-\infty}^{\infty} X(nT) \frac{\sin(w_ct - n\pi)}{w_c t-
+n\pi}
+\]</span> 证明：略。</p>
+<p>注：这个定理跟上一个有略微的不同，上一个是自相关函数，实际上已经没有随机性，可以直接用以前的信号与系统的观点来看。但是这里的
+<span class="math inline">\(X(t),X(nT)\)</span>
+都是随机变量，实际上这里可以理解为 <span
+class="math inline">\(X(t)\)</span> 可以表示为 <span
+class="math inline">\(X(nT)\)</span>
+的线性组合，所以我们可以用采样值重构原始过程。信号处理方面，我们则可以使用截断的抽样定理公式来重构信号。</p>
+<h3 id="随机预测">6.2 随机预测</h3>
+<p>这部分举个栗子。考虑对 <span class="math inline">\(X(t)\)</span>
+构造过程 <span class="math display">\[
+\hat{X}_n(t) = \tbinom{n}{1}X(t-T_1) - \tbinom{n}{2}X(t-2T_1) + \cdots +
+(-1)^{n-1}X(t-nT_1)
+\]</span> 那么 <span class="math inline">\(Y(t) =
+X(t)-\hat{X}_n(t)\)</span> 的功率谱为 <span
+class="math inline">\(S_{yy}(w) = S_{xx}(w)(2\sin
+\frac{wT}{2})^{2n}\)</span>，于是有 <span class="math inline">\({\mathbb
+E}[(X(t)-\hat{X}_n(t))^2]\to 0 ~ (n\to\infty)\)</span>。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%BD%E5%B9%B3%E7%A8%B3/">宽平稳</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">相关函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%9E%E7%BB%AD%E6%80%A7/">随机连续性</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8A%9F%E7%8E%87%E8%B0%B1/">功率谱</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%81%8D%E5%8E%86%E6%80%A7/">遍历性</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8A%BD%E6%A0%B7%E5%AE%9A%E7%90%86/">抽样定理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【随机过程2】离散鞅论1 | 基本概念</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/02/stochastic-process-2/ch1-intro/">
+                        <span class="hidden-mobile">【随机过程2】绪论</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

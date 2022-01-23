@@ -1,0 +1,820 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="假设检验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(一) Hypothesis Test">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch1_Hypothesis%20Test/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="假设检验">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T11:55:53.000Z">
+<meta property="article:modified_time" content="2020-03-28T08:32:36.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="假设检验">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(一) Hypothesis Test - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(一) Hypothesis Test">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 19:55" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      53 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(一) Hypothesis Test</h1>
+            
+            <div class="markdown-body">
+              <p>假设检验</p>
+<span id="more"></span>
+<h2 id="binary-bayesian-hypothesis-testing">1. Binary Bayesian
+hypothesis testing</h2>
+<h3 id="problem-setting">1.0 Problem Setting</h3>
+<ul>
+<li>Hypothesis
+<ul>
+<li>Hypothesis space <span class="math inline">\(\mathcal{H}=\{H_0,
+H_1\}\)</span></li>
+<li>Bayesian approach: Model the valid hypothesis as an RV H</li>
+<li>Prior <span class="math inline">\(P_0 = p_\mathsf{H}(H_0),
+P_1=p_\mathsf{H}(H_1)=1-P_0\)</span></li>
+</ul></li>
+<li>Observation
+<ul>
+<li>Observation space <span
+class="math inline">\(\mathcal{Y}\)</span></li>
+<li>Observation Model <span
+class="math inline">\(p_\mathsf{y|H}(\cdot|H_0),
+p_\mathsf{y|H}(\cdot|H_1)\)</span></li>
+</ul></li>
+<li>Decision rule <span class="math inline">\(f:\mathcal{Y\to
+H}\)</span></li>
+<li>Cost function <span class="math inline">\(C: \mathcal{H\times H} \to
+\mathbb{R}\)</span>
+<ul>
+<li>Let <span class="math inline">\(C_{ij}=C(H_j,H_i), correct hypo is
+H_j\)</span></li>
+<li><span class="math inline">\(C\)</span> is <em>valid</em> if <span
+class="math inline">\(C_{jj}&lt;C_{ij}\)</span></li>
+</ul></li>
+<li>Optimum decision rule <span class="math inline">\(\hat{H}(\cdot) =
+\arg\min\limits_{f(\cdot)}\mathbb{E}[C(\mathsf{H},f(\mathsf{y}))]\)</span></li>
+</ul>
+<h3 id="binary-bayesian-hypothesis-testing-1">1.1 Binary Bayesian
+hypothesis testing</h3>
+<blockquote>
+<p><strong>Theorem</strong>: The optimal Bayes' decision takes the form
+<span class="math display">\[
+L(\mathsf{y}) \triangleq
+\frac{p_\mathsf{y|H}(\cdot|H_1)}{p_\mathsf{y|H}(\cdot|H_0)}
+\overset{H_1} \gtreqless
+\frac{P_0}{P_1} \frac{C_{10}-C_{00}}{C_{01}-C_{11}}
+\triangleq \eta
+\]</span></p>
+<p><strong>Proof</strong>: <span class="math display">\[
+\begin{align}
+\varphi(f) &amp;=\mathbb{E} [C(H, f(y))] \\
+&amp;= \int_{y*} \mathbb{E} [C(H,f(y^*) | \mathsf{y}=y^*)] \\
+\end{align}
+\]</span></p>
+<p>Given <span class="math inline">\(y^*\)</span></p>
+<ul>
+<li>if <span class="math inline">\(f(y^*)=H_0\)</span>, <span
+class="math inline">\(\mathbb{E}=C_{00}p_{\mathsf{H|y}}(H_0|y^*)+C_{01}p_{\mathsf{H|y}}(H_1|y^*)\)</span></li>
+<li>if <span class="math inline">\(f(y^*)=H_1\)</span>, <span
+class="math inline">\(\mathbb{E}=C_{10}p_{\mathsf{H|y}}(H_0|y^*)+C_{11}p_{\mathsf{H|y}}(H_1|y^*)\)</span></li>
+</ul>
+<p>So <span class="math display">\[
+\frac{p_\mathsf{H|y}(H_1|y^*)}{p_\mathsf{H|y}(H_0|y^*)}
+\overset{H_1} \gtreqless
+\frac{C_{10}-C_{00}}{C_{01}-C_{11}}
+\]</span></p>
+<p><strong>备注</strong>：证明过程中，注意贝叶斯检验为<strong>确定性检验</strong>，因此对于某个确定的
+y，<span class="math inline">\(f(y)=H_1\)</span> 的概率要么为 0 要么为
+1。因此对代价函数求期望时，把 H 看作是随机变量，而把 <span
+class="math inline">\(f(y)\)</span>
+看作是确定的值来<strong>分类讨论</strong></p>
+</blockquote>
+<h4 id="special-cases">Special cases</h4>
+<ul>
+<li>Maximum a posteriori (MAP)
+<ul>
+<li><span
+class="math inline">\(C_{00}=C_{11}=0,C_{01}=C_{10}=1\)</span></li>
+<li><span
+class="math inline">\(\hat{H}(y)==\arg\max\limits_{H\in\{H_0,H_1\}}
+p_\mathsf{H|y}(H|y)\)</span></li>
+</ul></li>
+<li>Maximum likelihood (ML)
+<ul>
+<li><span class="math inline">\(C_{00}=C_{11}=0,C_{01}=C_{10}=1,
+P_0=P_1=0.5\)</span></li>
+<li><span
+class="math inline">\(\hat{H}(y)==\arg\max\limits_{H\in\{H_0,H_1\}}
+p_\mathsf{y|H}(y|H)\)</span></li>
+</ul></li>
+</ul>
+<h3 id="likelyhood-ratio-test">1.2 Likelyhood Ratio Test</h3>
+<p>Generally, LRT <span class="math display">\[
+L(\mathsf{y}) \triangleq
+\frac{p_\mathsf{y|H}(\cdot|H_1)}{p_\mathsf{y|H}(\cdot|H_0)}
+\overset{H_1} \gtreqless
+\eta
+\]</span></p>
+<ul>
+<li>Bayesian formulation gives a method of calculating <span
+class="math inline">\(\eta\)</span></li>
+<li><span class="math inline">\(L(y)\)</span> is a <strong>sufficient
+statistic</strong> for the decision problem</li>
+<li><span class="math inline">\(L(y)\)</span>
+的可逆函数也是充分统计量</li>
+</ul>
+<blockquote>
+<p><strong>充分统计量</strong></p>
+</blockquote>
+<h3 id="roc">1.3 ROC</h3>
+<ul>
+<li>Detection probability <span class="math inline">\(P_D =
+P(\hat{H}=H_1 | \mathsf{H}=H_1)\)</span></li>
+<li>False-alarm probability <span class="math inline">\(P_F =
+P(\hat{H}=H_1 | \mathsf{H}=H_0)\)</span></li>
+</ul>
+<p><strong>性质（重要！）</strong></p>
+<ul>
+<li>LRT 的 ROC 曲线是单调不减的</li>
+<li></li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/roc.jpg" srcset="/img/loading.gif" lazyload
+alt="ROC" />
+<figcaption aria-hidden="true">ROC</figcaption>
+</figure>
+<h2 id="non-bayesian-hypo-test">2. Non-Bayesian hypo test</h2>
+<ul>
+<li>Non-Bayesian
+不需要<strong>先验概率</strong>或者<strong>代价函数</strong></li>
+</ul>
+<h3 id="neyman-pearson-criterion">Neyman-Pearson criterion</h3>
+<p><span class="math display">\[
+\max_{\hat{H}(\cdot)}P_D \ \ \ s.t. P_F\le \alpha
+\]</span></p>
+<blockquote>
+<p><strong>Theorem</strong>(Neyman-Pearson Lemma)：NP 准则的最优解由 LRT
+得到，其中 <span class="math inline">\(\eta\)</span> 由以下公式得到
+<span class="math display">\[
+P_F=P(L(y)\ge\eta | \mathsf{H}=H_0) = \alpha
+\]</span></p>
+<p><strong>Proof</strong>： <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/np_proof.jpg" srcset="/img/loading.gif" lazyload
+alt="proof" /></p>
+<p><strong>物理直观</strong>：同一个 <span
+class="math inline">\(P_F\)</span> 时 LRT 的 <span
+class="math inline">\(P_D\)</span> 最大。物理直观来看，LRT 中判决为 H1
+的区域中 <span class="math inline">\(\frac{p(y|H_1)}{p(y|H_0)}\)</span>
+都尽可能大，因此 <span class="math inline">\(P_F\)</span> 相同时 <span
+class="math inline">\(P_D\)</span> 可最大化</p>
+<p><strong>备注</strong>：NP 准则最优解为 LRT，原因是</p>
+<ul>
+<li>同一个 <span class="math inline">\(P_F\)</span> 时， LRT 的 <span
+class="math inline">\(P_D\)</span> 最大</li>
+<li>LRT 取不同的 <span class="math inline">\(\eta\)</span> 时，<span
+class="math inline">\(P_F\)</span> 越大，则 <span
+class="math inline">\(P_D\)</span> 也越大，即 ROC 曲线单调不减</li>
+</ul>
+</blockquote>
+<h2 id="randomized-test">3. Randomized test</h2>
+<h3 id="decision-rule">3.1 Decision rule</h3>
+<ul>
+<li><p>Two deterministic decision rules <span
+class="math inline">\(\hat{H&#39;}(\cdot),\hat{H&#39;&#39;}(\cdot)\)</span></p></li>
+<li><p>Randomized decision rule <span
+class="math inline">\(\hat{H}(\cdot)\)</span> by time-sharing <span
+class="math display">\[
+\hat{\mathrm{H}}(\cdot)=\left\{\begin{array}{ll}{\hat{H}^{\prime}(\cdot),}
+&amp; {\text { with probability } p} \\ {\hat{H}^{\prime
+\prime}(\cdot),} &amp; {\text { with probability }
+1-p}\end{array}\right.
+\]</span></p>
+<ul>
+<li>Detection prob <span
+class="math inline">\(P_D=pP_D&#39;+(1-p)P_D&#39;&#39;\)</span></li>
+<li>False-alarm prob <span
+class="math inline">\(P_F=pP_F&#39;+(1-P)P_F&#39;&#39;\)</span></li>
+</ul></li>
+<li><p>A randomized decision rule is <strong>fully described</strong> by
+<span class="math inline">\(p_{\mathsf{\hat{H}|y}}(H_m|y)\)</span> for
+m=0,1</p></li>
+</ul>
+<h3 id="proposition">3.2 Proposition</h3>
+<ol type="1">
+<li><p>Bayesian case: <strong>cannot</strong> achieve a lower <em>Bayes'
+risk</em> than the optimum LRT</p>
+<blockquote>
+<p><strong>Proof</strong>: Risk <strong>for each y</strong> is linear in
+<span class="math inline">\(p_{\mathrm{H} | \mathbf{y}}\left(H_{0} |
+\mathbf{y}\right)\)</span>, so the minima is achieved at 0 or 1, which
+degenerate to deterministic decision <span class="math display">\[
+\begin{align}
+\varphi(\mathbf{y})&amp;=\sum_{i, j} C_{i j}
+\mathbb{P}\left(\mathrm{H}=H_{j}, \hat{\mathrm{H}}=H_{i} |
+\mathbf{y}=\mathbf{y}\right)=\sum_{i, j} C_{i j} p_{\mathrm{\hat H} |
+y}\left(H_{i} | \mathbf{y}\right) p_{\mathrm{H} | \mathbf{y}}\left(H_{j}
+| \mathbf{y}\right) \\
+&amp;= \Delta(y) + P(\hat H=H_0|y)
+\frac{P(y|H_0)}{p(y)}P_1(C_{01}-C_{11})(L(y)-\eta)
+\end{align}
+\]</span></p>
+</blockquote></li>
+<li><p>Neyman-Pearson case:</p>
+<ol type="1">
+<li><strong>continuous-valued</strong>: For a given <span
+class="math inline">\(P_F\)</span> constraint, randomized test
+<strong>cannot</strong> achieve <strong>a larger <span
+class="math inline">\(P_D\)</span></strong> than optimum LRT</li>
+<li><strong>discrete-valued</strong>: For a given <span
+class="math inline">\(P_F\)</span> constraint, randomized test
+<strong>can</strong> achieve <strong>a larger <span
+class="math inline">\(P_D\)</span></strong> than optimum LRT.
+Furthermore, the optimum rand test corresponds to simple
+<strong>time-sharing</strong> between the <strong>two LRTs
+nearby</strong></li>
+</ol></li>
+</ol>
+<h3 id="efficient-frontier">3.3 Efficient frontier</h3>
+<p>Boundary of region of achievable <span
+class="math inline">\((P_D,P_F)\)</span> operation points</p>
+<ul>
+<li><strong>continuous-valued</strong>: ROC of LRT</li>
+<li><strong>discrete-valued</strong>: LRT points and the straight line
+segments</li>
+</ul>
+<p><strong>Facts</strong></p>
+<ul>
+<li><span class="math inline">\(P_D \ge P_F\)</span></li>
+<li>efficient frontier is <strong>concave</strong> function</li>
+<li><span class="math inline">\(\frac{dP_D}{dP_F}=\eta\)</span></li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/efficient_frontier.jpg" srcset="/img/loading.gif" lazyload
+alt="efficient frontier" />
+<figcaption aria-hidden="true">efficient frontier</figcaption>
+</figure>
+<h2 id="minmax-hypo-testing">4. Minmax hypo testing</h2>
+<p>prior: unknown, cost fun: known</p>
+<h3 id="decision-rule-1">4.1 Decision rule</h3>
+<ul>
+<li><p>minmax approach <span class="math display">\[
+\hat H(\cdot)=\arg\min_{f(\cdot)}\max_{p\in[0,1]} \varphi(f,p)
+\]</span></p></li>
+<li><p>optimal decision rule <span class="math display">\[
+\hat H(\cdot)=\hat{H}_{p_*}(\cdot) \\
+p_* = \arg\max_{p\in[0,1]} \varphi(\hat H_p, p)
+\]</span></p>
+<blockquote>
+<p>要想证明上面的最优决策，首先引入 mismatch Bayes decision <span
+class="math display">\[
+\hat{\mathrm{H}}_q(y)=\left\{
+\begin{array}{ll}{H_1,} &amp; {L(y) \ge
+\frac{1-q}{q}\frac{C_{10}-C_{00}}{C_{01}-C_{11}}} \\
+{H_0,} &amp; {otherwise}\end{array}\right.
+\]</span> 代价函数如下，可得到 <span class="math inline">\(\varphi(\hat
+H_q,p)\)</span> 与概率 <span class="math inline">\(p\)</span> 成线性关系
+<span class="math display">\[
+\varphi(\hat H_q,p)=(1-p)[C_{00}(1-P_F(q))+C_{10}P_F(q)] +
+p[C_{01}(1-P_D(q))+C_{11}P_D(q)]
+\]</span></p>
+<p><strong>Lemma</strong>: Max-min inequality <span
+class="math display">\[
+\max_x\min_y g(x,y) \le \min_y\max_x g(x,y)
+\]</span> <strong>Theorem</strong>:<br />
+<span class="math display">\[
+\min_{f(\cdot)}\max_{p\in[0,1]}\varphi(f,p)=\max_{p\in[0,1]}\min_{f(\cdot)}\varphi(f,p)
+\]</span> <strong>Proof of Lemma</strong>: Let <span
+class="math inline">\(h(x)=\min_y g(x,y)\)</span> <span
+class="math display">\[
+\begin{aligned}
+g(x) &amp;\leq f(x, y), \forall x \forall y \\
+\Longrightarrow \max _{x} g(x) &amp; \leq \max _{x} f(x, y), \forall y
+\\ \Longrightarrow \max _{x} g(x) &amp; \leq \min _{y} \max _{x} f(x, y)
+\end{aligned}
+\]</span> <strong>Proof of Thm</strong>: 先取 <span
+class="math inline">\(\forall p_1,p_2 \in [0,1]\)</span>，可得到 <span
+class="math display">\[
+\varphi(\hat H_{p_1},p_1)=\min_f \varphi(f,p_1) \le \max_p \min_f
+\varphi(f,p) \le \min_f \max_p \varphi(f, p) \le \max_p \varphi(\hat
+H_{p_2}, p)
+\]</span> 由于 <span class="math inline">\(p_1,p_2\)</span>
+任取时上式都成立，因此可以取 <span
+class="math inline">\(p_1=p_2=p_*=\arg\max_p \varphi(\hat H_p,
+p)\)</span></p>
+<p>要想证明定理则只需证明 <span class="math inline">\(\varphi(\hat
+H_{p_*},p_*)=\max_p \varphi(\hat H_{p_*}, p)\)</span></p>
+<p>由前面可知 <span class="math inline">\(\varphi(\hat H_q,p)\)</span>
+与 <span class="math inline">\(p\)</span> 成线性关系，因此要证明上式</p>
+<ul>
+<li>若 <span class="math inline">\(p_* \in (0,1)\)</span>，只需 <span
+class="math inline">\(\left.\frac{\partial \varphi\left(\hat{H}_{q^{*}},
+p\right)}{\partial p}\right|_{\text {for any }
+p}=0\)</span>，等式自然成立</li>
+<li>若 <span class="math inline">\(p_* = 1\)</span>，只需 <span
+class="math inline">\(\left.\frac{\partial \varphi\left(\hat{H}_{q^{*}},
+p\right)}{\partial p}\right|_{\text {for any } p} &gt;
+0\)</span>，最优解就是 <span class="math inline">\(p=1\)</span>；<span
+class="math inline">\(q_*=0\)</span> 同理</li>
+</ul>
+<p>根据下面的引理，可以得到最优决策就是 Bayes 决策 <span
+class="math inline">\(p_*=\arg\max_p \varphi(\hat H_p, p)\)</span>，其中
+<span class="math inline">\(p_*\)</span> 满足 <span
+class="math display">\[
+\begin{aligned} 0 &amp;=\frac{\partial \varphi\left(\hat{H}_{p_{*}},
+p\right)}{\partial p} \\
+&amp;=\left(C_{01}-C_{00}\right)-\left(C_{01}-C_{11}\right)
+P_{\mathrm{D}}\left(p_{*}\right)-\left(C_{10}-C_{00}\right)
+P_{\mathrm{F}}\left(p_{*}\right) \end{aligned}
+\]</span> <strong>Lemma</strong>: <span class="math display">\[
+\left.\frac{\mathrm{d} \varphi\left(\hat{H}_{p}, p\right)}{\mathrm{d}
+p}\right|_{p=q}=\left.\frac{\partial \varphi\left(\hat{H}_{q},
+p\right)}{\partial p}\right|_{p=q}=\left.\frac{\partial
+\varphi\left(\hat{H}_{q}, p\right)}{\partial p}\right|_{\text {for any }
+p}
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/mismatch_bayes_risk.jpg" srcset="/img/loading.gif" lazyload
+alt="bayes risk" /></p>
+</blockquote></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C/">假设检验</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch2_Estimation/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(二) Estimation Problem</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/08/tools/taskbar/">
+                        <span class="hidden-mobile">Windows任务栏右侧小图标显示不完整</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

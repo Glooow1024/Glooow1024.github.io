@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记23：算子分裂法 &amp; ADMM">
+<meta property="og:url" content="http://example.com/2020/05/10/optimization/ch23-DR-splitting-admm/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-10T01:52:41.000Z">
+<meta property="article:modified_time" content="2020-05-10T02:13:36.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="近似点算子">
+<meta property="article:tag" content="算子分裂法">
+<meta property="article:tag" content="ADMM">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记23：算子分裂法 &amp; ADMM - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记23：算子分裂法 &amp; ADMM">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-10 09:52" pubdate>
+        May 10, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      10k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      88 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记23：算子分裂法 &amp; ADMM</h1>
+            
+            <div class="markdown-body">
+              <p>前面章节中，针对 <span class="math inline">\(\min f(x)+g(Ax)\)</span>
+形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG
+方法为 <span class="math display">\[
+x_{k+1}=\text{prox}_{th}(x_k-t_k\nabla g(x_k))
+\]</span> ALM 的第一步要解一个联合优化问题 <span class="math display">\[
+(x^{k+1},y^{k+1}) = \arg\min_{x,y} L_t(x,y,z^k)
+\]</span> 他们都把 <span class="math inline">\(f,g\)</span>
+耦合在一起了。如果我们看原始问题 <span class="math inline">\(\min
+f(x)+g(Ax)\)</span> 实际上就是要找 <span
+class="math inline">\(x^\star\)</span> 使得 <span
+class="math inline">\(0\in\partial f(x^\star)+A^T\partial
+g(x^\star)\)</span>，这一节要介绍的 Douglas-Rachford splitting method
+实际上就是要 decoupling。</p>
+<span id="more"></span>
+<h2 id="douglas-rachford-splitting-algorithm">1.Douglas-Rachford
+splitting Algorithm</h2>
+<p>针对如下优化问题，其中 <span class="math inline">\(f,g\)</span>
+都是闭凸函数 <span class="math display">\[
+\min f(x)+g(x)
+\]</span></p>
+<blockquote>
+<p>先给出 DR-splitting 方法的迭代方程 <span class="math display">\[
+\begin{array}{l}
+x_{k+1}=\operatorname{prox}_{f}\left(y_{k}\right) \\
+y_{k+1}=y_{k}+\operatorname{prox}_{g}\left(2
+x_{k+1}-y_{k}\right)-x_{k+1}
+\end{array}
+\]</span></p>
+</blockquote>
+<p>为什么叫做 splitting 呢？回忆 PPA 是不是需要求解 <span
+class="math inline">\(x^+ =
+\text{prox}_{t(f+g)}(x)\)</span>，而这里则可以分开依次求 <span
+class="math inline">\(\text{prox}_f\)</span> 和 <span
+class="math inline">\(\text{prox}_g\)</span>，所以被称为
+splitting。这个迭代方程看起来没有规律，那么他能不能收敛呢？答案当然是可以的，<span
+class="math inline">\(x_k\)</span> 最终会收敛到 <span
+class="math inline">\(0\in \partial f(x)+\partial
+g(x)\)</span>，这个证明放到后面，先来从别的方面认识一下这个方法。</p>
+<p>首先 <span class="math inline">\(f,g\)</span>
+并没有区分，因此可以交换两者的位置，那么迭代方程也可以写为 <span
+class="math display">\[
+\begin{array}{l}
+x_{k+1}=\operatorname{prox}_{g}\left(y_{k}\right) \\
+y_{k+1}=y_{k}+\operatorname{prox}_{f}\left(2
+x_{k+1}-y_{k}\right)-x_{k+1}
+\end{array}
+\]</span>
+但需要注意的是这两种不同的迭代方程产生的序列是不一样的，也可能会影响收敛的速度，因此这个方法关于
+<span class="math inline">\(f,g\)</span> 是不对称的。</p>
+<p>如果把 <span class="math inline">\(x_{k+1}\)</span>
+带入到第二步，整个过程实际上可以用一个迭代方程表示 <span
+class="math display">\[
+y_{k+1} = F(y) \notag\\
+F(y)=y+\operatorname{prox}_{g}\left(2
+\operatorname{prox}_{f}(y)-y\right)-\operatorname{prox}_{f}(y)
+\]</span> 这是个什么式子呢？<strong>不动点迭代</strong>(fixed-point
+iteration)！就是在找函数 <span class="math inline">\(F(y)\)</span>
+的不动点。这个函数 <span class="math inline">\(F(y)\)</span>
+是连续的吗？是的，这是因为上一节中我们证明了 <span
+class="math inline">\(\text{prox}_{h}(x)\)</span> 满足firmly
+nonexpansive(co-coercivite) 性质 <span class="math display">\[
+\left(\operatorname{prox}_{h}(x)-\operatorname{prox}_{h}(y)\right)^{T}(x-y)
+\geq\left\|\operatorname{prox}_{h}(x)-\operatorname{prox}_{h}(y)\right\|_{2}^{2}
+\]</span> 因此近似点算子是 Lipschitz continuous 的，所以 <span
+class="math inline">\(F(y)\)</span> 也是连续的。那么假如最终找到了不动点
+<span class="math inline">\(y\)</span>，他有什么性质呢？ <span
+class="math display">\[
+y=F(y) \notag\\
+\iff 0 \in \partial f\left(\operatorname{prox}_{f}(y)\right)+\partial
+g\left(\operatorname{prox}_{f}(y)\right)
+\]</span> <strong>证明</strong>：对于不动点 <span
+class="math inline">\(y=F(y)\)</span>，取 <span
+class="math inline">\(x=\text{prox}_f(y)\)</span>，我们有 <span
+class="math display">\[
+\begin{aligned}
+x=\text{prox}_f(y),&amp;\quad F(y)=y \notag\\
+\iff x=\text{prox}_f(y),&amp;\quad x=\text{prox}_g(2x-y) \\
+\iff y-x\in \partial f(x),&amp;\quad x-y\in\partial g(x)
+\end{aligned}
+\]</span> 其中第一个等价性只需要把 <span
+class="math inline">\(x\)</span> 带入到 <span
+class="math inline">\(F(y)\)</span> 中，由此我们就可以得到 <span
+class="math display">\[
+0=(y-x)+(x-y)\in\partial f(x)+\partial g(x)
+\]</span> 自然而然地我们证明了一开始提到的 <span
+class="math inline">\(x_{k}\)</span> 的收敛性。</p>
+<p><strong>等价形式</strong>：下面这部分则主要是对原始形式做了一些<strong>变量代换</strong>，使其看起来更简洁，并没有新的内容。首先交换
+<span class="math inline">\(x,y\)</span> 的迭代次序 <span
+class="math display">\[
+\begin{array}{l}
+y_{k+1}=y_{k}+\operatorname{prox}_{g}\left(2 x_{k}-y_{k}\right)-x_{k} \\
+x_{k+1}=\operatorname{prox}_{f}\left(y_{k+1}\right)
+\end{array}
+\]</span> 引入新变量 <span
+class="math inline">\(u_{k+1}=\text{prox}_g(2x_k-y_k),w_k=x_k-y_k\)</span>
+<span class="math display">\[
+\begin{aligned}
+u_{k+1} &amp;=\operatorname{prox}_{g}\left(x_{k}+w_{k}\right) \\
+x_{k+1} &amp;=\operatorname{prox}_{f}\left(u_{k+1}-w_{k}\right) \\
+w_{k+1} &amp;=w_{k}+x_{k+1}-u_{k+1}
+\end{aligned}
+\]</span>
+<strong>放缩</strong>：除此之外，我们还可以对原始问题做一个放缩变为
+<span class="math inline">\(\min
+tf(x)+tg(x)\)</span>，那么迭代方程就变为如下形式，并没有本质的变化 <span
+class="math display">\[
+\begin{aligned}
+u_{k+1} &amp;=\operatorname{prox}_{tg}\left(x_{k}+w_{k}\right) \\
+x_{k+1} &amp;=\operatorname{prox}_{tf}\left(u_{k+1}-w_{k}\right) \\
+w_{k+1} &amp;=w_{k}+x_{k+1}-u_{k+1}
+\end{aligned}
+\]</span> <strong>松弛</strong>：前面降到了实际上是在对 <span
+class="math inline">\(y\)</span> 做不动点迭代，那么我们可以改为 <span
+class="math display">\[
+y_{k+1}=y_{k}+\rho_{k}\left(F\left(y_{k}\right)-y_{k}\right)
+\]</span> 如果 <span class="math inline">\(1&lt;\rho_k&lt;2\)</span>
+就是超松弛，如果 <span class="math inline">\(0&lt;\rho_k&lt;1\)</span>
+就是低松弛。这个时候迭代方程稍微复杂了一点点 <span
+class="math display">\[
+\begin{aligned}
+u_{k+1} &amp;=\operatorname{prox}_{g}\left(x_{k}+w_{k}\right) \\
+x_{k+1}
+&amp;=\operatorname{prox}_{f}\left(x_{k}+\rho_{k}\left(u_{k+1}-x_{k}\right)-w_{k}\right)
+\\
+w_{k+1} &amp;=w_{k}+x_{k+1}-x_{k}+\rho_{k}\left(x_{k}-u_{k+1}\right)
+\end{aligned}
+\]</span> <strong>共轭函数</strong>：根据 Moreau decomposition <span
+class="math inline">\(\text{prox}_g(x)+\text{prox}_{g^\star}(x)=x\)</span>，如果
+<span class="math inline">\(\text{prox}_g\)</span>
+比较难计算，我们就可以换到共轭函数上去计算 <span class="math display">\[
+\begin{array}{l}
+x_{k+1}=\operatorname{prox}_{f}\left(y_{k}\right) \\
+y_{k+1}=x_{k+1}-\operatorname{prox}_{g^{*}}\left(2 x_{k+1}-y_{k}\right)
+\end{array}
+\]</span> 下面举几个例子，主要就是练习近似点算子的计算，因为
+DR-splitting 方法主要就是在计算 <span class="math inline">\(f,g\)</span>
+的近似点。</p>
+<p><strong><em>例子 1</em></strong>：变量 <span
+class="math inline">\(X\in S^n\)</span>，参数 <span
+class="math inline">\(C\in S_+^n,\gamma&gt;0\)</span> <span
+class="math display">\[
+\text { minimize } \quad \operatorname{tr}(C X)-\log \operatorname{det}
+X+\gamma \sum_{i&gt;j}\left|X_{i j}\right|
+\]</span> 我们取 <span class="math inline">\(f(X)=\operatorname{tr}(C
+X)-\log \operatorname{det} X,\quad g(X)=\gamma \sum_{i&gt;j}\left|X_{i
+j}\right|\)</span></p>
+<p><span class="math inline">\(X=\text{prox}_{tf}(\hat{X}) \iff
+C-X^{-1}+(1/t)(X-\hat{X})\)</span>，这个方程可以通过对 <span
+class="math inline">\(\hat{X}-tC\)</span> 进行特征值分解求解</p>
+<p><span class="math inline">\(X=\text{prox}_{tg}(\hat{X})\)</span>
+可以通过软阈值(soft-thresholding)求解</p>
+<p><strong><em>例子 2</em></strong>：考虑等式约束的优化问题 <span
+class="math display">\[
+\begin{aligned}
+\min \quad&amp; f(x)\\
+\text{s.t.} \quad&amp; x\in V
+\end{aligned}
+\]</span> 等价于 <span class="math inline">\(g=\delta_V\)</span> <span
+class="math display">\[
+\begin{array}{l}
+x_{k+1}=\operatorname{prox}_{g}\left(y_{k}\right) \\
+y_{k+1}=y_{k}+P_V\left(2 x_{k+1}-y_{k}\right)-x_{k+1}
+\end{array}
+\]</span> <strong><em>例子 3</em></strong>：考虑这种复合形式 <span
+class="math inline">\(\min f_1(x)+f_2(Ax)\)</span>，可以引入等式约束
+<span class="math display">\[
+\begin{aligned}
+\min \quad&amp; f_1(x)+f_2(y) \\
+\text{s.t.} \quad&amp; Ax=y
+\end{aligned}
+\]</span> 取 <span
+class="math inline">\(f(x_1,x_2)=f_1(x_1)+f_2(x_2)\)</span>，他的近似点算子是可分的
+<span class="math display">\[
+\operatorname{prox}_{t f}\left(x_{1},
+x_{2}\right)=\left(\operatorname{prox}_{t f_{1}}\left(x_{1}\right),
+\operatorname{prox}_{t f_{2}}\left(x_{2}\right)\right)
+\]</span> 然后像例子 2 一样，向超平面 <span
+class="math inline">\([A,-I][x_1,x_2]^T=0\)</span> 做个投影。</p>
+<h2 id="admm">2. ADMM</h2>
+<p>交替方向乘子法(Alternating Direction Method of
+Multipliers)也是一个很重要而且很受欢迎的算法，下一节还会详细讲，这里主要是看看他与
+DR-splitting 的联系。</p>
+<p>这里还是先给出结论：<strong>DR-splitting 中取 <span
+class="math inline">\(\rho_k=1\)</span>，应用在对偶问题上，就等价于原问题的
+ADMM 算法</strong>。我们先推导对偶问题上的 DR-splitting
+迭代形式，然后再引出 ADMM 方法。</p>
+<p>对可分离的凸优化问题 <span class="math display">\[
+\begin{aligned}
+(P)\min \quad&amp; f_1(x_1)+f_2(x_2) \\
+\text{s.t.} \quad&amp; A_1x_1+A_2x_2=b \\
+(D)\max \quad&amp; -b^{T} z-f_{1}^{*}\left(-A_{1}^{T}
+z\right)-f_{2}^{*}\left(-A_{2}^{T} z\right)
+\end{aligned}
+\]</span> 取 <span class="math inline">\(g(z)=b^{T}
+z+f_{1}^{\star}\left(-A_{1}^{T} z\right),
+f(z)=f_{2}^{\star}\left(-A_{2}^{T} z\right)\)</span>，DR 方法为 <span
+class="math display">\[
+u^{+}=\operatorname{prox}_{t g}(z+w), \quad z^{+}=\operatorname{prox}_{t
+f}\left(u^{+}-w\right), \quad w^{+}=w+z^{+}-u^{+}
+\]</span> <strong>第一步</strong>：他等价于计算 <span
+class="math display">\[
+\begin{aligned}
+\hat{x}_{1}
+&amp;=\underset{x_{1}}{\operatorname{argmin}}\left(f_{1}\left(x_{1}\right)+z^{T}\left(A_{1}
+x_{1}-b\right)+\frac{t}{2}\left\|A_{1} x_{1}-b+w /
+t\right\|_{2}^{2}\right) \\
+u^{+} &amp;=z+w+t\left(A_{1} \hat{x}_{1}-b\right)
+\end{aligned}
+\]</span> 这个证明很不直观，上一节分析 PPA 与 ALM
+的关系的时候，证明了一个很不直观的结论：对 <span
+class="math inline">\(h(z)=g^{\star}(z)+f^{\star}\left(-A^{T}
+z\right)\)</span>，有 <span class="math display">\[
+\begin{aligned}
+z^+&amp;=\text{prox}_{th}(z) = z+t(A\hat{x}-\hat{y}) \\
+(\hat{x}, \hat{y})&amp;=\underset{x,
+y}{\operatorname{argmin}}\left(f(x)+g(y)+z^{T}(A x-y)+\frac{t}{2}\|A
+x-y\|_{2}^{2}\right)
+\end{aligned}
+\]</span> <strong>第二步</strong>：与第一个式子是类似的，等价于 <span
+class="math display">\[
+\begin{array}{l}
+\hat{x}_{2}=\underset{x_{2}}{\operatorname{argmin}}\left(f_{2}\left(x_{2}\right)+z^{T}
+A_{2} x_{2}+\frac{t}{2}\left\|A_{1} \hat{x}_{1}+A_{2}
+x_{2}-b\right\|_{2}^{2}\right. \\
+z^{+}=z+t\left(A_{1} \hat{x}_{1}+A_{2} \hat{x}_{2}-b\right)
+\end{array}
+\]</span> <strong>第三步</strong>：<span
+class="math inline">\(w^+=tA_2\hat{x}_2\)</span></p>
+<p>现在我们就可以引出 ADMM 方法了，他包括三个步骤 <span
+class="math display">\[
+\begin{aligned}
+x_{k+1,1}&amp;=\underset{\tilde{x}_{1}}{\operatorname{argmin}}\left(f_{1}\left(\tilde{x}_{1}\right)+z_{k}^{T}
+A_{1} \tilde{x}_{1}+\frac{t}{2}\left\|A_{1} \tilde{x}_{1}+A_{2} x_{k,
+2}-b\right\|_{2}^{2}\right) \\
+x_{k+1,2}&amp;=\underset{\tilde{x}_{2}}{\operatorname{argmin}}\left(f_{2}\left(\tilde{x}_{2}\right)+z_{k}^{T}
+A_{2} \tilde{x}_{2}+\frac{t}{2}\left\|A_{1} x_{k+1,1}+A_{2}
+\tilde{x}_{2}-b\right\|_{2}^{2}\right) \\
+z_{k+1}&amp;=z_{k}+t\left(A_{1} x_{k+1,1}+A_{2} x_{k+1,2}-b\right)
+\end{aligned}
+\]</span> 前两步分别对应了增广拉格朗日函数的两部分，分别对 <span
+class="math inline">\(x_1,x_2\)</span> 进行优化。与原本的 ALM
+算法相比，ALM 是每次对 <span class="math inline">\((x_1,x_2)\)</span>
+进行联合优化，即 <span class="math display">\[
+\begin{aligned}
+(x_{k+1,1},x_{k+1,2}) = \arg\min_{x_1,x_2} L_t(x_1,x_2,z_k) \\
+z_{k+1} = z_k + t\left(A_{1} x_{k+1,1}+A_{2} x_{k+1,2}-b\right)
+\end{aligned}
+\]</span> 另外我们前面还讲到了 dual PG 方法跟 ALM
+也很像，也是增广拉格朗日函数先对 <span
+class="math inline">\(x_1\)</span> 优化再对 <span
+class="math inline">\(x_2\)</span> 优化，但注意他跟 ADMM
+不同的地方在于：前者对 <span class="math inline">\(x_1\)</span>
+优化的时候不包含后面的二次正则项，而 ADMM 则包含，写出来对比一下就知道了
+<span class="math display">\[
+\begin{aligned}
+(dual\ PG)\hat{x}
+&amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+z^{T} A x\right) \\
+\hat{y} &amp;=\underset{y}{\operatorname{argmin}}\left(g(y)-z^{T}
+y+\frac{t}{2}\|A \hat{x}-y\|_{2}^{2}\right) \\
+(ADMM)
+x_{k+1,1}&amp;=\underset{\tilde{x}_{1}}{\operatorname{argmin}}\left(f_{1}\left(\tilde{x}_{1}\right)+z_{k}^{T}
+A_{1} \tilde{x}_{1}+\frac{t}{2}\left\|A_{1} \tilde{x}_{1}+A_{2} x_{k,
+2}-b\right\|_{2}^{2}\right) \\
+x_{k+1,2}&amp;=\underset{\tilde{x}_{2}}{\operatorname{argmin}}\left(f_{2}\left(\tilde{x}_{2}\right)+z_{k}^{T}
+A_{2} \tilde{x}_{2}+\frac{t}{2}\left\|A_{1} x_{k+1,1}+A_{2}
+\tilde{x}_{2}-b\right\|_{2}^{2}\right)
+\end{aligned}
+\]</span></p>
+<h2 id="收敛性分析">3. 收敛性分析</h2>
+<p>DR
+方法可以看成是一个不动点迭代，因此要证明收敛性，我们需要证明以下两个结论：</p>
+<ol type="1">
+<li><span class="math inline">\(y_k\)</span> 收敛到 <span
+class="math inline">\(F(y)\)</span> 的不动点 <span
+class="math inline">\(y^\star\)</span></li>
+<li><span class="math inline">\(x_{k+1}=\text{prox}_f(y_k)\)</span>
+收敛到 <span
+class="math inline">\(x^\star=\text{prox}_f(y^\star)\)</span></li>
+</ol>
+<p>在证明收敛性之前，需要先定义两个函数 <span class="math display">\[
+\begin{aligned}F(y) &amp;=y+\operatorname{prox}_{g}\left(2
+\operatorname{prox}_{f}(y)-y\right)-\operatorname{prox}_{f}(y) \\G(y)
+&amp;=y-F(y)
+\\&amp;=\operatorname{prox}_{f}(y)-\operatorname{prox}_{g}\left(2
+\operatorname{prox}_{f}(y)-y\right)\end{aligned}
+\]</span> 需要用到的是这两个函数的 firmly nonexpansive(co-coercive with
+parameter 1) 的性质 <span class="math display">\[
+\begin{aligned}(F(y)-F(\hat{y}))^{T}(y-\hat{y})
+&amp;\geq\|F(y)-F(\hat{y})\|_{2}^{2} \quad \text { for all } y, \hat{y}
+\\(G(y)-G(\hat{y}))^{T}(y-\hat{y})
+&amp;\geq\|G(y)-G(\hat{y})\|_{2}^{2}\end{aligned}
+\]</span> <strong>证明</strong>：令 <span
+class="math inline">\(x=\text{prox}_f(y),\hat{x}=\text{prox}_f(\hat{y})\)</span>，<span
+class="math inline">\(v=\operatorname{prox}_{g}(2 x-y), \quad
+\hat{v}=\operatorname{prox}_{g}(2 \hat{x}-\hat{y})\)</span></p>
+<p>根据 <span
+class="math inline">\(F(y)=y+v-x,F(\hat{y})=\hat{y}+\hat{v}-\hat{x}\)</span>
+有 <span class="math display">\[
+\begin{array}{l}(F(y)-F(\hat{y}))^{T}(y-\hat{y}) \\\quad \geq
+\quad(y+v-x-\hat{y}-\hat{v}+\hat{x})^{T}(y-\hat{y})-(x-\hat{x})^{T}(y-\hat{y})+\|x-\hat{x}\|_{2}^{2}
+\\\quad=(v-\hat{v})^{T}(y-\hat{y})+\|y-x-\hat{y}+\hat{x}\|_{2}^{2}
+\\\quad=(v-\hat{v})^{T}(2 x-y-2
+\hat{x}+\hat{y})-\|v-\hat{v}\|_{2}^{2}+\|F(y)-F(\hat{y})\|_{2}^{2}
+\\\quad \geq\|F(y)-F(\hat{y})\|_{2}^{2}\end{array}
+\]</span> 其中用到了 <span class="math inline">\(\text{prox}\)</span>
+算子的firm nonexpansiveness 性质 <span class="math display">\[
+(x-\hat{x})^{T}(y-\hat{y}) \geq\|x-\hat{x}\|_{2}^{2}, \quad(2 x-y-2
+\hat{x}+\hat{y})^{T}(v-\hat{v}) \geq\|v-\hat{v}\|_{2}^{2}
+\]</span> 证毕。</p>
+<p>然后我们就可以根据以下的不动点迭代方程证明前面提到的收敛性 <span
+class="math display">\[
+\begin{aligned}y_{k+1} &amp;=\left(1-\rho_{k}\right) y_{k}+\rho_{k}
+F\left(y_{k}\right) \\&amp;=y_{k}-\rho_{k}
+G\left(y_{k}\right)\end{aligned}
+\]</span> 其中需要假设 <span class="math inline">\(F\)</span>
+的不动点存在，且满足 <span class="math inline">\(0\in\partial
+f(x)+\partial g(x)\)</span>，以及松弛变量 <span
+class="math inline">\(\rho_k\in
+[\rho_{\min},\rho_{\max}],0&lt;\rho_{\min}&lt;\rho_{\max}&lt;2\)</span>。</p>
+<p><strong>证明</strong>：设 <span
+class="math inline">\(y^\star\)</span> 为 <span
+class="math inline">\(F(y)\)</span> 的不动点（也即 <span
+class="math inline">\(G(y)\)</span> 的零点），考虑第 <span
+class="math inline">\(k\)</span> 步迭代 <span class="math display">\[
+\begin{aligned}\left\|y^{+}-y^{\star}\right\|_{2}^{2}-\left\|y-y^{\star}\right\|_{2}^{2}
+&amp;=2\left(y^{+}-y\right)^{T}\left(y-y^{\star}\right)+\left\|y^{+}-y\right\|_{2}^{2}
+\\&amp;=-2 \rho
+G(y)^{T}\left(y-y^{\star}\right)+\rho^{2}\|G(y)\|_{2}^{2}
+\\&amp;\leq-\rho(2-\rho) \| G(y)) \|_{2}^{2} \\&amp;\leq-M \| G(y))
+\|_{2}^{2}\end{aligned}
+\]</span> 其中 <span
+class="math inline">\(M=\rho_{\min}(2-\rho_{\max})\)</span>。上式表明
+<span class="math display">\[
+M \sum_{k=0}^{\infty}\left\|G\left(y_{k}\right)\right\|_{2}^{2}
+\leq\left\|y_{0}-y^{\star}\right\|_{2}^{2}, \quad \| G(y)\|_2\to 0
+\]</span> 还可以得到 <span class="math inline">\(\|
+y_k-y^\star\|_2\)</span> 是单调不增的，因此 <span
+class="math inline">\(y_k\)</span> 有界。</p>
+<p>由于 <span class="math inline">\(\| y_k-y^\star\|_2\)</span>
+单调不增，故极限 <span class="math inline">\(\lim_{k\to \infty} \|
+y_k-y^\star\|_2\)</span> 存在；又由于 <span
+class="math inline">\(y_k\)</span> 有界，故存在收敛子序列。</p>
+<p>记 <span class="math inline">\(\bar{y}_k\)</span>
+为一个收敛子序列，收敛值为 <span
+class="math inline">\(\bar{y}\)</span>，根据 <span
+class="math inline">\(G\)</span> 的连续性有 <span
+class="math inline">\(0=\lim _{k \rightarrow \infty}
+G\left(\bar{y}_{k}\right)=G(\bar{y})\)</span>，因此 <span
+class="math inline">\(\bar{y}\)</span> 是 <span
+class="math inline">\(G\)</span> 的l零点，且极限 <span
+class="math inline">\(\lim_{k\to \infty} \| y_k-\bar{y}\|_2\)</span>
+存在。</p>
+<p>接着需要证明唯一性，假设 <span
+class="math inline">\(\bar{u},\bar{v}\)</span>
+是两个不同的极限点，收敛极限 <span class="math inline">\(\lim_{k\to
+\infty} \| y_k-\bar{u}\|_2,\lim_{k\to \infty} \|
+y_k-\bar{v}\|_2\)</span> 存在，因此 <span class="math display">\[
+\|\bar{u}-\bar{v}\|_{2}=\lim _{k \rightarrow
+\infty}\left\|y_{k}-\bar{u}\right\|_{2}=\lim _{k \rightarrow
+\infty}\left\|y_{k}-\bar{v}\right\|_{2}=0
+\]</span> 证毕。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">算子分裂法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ADMM/">ADMM</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/20/optimization/ch24-ADMM/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记24：ADMM</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/09/optimization/ch22-ppa/">
+                        <span class="hidden-mobile">凸优化笔记22：近似点算法</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

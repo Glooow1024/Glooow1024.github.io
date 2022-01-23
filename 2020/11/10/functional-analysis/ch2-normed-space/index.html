@@ -1,0 +1,1079 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在度量空间中，我们重点关注的是两个元素之间的距离，而这一部分要引出来的赋范空间中，则对每个元素本身也赋予了“范数”，也就是“长度”。 1. 线性空间 线性空间，可以简单理解为对线性运算封闭的集合。那么线性运算的形式是什么呢？常见的线性运算可以写为 \(T(x;a)&#x3D;\sum_i a_ix_i\)，因此可以看出来包含了数乘和加法两种基本运算，因此线性空间必然需要对数乘和加法封闭，除此之外，为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛函分析笔记2：赋范空间">
+<meta property="og:url" content="http://example.com/2020/11/10/functional-analysis/ch2-normed-space/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="在度量空间中，我们重点关注的是两个元素之间的距离，而这一部分要引出来的赋范空间中，则对每个元素本身也赋予了“范数”，也就是“长度”。 1. 线性空间 线性空间，可以简单理解为对线性运算封闭的集合。那么线性运算的形式是什么呢？常见的线性运算可以写为 \(T(x;a)&#x3D;\sum_i a_ix_i\)，因此可以看出来包含了数乘和加法两种基本运算，因此线性空间必然需要对数乘和加法封闭，除此之外，为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-10T12:15:17.000Z">
+<meta property="article:modified_time" content="2020-11-10T12:18:50.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="线性空间">
+<meta property="article:tag" content="赋范空间">
+<meta property="article:tag" content="Banach空间">
+<meta property="article:tag" content="Hamel基">
+<meta property="article:tag" content="Schauder基">
+<meta property="article:tag" content="线性算子">
+<meta property="article:tag" content="算子范数">
+<meta property="article:tag" content="线性泛函">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>泛函分析笔记2：赋范空间 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="泛函分析笔记2：赋范空间">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-10 20:15" pubdate>
+        November 10, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      11k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      90 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛函分析笔记2：赋范空间</h1>
+            
+            <div class="markdown-body">
+              <p>在度量空间中，我们重点关注的是两个元素之间的距离，而这一部分要引出来的赋范空间中，则对每个元素本身也赋予了“范数”，也就是“长度”。</p>
+<h2 id="线性空间">1. 线性空间</h2>
+<p>线性空间，可以简单理解为对线性运算封闭的集合。那么线性运算的形式是什么呢？常见的线性运算可以写为
+<span class="math inline">\(T(x;a)=\sum_i
+a_ix_i\)</span>，因此可以看出来包含了<strong>数乘</strong>和<strong>加法</strong>两种基本运算，因此线性空间必然需要对数乘和加法封闭，除此之外，为了保证运算体系的自洽性，我们还需要规定一些其他的运算规则。最后，给出来线性空间的定义：</p>
+<span id="more"></span>
+<p>考虑 <span class="math inline">\(\mathbb{K=C\ or\ R}, X\ne
+\varnothing,\forall x,y\in X,\forall
+\lambda\in\mathbb{K}\)</span>，可以定义 <span
+class="math inline">\(x+y\in X,\lambda x\in X\)</span>，如果满足</p>
+<ol type="1">
+<li><span class="math inline">\(x+y=y+x\)</span></li>
+<li><span class="math inline">\((x+y)+z=x+(y+z)\)</span></li>
+<li><span class="math inline">\(\exists 0\in X,\forall x\in X,
+x+0=0+x=x\)</span></li>
+<li><span class="math inline">\(\forall x,\exists! y\in
+X,x+y=0,y=-x\)</span></li>
+<li><span class="math inline">\(\alpha(\beta
+x)=(\alpha\beta)x\)</span></li>
+<li><span class="math inline">\(1x=x\)</span></li>
+<li><span class="math inline">\((\alpha+\beta)x=\alpha x+\beta
+x\)</span></li>
+<li><span class="math inline">\(\alpha(x+y)=\alpha x+\alpha
+y\)</span></li>
+</ol>
+<p>则称 <span class="math inline">\(X\)</span> 为 <span
+class="math inline">\(\mathbb{K}\)</span>
+上的<strong>线性空间</strong>。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(S=\{(x_n)_{n\ge1},x_n\in\mathbb{K}
+\}\)</span>，定义加法 <span
+class="math inline">\((x_n)_{n\ge1}+(y_n)_{n\ge1}=(x_n+y_n)_{n\ge1}\in
+S\)</span>，定义数乘 <span
+class="math inline">\(\lambda(x_n)_{n\ge1}=(\lambda x_n)_{n\ge1}\in
+S\)</span>，那么可以验证 <span class="math inline">\(S\)</span>
+为线性空间。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\(C[a,b]\)</span>，定义 <span
+class="math inline">\((f+g)(t)=f(t)+g(t), (\lambda f)(t)=\lambda
+f(t)\)</span>，可以验证 <span class="math inline">\(C[a,b]\)</span>
+为线性空间。</p>
+<p><strong>定义</strong>：<span class="math inline">\(X\)</span> 为
+<span class="math inline">\(\mathbb{K}\)</span> 上的线性空间，<span
+class="math inline">\(Y\subset X\)</span>，称 <span
+class="math inline">\(Y\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，若 <span
+class="math inline">\(\forall x,y\in Y,\forall
+\lambda\in\mathbb{K}\)</span>，有 <span class="math inline">\(x+y\in
+Y,\lambda x\in Y\)</span>，并且 <span class="math inline">\(Y\)</span>
+本身也是线性空间。</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\(\ell^\infty \subset S\)</span> 是线性空间。</p>
+<p><strong><em>例子 4</em></strong>：<span class="math inline">\(\ell^p
+\subset S,1\le p &lt; \infty\)</span> 是线性空间。</p>
+<p><strong><em>例子 5</em></strong>：<span class="math inline">\(\ell^p
+\subset c_0(x_n\to0的序列\{(x_n)\}) \subset c(x_n收敛的序列) \subset
+\ell^\infty\subset S(无穷维序列)\)</span>，每一个都是线性空间。</p>
+<p><strong><em>例子 6</em></strong>：<span
+class="math inline">\(P\)</span> 所有多项式的集合，<span
+class="math inline">\(P\subset C[a,b]\)</span> 也是线性空间。</p>
+<p><strong>命题</strong>：若 <span class="math inline">\(X\)</span>
+为线性空间，<span class="math inline">\((Y_i)_{i\in I}\)</span> 为 <span
+class="math inline">\(X\)</span> 的一族线性子空间，则 <span
+class="math inline">\(Y=\bigcap_{i\in I}Y_i\)</span> 仍然是 <span
+class="math inline">\(X\)</span> 的线性子空间。</p>
+<p><strong>定义</strong>：<span class="math inline">\(X\)</span>
+为线性空间，<span class="math inline">\(M\subset X\)</span> 非空，令
+<span class="math inline">\(\mathcal{E}\)</span> 为所有包含 <span
+class="math inline">\(M\)</span> 的线性子空间，那么一定有 <span
+class="math inline">\(X\in\mathcal{E}\)</span>，因此 <span
+class="math inline">\(\mathcal{E}\)</span> 一定非空。令 <span
+class="math inline">\(Z=\bigcap_{Y\in\mathcal{E}}Y\)</span> 也一定是
+<span class="math inline">\(X\)</span> 的线性子空间，记 <span
+class="math inline">\(Z=\text{span}(M)\)</span> 称为 <span
+class="math inline">\(M\)</span> <strong>生成的线性子空间</strong>。</p>
+<p><strong>命题</strong>：若 <span class="math inline">\(M\subset
+X\)</span> 非空，那么 <span class="math inline">\(Z=\text{span}(M) =
+\{\sum_i^n \lambda_i x_i,n\ge1,x_i\in
+M,\lambda_i\in\mathbb{K}\}\)</span> 为包含 <span
+class="math inline">\(M\)</span> 的 <span
+class="math inline">\(X\)</span> 的<strong>最小线性子空间</strong>。</p>
+<p>证明：略。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(X=S,e_n=(0,\cdots,0,1,0,\cdots)\in S,
+M=\{e_n,n\ge1\}\subset S\)</span>，则 <span
+class="math inline">\(\text{span}(M)=c_{00}\)</span>(只有有限个元素非零的无穷维序列)。</p>
+<p><strong>定义</strong>：<span class="math inline">\(M\subset
+X\)</span> 为<strong>线性无关</strong>的，若 <span
+class="math inline">\(\forall x_1,...,x_n\in M\)</span> 两两不等，都有
+<span class="math inline">\(x_1,...,x_n\)</span>
+都线性无关(也即任意有限个元素都线性无关)。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\(X=C[a,b],\alpha_1&lt;\alpha_2&lt;\cdots&lt;\alpha_n\le\cdots,
+f_n=e^{\alpha_n t}\in C[a,b]\)</span>，那么取 <span
+class="math inline">\(M=\{f_1,f_2,\cdots\}\)</span> 是线性无关的 <span
+class="math inline">\(\iff \forall n\ge1, f_1,...,f_n\)</span>
+线性无关。</p>
+<p><em>证明</em>：利用线性相关的定义，重复求导、相减的过程，细节略。</p>
+<p><strong>定义</strong>： <span class="math inline">\(X\)</span>
+为线性空间，若 <span class="math inline">\(X\)</span> 中存在 <span
+class="math inline">\(n\)</span> 个元素线性无关，但任意 <span
+class="math inline">\(n+1\)</span> 个元素都线性相关，则称 <span
+class="math inline">\(X\)</span> 为 <span
+class="math inline">\(n\)</span> <strong>维</strong>的，记为 <span
+class="math inline">\(\text{dim}X=n\)</span>。若 <span
+class="math inline">\(\forall n\ge1,\exists x_!,...,x_n\)</span>
+线性无关，则称 <span class="math inline">\(X\)</span>
+为<strong>无穷维</strong>的。</p>
+<p><strong>命题</strong>：<span
+class="math inline">\(\text{dim}X=n,\forall x\in X\)</span>
+都存在唯一的系数 <span class="math inline">\(a_1,...,a_n\)</span> 使得
+<span class="math inline">\(x=a_1x_1+\cdots+a_nx_n\)</span>。</p>
+<p>证明：略。</p>
+<p>对于复空间 <span class="math inline">\(\mathbb{C}^n\)</span>，认为
+<span class="math inline">\(\text{dim}\mathbb{C}^n=2n\)</span>。</p>
+<p><strong>定义</strong>：<span class="math inline">\(X\)</span>
+为线性空间，<span class="math inline">\(M\subset X\)</span> 线性无关，若
+<span class="math inline">\(\text{span}(M)=X\)</span>，则称 <span
+class="math inline">\(M\)</span> 为 <span
+class="math inline">\(X\)</span> 的 <strong>Hamel 基</strong>。</p>
+<blockquote>
+<p><strong>命题</strong>：<span class="math inline">\(\forall x\in
+X\)</span>，则 <span class="math inline">\(\exists x_1,...,x_n\in
+M\)</span> 两两不等，<span class="math inline">\(\exists
+\lambda_1,...,\lambda_n\in\mathbb{K}\)</span> 均不为 0，使得 <span
+class="math inline">\(x=\lambda_1 x_1+...+\lambda_n
+x_n\)</span>，并且上述<strong>表示唯一</strong>。</p>
+<p>证明：略。</p>
+</blockquote>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(\{e_1,e_1,...\}\)</span> 为 <span
+class="math inline">\(c_{00}\)</span> 的 Hamel 基。</p>
+<p><strong>定理</strong>：<span class="math inline">\(X\)</span>
+为线性空间，<span class="math inline">\(M\subset X\)</span> 线性无关，则
+<span class="math inline">\(\exists N\)</span> 为 <span
+class="math inline">\(X\)</span> 的 Hamel 基，使得 <span
+class="math inline">\(M\subset N\)</span>。</p>
+<blockquote>
+<p><strong>小结</strong>：这一部分主要是讲解了线性空间的定义，最关键的概念就在于</p>
+<ol type="1">
+<li>对于加法和数乘封闭；</li>
+<li>可以找到一组基，任意向量都可以用基的线性组合来表示，并且表示方法唯一。</li>
+</ol>
+</blockquote>
+<h2 id="赋范空间与banach空间">2. 赋范空间与Banach空间</h2>
+<p>假设 <span class="math inline">\(X\)</span> 为 <span
+class="math inline">\(\mathbb{K}\)</span> 上的线性空间，定义范数运算
+<span class="math inline">\(\Vert\cdot\Vert:X\to
+\mathbb{R}\)</span>，满足如下条件：</p>
+<ol type="1">
+<li><span class="math inline">\(\Vert x\Vert \ge 0\)</span></li>
+<li><span class="math inline">\(\Vert x\Vert =0\iff x=0\)</span></li>
+<li><span class="math inline">\(\Vert\lambda x\Vert=|\lambda|\cdot\Vert
+x\Vert\)</span></li>
+<li><span class="math inline">\(\forall x,y\in X, \Vert x+y\Vert\le
+\Vert x\Vert + \Vert y\Vert\)</span></li>
+</ol>
+<p>则称 <span class="math inline">\(\Vert\cdot\Vert\)</span> 为 <span
+class="math inline">\(X\)</span> 上的范数，<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>
+为<strong>赋范空间</strong>。</p>
+<p><strong>定义</strong>：在赋范空间中，<span
+class="math inline">\(\forall x,y\in X\)</span>，若定义 <span
+class="math inline">\(d(x,y)=\Vert x-y\Vert\)</span>，那么该方法定义的
+<span class="math inline">\(d(x,y)\)</span> 也是度量，称为 <span
+class="math inline">\(\Vert\cdot\Vert\)</span>
+<strong>诱导的度量</strong>。若此时 <span
+class="math inline">\((X,d)\)</span> 为<strong>完备空间</strong>，则称
+<span class="math inline">\((X,\Vert\cdot\Vert)\)</span> 为
+<strong>Banach 空间</strong>（即完备的赋范空间）。</p>
+<p><strong>注</strong>：由于范数的定义中第 3 条存在，以及诱导度量只有
+<span class="math inline">\(x-y\)</span>
+决定，使得诱导度量相比于一般定义的度量还具有一些特别性质，例如：</p>
+<ul>
+<li>平移不变性 <span
+class="math inline">\(d(x+a,y+a)=d(x+y)\)</span></li>
+<li>齐次性 <span class="math inline">\(d(\lambda x,\lambda y)=|\lambda|
+d(x,y)\)</span></li>
+</ul>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\((\mathbb{K}^n,\Vert\cdot\Vert_\infty),(\mathbb{K}^n,\Vert\cdot\Vert_p),(\ell^\infty,\Vert\cdot\Vert_\infty),(\ell^p,\Vert\cdot\Vert_p),(c_{0},\Vert\cdot\Vert_\infty),(c,\Vert\cdot\Vert_\infty)\)</span>
+均为 Banach 空间。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\(S=\{(x_n)_{n\ge1},x_n\in\mathbb{K}\},d(x,y)=\sum_n
+\frac{1}{2^n}\frac{|x_n-y_n|}{1+|x_n-y_n|}\)</span>，<strong>不存在</strong>
+<span class="math inline">\(S\)</span> 上的范数 <span
+class="math inline">\(\Vert\cdot\Vert\)</span> 使 <span
+class="math inline">\(d\)</span> 被诱导出，因为 <span
+class="math inline">\(d\)</span> 不满足齐次性。</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\((C[a,b],\Vert\cdot\Vert_\infty)\)</span> 为 Banach
+空间，<span class="math inline">\((C[a,b],\Vert\cdot\Vert_p)\)</span>
+不是 Banach 空间。</p>
+<p><strong><em>例子
+4</em></strong>：离散度量不满足齐次性，因此不可能由范数诱导出。</p>
+<p><strong>命题 1</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert_\infty)\)</span>
+为赋范空间，<span class="math inline">\(Y\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间。若 <span
+class="math inline">\(Y\)</span> 为 Banach 空间，则 <span
+class="math inline">\(Y\)</span> 在 <span
+class="math inline">\(X\)</span> 中必为闭集。</p>
+<p><strong>命题 2</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert_\infty)\)</span> 为 Banach
+空间，<span class="math inline">\(Y\subset X\)</span>
+为闭集线性子空间，则 <span class="math inline">\(Y\)</span> 必为 Banach
+空间。</p>
+<p>证明：赋范空间的线性子空间仍然是赋范空间，完备空间一定要是闭集。细节略。</p>
+<blockquote>
+<p>只需要掌握关键点，那么上面的命题都可以由下面的关键点轻松导出：</p>
+<ol type="1">
+<li>完备空间一定是闭集；完备空间的子空间也完备 <span
+class="math inline">\(\iff\)</span> 该子空间为闭集；</li>
+<li>赋范空间 + 完备性 = Banach 空间。</li>
+</ol>
+</blockquote>
+<p><strong>命题</strong>：若 <span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span> 为 Banach 空间，<span
+class="math inline">\(x_n\in X\)</span>，且 <span
+class="math inline">\(\sum_n^\infty \Vert x_n\Vert &lt;
+\infty\)</span>，则 <span class="math inline">\(\sum^\infty x_n\)</span>
+收敛。</p>
+<p>证明：完备空间中，证明序列收敛可以证明序列是柯西列。</p>
+<p><strong>定义</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span> 为赋范空间，<span
+class="math inline">\(e_n\in X(n\ge 1)\)</span>，称 <span
+class="math inline">\((e_n)_{n\ge1}\)</span> 为 <span
+class="math inline">\(X\)</span> 的一组 <strong>Schauder 基</strong>，若
+<span class="math inline">\(\forall x\in X, \exists !
+\lambda_n,x=\sum^\infty_n \lambda_n e_n\)</span>。</p>
+<p><strong>命题</strong>：若 <span class="math inline">\(X\)</span> 有
+Schauder 基，那么 <span class="math inline">\(X\)</span>
+一定是可分的。</p>
+<p>证明：可以取 <span class="math inline">\(M=\{\sum^n_{i=1}x_ie_i \in
+X, n\ge1, x_i\in\mathbb{Q} \}\)</span>，是可数个可数集的并。</p>
+<blockquote>
+<p>Hamel 基与 Schauder 基的区别：</p>
+<ol type="1">
+<li>最主要的区别是 Hamel 基可以是有限维也可以是无穷维的，这由集合 <span
+class="math inline">\(X\)</span> 的维数决定，而 Schauder
+基则只定义在无穷维上；</li>
+<li>前者针对线性空间，后者针对 Banach 空间。</li>
+</ol>
+</blockquote>
+<h2 id="有限维赋范空间">3. 有限维赋范空间</h2>
+<p>有限维赋范空间相比于一般的赋范空间有很多很好的性质，比如所有范数等价、有限维赋范空间都是
+Banach 空间。</p>
+<p>假设 <span class="math inline">\(X\)</span> 为 <span
+class="math inline">\(\mathbb{K}\)</span> 上的线性空间，并且存在两个范数
+<span
+class="math inline">\(\Vert\cdot\Vert_1,\Vert\cdot\Vert_2\)</span>，称二者等价，若
+<span class="math display">\[
+\exists \alpha,\beta &gt; 0,\forall x\in X,\quad \alpha\Vert x\Vert_1\le
+\Vert x\Vert_2\le \beta\Vert x\Vert_2
+\]</span> 此时 <span
+class="math inline">\((X,\Vert\cdot\Vert_1),(X,\Vert\cdot\Vert_2)\)</span>
+有：</p>
+<ul>
+<li>相同的收敛列、柯西列；</li>
+<li>相同的开集、闭集、闭包、内部；</li>
+<li><span class="math inline">\((X,\Vert\cdot\Vert_1)\)</span> Banach
+<span class="math inline">\(\iff (X,\Vert\cdot\Vert_2)\)</span>
+Banach；</li>
+</ul>
+<blockquote>
+<p><strong>引理</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，<span
+class="math inline">\(Y\subset X\)</span> 为有限维线性子空间，设 <span
+class="math inline">\(e_1,...,e_n\)</span> 为 <span
+class="math inline">\(Y\)</span> 的一组基，则 <span
+class="math inline">\(\exists c &gt; 0,\forall \lambda_1,...,\lambda_n
+\in \mathbb{K}\)</span>，有 <span class="math display">\[
+c(|\lambda_1|+\cdots+|\lambda_n|) \le \Vert\lambda_1
+e_1+\cdots+\lambda_n e_n\Vert \le \max_i\Vert e_i\Vert
+(|\lambda_1|+\cdots+|\lambda_n|)
+\]</span> 证明：需要用到 Bolzano-Weierstrass
+定理，即<strong>有界列存在收敛子列</strong>。反证法，证明略。</p>
+<p><strong>定理</strong>：若 <span
+class="math inline">\(\text{dim}X&lt;\infty\)</span>，则 <span
+class="math inline">\(X\)</span>
+上的<strong>范数互相等价</strong>，且均为 Banach 空间。</p>
+<p>证明：只需要证明所有范数与 <span
+class="math inline">\(\Vert\cdot\Vert_1\)</span> 范数等价，且 <span
+class="math inline">\((X,\Vert\cdot\Vert_1)\)</span> 构成 Banach
+空间。</p>
+</blockquote>
+<p><strong>推论</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，若 <span
+class="math inline">\(Y\subset X\)</span> 为有限维线性子空间，则 <span
+class="math inline">\(Y\)</span> 为闭集。</p>
+<p>有限维赋范空间除了这个良好的性质（一定是 Bananch
+空间）之外，还有其他的好性质。下面引入紧集的概念。</p>
+<p><strong>定义</strong>：<span
+class="math inline">\((X,d)\)</span>，<span
+class="math inline">\(M\subset X\)</span> 为紧集，若 <span
+class="math inline">\(\forall x_n\in M,\exists n_k\uparrow
+\infty,\exists x\in M, x_{n_k}\to x(k\to \infty).\)</span></p>
+<p>实际上，紧集的概念跟完备性的概念有点像，前者是任意序列一定存在收敛子列，后者说明柯西列一定是收敛列。他们都跟序列的收敛性有关，后面也可以看到，他们都跟闭集有一定的关系。</p>
+<p>实际上，紧集一定是有界闭集，但是闭集不一定是紧集。不过对于有限维赋范空间来说，二者等价，后面会有定理专门证明。</p>
+<p><strong>定理</strong>：<span class="math inline">\((X,d)\)</span>，若
+<span class="math inline">\(M\subset X\)</span>
+为<strong>紧集</strong>，则 <span class="math inline">\(M\)</span>
+一定<strong>完备</strong>，并且一定是<strong>有界闭集</strong>。</p>
+<p><strong>定理</strong>：<span
+class="math inline">\((X,d)\)</span>，<span
+class="math inline">\(M\subset X\)</span> 为紧集，<span
+class="math inline">\(N\subset M\)</span>，则 <span
+class="math inline">\(N\)</span> 为紧集 <span class="math inline">\(\iff
+N\)</span> 为闭集。</p>
+<p>证明：略。</p>
+<p><strong>定理</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，<span
+class="math inline">\(\text{dim}X=n&lt;\infty\)</span>，<span
+class="math inline">\(M\subset X\)</span> 为紧集 <span
+class="math inline">\(\iff M\)</span> 为有界闭集。</p>
+<p><strong>证明</strong>：必要性易证，充分性证明的关键是首先找到 Hamel
+基表示，将在 <span class="math inline">\(M\)</span>
+中寻找收敛子列的任务分解到对每一个坐标维度上寻找收敛子列，而这可以根据
+Bolzano-Weiertrass 定理得到，然后再根据每个坐标为度上的收敛子列得到
+<span class="math inline">\(M\)</span> 中的收敛子列。证毕。</p>
+<p><strong>引理</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，<span
+class="math inline">\(M\subsetneq X\)</span> 为闭集线性子空间，对于
+<span class="math inline">\(\forall 0 &lt; \theta &lt; 1\)</span>，<span
+class="math inline">\(\exists z\in X,\Vert z\Vert =1,\forall y\in
+M,\Vert z-y\Vert \ge \theta.\)</span></p>
+<p><strong>证明</strong>：固定 <span class="math inline">\(\forall v\in
+Y^c\)</span>，令 <span class="math inline">\(a=\inf_{y\in Y}\Vert
+v-y\Vert\)</span>，那么 <span
+class="math inline">\(a&gt;0\)</span>，否则的话与 <span
+class="math inline">\(Y\)</span> 是闭集相矛盾。因此存在 <span
+class="math inline">\(y_0\in Y\)</span> 使得 <span
+class="math inline">\(a\le \Vert v-y_0\Vert \le
+a/\varepsilon\)</span>。那么我们就可以把这个 <span
+class="math inline">\(v\)</span> 平移到 <span
+class="math inline">\(0\)</span> 点附近，同时也把对应的 <span
+class="math inline">\(y_0\)</span> 平移到原点附近，也就是取 <span
+class="math inline">\(y=\frac{v-y_0}{\Vert v-y_0\Vert}\)</span>，那么
+<span class="math inline">\(\Vert y\Vert=1\)</span>，并且可以验证 <span
+class="math inline">\(\forall z\in X\)</span>，都有 <span
+class="math inline">\(\Vert y-z\Vert \ge \varepsilon.\)</span>
+证毕。</p>
+<p><strong>定理</strong>(F.Riesz)：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，则 <span
+class="math inline">\(\text{dim}X&lt;\infty \iff \bar{B}(0,1)\)</span>
+为紧集。</p>
+<p><strong>证明</strong>：必要性易证。充分性可以利用反证法，若维度无穷，则可以构造出特殊的序列，使得序列中任意两个元素的距离都大于
+<span
+class="math inline">\(1/2\)</span>（这要用到上一个引理），从而不存在收敛子列，即
+<span class="math inline">\(\bar{B}(0,1)\)</span> 不是紧集。证毕。</p>
+<p><strong>推论</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，则 <span
+class="math inline">\(\text{dim}X&lt;\infty\iff S(0,1)=\{x:\Vert
+x\Vert=1\}\)</span> 为紧集。</p>
+<p><strong>定义</strong>：<span
+class="math inline">\((X,d)\)</span>，<span
+class="math inline">\(M\subset X\)</span> 非空，<span
+class="math inline">\(x_0\in X\)</span>，令 <span
+class="math display">\[
+\rho(x_0, M) = \inf_{y\in M} d(x_0, y)
+\]</span> 称为 <span class="math inline">\(x_0\)</span> 到 <span
+class="math inline">\(M\)</span> 的距离。若 <span
+class="math inline">\(\exists y_0\in M\)</span>，使得 <span
+class="math inline">\(\rho(x_0,M)=d(x_0,y_0)\)</span>，则称 <span
+class="math inline">\(y_0\)</span> 为 <span
+class="math inline">\(x_0\)</span> 在 <span
+class="math inline">\(M\)</span> 中的最佳逼近元。</p>
+<p><strong>命题</strong>：设 <span class="math inline">\(M\)</span>
+为非空紧集，则 <span class="math inline">\(\forall x_0 \in
+X\)</span>，<span class="math inline">\(x_0\)</span> 在 <span
+class="math inline">\(M\)</span> 中的最佳逼近元存在。</p>
+<p><strong>命题</strong>：<span class="math inline">\((X,d), M\)</span>
+为 <span class="math inline">\(X\)</span> 的有限维线性子空间，<span
+class="math inline">\(\forall x_0\in X, \rho(x_0,M)=\inf_{y\in M}\{\Vert
+x_0-y\Vert\}\)</span>，则 <span class="math inline">\(x_0\)</span> 在
+<span class="math inline">\(M\)</span> 中的最佳逼近元一定存在。</p>
+<p>证明：略。</p>
+<blockquote>
+<p><strong>小结</strong>：本部分主要证明了有限维赋范空间的良好性质：</p>
+<ol type="1">
+<li>有限维赋范空间<strong>所有范数等价</strong>，且均为 <strong>Banach
+空间</strong>；</li>
+<li>有限维赋范空间<strong>紧集</strong>（即任意序列存在收敛子列） <span
+class="math inline">\(\iff\)</span> <strong>有界闭集</strong>；</li>
+</ol>
+</blockquote>
+<h2 id="有界线性算子">4. 有界线性算子</h2>
+<h3 id="线性算子">4.1 线性算子</h3>
+<p><strong>定义</strong>：<span class="math inline">\(X,Y\)</span> 为
+<span class="math inline">\(\mathbb{K}\)</span> 上的线性子空间，<span
+class="math inline">\(D(T)\subset X\)</span> 为线性子空间，<span
+class="math inline">\(T:D(T)\to Y\)</span>
+为<strong>线性算子</strong>，若 <span class="math inline">\(\forall
+x,y\in D(T),\forall \lambda \in \mathbb{K}\)</span>，都有 <span
+class="math display">\[
+T(x+y)=Tx+Ty,\quad T(\lambda x)=\lambda Tx \\
+\iff T(\lambda x+\mu y) = \lambda Tx + \mu Ty.
+\]</span> <strong>定义</strong>：零空间 <span
+class="math inline">\(N(T)=\text{ker}(T)=\{x\in D(T),
+Tx=0\}=T^{-1}(0),\)</span> 像空间 <span class="math inline">\(R(T)=\{Tx,
+x\in D(T)\}.\)</span></p>
+<p><strong>命题</strong>：<span class="math inline">\(N(T)\)</span> 为
+<span class="math inline">\(D(T)\)</span> 的线性子空间，<span
+class="math inline">\(R(T)\)</span> 为 <span
+class="math inline">\(Y\)</span> 的线性子空间。</p>
+<p><strong>命题</strong>：<span class="math inline">\(T\)</span> 为单射
+<span class="math inline">\(N(T)=\{0\}\)</span>。</p>
+<p><strong>命题</strong>：<span class="math inline">\(M\subset
+D(T)\)</span> 为 <span class="math inline">\(n\)</span> 维线性子空间，则
+<span class="math inline">\(\text{dim} T(M) \le n\)</span>。</p>
+<p>证明：略。</p>
+<h3 id="算子范数">4.2 算子范数</h3>
+<p><strong>定义</strong>：对于线性算子，若 <span
+class="math inline">\(\exists c\ge 0,\forall x\in D(T), \Vert Tx\Vert_Y
+\le c\Vert x\Vert_X\)</span>，则称 <span
+class="math inline">\(T\)</span>
+是<strong>有界的</strong>。使该式成立的最小 <span
+class="math inline">\(c\)</span> 称为 <span
+class="math inline">\(T\)</span> 的<strong>范数</strong>，等价于 <span
+class="math display">\[
+\Vert T\Vert = \sup_{x\in D(T),x\ne 0} \frac{\Vert Tx\Vert}{\Vert
+x\Vert} = \sup_{x\in D(T),\Vert x\Vert \le 1} \frac{\Vert Tx\Vert}{\Vert
+x\Vert} = \sup_{x\in D(T),\Vert x\Vert &lt; 1} \frac{\Vert
+Tx\Vert}{\Vert x\Vert}
+\]</span> <strong><em>例子 1</em></strong>：<span
+class="math inline">\(X=Y=C[0,1],(Tx)(t)=\int_0^t
+x(\tau)d\tau\)</span>，则 <span class="math inline">\(\Vert T\Vert = 1,
+x(t)\equiv1\)</span> 时取到。</p>
+<p><strong><em>例子 2</em></strong>：<span
+class="math inline">\(X=C[-1,1],f(x)=\int_{-1}^0x(t)dt -
+\in_0^1x(t)dt,|f(x)|\le 2\Vert x\Vert_\infty\)</span>，但是 <span
+class="math inline">\(2\)</span> 取不到。</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\(T:C^1[0,1]\to C[0,1],T(x)=x&#39;\)</span>，那么
+<span class="math inline">\(T\)</span>
+为线性<strong>无界</strong>算子。令 <span
+class="math inline">\(x_n(t)=t^n,t\in[0,1]\)</span>，则 <span
+class="math inline">\((Tx_n)(t)=nt^{n-1}.\)</span></p>
+<p><strong><em>例子 4</em></strong>：<span
+class="math inline">\(A=(a_{ij})_{n\times
+n},a_{ij}\in\mathbb{K},Tx=Ax.\Vert T\Vert=?\)</span></p>
+<p><strong>定理</strong>：<span class="math inline">\(X,Y\)</span> 为
+<span class="math inline">\(\mathbb{K}\)</span> 上的赋范空间，假设 <span
+class="math inline">\(\text{dim}X=n&lt;\infty\)</span>，<span
+class="math inline">\(T:X\to Y\)</span> 是线性算子，那么 <span
+class="math inline">\(T\)</span> 一定是有界的。</p>
+<p>证明：用基来表示 <span class="math inline">\(X\)</span>
+中的元素，并利用性质 <span class="math inline">\(\Vert\lambda_1
+e_1+\cdots+\lambda_n e_n\Vert \ge
+c(|\lambda_1|+\cdots+|\lambda_n|)\)</span> 即可得证。证毕。</p>
+<p><strong>定理</strong>：<span class="math inline">\(X,Y\)</span> 为
+<span class="math inline">\(\mathbb{K}\)</span> 上的赋范空间，<span
+class="math inline">\(T:X\to Y\)</span> 是线性算子，那么以下命题等价</p>
+<ol type="1">
+<li><span class="math inline">\(T\)</span> 有界</li>
+<li><span class="math inline">\(T\)</span> 处处连续</li>
+<li><span class="math inline">\(T\)</span> 在 <span
+class="math inline">\(X\)</span> 上某一点连续</li>
+</ol>
+<p><strong>证明</strong>：<span
+class="math inline">\((1)\to(2),(2)\to(3)\)</span> 易证；</p>
+<p><span class="math inline">\((2)\to(1)\)</span>：由于 <span
+class="math inline">\(T\)</span> 连续，在 <span
+class="math inline">\(x=0\)</span> 点附近，存在 <span
+class="math inline">\(\delta&gt;0, \forall x \in
+B(0,\delta)\)</span>，有 <span class="math inline">\(\Vert
+Tx\Vert\le1\)</span>，因而 <span class="math inline">\(\Vert Tx\Vert \le
+\frac{2}{\delta}\Vert x\Vert\)</span>；</p>
+<p><span class="math inline">\((3)\to(2)\)</span>：由于 <span
+class="math inline">\(T\)</span> 为线性算子，那么只要在任一 <span
+class="math inline">\(x_0\)</span> 点处连续，经过平移可以得到 <span
+class="math inline">\(T\)</span> 在任意一点处都连续。</p>
+<p>证毕。</p>
+<p><strong>推论</strong>：<span class="math inline">\(X,Y\)</span> 为
+<span class="math inline">\(\mathbb{K}\)</span> 上的赋范空间，<span
+class="math inline">\(T:X\to Y\)</span> 线性有界，那么 <span
+class="math inline">\(N(T)\)</span> 为 <span
+class="math inline">\(X\)</span> 的闭集线性子空间。</p>
+<p>用符号 <span class="math inline">\(B(X,Y)\)</span> 来表示 <span
+class="math inline">\(X\to Y\)</span> 的有界线性算子。</p>
+<p><strong>定理</strong>：假设 <span class="math inline">\(X\)</span>
+为赋范空间，<span class="math inline">\(Y\)</span> 为 Banach 空间，那么
+<span class="math inline">\(B(X,Y)\)</span> 为 Banach 空间。</p>
+<p>证明：略。</p>
+<blockquote>
+<p><strong>小结</strong>：本部分定义了线性算子，以及有界线性算子的范数。由于<strong>有界线性算子等价于连续算子</strong>，今后主要研究的也是有界线性算子。</p>
+</blockquote>
+<h2 id="有界线性泛函">5. 有界线性泛函</h2>
+<p>从赋范空间 <span class="math inline">\(X\)</span> 到 <span
+class="math inline">\(\mathbb{K}\)</span> 的线性算子称为 <span
+class="math inline">\(X\)</span> 上的<strong>线性泛函</strong>。</p>
+<p><strong>定义</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，用 <span
+class="math inline">\(X&#39;\)</span> 表示 <span
+class="math inline">\(X\)</span> 上所有有界线性泛函全体，称之为 <span
+class="math inline">\(X\)</span> 的<strong>拓扑对偶空间</strong>。</p>
+<p>若 <span class="math inline">\(X\)</span> 上的一组基为 <span
+class="math inline">\(\{e_1,e_2,\cdots\}\)</span>（有限维或者无限维均可），那么
+<span class="math inline">\(f:X\to\mathbb{K}\)</span> 由 <span
+class="math inline">\(f(e_1),f(e_2),\cdots\)</span> 唯一确定。</p>
+<p><strong>定义</strong>：<span class="math inline">\((X,Y)\)</span>
+赋范空间，若存在线性算子 <span class="math inline">\(T:X\to
+Y\)</span>，并且 <span class="math inline">\(\Vert Tx\Vert_Y = \Vert
+x\Vert_X,\forall x\in X\)</span>，则称 <span
+class="math inline">\(X,Y\)</span>
+为<strong>等距同构</strong>的，因此可以视 <span
+class="math inline">\(X,Y\)</span> 为同一空间。</p>
+<p><strong>命题</strong>：<span
+class="math inline">\((\mathbb{K}^n,\Vert\cdot\Vert_2)&#39; =
+(\mathbb{K}^n,\Vert\cdot\Vert_2)\)</span>（此命题的含义为 <span
+class="math inline">\((\mathbb{K}^n,\Vert\cdot\Vert_2)\)</span>
+的对偶空间等价于 <span class="math inline">\(n\)</span>
+维空间，也就是说每一个有界线性泛函都可以映射为 <span
+class="math inline">\(\mathbb{K}^n\)</span> 上的一个点/向量）</p>
+<p>证明：略。</p>
+<p>对于形如 <span class="math inline">\((X,\Vert\cdot\Vert_1)&#39; =
+(Y,\Vert\cdot\Vert_2)\)</span> 的命题，证明思路如下。</p>
+<p><strong>证明</strong>：要想证明两个空间等价，那么只需要找到一个线性映射
+<span class="math inline">\(T:(X,\Vert\cdot\Vert_1)&#39; \to
+(Y,\Vert\cdot\Vert_2)\)</span>，使得映射前后在两个空间的范数相等。考虑对
+<span class="math inline">\(\forall f\in
+(X,\Vert\cdot\Vert_1)&#39;\)</span>，取 <span
+class="math inline">\(f\mapsto
+(f(e_1),f(e_2),\cdots,f(e_n))\)</span>，那么按照以下步骤证明：</p>
+<ol type="1">
+<li>证明对于任意 <span class="math inline">\(\forall f\in
+(X,\Vert\cdot\Vert_1)&#39;\)</span>，的确有 <span
+class="math inline">\((f(e_1),f(e_2),\cdots,f(e_n))\in
+Y\)</span>，即映射的源空间和像空间的确是 <span
+class="math inline">\(X,Y\)</span>；</li>
+<li>证明 <span class="math inline">\(T\)</span> 为单射（即证明若 <span
+class="math inline">\(Tf=Tg\)</span>，那么有 <span
+class="math inline">\(f=g\)</span>）；</li>
+<li>证明 <span class="math inline">\(T\)</span> 为满射，此时 <span
+class="math inline">\(T\)</span> 为双射（即证明 <span
+class="math inline">\(\forall \alpha \in Y\)</span>，存在 <span
+class="math inline">\(f \in (X,\Vert\cdot\Vert_1)&#39;\)</span> 使得
+<span class="math inline">\(Tf=\alpha\)</span>，一般需要构造线性算子
+<span class="math inline">\(f\)</span>）；</li>
+<li>证明 <span class="math inline">\(\Vert Tf\Vert = \Vert
+f\Vert\)</span>。</li>
+</ol>
+<p>证毕。</p>
+<p>因此按照上面的方法，还可以证明如下几个命题。</p>
+<ul>
+<li><span class="math inline">\((\mathbb{K}^n,\Vert\cdot\Vert_p)&#39; =
+(\mathbb{K}^n,\Vert\cdot\Vert_q),\frac{1}{p}+\frac{1}{q}=1\)</span></li>
+<li><span class="math inline">\((c_0, \Vert
+\cdot\Vert_\infty)&#39;=(\ell^1,\Vert \cdot\Vert_1)\)</span></li>
+<li><span class="math inline">\((\ell^1,\Vert
+\cdot\Vert_1)&#39;=(\ell^\infty,\Vert \cdot\Vert_\infty)\)</span></li>
+<li><span class="math inline">\((\ell^p,\Vert
+\cdot\Vert_p)&#39;=(\ell^q,\Vert \cdot\Vert_q)\)</span></li>
+</ul>
+<blockquote>
+<p><strong>小结</strong>：有界线性泛函可以映射到某个我们熟悉的空间，对于后面的处理很有用。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Functional-Analysis/">Functional Analysis</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4/">线性空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%B5%8B%E8%8C%83%E7%A9%BA%E9%97%B4/">赋范空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Banach%E7%A9%BA%E9%97%B4/">Banach空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Hamel%E5%9F%BA/">Hamel基</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Schauder%E5%9F%BA/">Schauder基</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E7%AE%97%E5%AD%90/">线性算子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E5%AD%90%E8%8C%83%E6%95%B0/">算子范数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%80%A7%E6%B3%9B%E5%87%BD/">线性泛函</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/11/functional-analysis/ch3-hilbert-space/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">泛函分析笔记3：内积空间</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/18/functional-analysis/ch1-metric-space/">
+                        <span class="hidden-mobile">泛函分析笔记1：度量空间</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

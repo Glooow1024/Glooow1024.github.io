@@ -1,0 +1,615 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. Undirected graphical models(Markov random fields)  节点表示随机变量，边表示与节点相关的势函数 \[ p_{\mathbf{x}}(\mathbf{x}) \propto \varphi_{12}\left(x_{1}, x_{2}\right) \varphi_{13}\left(x_{1}, x_{3}\right) \varp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(九) Graphical models">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch9_GraphModels/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. Undirected graphical models(Markov random fields)  节点表示随机变量，边表示与节点相关的势函数 \[ p_{\mathbf{x}}(\mathbf{x}) \propto \varphi_{12}\left(x_{1}, x_{2}\right) \varphi_{13}\left(x_{1}, x_{3}\right) \varp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T12:03:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:06:10.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="图模型">
+<meta property="article:tag" content="因子图">
+<meta property="article:tag" content="DAG">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(九) Graphical models - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(九) Graphical models">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 20:03" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(九) Graphical models</h1>
+            
+            <div class="markdown-body">
+              <h2 id="undirected-graphical-modelsmarkov-random-fields">1. Undirected
+graphical models(Markov random fields)</h2>
+<ul>
+<li><p>节点表示随机变量，边表示与节点相关的势函数 <span
+class="math display">\[
+p_{\mathbf{x}}(\mathbf{x}) \propto \varphi_{12}\left(x_{1}, x_{2}\right)
+\varphi_{13}\left(x_{1}, x_{3}\right) \varphi_{25}\left(x_{2},
+x_{5}\right) \varphi_{345}\left(x_{3}, x_{4}, x_{5}\right)
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/undirected_graph.PNG" srcset="/img/loading.gif" lazyload
+alt="undirected_graph" /></p></li>
+<li><p><strong>clique</strong>：全连接的节点集合</p></li>
+<li><p><strong>maximal clique</strong>：不是其他 clique
+的真子集</p></li>
+</ul>
+<blockquote>
+<p><strong>Theorem (Hammersley-Cliﬀord) </strong>: A strictly positive
+distribution <span
+class="math inline">\(p_{\mathsf{x}}(\mathbf{x})&gt;0\)</span> satisﬁes
+the graph separation property of undirected graphical models if and only
+if it can be represented in the factorized form <span
+class="math display">\[
+p_{\mathsf{x}}(\mathbf{x}) \propto \prod_{\mathcal{A} \in \mathcal{C}}
+\psi_{\mathbf{x}_{\mathcal{A}}}\left(\mathbf{x}_{\mathcal{A}}\right)
+\]</span></p>
+</blockquote>
+<ul>
+<li><strong>conditional independence</strong>：<span
+class="math inline">\(\mathbf{x}_{\mathcal{A}_{1}} \perp
+\mathbf{x}_{\mathcal{A}_{2}} |
+\mathbf{x}_{\mathcal{A}_{3}}\)</span></li>
+</ul>
+<span id="more"></span>
+<h2 id="directed-graphical-modelsbayesian-network">2. Directed graphical
+models(Bayesian network)</h2>
+<ul>
+<li><p>节点表示随机变量，有向边表示条件关系 <span
+class="math display">\[
+p_{\mathrm{x}_{1}, \ldots,
+\mathrm{x}_{n}}=p_{\mathrm{x}_{1}}\left(x_{1}\right) p_{\mathrm{x}_{2} |
+\times_{1}}\left(x_{2} | x_{1}\right) \cdots p_{\mathrm{x}_{n} | x_{1},
+\ldots, x_{n-1}}\left(x_{n} | x_{1}, \ldots, x_{n-1}\right)
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/directed_graph.PNG" srcset="/img/loading.gif" lazyload
+alt="directed_graph" /></p></li>
+<li><p>Directed acyclic graphs (<strong>DAG</strong>)</p></li>
+<li><p>Fully-connected DAG</p></li>
+<li><p><strong>conditional independence</strong>：<span
+class="math inline">\(\mathbf{x}_{\mathcal{A}_{1}} \perp
+\mathbf{x}_{\mathcal{A}_{2}} | \mathbf{x}_{\mathcal{A}_{3}}\)</span></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/conditional_independence.PNG" srcset="/img/loading.gif" lazyload
+alt="conditional_independence" />
+<figcaption aria-hidden="true">conditional_independence</figcaption>
+</figure></li>
+<li><p>Bayes ball algorithm</p>
+<ul>
+<li>primary shade: <span class="math inline">\(\mathcal{A_3}\)</span>
+中的节点</li>
+<li>secondary shade: primary shade 的节点，以及 secondary shade
+的父节点</li>
+</ul>
+<figure>
+<img
+src="C:\Users\1\AppData\Roaming\Typora\typora-user-images\1574319393095.png" srcset="/img/loading.gif" lazyload
+alt="1574319393095" />
+<figcaption aria-hidden="true">1574319393095</figcaption>
+</figure></li>
+</ul>
+<h2 id="factor-graph">3. Factor graph</h2>
+<ul>
+<li><p>有 variable nodes 和 factor nodes，是 bipartitie graph <span
+class="math display">\[
+p_{\mathbf{x}}(\mathbf{x}) \propto \prod_{j}
+f_{j}\left(\mathbf{x}_{f_{j}}\right)
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/factor_graph.PNG" srcset="/img/loading.gif" lazyload
+alt="factor_graph" /></p></li>
+<li><p>因子图比 directed graph 和 undirected graph 的表示能力更强，比如
+<span
+class="math inline">\(p(x)=\frac{1}{Z}\phi_{12}(x_1,x_2)\phi_{13}(x_1,x_3)\phi_{23}(x_2,x_3)\)</span></p></li>
+<li><p>因子图可以与 DAG 相互转化(根据 <span
+class="math inline">\(x_1,...,x_n\)</span> 依次根据 conditional
+independence 决定父节点)，DAG又可以转化为 undirected graph</p></li>
+</ul>
+<h2 id="measuring-goodness-of-graphical-representations">4. Measuring
+goodness of graphical representations</h2>
+<ul>
+<li>给定分布 D 和图 G，他们之间没必要有联系</li>
+<li><span class="math inline">\(CI(D)\)</span>：the set of conditional
+independencies satisﬁed by <span class="math inline">\(D\)</span></li>
+<li><span class="math inline">\(CI(G)\)</span>： the set of all
+conditional independencies implied by <span
+class="math inline">\(G\)</span></li>
+<li><strong>I-map</strong>：<span class="math inline">\(C I(\mathcal{G})
+\subset C I(D)\)</span></li>
+<li><strong>D-map</strong>: ：<span class="math inline">\(C
+I(\mathcal{G}) \supset C I(D)\)</span></li>
+<li><strong>P-map</strong>：<span class="math inline">\(C I(\mathcal{G})
+= C I(D)\)</span></li>
+<li>minimal I-map: Aminimal
+I-mapisanI-mapwiththepropertythatremovinganysingle edge would cause the
+graph to no longer be an I-map. <strong>Remarks</strong>: G
+中去掉一个边会使该 map 中有更多的 conditional independence，也即 <span
+class="math inline">\(CI(G)\)</span> 更大，更不易满足 I-map条件。I-map
+可以表示分布 D，但是 D-map 不能</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E6%A8%A1%E5%9E%8B/">图模型</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%A0%E5%AD%90%E5%9B%BE/">因子图</a>
+                    
+                      <a class="hover-with-bg" href="/tags/DAG/">DAG</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch10_Elimination/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(十) Elimination algorithm</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch8_ModelSelection/">
+                        <span class="hidden-mobile">统计推断(八) Model Selection</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

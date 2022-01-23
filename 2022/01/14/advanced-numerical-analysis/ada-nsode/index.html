@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 预备理论 求解常微分方程初值问题数值解 \[ \begin{align} &amp;\frac{dy}{dx} &#x3D; f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\ &amp;y(a) &#x3D; y_0 \end{align} \] 存在唯一性定理：若 \(f(x,y)\) 连续，对 \(y\) 满足 Lipschitz 条件，那么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【高等数值分析】常微分方程数值解">
+<meta property="og:url" content="http://example.com/2022/01/14/advanced-numerical-analysis/ada-nsode/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. 预备理论 求解常微分方程初值问题数值解 \[ \begin{align} &amp;\frac{dy}{dx} &#x3D; f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\ &amp;y(a) &#x3D; y_0 \end{align} \] 存在唯一性定理：若 \(f(x,y)\) 连续，对 \(y\) 满足 Lipschitz 条件，那么">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-14T01:26:08.000Z">
+<meta property="article:modified_time" content="2022-01-14T01:28:42.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="常微分方程">
+<meta property="article:tag" content="刚性问题">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【高等数值分析】常微分方程数值解 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【高等数值分析】常微分方程数值解">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-14 09:26" pubdate>
+        January 14, 2022 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【高等数值分析】常微分方程数值解</h1>
+            
+            <div class="markdown-body">
+              <h2 id="预备理论">1. 预备理论</h2>
+<p>求解常微分方程初值问题数值解 <span class="math display">\[
+\begin{align}
+&amp;\frac{dy}{dx} = f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\
+&amp;y(a) = y_0
+\end{align}
+\]</span> 存在唯一性定理：若 <span class="math inline">\(f(x,y)\)</span>
+连续，对 <span class="math inline">\(y\)</span> 满足 Lipschitz
+条件，那么初值问题有唯一解。</p>
+<span id="more"></span>
+<p>对上面的常微分方程积分就有 <span class="math inline">\(y(t_{n+k}) -
+y(t_{n-j}) = \int_{t_{n-j}}^{t_{n+k}} f(t,y(t))
+dt\)</span>，所以实际上可以转化为数值积分的问题，所以这一节的方法和数值积分很类似。但是这里的问题在于被积函数值是不知道的。</p>
+<h2 id="线性多步法">2. 线性多步法</h2>
+<p>在数值积分里面 <span class="math inline">\(f(t_k,y(t_k))\)</span>
+是已知的，主要是在设计求积节点对应的系数。在这里还需要首先估计每个节点的函数值。对前面的式子采样求积就得到
+<span class="math inline">\(y(t_{n+k}) - y(t_{n-j}) = h\sum_i \beta_i
+f_{n-i}\)</span>，就引出了下面要介绍的线性多步法。</p>
+<h3 id="线性多步法-1">2.1 线性多步法</h3>
+<p>记 <span class="math inline">\(f_n=f(t_n,y_n),
+y_n=y(t_n)\)</span>，线性多步法（线性 <span
+class="math inline">\(k\)</span> 步法）的一般表达式为 <span
+class="math display">\[
+\sum_{i=0}^k \alpha_i y_{n+i} = h\sum_{i=0}^{k} \beta_i f_{n+i}
+\]</span> 其中 <span class="math inline">\(\alpha_k=1,
+\alpha_0^2+\beta_0^2\ne0\)</span>。给一些特例：</p>
+<ul>
+<li><span class="math inline">\(\alpha_0=-1,\beta_0=1,\beta_1=0\)</span>
+时为显式Euler法 <span class="math inline">\(y_{n+1}=y_n +
+hf_n\)</span>；</li>
+<li><span class="math inline">\(\alpha_0=-1,\beta_0=0,\beta_1=1\)</span>
+时为隐式Euler法 <span class="math inline">\(y_{n+1}=y_n +
+hf_{n+1}\)</span>；</li>
+<li><span class="math inline">\(\alpha_0=-1,\beta_0=\beta_1=1/2\)</span>
+时为梯形法 <span class="math inline">\(y_{n+1} = y_n +
+h/2(f_n+f_{n+1})\)</span>。</li>
+</ul>
+<p>可以定义<strong>“特征多项式”</strong>，在后面分析稳定性和收敛性的时候会很有用
+<span class="math display">\[
+\rho(\xi) = \sum_{i=0}^k \alpha_i \xi^i, \quad \sigma(\xi)=\sum_{i=0}^k
+\beta_i\xi^i
+\]</span>
+如何衡量数值求解方法的精度呢？定义<strong>局部截断误差</strong>为 <span
+class="math display">\[
+T_{n+k} = \sum_{i=0}^k [\alpha_i y(t_{n+i}) - h\beta_i y&#39;(t_{n+i})]
+\]</span> 对上面的式子做Taylor展开，可以得到形如 <span
+class="math inline">\(T_{n+1} = -1/90 h^5
+y^{(5)}(x_n)+O(h^6)\)</span>（这是Simpson公式的局部截断误差），这个式子表明Simpson公式是4阶的。</p>
+<p>对于线性 <span class="math inline">\(k\)</span>
+步法，要想设计一种迭代方法使得数值精度是 <span
+class="math inline">\(p\)</span>
+阶的，可以采用待定系数法，保证局部截断误差中 <span
+class="math inline">\(y^{(1)}(x),...,y^{(q)}(x)\)</span>
+前面的系数都是0。</p>
+<h3 id="稳定性与收敛性">2.2 稳定性与收敛性</h3>
+<h4 id="相容性">2.2.1 相容性</h4>
+<p>首先引入相容性的概念。若某个多步法的截断误差满足 <span
+class="math inline">\(T(t,y(t),h)=o(h)\)</span>
+那么称其为<strong>相容的</strong>。若 <span
+class="math inline">\(T(t,y(t),h)=O(h^{q+1})\)</span>，则称其为 <span
+class="math inline">\(q\)</span> 阶的。</p>
+<p>实际上，相容性就是说该方法至少是1阶的，也就是当 <span
+class="math inline">\(y\)</span>
+为一次线性函数时，该方法要能够得到准确解。</p>
+<p><strong>定理</strong>：相容的多步法充要条件是 <span
+class="math inline">\(\rho(1)=0,\rho&#39;(1)=\sigma(1)\)</span>。</p>
+<h4 id="零稳定性">2.2.2 零稳定性</h4>
+<p><strong>根条件</strong>：若多项式 <span
+class="math inline">\(\rho(\xi)\)</span> 的 <span
+class="math inline">\(k\)</span> 个根的模长都<strong>不大于
+1</strong>，并且模值等于 1 的根都是单根，则称其满足根条件。</p>
+<p><strong>Note</strong>：根条件考虑的是齐次差分方程的解。当 <span
+class="math inline">\(f\equiv 0\)</span>
+的时候，齐次差分方程的解具有指数形式 <span
+class="math inline">\(y(n)=\sum_i P(n) \xi_i^n\)</span>，其中 <span
+class="math inline">\(P(n)\)</span> 是一个多项式， <span
+class="math inline">\(\xi_i\)</span> 就是 <span
+class="math inline">\(\rho(\xi)\)</span>
+的根（这里没考虑重根的情况，不过是类似的），如果 <span
+class="math inline">\(|\xi_i|&lt;1\)</span> 就意味着 <span
+class="math inline">\(\lim_{n\to\infty}y(n) =
+0\)</span>，那么这跟稳定性有什么关系呢？</p>
+<p><strong>定理</strong>：线性多步法关于初值稳定的充要条件是 <span
+class="math inline">\(\rho(\xi)\)</span> 满足根条件。</p>
+<p><strong>Note</strong>：这个定理说明了根条件和（零）稳定性二者的等价关系。为什么呢？假设真实的初值为
+<span class="math inline">\(y_0=y(t_0)\)</span>，真实的解为 <span
+class="math inline">\(y(n)=y_0\xi_0^{(n-t_0)}\)</span>。而我们计算的时候由于各种原因拿到的初值是有误差的，也就是
+<span class="math inline">\(\hat{y}_0\)</span>，那么最后求得的误差就是
+<span
+class="math inline">\(\hat{y}(n)-y(n)=(\hat{y}_0-y_0)\xi_0^{(n-t_0)}\)</span>，如果不满足根条件，当
+<span class="math inline">\(n\to\infty\)</span> 的时候，<span
+class="math inline">\(\hat{y}(n)-y(n) \to
+\infty\)</span>，解就是不稳定的。</p>
+<h4 id="收敛性">2.2.3 收敛性</h4>
+<p><strong>定义</strong>：假设在区间 <span
+class="math inline">\([a,b]\)</span> 上等距划分 <span
+class="math inline">\(N\)</span> 个区间，<span class="math inline">\(x_n
+= a+nh,n=0,1,...,N\)</span>，求解初值问题得到的解为 <span
+class="math inline">\(y_n,n=0,1,...,N\)</span>，最大整体误差为 <span
+class="math inline">\(E(h) = \max_{n} |y(x_n) - y_n|\)</span>，如果满足
+<span class="math inline">\(\lim_{h\to0}
+E(h)=0\)</span>，则称方法是<strong>收敛</strong>的。如果 <span
+class="math inline">\(E(h) \le Ch^p\)</span>，则称方法是 <span
+class="math inline">\(p\)</span> 阶收敛的。</p>
+<p><strong>定理</strong>：相容性 + 零稳定性 <span
+class="math inline">\(\iff\)</span> 收敛性。</p>
+<h4 id="绝对稳定性">2.2.4 绝对稳定性</h4>
+<p>前面的零稳定性是跟所选择的方法有关的。而这里的绝对稳定性研究的是微分方程本身的属性。如果方程本身性质很不好，那么可能无论选择什么方法都是不稳定的。</p>
+<p>取 <span class="math inline">\(f(x,y)=\lambda
+y\)</span>，再研究方法的稳定性。以试验方程为例 <span
+class="math display">\[
+\begin{cases}
+y&#39; = \lambda y, t\in[a,b] \\
+y(a) = \tilde{y}_0
+\end{cases}
+\]</span> 用Euler法得到 <span class="math inline">\(y_n =
+(1+h\lambda)y_{n-1}\)</span>，于是两个解的误差满足 <span
+class="math inline">\(y_n-z_n = (1+h\lambda)^n (y_0-z_0)\)</span>，若
+<span
+class="math inline">\(|1+h\lambda|&gt;1\)</span>，则误差总会放大，这是我们不希望的。</p>
+<p>要保证稳定性，既与方程本身的性质（也即 <span
+class="math inline">\(\lambda\)</span>） 有关，也与所选择的步长 <span
+class="math inline">\(h\)</span>
+有关。从另一个角度而言，方程本身的性质（<span
+class="math inline">\(\lambda\)</span>）会影响可选择的 <span
+class="math inline">\(h\)</span> 的范围。由此引出绝对稳定性的概念。</p>
+<p>对前面提到的线性多步法，把 <span class="math inline">\(f(x,y)=\lambda
+y\)</span> 代回去就有 <span class="math display">\[
+\sum_{i=0}^k (\alpha_i - h\lambda \beta_i) y_{n+i} = 0
+\]</span> 称 <span class="math inline">\(\Pi(\xi;z) = \rho(\xi) -
+z\sigma(\xi)\)</span> 为<strong>稳定多项式</strong>。</p>
+<p><strong>定理</strong>：对给定的 <span
+class="math inline">\(z\)</span>，若 <span
+class="math inline">\(\Pi(\xi;z)\)</span> 的 <span
+class="math inline">\(k\)</span> 个根的模都<strong>小于
+1</strong>，则其是绝对稳定的。（满足这样条件的 <span
+class="math inline">\(z\)</span>
+的集合构成<strong>绝对稳定区域</strong>。）</p>
+<h2 id="runge-kutta方法">3. Runge-Kutta方法</h2>
+<p>Runge-Kutta方法和线性多步法的主要区别在于，其在 <span
+class="math inline">\(x_n,x_{n+1}\)</span>
+中间又进行了采样、插值。这种方法大概可以表示为 <span
+class="math display">\[
+\begin{align}
+&amp; y_{n+1} = y_n + h\sum_{i=1}^{s} b_i k_i \\
+&amp; k_i = y_n + f(t_n + c_i h, y_n + \sum_{i=1}^s a_{ij} k_j)
+\end{align}
+\]</span> 其中 <span class="math inline">\(0\le c_i\le1\)</span>。实际上
+<span class="math inline">\(k_i \approx y(t_n+c_i h)\)</span>，就是在
+<span class="math inline">\([y_n,y_{n+1}]\)</span>
+中间又进行了采样插值。</p>
+<p>这样提高了精度，同时也会增加计算复杂度。</p>
+<p>除此之外，提高精度的方法还有 Richardson 外推方法。</p>
+<h2 id="刚性问题">4. 刚性问题</h2>
+<p>刚性问题也是方程本身的属性，主要是指某些情况下两个特解的尺度相差很大，比如两个指数衰减的过程混合在一起，但是其中一个衰减特别快（<span
+class="math inline">\(\exp(-\lambda t)\)</span> 的 <span
+class="math inline">\(\lambda\)</span>
+特别大），另一个则衰减特别慢，那么数值求解的时候很可能只能看到衰减慢的那个过程，另一个则被忽略。这在化学反应中是经常遇到的。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">常微分方程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/">刚性问题</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/23/hello-world/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/">
+                        <span class="hidden-mobile">【高等数值分析】数值积分和数值微分</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

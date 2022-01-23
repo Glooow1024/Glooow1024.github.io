@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在进入具体的优化算法后，我们首先讲了基于梯度的，比如梯度下降(GD)、次梯度下降(SD)；然后又讲了近似点算子，之后讲了基于近似点算子的方法，比如近似点梯度下降(PG)、对偶问题的近似点梯度下降(DPG)、加速近似点梯度下降(APG)。而这一节讲的，还是基于近似点的！他叫近似点方法(Proximal Point Algorithm, PPA)，除此之外还会介绍增广拉格朗日方法(Augmentt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记22：近似点算法">
+<meta property="og:url" content="http://example.com/2020/05/09/optimization/ch22-ppa/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="在进入具体的优化算法后，我们首先讲了基于梯度的，比如梯度下降(GD)、次梯度下降(SD)；然后又讲了近似点算子，之后讲了基于近似点算子的方法，比如近似点梯度下降(PG)、对偶问题的近似点梯度下降(DPG)、加速近似点梯度下降(APG)。而这一节讲的，还是基于近似点的！他叫近似点方法(Proximal Point Algorithm, PPA)，除此之外还会介绍增广拉格朗日方法(Augmentt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-09T06:04:09.000Z">
+<meta property="article:modified_time" content="2020-05-27T09:31:40.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="近似点算子">
+<meta property="article:tag" content="ALM">
+<meta property="article:tag" content="增广拉格朗日函数">
+<meta property="article:tag" content="PPA">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记22：近似点算法 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记22：近似点算法">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-09 14:04" pubdate>
+        May 9, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      57 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记22：近似点算法</h1>
+            
+            <div class="markdown-body">
+              <p>在进入具体的优化算法后，我们首先讲了基于梯度的，比如梯度下降(GD)、次梯度下降(SD)；然后又讲了近似点算子，之后讲了基于近似点算子的方法，比如近似点梯度下降(PG)、对偶问题的近似点梯度下降(DPG)、加速近似点梯度下降(APG)。而这一节讲的，还是基于近似点的！他叫<strong>近似点方法(Proximal
+Point Algorithm,
+PPA)</strong>，除此之外还会介绍<strong>增广拉格朗日方法(Augmentted
+Larangian Method, ALM)</strong>。我们就开始吧！</p>
+<span id="more"></span>
+<h2 id="近似点方法">1. 近似点方法</h2>
+<p>近似点方法跟近似点梯度下降很像，在此之外我们先简单回顾一下 PG
+方法。对优化问题 <span class="math display">\[
+\text{minimize } f(x)=g(x)+h(x)
+\]</span> 其中 <span class="math inline">\(g\)</span>
+为光滑凸函数，而且为了保证收敛性需要满足 Lipschitz 光滑性质，<span
+class="math inline">\(h\)</span> 为非光滑函数，只要 <span
+class="math inline">\(h\)</span> 为闭凸函数，对于近似点算子 <span
+class="math inline">\(\text{prox}_{h}(x)\)</span> 自然满足firmly
+nonexpansive(co-coercivite) 性质，这个也等价于 Lipschitz continuous 性质
+<span class="math display">\[
+\left(\operatorname{prox}_{h}(x)-\operatorname{prox}_{h}(y)\right)^{T}(x-y)
+\geq\left\|\operatorname{prox}_{h}(x)-\operatorname{prox}_{h}(y)\right\|_{2}^{2}
+\]</span> 迭代格式为 <span class="math display">\[
+x_{k+1}=\text{prox}_{th}(x_k-t_k\nabla g(x_k))
+\]</span> 这个表达式实际上可以等价表示为 <span class="math display">\[
+x^+ = x-tG_t(x), \qquad G_t(x):=\frac{x-x^+}{t}\in \partial
+h(x^+)+\nabla g(x)
+\]</span> 然后我们再回顾一下 APG 方法，实际上就是在 PG
+的基础上引入了一个外差，直观理解就是加入了动量 <span
+class="math display">\[
+\begin{aligned}
+x_{k+1} &amp;= \text{prox}_{th}(y_k-t_k\nabla g(y_k)) \\
+y_k &amp;= x_k + w_k(x_k-x_{k-1})
+\end{aligned}
+\]</span> 好了复习结束！那么近似点方法 PPA 针对的优化问题是 <span
+class="math inline">\(\min f\)</span>，其中 <span
+class="math inline">\(f\)</span> 为闭凸函数</p>
+<blockquote>
+<p><strong>迭代格式</strong>为 <span class="math display">\[
+\begin{aligned}
+x_{k+1} &amp;= \text{prox}_{t_k f}(x_k) \\
+&amp;= \arg\min_u \left( f(u)+\frac{1}{2t_k}\Vert u-x_k\Vert_2^2 \right)
+\end{aligned}
+\]</span></p>
+</blockquote>
+<p>这实际上可以看作是 PG 方法中取函数 <span
+class="math inline">\(g=0\)</span>，因此所有适用于 PG
+的收敛性分析也都适用于 PPA 方法，而且由于 <span
+class="math inline">\(g=0\)</span>，因此也不需要对 <span
+class="math inline">\(f\)</span> 做 Lipschitz
+光滑的假设，因此<strong>步长 <span class="math inline">\(t_k\)</span>
+可以是任意正实数，而不需要 <span class="math inline">\(0&lt; t_k &lt;
+1/L\)</span></strong>。类比 PG 中的收敛性分析可以得到 $$
+t_{i}(f(x_{i+1})-f^{})
+(|x_{i}-x<sup>{}|<em>{2}<sup>{2}-|x_{i+1}-x</sup>{}|</em>{2}</sup>{2})
+\</p>
+<p>f(x_{k})-f^{} k <span class="math display">\[
+同样得，我们也可以引入外差进行加速
+\]</span> x_{k+1}=<em>{t</em>{k}
+f}(x_{k}+<em>{k}(-1)(x</em>{k}-x_{k-1})) k <span class="math display">\[
+其中可以是任意 $t_k&gt; 0$，$\theta_k$ 由以下方程解得
+\]</span> =(1-_{k}) $$ 并且可以证明加速后的方法收敛速度可以达到 <span
+class="math inline">\(O(1/k^2)\)</span>。</p>
+<p>PPA 的基本原理就没有了，这里简单总结一下，
+实际上核心的地方只有一个迭代格式 <span class="math display">\[
+x_{k+1} = \text{prox}_{t_k f}(x_k)
+\]</span> 其他的收敛性分析以及加速算法都可以类比 PG 得到。</p>
+<h2 id="增广拉格朗日方法">2. 增广拉格朗日方法</h2>
+<p>增广拉格朗日方法(也叫乘子法)一般是为了解决有约束优化问题，并且我们通常考虑等式约束，对于非等式约束可以通过引入松弛变量将其转化为等式约束。这里我们首先介绍一下基本的
+ALM 形式。对于优化问题 <span class="math display">\[
+\begin{aligned}
+\min\quad&amp; f(x) \\
+\text{s.t.}\quad&amp; C(x)=0
+\end{aligned}
+\]</span> <strong>增广拉格朗日函数(重要)</strong>为 <span
+class="math display">\[
+L_\sigma(x,\nu) = f(x)+\nu^TC(x) + \frac{\sigma}{2}\Vert
+C(x)\Vert_2^2,\quad \sigma&gt;0
+\]</span> 就是在初始的拉格朗日函数后面加了一个等式约束的二次正则项</p>
+<blockquote>
+<p><strong>ALM 的迭代格式</strong>则为 <span class="math display">\[
+\begin{aligned}
+x^{k+1} &amp;= \arg\min_{x} L_\sigma(x,\nu^k) \\
+\nu^{k+1} &amp;= \nu^k + \sigma C(x^{k+1})
+\end{aligned}
+\]</span></p>
+</blockquote>
+<p>一般会将增广拉格朗日函数化简成另一种形式(<strong>重要</strong>) <span
+class="math display">\[
+L_\sigma(x,\nu) = f(x) + \frac{\sigma}{2}\Vert
+C(x)+\frac{\nu}{\sigma}\Vert_2^2
+\]</span> 就是做了一个配方，但化简前后的两个函数并不完全等价，因为丢掉了
+<span class="math inline">\(\nu\)</span>
+的二次项，不过对于迭代算法没有影响，因为迭代的第一步仅仅是针对 <span
+class="math inline">\(x\)</span> 求最小。</p>
+<p>如果是不等式约束呢？比如优化问题 <span class="math display">\[
+\begin{aligned}
+\min_x\quad&amp; f(x) \\
+\text{s.t.}\quad&amp; C(x)\ge0
+\end{aligned}
+\iff
+\begin{aligned}
+\min_{x,s}\quad&amp; f(x) \\
+\text{s.t.}\quad&amp; C(x)-s=0,\quad s\ge0
+\end{aligned}
+\]</span> 此时增广拉格朗日函数为 <span class="math display">\[
+L_\sigma(x,s,\nu) = f(x)-\nu^T(C(x)-s)+\frac{\sigma}{2}\Vert
+C(x)-s\Vert^2,\quad s\ge0
+\]</span> 迭代方程为 <span class="math display">\[
+\begin{aligned}
+(x^{k+1},s^{k+1}) &amp;= \arg\min_{x,s\ge0} L_\sigma(x,s,\nu^k) \\
+\nu^{k+1} &amp;= \nu^k - \sigma (C(x^{k+1})-s^{k+1})
+\end{aligned}
+\]</span> 第一步求极小要怎么计算呢？先把增广拉格朗日函数化为 <span
+class="math display">\[
+\min_x\left\{f(x)+\min_{s\ge0}\frac{\sigma}{2}\left\Vert
+C(x)-s-\frac{\nu}{\sigma}\right\Vert^2 \right\} \\
+= \min_x\left\{f(x)+\frac{\sigma}{2}\left\Vert
+C(x)-\frac{\nu}{\sigma}-\Pi_+(C(x)-\frac{\nu}{\sigma})\right\Vert^2
+\right\}
+\]</span> 其中 <span class="math inline">\(\Pi_+\)</span> 表示向 <span
+class="math inline">\(R_+^n\)</span> 空间的投影。</p>
+<p><strong><em>例子</em></strong>：这是一个应用 ALM 的例子，考虑优化问题
+<span class="math inline">\(\min f(x),\text{ s.t. }Ax\in C\)</span>，用
+ALM 的迭代步骤为 <span class="math display">\[
+\begin{aligned}
+\hat{x} &amp;= \arg\min_{x} f(x)+\frac{t}{2}d( Ax+z/t)^2 \\
+z :&amp;= z + t(A\hat{x}-P_C(A\hat{x}+z/t))
+\end{aligned}
+\]</span> 其中 <span class="math inline">\(P_C\)</span> 是向集合 <span
+class="math inline">\(C\)</span> 的投影，<span
+class="math inline">\(d(u)\)</span> 是 <span
+class="math inline">\(u\)</span> 到集合 <span
+class="math inline">\(C\)</span> 的欧氏距离。</p>
+<h2 id="ppa-与-alm-的关系">3. PPA 与 ALM 的关系</h2>
+<p>这里先给出一个结论：<strong>对原始问题应用 ALM 等价于对对偶问题应用
+PPA</strong>。</p>
+<p>下面看分析，考虑优化问题 <span class="math display">\[
+\begin{aligned}
+(P)\text { minimize }\quad&amp; f(x)+g(A x)\\
+(D)\text { maximize } \quad&amp; -g^{\star}(z)-f^{\star}\left(-A^{T}
+z\right)
+\end{aligned}
+\]</span> 我们就先来看看原始问题应用 ALM 会得到什么。原始问题等价于
+<span class="math display">\[
+\begin{aligned}
+\min\quad&amp; f(x)+g(y) \\
+\text{s.t.}\quad&amp; Ax=y
+\end{aligned}
+\]</span> 拉格朗日函数为 <span class="math display">\[
+L_t(x,y,z) = f(x)+g(y)+z^T(Ax-y)+\frac{t}{2}\Vert Ax-y\Vert^2
+\]</span> ALM 迭代方程为 <span class="math display">\[
+\begin{aligned}
+(x^{k+1},y^{k+1}) &amp;= \arg\min_{x,y} L_t(x,y,z^k) \\
+z^{k+1} &amp;= z^k + t(Ax^{k+1}-y^{k+1})
+\end{aligned}
+\]</span> 对偶问题应用 PPA 的迭代方程是什么呢？首先我们令 <span
+class="math inline">\(h(z)=g^{\star}(z)+f^{\star}\left(-A^{T}
+z\right)\)</span>，那么就需要求解 $$ z^{+} = <em>{th}(z) =
+(f<sup>{}(-A</sup>{T} u)+g^{}(u)+|u-z|</em>{2}^{2}) \</p>
+<p>z-z^+ th(z<sup>+)=t(-Af</sup>(-A<sup>Tz</sup>+)+g<sup>(z</sup>+) $$
+这个 <span class="math inline">\(z^+\)</span> 乍一看跟 ALM 的 <span
+class="math inline">\(z^{k+1}\)</span>
+没有一点关系啊，为什么说他们俩等价呢？这就要引出下面一个等式了（先打个预防针，这个等式以及他的推导很不直观，我也没有想到一个很好的解释，但是这个等式以及推导又很重要！在后面章节中也会用到）</p>
+<blockquote>
+<p>很重要的式子： <span class="math display">\[
+z^+=\text{prox}_{th}(z) = z+t(A\hat{x}-\hat{y})
+\]</span> 其中 <span class="math inline">\(\hat{x},\hat{y}\)</span> 为
+<span class="math display">\[
+(\hat{x}, \hat{y})=\underset{x,
+y}{\operatorname{argmin}}\left(f(x)+g(y)+z^{T}(A x-y)+\frac{t}{2}\|A
+x-y\|_{2}^{2}\right)
+\]</span></p>
+</blockquote>
+<p>先不管推导，这样看来对偶问题的 PPA 是不是就跟原始问题的 ALM
+完全等价了呢？！然后我们来看一下证明（更多的是验证上面这两个等式成立，至于怎么推导出来我也不知道......）</p>
+<p>增广拉格朗日函数可以转化为 <span class="math display">\[
+(\hat{x},\hat{y}) = \underset{x,
+y}{\operatorname{argmin}}\left(f(x)+g(y)+\frac{t}{2}\|A
+x-y+z/t\|_{2}^{2}\right)
+\]</span> 我们把它表示成一个优化问题，并且引入等式约束 <span
+class="math display">\[
+\begin{aligned}
+\text{minimize}_{x, y, w} \quad&amp; f(x)+g(y)+\frac{t}{2}\|w\|_{2}^{2}
+\\
+\text{subject to}\quad&amp; A x-y+z / t=w
+\end{aligned}
+\]</span> 他的 KKT 条件就是 <span class="math display">\[
+A x-y+\frac{1}{t} z=w, \quad-A^{T} u \in \partial f(x), \quad u \in
+\partial g(y), \quad t w=u
+\]</span> 我们把 <span class="math inline">\(x,y,w\)</span> 消掉就得到了
+<span class="math inline">\(u = z+t(Ax-y)\)</span>，并且有 <span
+class="math display">\[
+0 \in-A \partial f^{*}\left(-A^{T} u\right)+\partial
+g^{*}(u)+\frac{1}{t}(u-z)
+\]</span> 上面这个式子就等价于 <span
+class="math inline">\(u=\text{prox}_{th}(z)\)</span>。因此就有 <span
+class="math inline">\(\text{prox}_{th}(z) =
+z+t(A\hat{x}-\hat{y})\)</span>。</p>
+<h2 id="moreauyosida-smoothing">4. Moreau–Yosida smoothing</h2>
+<p>这一部分是从另一个角度看待 PPA 算法。我们知道如果 <span
+class="math inline">\(f\)</span>
+是光滑函数就可以直接用梯度下降了，如果是非光滑函数则可以用次梯度或者近似点算法，前面复习
+PG 方法的时候提到了 PG 也可以看成是一种梯度下降，梯度为 <span
+class="math inline">\(G_t(x)\)</span> <span class="math display">\[
+x_{k+1}=\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \iff x^+ = x-tG_t(x)
+\]</span> 这一部分要讲的就是从梯度下降的角度认识 PPA 方法。</p>
+<p>这里再次先抛出结论：<strong>PPA 实际上就是对 <span
+class="math inline">\(f\)</span> 的某个光滑近似函数 <span
+class="math inline">\(\tilde{f}\)</span> 做梯度下降</strong>。</p>
+<p>这个光滑近似函数是什么呢？对于闭凸函数 <span
+class="math inline">\(f\)</span>，我们定义 <span class="math display">\[
+\begin{aligned}
+f_{(t)}(x) &amp;=\inf _{u}\left(f(u)+\frac{1}{2 t}\|u-x\|_{2}^{2}\right)
+\quad(\text { with } t&gt;0) \\
+&amp;=f\left(\operatorname{prox}_{t f}(x)\right)+\frac{1}{2
+t}\left\|\operatorname{prox}_{t f}(x)-x\right\|_{2}^{2}
+\end{aligned}
+\]</span> 为函数 <span class="math inline">\(f\)</span> 的
+<strong>Moreau Envelop</strong> 。这里是将 <span
+class="math inline">\(\text{prox}_{tf}(x)\)</span>
+代回到了原函数中。在此之前我们需要首先研究一下这个函数的性质。</p>
+<ol type="1">
+<li><span class="math inline">\(f_{(t)}\)</span>
+为<strong>凸函数</strong>。取 <span class="math inline">\(G(x,u) =
+f(u)+\frac{1}{2t}\Vert u-x\Vert^2_2\)</span> 是关于 <span
+class="math inline">\((x,u)\)</span> 的联合凸函数，因此 <span
+class="math inline">\(f_{(t)}(x)=\inf_u G(x,u)\)</span> 是凸的；</li>
+<li><span class="math inline">\(\text{dom}f_{(t)}=R^n\)</span>。这是因为
+<span class="math inline">\(\text{prox}_{tf}(x)\)</span> 对任意的 <span
+class="math inline">\(x\)</span> 都有唯一的定义；</li>
+<li><span class="math inline">\(f_{(t)}\in C^1\)</span>
+<strong>连续</strong>；</li>
+</ol>
+<p>另外可以验证共轭函数为 <span class="math display">\[
+\left(f_{(t)}\right)^{\star}(y)=f^{\star}(y)+\frac{t}{2}\|y\|_{2}^{2}
+\]</span> 因此还有性质</p>
+<ol start="4" type="1">
+<li><span class="math inline">\(\left(f_{(t)}\right)^{\star}(y)\)</span>
+为 <strong>t-强凸函数</strong>，等价的有 <span
+class="math inline">\(f_{(t)}(x)\)</span> 为
+<strong>1/t-smooth</strong>；</li>
+</ol>
+<p>既然这个 <span class="math inline">\(f_{(t)}\)</span> 为 <span
+class="math inline">\(C^1\)</span> 连续的，那么他的梯度是什么呢？ <span
+class="math display">\[
+f_{(t)}(x) = \left(f_{(t)}(x)\right)^{\star\star}=\sup _{y}\left(x^{T}
+y-f^{\star}(y)-\frac{t}{2}\|y\|_{2}^{2}\right)
+\]</span> 根据 Legendre transform 有 <span
+class="math inline">\(y^\star\in\partial
+f_{(t)}(x)\)</span>，令上面式子关于 <span
+class="math inline">\(y\)</span> 的次梯度等于 0 可以得到 <span
+class="math display">\[
+x-ty^\star \in \partial f^\star(y^\star) \iff y^\star\in\partial
+f(x-ty^\star) \\\Longrightarrow x-ty^\star=\text{prox}_{tf}(x)
+\]</span> 因此我们就有(<strong>重要</strong>) <span
+class="math display">\[
+y^\star=\nabla f_{(t)}(x) =
+\frac{1}{t}\left(x-\text{prox}_{tf}(x)\right)
+\]</span> 变换一下就是 <span class="math inline">\(\text{prox}_{tf}(x) =
+x-t\nabla f_{(t)}(x)\)</span>，注意这个式子左边就是 PPA
+的迭代方程，右边就是光滑函数函数 <span
+class="math inline">\(f_{(t)}(x)\)</span>
+应用梯度下降法的迭代方程，并且由于这个函数是 <span
+class="math inline">\(L=1/t\)</span>-smooth 的，因此我们取的步长为 <span
+class="math inline">\(t\)</span> 满足要求 <span
+class="math inline">\(0&lt;t\le
+1/L\)</span>。也就是我们这一小节刚开始说的，PPA 等价于对一个光滑近似函数
+<span class="math inline">\(f_{(t)}(x)\)</span> 的梯度下降方法。</p>
+<p><strong><em>例子 1</em></strong>：举个例子算一下 Moreau
+Envelop，假如函数 <span
+class="math inline">\(f(x)=\delta_C(x)\)</span>，则 <span
+class="math inline">\(f_{(t)}(x)=\frac{1}{2t}d(x)^2\)</span>，这里 <span
+class="math inline">\(d(x)\)</span> 是 <span
+class="math inline">\(x\)</span> 到集合 <span
+class="math inline">\(C\)</span> 的欧氏距离。</p>
+<p><strong><em>例子 2</em></strong>：若 <span
+class="math inline">\(f(x)=\Vert x\Vert_1\)</span>，函数 <span
+class="math inline">\(f_{(t)}(x)=\sum_k \phi_t(x_k)\)</span> 被称为
+<strong>Huber penalty</strong>，其中 <span class="math display">\[
+\phi_{t}(z)=\left\{\begin{array}{ll}z^{2} /(2 t) &amp; |z| \leq t
+\\|z|-t / 2 &amp; |z| \geq t\end{array}\right.
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/22-huber.PNG" srcset="/img/loading.gif" lazyload /></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ALM/">ALM</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A2%9E%E5%B9%BF%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">增广拉格朗日函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PPA/">PPA</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记23：算子分裂法 & ADMM</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/04/music/TroubleImIn/">
+                        <span class="hidden-mobile">Trouble I'm In</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

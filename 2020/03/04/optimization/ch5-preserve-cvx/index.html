@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 保凸变换 前面提到过一次保凸变换，前面针对的是集合，凸集经过一定的保凸变换，映射后的集合仍然是凸集。这里复习一下  任意个凸集的交集 仿射变换 透视变换 分式线性函数  而这里要讲的是对函数经过操作以后，得到的仍然是凸函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记 5：保凸变换">
+<meta property="og:url" content="http://example.com/2020/03/04/optimization/ch5-preserve-cvx/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. 保凸变换 前面提到过一次保凸变换，前面针对的是集合，凸集经过一定的保凸变换，映射后的集合仍然是凸集。这里复习一下  任意个凸集的交集 仿射变换 透视变换 分式线性函数  而这里要讲的是对函数经过操作以后，得到的仍然是凸函数。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-04T15:49:33.000Z">
+<meta property="article:modified_time" content="2020-03-27T09:59:10.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="保凸变换">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记 5：保凸变换 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记 5：保凸变换">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-04 23:49" pubdate>
+        March 4, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记 5：保凸变换</h1>
+            
+            <div class="markdown-body">
+              <h2 id="保凸变换">1. 保凸变换</h2>
+<p>前面提到过一次保凸变换，前面针对的是集合，凸集经过一定的保凸变换，映射后的集合仍然是凸集。这里复习一下</p>
+<ol type="1">
+<li>任意个凸集的交集</li>
+<li>仿射变换</li>
+<li>透视变换</li>
+<li>分式线性函数</li>
+</ol>
+<p>而这里要讲的是对函数经过操作以后，得到的仍然是凸函数。</p>
+<span id="more"></span>
+<h3 id="正权重求和">1.1 正权重求和</h3>
+<blockquote>
+<p>离散情况：<span class="math inline">\(f=\sum\omega_i
+f_i,\omega_i\ge0\)</span></p>
+<p>连续情况：<span
+class="math inline">\(f=\int\omega(y)f(y)dy,\omega(y)\ge0\)</span></p>
+</blockquote>
+<h3 id="与仿射变换的复合函数">1.2 与仿射变换的复合函数</h3>
+<blockquote>
+<p>若 <span class="math inline">\(f\)</span> 为凸函数，则 <span
+class="math inline">\(f(Ax+b)\)</span> 也为凸函数。</p>
+</blockquote>
+<p><strong>Remarks</strong>：反之则不一定成立，若想成立（根据后面复合函数的原理）则仿射变换应具有一定的单调性。</p>
+<h3 id="逐元素最大值上确界">1.3 逐元素最大值&amp;上确界</h3>
+<blockquote>
+<p>若 <span class="math inline">\(f_i\)</span> 均为凸函数，则 <span
+class="math inline">\(f(x)=\max_i\{f_1(x),...,f_n(x)\}\)</span>
+也为凸函数。</p>
+</blockquote>
+<p><strong>Remarks</strong>：这实际上可以看成是 <span
+class="math inline">\(\text{epi} f=\bigcap
+\text{epi}f_i\)</span>，多个凸集的交集仍然是凸集。</p>
+<blockquote>
+<p>若与仿射变换相结合，则可以得到 <span
+class="math inline">\(f(x)=\max_i\{a_1^Tx+b_1,...,a_n^Tx+b_n\}\)</span>
+也是凸函数。</p>
+</blockquote>
+<p><strong><em>例</em></strong>：根据上述结论，可以推广得到，<span
+class="math inline">\(n\)</span> 个元素中最大的 <span
+class="math inline">\(r\)</span> 的求和也是凸函数，证明很简单。</p>
+<blockquote>
+<p>若 <span class="math inline">\(f(x,y)\)</span> 关于 <span
+class="math inline">\(x\)</span> 是凸的，对任意 <span
+class="math inline">\(y\in\mathcal{A}\)</span>，则 <span
+class="math inline">\(g(x)=\sup_{y\in\mathcal{A}}f(x,y)\)</span>
+也是凸的。</p>
+</blockquote>
+<p><strong>Remarks</strong>：上述情况跟逐元素最大值是类似的，可以看成是无穷个
+epigraph 的交集。</p>
+<blockquote>
+<p>由上述结论，可以得到一个重要性质</p>
+<p><strong>Property</strong>：若 <span class="math inline">\(f\)</span>
+为凸函数，则 <span class="math inline">\(f(x)=\sup\{g(x)| g\ \text{is
+affine},g(z)\le f(z),\forall z\}\)</span></p>
+<p><strong>Remarks</strong>：上述性质所描述的事情实际上就是 <span
+class="math inline">\(f\)</span>
+被很多个支撑超平面(以及更靠下的平面)紧紧的围起来了。证明过程实际上就是找到每个
+<span class="math inline">\(x\)</span> 对应的(支撑)超平面。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/5-support.jpg" srcset="/img/loading.gif" lazyload
+alt="support hyperplane" />
+<figcaption aria-hidden="true">support hyperplane</figcaption>
+</figure>
+<p>通过上面的证明，可以得到的一个结论就是 <span
+class="math inline">\(\forall x\in \text{int dom}f\)</span>，都存在一个
+<span class="math inline">\(y\)</span> 使得 <span
+class="math display">\[
+f(z)\ge f(x)+y^T(z-x),\forall z\in\text{dom}f
+\]</span> 由此可以引出<strong>次梯度(subgradient)</strong>的概念 <span
+class="math display">\[
+\partial f=\{g| f(z)\ge f(x)+g^T(z-x),\forall z\in\text{dom}f \}
+\]</span> 注意这里得到的是一系列梯度值的集合，这个集合有以下性质</p>
+<ol type="1">
+<li><span class="math inline">\(\partial f(x)\ne \varnothing, \text{if}\
+x\in\text{int dom}f\)</span></li>
+<li><span class="math inline">\(\partial f(x)\)</span> convex and
+closed</li>
+<li><span class="math inline">\(\partial f(x)\)</span> bounded if <span
+class="math inline">\(x\in\text{int dom}f\)</span></li>
+</ol>
+</blockquote>
+<p><strong><em>例</em></strong>：应用上述结论，可验证下面这些函数是凸的</p>
+<ol type="1">
+<li>集合 <span class="math inline">\(C\)</span> 的支撑函数(support
+function)定义为：<span class="math inline">\(S_C(x)=\sup_{y\in
+C}y^Tx\)</span> (实际上可以将 <span class="math inline">\(x\)</span>
+看作某个支撑超平面的法向量)</li>
+<li>到集合 <span class="math inline">\(C\)</span> 的最远距离：<span
+class="math inline">\(f(x)=\sup_{y\in C}\Vert x-y\Vert\)</span>
+(距离关于 <span class="math inline">\(x,y\)</span> 都是凸的)</li>
+<li>矩阵范数：<span class="math inline">\(\Vert
+X\Vert_{a,b}=\sup\left\{\Vert Xv\Vert_a / \Vert
+v\Vert_b\right\}\)</span> (证明过程用到了范数的等价定义，可参考 Boyd
+的书)</li>
+</ol>
+<h3 id="下确界">1.4 下确界</h3>
+<p>前面提到了逐元素上确界，实际上就是 epigraph
+的交集，而取下确界呢？是类似的，只不过对 <span
+class="math inline">\(f(x,y)\)</span> 的要求更严了</p>
+<blockquote>
+<p>若 <span class="math inline">\(f(x,y)\)</span> 关于 <span
+class="math inline">\((x,y)\)</span> 是凸的，<strong><span
+class="math inline">\(C\)</span> 是一个凸集</strong>，则 <span
+class="math inline">\(g(x)=\inf_{y\in C}f(x,y)\)</span> 是凸的。</p>
+</blockquote>
+<p>上述性质可应用下确性质定义来证明，也可以从 epigraph 角度来理解：<span
+class="math inline">\(\forall(x,t)\in\text{epi }g\)</span>，都有 <span
+class="math inline">\((x,y,t)\in \text{epi }f,\text{ for some }y\in
+C\)</span>，所以 <span class="math inline">\(\text{epi }g\)</span>
+实际上可以看作 <span class="math inline">\(\text{epi }f\)</span>
+向低维空间中的一个投影，也是一个仿射变换/线性变换，因此 <span
+class="math inline">\(\text{epi }g\)</span> 也是凸的。</p>
+<p><strong>Remarks</strong>：注意上面还要求 <span
+class="math inline">\(C\)</span>
+是一个凸集，因为凸函数要求其定义域也为凸集。</p>
+<p><strong><em>例</em></strong>：到集合 <span
+class="math inline">\(C\)</span> 最近距离：<span
+class="math inline">\(\text{dist}(x,S)=\inf_{y\in S}\Vert
+x-y\Vert\)</span> 是凸的，如果 <span class="math inline">\(S\)</span>
+是凸的。</p>
+<h3 id="复合函数">1.5 复合函数</h3>
+<p>两个凸函数的复合函数不一定是凸的，比如 <span
+class="math inline">\(f(x)=-x,g(x)=x^2\)</span>，那么 <span
+class="math inline">\(f(g(x))=-x^3\)</span> 非凸</p>
+<blockquote>
+<h4 id="标量复合函数">1. 标量复合函数</h4>
+<p>有函数 <span class="math inline">\(g:R^n\to R,\ h:R\to
+R\)</span>，对于复合函数 <span class="math inline">\(f(x)=
+h(g(x))\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(f(x)\)</span> 为凸函数，若 <span
+class="math inline">\(g\)</span> convex，<span
+class="math inline">\(h\)</span> convex，<span
+class="math inline">\(h\)</span> <strong>单调不减</strong></li>
+<li><span class="math inline">\(f(x)\)</span> 为凸函数，若 <span
+class="math inline">\(g\)</span> concave，<span
+class="math inline">\(h\)</span> convex，<span
+class="math inline">\(h\)</span> <strong>单调增</strong></li>
+</ol>
+<h4 id="向量复合函数">2. 向量复合函数</h4>
+<p>有函数 <span class="math inline">\(g:R^n\to R^k,\ h:R^k\to
+R\)</span>，对于复合函数 <span class="math inline">\(f(x)=
+h(g(x))=h(g_1(x),...,g_n(x))\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(f(x)\)</span> 为凸函数，若 <span
+class="math inline">\(g_i\)</span> convex，<span
+class="math inline">\(h\)</span> convex，<span
+class="math inline">\(h\)</span>
+<strong>关于每个元素</strong>都单调不减</li>
+<li><span class="math inline">\(f(x)\)</span> 为凸函数，若 <span
+class="math inline">\(g_i\)</span> concave，<span
+class="math inline">\(h\)</span> convex，<span
+class="math inline">\(h\)</span>
+<strong>关于每个元素</strong>都单调增</li>
+</ol>
+</blockquote>
+<p>证明：标量函数 <span class="math inline">\(f^{\prime
+\prime}(x)=h^{\prime \prime}(g(x)) g^{\prime}(x)^{2}+h^{\prime}(g(x))
+g^{\prime \prime}(x)\)</span></p>
+<p>向量复合函数 <span class="math inline">\(f^{\prime
+\prime}(x)=g^{\prime}(x)^{T} \nabla^{2} h(g(x)) g^{\prime}(x)+\nabla
+h(g(x))^{T} g^{\prime \prime}(x)\)</span></p>
+<p><strong>Remarks</strong>：</p>
+<ol type="1">
+<li>回到刚开始提到仿射变换与凸函数的复合 <span
+class="math inline">\(f(Ax+b)\)</span> 是凸的，但是 <span
+class="math inline">\(Affine(f(x))\)</span>
+就不一定了，若是凸函数则需要仿射变换具有一定的单调性</li>
+</ol>
+<p><strong><em>例</em></strong>：常见的例子有</p>
+<ol type="1">
+<li><span class="math inline">\(\exp g(x)\)</span> 是凸的，如果 <span
+class="math inline">\(g(x)\)</span> 是凸的</li>
+<li><span class="math inline">\(1/g(x)\)</span> 是凸的，如果 <span
+class="math inline">\(g(x)\)</span> 是凸的且为正值</li>
+<li><span class="math inline">\(\sum\log g_i(x)\)</span> 为凹的，如果
+<span class="math inline">\(g_i\)</span> 是凹的且为正值</li>
+<li><span class="math inline">\(\log\sum\exp g_i(x)\)</span>
+为凸的，如果 <span class="math inline">\(g_i\)</span> 为凸的</li>
+</ol>
+<h3 id="透射变换">1.6 透射变换</h3>
+<p>函数 <span class="math inline">\(f:R^n\to R\)</span> 的透射变换 <span
+class="math inline">\(g:R^n\times R\to R\)</span> 定义为 <span
+class="math display">\[
+g(x,t)=tf(x/t),\text{dom }g=\{(x,t)|x/t \in\text{dom }f,t&gt;0 \}
+\]</span></p>
+<blockquote>
+<p>若 <span class="math inline">\(f\)</span> 是凸的，则 <span
+class="math inline">\(g\)</span> 是凸的。</p>
+</blockquote>
+<p><strong>Remarks</strong>：上述变换在一些问题中应该能够对应一些物理意义，不过我暂时还没想起来。证明也可以用
+epigraph 来证明。</p>
+<p><strong>例</strong>：对负熵 <span class="math inline">\(f(x)=-\log
+x\)</span>，相对熵为 <span class="math inline">\(g(x,t)=t\log t-t\log
+x\)</span></p>
+<p>类似的，对向量函数 <span
+class="math inline">\(KL(u,v)=-\sum(u_i\log(u_i/v_i)-u_i+v_i)\)</span>
+也是凸的，这实际上就就是 KL-divergence。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BF%9D%E5%87%B8%E5%8F%98%E6%8D%A2/">保凸变换</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/04/optimization/ch6-conjugate-func/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记 6：共轭函数 Conjugate Function</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/01/fuzzy/ch4-relation/">
+                        <span class="hidden-mobile">模糊数学笔记 4：模糊关系</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="模型选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(六) Modeling">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch6_Modeling/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="模型选择">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:05:28.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="熵">
+<meta property="article:tag" content="信息容量">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(六) Modeling - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(六) Modeling">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 20:00" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      37 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(六) Modeling</h1>
+            
+            <div class="markdown-body">
+              <p>模型选择</p>
+<span id="more"></span>
+<h2 id="modeling-problem">1. Modeling problem</h2>
+<ul>
+<li><p>formulation</p>
+<ul>
+<li><p>a set of distributions <span class="math display">\[
+\mathcal{P}=\left\{p_{\mathrm{y}}(\cdot ; x) \in \mathcal{P}^{y}: x \in
+\mathcal{X}\right\}
+\]</span></p></li>
+<li><p>approximation <span class="math display">\[
+\min _{q \in \mathcal{P}^{y}} \max _{x \in \mathcal{X}}
+D\left(p_{\mathrm{y}}(\cdot ; x) \| q(\cdot)\right)
+\]</span></p></li>
+</ul></li>
+<li><p>solution</p></li>
+</ul>
+<blockquote>
+<p><strong>Theorem</strong>: 对任意 <span class="math inline">\(q \in
+\mathcal{P}^{y}\)</span> 都存在一个混合模型 <span
+class="math inline">\(q_w(\cdot) = \sum_{x \in \mathcal{X}} w(x)
+p_{y}(\cdot ; x)\)</span> 满足 <span class="math display">\[
+D\left(p_{y}(\cdot ; x) \| q_{w}(\cdot)\right) \leq D\left(p_{y}(\cdot ;
+x) \| q(\cdot)\right) \quad \text { for all } x \in \mathcal{X}
+\]</span> <strong>Proof</strong>: 应用 Pythagoras 定理</p>
+<p>然后很容易有</p>
+<p><span class="math display">\[
+\max _{x \in \mathcal{X}} \min _{q \in \mathcal{P}^{y}}
+D\left(p_{y}(\cdot ; x) \| q(\cdot)\right)=\max _{x \in \mathcal{X}} 0=0
+\\
+\]</span></p>
+<p><span class="math display">\[
+\min _{q \in \mathcal{P}} \max _{x \in \mathcal{X}}
+D\left(p_{\mathrm{y}}(\cdot ; x) \| q(\cdot)\right)=\min _{q \in
+\mathcal{P}} \max _{w \in \mathcal{P}^{\mathcal{X}}} \sum_{x} w(x)
+D\left(p_{\mathrm{y}}(\cdot ; x) \| q(\cdot)\right)
+\]</span></p>
+<p><strong>Theorem</strong> (Redundancy-Capacity Theorem):
+以下等式成立，且两侧最优的 <span class="math inline">\(w,q\)</span>
+s是相同的 <span class="math display">\[
+\begin{aligned} R^{+} \triangleq \min _{q \in \mathcal{P}^{\mathcal{Y}}}
+\max _{w \in \mathcal{P}^{\mathcal{X}}} &amp; \sum_{x} w(x)
+D\left(p_{\mathrm{y}}(\cdot ; x) \| q(\cdot)\right) \\ &amp;=\max _{w
+\in \mathcal{P}} \min _{q \in \mathcal{P}} \sum_{x} w(x)
+D\left(p_{\mathrm{y}}(\cdot ; x) \| q(\cdot)\right) \triangleq R^{-}
+\end{aligned}
+\]</span> <strong>Proof</strong>:</p>
+<ol type="1">
+<li>利用后面的 Equidistance property 证明 <span
+class="math inline">\(R^+ \le R^-\)</span></li>
+<li>根据 minimax 和 maxmini 的性质，有 <span class="math inline">\(R^+
+\ge R^-\)</span></li>
+<li>一定有 <span class="math inline">\(R^+ \ge R^-\)</span></li>
+<li>证明两个不等式的取等条件是在同样的 <span
+class="math inline">\(w,q\)</span> 处取到</li>
+</ol>
+</blockquote>
+<h2 id="model-capacity">2. Model capacity</h2>
+<blockquote>
+<p>首先计算 <span class="math inline">\(R^-\)</span> 内部的 min <span
+class="math display">\[
+\begin{aligned} &amp; \min _{q \in \mathcal{P}^{\mathcal{Y}}} \sum_{x}
+w(x) D\left(p_{\mathbf{y}}(\cdot ; x) \| q(\cdot)\right) \\=&amp; \min
+_{q \in \mathcal{P}^{\mathcal{Y}}} \sum_{x, y} w(x) p_{\mathbf{y}}(y ;
+x) \log \frac{p_{y}(y ; x)}{q(y)} \\=&amp; \text { constant }-\max _{q
+\in \mathcal{P}^{\mathcal{Y}}} \sum_{y} q_{w}(y) \log q(y) \\=&amp;
+\text { constant }-\max _{q \in \mathcal{P}^{\mathcal{Y}}}
+\mathbb{E}_{q_{w}}[\log q(y)] \end{aligned}
+\]</span></p>
+根据 Gibbs 不等式 <span class="math display">\[
+q^*(\cdot) = q_{w}(\cdot) \triangleq \sum_{x \in \mathcal{X}} w(x)
+p_{y}(\cdot ; x)
+\]</span> 再考虑 <span class="math inline">\(R^-\)</span> 外部的
+max，此时可以转化为 <strong>Bayesian</strong> 角度！ $$
+<span class="math display">\[\begin{aligned} R^{-} &amp;=\max _{w \in
+\mathcal{P}^{\mathcal{X}}} \sum_{x} w(x) D\left(p_{y}(\cdot ; x) \|
+q_{w}(\cdot)\right) \\ &amp;=\max _{w \in \mathcal{P}^{\mathcal{X}}}
+\sum_{x, y} w(x) p_{y}(y ; x) \log \frac{p_{y}(y ; x)}{\sum_{x^{\prime}}
+w\left(x^{\prime}\right) p_{y}\left(y ; x^{\prime}\right)} \\
+
+&amp;\overset{\text{Bayesian}}{=}\max _{p_{\mathbf{x}}} \sum_{x}
+p_{\mathbf{x}}(x) D\left(p_{y | \mathbf{x}}(\cdot | x) \|
+p_{y}(\cdot)\right) \\ &amp;=\max _{p_{\mathbf{x}}} \sum_{x, y}
+p_{\mathbf{x}}(x) p_{\mathbf{y} | \mathbf{x}}(y | x) \log \frac{p_{y |
+x}(y | x)}{p_{\mathbf{y}}(y)} \\ &amp;=\max _{p_{\mathbf{x}}} \sum_{x,
+y} p_{\mathbf{x}, \mathbf{y}}(x, y) \log \frac{p_{\mathbf{x},
+\mathbf{y}}(x, y)}{p_{\mathbf{x}}(x) p_{y}(y)}=\max _{p_{\mathbf{x}}}
+I(x ; y)=C
+\end{aligned}\]</span>
+<p>$$</p>
+<p><strong>Definition</strong>: 对一个模型 <span
+class="math inline">\(p_{\mathsf{y|x}}\)</span>，有 <span
+class="math display">\[
+C \triangleq \max _{p_{x}} I(x ; y)
+\]</span></p>
+<ul>
+<li><p><strong>Model capacity</strong>: C</p></li>
+<li><p><strong>least informative prior</strong>: <span
+class="math inline">\(p_x^*\)</span></p></li>
+</ul>
+<p><strong>Theorem</strong>(Equidistance property): C对应的最优的 <span
+class="math inline">\(p^*\)</span> 和 <span
+class="math inline">\(w^*\)</span> 满足 <span class="math display">\[
+D(p_y(\cdot;x)||q^*(\cdot)) \le C \ \ \ \ \ \forall x\in\mathcal{X}
+\]</span> 其中等号对于满足 <span
+class="math inline">\(w^*(x)&gt;0\)</span> 的 x 成立</p>
+<p><strong>Proof</strong>:</p>
+<ol type="1">
+<li><span class="math inline">\(I(x,y)\)</span> 关于 <span
+class="math inline">\(p_x(a)\ \ \forall a\)</span> 是 concave 的</li>
+<li>构造拉格朗日函数 <span class="math inline">\(\mathcal{L}=I(x,y) -
+\lambda(\sum_x p_x(x)-1)\)</span>，也关于 <span
+class="math inline">\(p_x(a)\)</span> concave</li>
+<li><span class="math inline">\(\min_{p_x}I(x,y)\)</span> 的极值点应满足
+<span class="math inline">\(\left.\frac{\partial I(x ; y)}{\partial
+p_{x}(a)}\right|_{p_{x}=p_{x}^{*}}-\lambda=0, \quad \text { for all } a
+\in \mathcal{X} \text { such that } p_{x}^{*}(a)&gt;0\)</span>，或者
+<span class="math inline">\(\left.\frac{\partial I(x ; y)}{\partial
+p_{x}(a)}\right|_{p_{x}=p_{x}^{*}}-\lambda\le0, \quad \text { for all }
+a \in \mathcal{X} \text { such that } p_{x}^{*}(a)=0\)</span></li>
+<li><span class="math inline">\(\frac{\partial I(x ; y)}{\partial
+p_{x}(a)} = D\left(p_{y | x}(\cdot ; a) \| p_{y}\right)-\log e\)</span>
+并根据 3 中取等号的特点恰好可以得到定理中的式子</li>
+</ol>
+</blockquote>
+<h2 id="inference-with-mixture-models">3. Inference with mixture
+models</h2>
+<ul>
+<li><p>Formulation: 有观测 <span
+class="math inline">\(y_-\)</span>，想要预测 <span
+class="math inline">\(y_+\)</span></p></li>
+<li><p>Solution</p>
+<ul>
+<li><p>根据前面得到的最优先验 <span class="math inline">\(w^*\)</span>
+来估计 <span class="math inline">\(y=[y_-,y_+]\)</span> 的分布 <span
+class="math display">\[
+q_{\mathbf{y}}^{*}(\mathbf{y})=\sum_{x} w^{*}(x)
+p_{\mathbf{y}}(\mathbf{y} ; x)
+\]</span></p></li>
+<li><p>然后可以获得后验概率 <span class="math display">\[
+\begin{aligned} q_{\mathrm{y}+| \mathrm{y}_{-}}^{*}\left(\cdot |
+y_{-}\right) &amp; \triangleq \frac{q_{\mathrm{y}}^{*}\left(y_{+},
+y_{-}\right)}{q_{\mathrm{y}-}^{*}\left(y_{-}\right)}=\frac{\sum_{x}
+w^{*}(x) p_{\mathrm{y}}\left(y_{+}, y_{-} ; x\right)}{\sum_{a} w^{*}(a)
+p_{\mathrm{y}_{-}}\left(y_{-} ; a\right)} \\
+&amp;=\sum_{x} w^{*}\left(x | y_{-}\right) p_{\mathrm{y}_{+} |
+y_{-}}\left(y_{+} | y_{-} ; x\right) \end{aligned}
+\]</span></p></li>
+<li><p>相当于是做了 soft decision，因为 ML 估计中只会取 <span
+class="math inline">\(p_{\mathrm{y}_{+} | y_{-}}(\cdot|y_-;
+\hat{x}_{ML})\)</span></p></li>
+</ul></li>
+</ul>
+<h2 id="maximum-entropy-distribution">4. Maximum entropy
+distribution</h2>
+<ul>
+<li>最大熵等价于<strong>均匀分布</strong>向对应的模型集合上的
+<strong>I-projection</strong> <span class="math display">\[
+D(p \| U)=\sum_{y} p(y) \log p(y)+\log |\mathcal{Y}|=\log
+|\mathcal{Y}|-H(p) \\
+p^{*}=\underset{p \in \mathcal{L}_{\mathrm{t}}}{\arg \max }
+H(p)=\underset{p \in \mathcal{L}_{\mathrm{t}}}{\arg \min } D(p \| U)
+\]</span></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%86%B5/">熵</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%B9%E9%87%8F/">信息容量</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch7_TypicalSequence/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(七)  Typical Sequence</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch5_EMAlgorithm/">
+                        <span class="hidden-mobile">统计推断(五)  EM algorithm</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="假如我们现在设计了一种服装，想要调研一下这种服装的受欢迎程度，该怎么办呢？ 首先是怎么表示受欢迎程度呢？我们可以简单分为三个等级：受欢迎、一般欢迎、不受欢迎，由于不同的人感受可能不同，结合前面模糊集的概念，我们可以引入隶属度，比如调查后得到 50% 的人喜欢，30%一般，20%不喜欢，我们就可以取隶属度分别为 0.5，0.3，0.2。 当然这样太粗糙了，我们知道评价一个衣服的因素有很多，比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模糊数学笔记 6：模糊综合评判">
+<meta property="og:url" content="http://example.com/2020/03/13/fuzzy/ch6-evaluate/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="假如我们现在设计了一种服装，想要调研一下这种服装的受欢迎程度，该怎么办呢？ 首先是怎么表示受欢迎程度呢？我们可以简单分为三个等级：受欢迎、一般欢迎、不受欢迎，由于不同的人感受可能不同，结合前面模糊集的概念，我们可以引入隶属度，比如调查后得到 50% 的人喜欢，30%一般，20%不喜欢，我们就可以取隶属度分别为 0.5，0.3，0.2。 当然这样太粗糙了，我们知道评价一个衣服的因素有很多，比">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-13T03:08:31.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:07:32.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="模糊综合评判">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>模糊数学笔记 6：模糊综合评判 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="模糊数学笔记 6：模糊综合评判">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-13 11:08" pubdate>
+        March 13, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">模糊数学笔记 6：模糊综合评判</h1>
+            
+            <div class="markdown-body">
+              <p>假如我们现在设计了一种服装，想要调研一下这种服装的受欢迎程度，该怎么办呢？</p>
+<p>首先是怎么表示受欢迎程度呢？我们可以简单分为三个等级：受欢迎、一般欢迎、不受欢迎，由于不同的人感受可能不同，结合前面模糊集的概念，我们可以引入隶属度，比如调查后得到
+50% 的人喜欢，30%一般，20%不喜欢，我们就可以取隶属度分别为
+0.5，0.3，0.2。</p>
+<p>当然这样太粗糙了，我们知道评价一个衣服的因素有很多，比如样式、耐穿性、价格等，而不同因素即使对同一个人的值观感受也是不一样的，比如有的人很喜欢这个样式，但是摸了摸钱包，发现这个衣服是这么的难看！所以要想更好的评价，我们需要对每一个指标分别评估一下受欢迎程度，然后把各种因素综合起来。这就是模糊综合评判要做的事情。</p>
+<span id="more"></span>
+<h2 id="一级模糊综合评判">1. 一级模糊综合评判</h2>
+<p>现在我们把上面描述的过程规范化。我们有<strong>因素集</strong> <span
+class="math inline">\(U=\{u_1,...,u_n\}\)</span>，<strong>评语集</strong>
+<span class="math inline">\(V=\{v_1,...,v_m\}\)</span>。</p>
+<p>综合评判的步骤是什么呢？</p>
+<ol type="1">
+<li>首先要对每个因素分别进行单因素评判，也就是获得 <span
+class="math inline">\(r_i = (r_{i1},\cdots,r_{im})\)</span></li>
+<li>然后把 <span class="math inline">\(n\)</span>
+个因素的评判指标拼接成一个 <span class="math inline">\(n\times
+m\)</span> 的矩阵，可以获得综合评判矩阵 <span
+class="math inline">\(R=(r_1^T,\cdots,r_n^T)^T\)</span></li>
+<li>之后需要对所有因素进行综合评判，因此可以设置一个权重 <span
+class="math inline">\(A=(a_1,...,a_n)\)</span>，再根据算子 <span
+class="math inline">\(M(\cdot,\cdot)\)</span> 计算 <span
+class="math inline">\(B=A\circ
+R=M(A,R)\)</span>，这个过程实际上就类似于一个加权的过程</li>
+<li>上一步结束后实际上得到的还是一个向量，要想最后给一个总的评价指标，可以对该向量再进行一次加权或者其他操作，获得一个总的指标。</li>
+</ol>
+<p>下面我对第 3，4 条再详细解释一下。</p>
+<p>算子 <span class="math inline">\(M(\cdot,\cdot)\)</span>
+可以取很多种形式，比如</p>
+<ul>
+<li><span class="math inline">\(M(\wedge,\vee) \Longrightarrow
+\boldsymbol{b}_{j}=\max \left\{\left(\boldsymbol{a}_{i} \wedge
+\boldsymbol{r}_{i j}\right), \mathbf{1} \leq \boldsymbol{i} \leq
+\boldsymbol{n}\right\}(\boldsymbol{j}=\mathbf{1}, \boldsymbol{2},
+\cdots, \boldsymbol{m})\)</span></li>
+<li><span class="math inline">\(M(\cdot,\vee) \Longrightarrow
+\boldsymbol{b}_{j}=\max \left\{\left(\boldsymbol{a}_{i} \cdot
+\boldsymbol{r}_{i j}\right), \mathbf{1} \leq \boldsymbol{i} \leq
+\boldsymbol{n}\right\}(\boldsymbol{j}=\mathbf{1}, \boldsymbol{2},
+\cdots, \boldsymbol{m})\)</span></li>
+<li><span class="math inline">\(M(\cdot,+) \Longrightarrow
+\boldsymbol{b}_{j}=\sum_i \left(\boldsymbol{a}_{i}
+\cdot\boldsymbol{r}_{i j}\right), (\boldsymbol{j}=\mathbf{1},
+\boldsymbol{2}, \cdots, \boldsymbol{m})\)</span></li>
+<li><span
+class="math inline">\(M(\wedge,\bigoplus)=\boldsymbol{b}_{j}=\min
+\left\{1, \sum_{i=1}^{n}\left(a_{i} \wedge r_{i j}\right)\right\}(j=1,2,
+\cdots, m)\)</span></li>
+<li><span class="math inline">\(M(\wedge,+) \Longrightarrow
+\boldsymbol{b}_{j}=\sum_i \left(\boldsymbol{a}_{i}
+\wedge\frac{\boldsymbol{r}_{i j}}{r_0}\right),
+(\boldsymbol{j}=\mathbf{1}, \boldsymbol{2}, \cdots,
+\boldsymbol{m}),r_0=\sum_k r_{kj}\)</span></li>
+</ul>
+<p>不同的算子形式有不同特点，也适用于不同情况。</p>
+<p>第 3 步经过 <span class="math inline">\(M(,)\)</span>
+算子之后，我们得到了模糊评判向量 <span
+class="math inline">\(B\)</span>，要获得综合结论也可以有不同的方式</p>
+<ul>
+<li><span class="math inline">\(u=\max{(b_1,...,b_n)}\)</span></li>
+<li><span class="math inline">\(u=\sum_i \mu_i b_i / \sum_i
+b_i\)</span></li>
+</ul>
+<h2 id="多级模糊综合评判">2. 多级模糊综合评判</h2>
+<p>有时候对一件事物的评价有很多指标，这些指标又可以分为几大类，比如对高校的评分，可以包括</p>
+<ul>
+<li>教学：教学下面又可以分为师资力量、教学设施、学生质量等等</li>
+<li>科研：...... 可以有很多指标</li>
+<li>图书馆、后勤 ......</li>
+</ul>
+<p>这个时候我们可以划分为多个层次依此评判综合，其步骤可以描述为以下形式：</p>
+<ol type="1">
+<li>将原始因素集 <span class="math inline">\(U=\{u_1,...,u_n\}\)</span>
+划分为若干组 <span class="math inline">\(U=\bigcup_i U_i,U_i\cap
+U_j=\varnothing\)</span></li>
+<li>对每组 <span class="math inline">\(U_i\)</span>
+分别进行模糊评判，得到 <span class="math inline">\(B_i\)</span></li>
+<li>对总的评判矩阵 <span
+class="math inline">\(R=(B_1^T,...,B_k^T)^T\)</span>
+再次进行综合评判，得到 <span class="math inline">\(B=A\circ
+R\)</span>，然后可以得到总的综合评语</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A8%A1%E7%B3%8A%E7%BB%BC%E5%90%88%E8%AF%84%E5%88%A4/">模糊综合评判</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/14/optimization/ch10-cvx-optimization/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记 10：凸优化问题</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/11/optimization/ch9-gene-cvx/">
+                        <span class="hidden-mobile">凸优化笔记 9：广义凸函数</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

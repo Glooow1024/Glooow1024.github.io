@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="我们证明了梯度方法最快的收敛速度只能是 \(O(1&#x2F;k^2)\)（没有强凸假设的话），但是前面的方法最多只能达到 \(O(1&#x2F;k)\) 的收敛速度，那么有没有方法能达到这一极限呢？有！这一节要讲的加速近似梯度方法(APG)就是。这个方法的构造非常的巧妙，证明过程中会发现每一项都恰到好处的抵消了！真不知道作者是怎么想出来这么巧妙地方法，各位可以看看证明过程自行体会。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记21：加速近似点梯度下降">
+<meta property="og:url" content="http://example.com/2020/04/24/optimization/ch21-apg-fista/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="我们证明了梯度方法最快的收敛速度只能是 \(O(1&#x2F;k^2)\)（没有强凸假设的话），但是前面的方法最多只能达到 \(O(1&#x2F;k)\) 的收敛速度，那么有没有方法能达到这一极限呢？有！这一节要讲的加速近似梯度方法(APG)就是。这个方法的构造非常的巧妙，证明过程中会发现每一项都恰到好处的抵消了！真不知道作者是怎么想出来这么巧妙地方法，各位可以看看证明过程自行体会。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-24T10:23:37.000Z">
+<meta property="article:modified_time" content="2020-05-27T09:31:06.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="PG 算法">
+<meta property="article:tag" content="APG 算法">
+<meta property="article:tag" content="FISTA 算法">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记21：加速近似点梯度下降 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记21：加速近似点梯度下降">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-24 18:23" pubdate>
+        April 24, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      48 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记21：加速近似点梯度下降</h1>
+            
+            <div class="markdown-body">
+              <p>我们证明了梯度方法最快的收敛速度只能是 <span
+class="math inline">\(O(1/k^2)\)</span>（没有强凸假设的话），但是前面的方法最多只能达到
+<span class="math inline">\(O(1/k)\)</span>
+的收敛速度，那么有没有方法能达到这一极限呢？有！这一节要讲的<strong>加速近似梯度方法(APG)</strong>就是。这个方法的构造非常的巧妙，证明过程中会发现每一项都恰到好处的抵消了！真不知道作者是怎么想出来这么巧妙地方法，各位可以看看证明过程自行体会。</p>
+<span id="more"></span>
+<h2 id="加速近似梯度方法">1. 加速近似梯度方法</h2>
+<p>首先说我们要考虑的优化问题形式还是 <span class="math display">\[
+\text{minimize }\quad f(x)=g(x)+h(x)
+\]</span> 其中 <span class="math inline">\(g\)</span> 为光滑项，<span
+class="math inline">\(\text{dom }g=R^n\)</span>，<span
+class="math inline">\(h\)</span>
+为不光滑项，且为闭的凸函数，另外为了证明梯度方法的收敛性，跟前面类似，我们需要引入
+Lipschitz-smooth 条件与强凸性质： <span class="math display">\[
+\frac{L}{2}x^Tx-g(x),\quad g(x)-\frac{m}{2}x^Tx \quad \text{convex}
+\]</span> 其中 <span class="math inline">\(L&gt;0,m\ge0\)</span>，<span
+class="math inline">\(m\)</span> 可以等于
+0，此时就相当于没有强凸性质。</p>
+<p>然后我们就来看看 <strong>APG(Accelerated Proximal Gradient
+Methods)</strong> 方法到底是怎么下降的。首先取 <span
+class="math inline">\(x_0=v_0,\theta_0\in(0,1]\)</span>，对于每次迭代过程，包括以下几个步骤：</p>
+<blockquote>
+<ol type="1">
+<li>求 <span class="math inline">\(\theta_k\)</span>：<span
+class="math inline">\(\frac{\theta_{k}^{2}}{t_{k}}=\left(1-\theta_{k}\right)
+\gamma_{k}+m \theta_{k} \quad \text { where }
+\gamma_{k}=\frac{\theta_{k-1}^{2}}{t_{k-1}}\)</span></li>
+<li>更新 <span class="math inline">\(x_k,v_k\)</span>：</li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;=x_{k}+\frac{\theta_{k} \gamma_{k}}{\gamma_{k}+m
+\theta_{k}}\left(v_{k}-x_{k}\right) \quad\left(y=x_{0} \text { if }
+k=0\right) \\
+x_{k+1} &amp;=\operatorname{prox}_{t_{k} h}\left(y-t_{k} \nabla
+g(y)\right) \quad(\bigstar)\\
+v_{k+1} &amp;=x_{k}+\frac{1}{\theta_{k}}\left(x_{k+1}-x_{k}\right)
+\end{aligned}
+\]</span></p>
+</blockquote>
+<p>这里面的关键就是上面的 <span
+class="math inline">\((\bigstar)\)</span>
+式，对比前面讲过的近似梯度下降法实际上是 <span class="math display">\[
+x_{k+1} =\operatorname{prox}_{t_{k} h}\left(x_k-t_{k} \nabla
+g(x_k)\right)
+\]</span> 所以这里实际上主要的变化就是将 <span
+class="math inline">\(x_k\)</span> 换成了 <span
+class="math inline">\(y\)</span>，那么 <span
+class="math inline">\(y\)</span> 跟 <span
+class="math inline">\(x_k\)</span> 又有什么不同呢？ <span
+class="math display">\[
+y=x_{k}+\frac{\theta_{k} \gamma_{k}}{\gamma_{k}+m
+\theta_{k}}\left(v_{k}-x_{k}\right)=x_{k}+\beta_{k}\left(x_{k}-x_{k-1}\right)
+\\
+\beta_{k}=\frac{\theta_{k} \gamma_{k}}{\gamma_{k}+m
+\theta_{k}}\left(\frac{1}{\theta_{k-1}}-1\right)=\frac{t_{k}
+\theta_{k-1}\left(1-\theta_{k-1}\right)}{t_{k-1} \theta_{k}+t_{k}
+\theta_{k-1}^{2}}
+\]</span> 可以看到 <span
+class="math inline">\(y=x_{k}+\beta_{k}\left(x_{k}-x_{k-1}\right)\)</span>
+实际上就是在 <span class="math inline">\(x_k\)</span>
+的基础上增加了一个<strong>“动量(Momentum)”</strong>，如下图所示</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/21-momentum.PNG" srcset="/img/loading.gif" lazyload
+alt="momentum" />
+<figcaption aria-hidden="true">momentum</figcaption>
+</figure>
+<p>我们自然的要关注 <span
+class="math inline">\(\beta_k,\theta_k\)</span>
+的大小以及有什么性质。首先对于参数 <span
+class="math inline">\(\theta_k\)</span> 它是根据二次方程一步步迭代出来的
+<span class="math display">\[
+\frac{\theta_{k}^{2}}{t_{k}}=\left(1-\theta_{k}\right)
+\frac{\theta_{k-1}^{2}}{t_{k-1}}+m \theta_{k}
+\]</span> 可以有几个主要结论：</p>
+<ol type="1">
+<li>如果 <span class="math inline">\(m&gt;0\)</span> 且 <span
+class="math inline">\(\theta_0=\sqrt{mt_0}\)</span>，那么有 <span
+class="math inline">\(\theta_k=\sqrt{mt_k},\forall k\)</span></li>
+<li>如果 <span class="math inline">\(m&gt;0\)</span> 且 <span
+class="math inline">\(\theta_0\ge\sqrt{mt_0}\)</span>，那么有 <span
+class="math inline">\(\theta_k\ge\sqrt{mt_k},\forall k\)</span></li>
+<li>如果 <span class="math inline">\(mt_k&lt;,\)</span>，那么有 <span
+class="math inline">\(\theta_k&lt;1\)</span></li>
+</ol>
+<p>下面可以看几个关于 <span
+class="math inline">\(\theta_k,\beta_k\)</span> 随着迭代次数 <span
+class="math inline">\(k\)</span> 的变化：</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/21-beta-theta.PNG" srcset="/img/loading.gif" lazyload
+alt="example" />
+<figcaption aria-hidden="true">example</figcaption>
+</figure>
+<p>如果我们取前面的 APG 方法中的 <span
+class="math inline">\(m=0\)</span>，然后消掉中间变量 <span
+class="math inline">\(v_k\)</span>，就可以得到 <strong>FISTA(Fast
+Iterative Shrinkage-Thresholding Algorithm)</strong> 算法 <span
+class="math display">\[
+\begin{aligned}
+y
+&amp;=x_{k}+\theta_{k}\left(\frac{1}{\theta_{k-1}}-1\right)\left(x_{k}-x_{k-1}\right)
+\quad\left(y=x_{0} \text { if } k=0\right) \\
+x_{k+1} &amp;=\operatorname{prox}_{t_{k} h}\left(y-t_{k} \nabla
+g(y)\right)
+\end{aligned}
+\]</span></p>
+<h2 id="收敛性分析">2. 收敛性分析</h2>
+<p>前面已经了解了基本原理，下面需要证明一下为什么他可以达到 <span
+class="math inline">\(O(1/k^2)\)</span>
+的收敛速度。作为类比，我们先回忆一下之前是怎么证明梯度方法/近似梯度方法的收敛性的？
+<span class="math display">\[
+\begin{aligned}(GD)\quad&amp;  f\left(x^{+}\right)-f^{\star} \leq \nabla
+f(x)^{T}\left(x-x^{\star}\right)-\frac{t}{2}\|\nabla
+f(x)\|_{2}^{2}\\\Longrightarrow &amp;f\left(x^{+}\right)-f^{\star}
+\leq\frac{1}{2
+t}\left(\left\|x-x^{\star}\right\|_{2}^{2}-\left\|x^{+}-x^{\star}\right\|_{2}^{2}\right)
+\\(SD)\quad&amp; 2 t\left(f(x)-f^{\star}\right)
+\leq\left\|x-x^{\star}\right\|_{2}^{2}-\left\|x^{+}-x^{\star}\right\|_{2}^{2}+t^{2}\|g\|_{2}^{2}
+\\(PD)\quad&amp; f\left(x^+\right) \leq
+f(z)+G_{t}(x)^{T}(x-z)-\frac{t}{2}\left\|G_{t}(x)\right\|_{2}^{2}-\frac{m}{2}\|x-z\|_{2}^{2}\\\Longrightarrow
+&amp;f\left(x^{+}\right)-f^{\star} \leq \frac{1}{2
+t}\left(\left\|x-x^{\star}\right\|_{2}^{2}-\left\|x^{+}-x^{\star}\right\|_{2}^{2}\right)\end{aligned}
+\]</span> 对于这一节的 APG 方法，证明思路是首先证明下面的迭代式子成立
+<span class="math display">\[
+f\left(x_{i+1}\right)-f^{\star}+\frac{\gamma_{i+1}}{2}\left\|v_{i+1}-x^{\star}\right\|_{2}^{2}
+\\\quad \leq
+\left(1-\theta_{i}\right)\left(f\left(x_{i}\right)-f^{\star}+\frac{\gamma_{i}}{2}\left\|v_{i}-x^{\star}\right\|_{2}^{2}\right)
+\quad \text { if } i\ge1
+\]</span> 对比后发现实际上之前我们考虑的是 <span
+class="math inline">\(f(x^+)-f^\star\)</span>
+的迭代式子，而这里我们加了一个小尾巴，考虑 <span
+class="math inline">\(f(x^+)-f^\star +
+\frac{\gamma_{i+1}}{2}\left\|v_{i+1}-x^{\star}\right\|_{2}^{2}\)</span>
+的收敛速度。证明一会再说，有了这个迭代关系式，那么就可以有 <span
+class="math display">\[
+\begin{aligned}f\left(x_{k}\right)-f^{\star} &amp; \leq
+\lambda_{k}\left(\left(1-\theta_{0}\right)\left(f\left(x_{0}\right)-f^{\star}\right)+\frac{\gamma_{1}-m
+\theta_{0}}{2}\left\|x_{0}-x^{\star}\right\|_{2}^{2}\right) \\&amp; \leq
+\lambda_{k}\left(\left(1-\theta_{0}\right)\left(f\left(x_{0}\right)-f^{\star}\right)+\frac{\theta_{0}^{2}}{2
+t_{0}}\left\|x_{0}-x^{\star}\right\|_{2}^{2}\right)\end{aligned}
+\]</span> 其中 <span class="math inline">\(\lambda_1=1\)</span>，<span
+class="math inline">\(\lambda_{k}=\prod_{i=1}^{k-1}\left(1-\theta_{i}\right)
+\text { for } k&gt;1\)</span>，如果能证明 <span
+class="math inline">\(\lambda_k\sim O(1/k^2)\)</span>
+就能证明收敛速度了。好了，下面就是非常巧妙而又繁琐的证明过程了。</p>
+<p>这个证明过程很繁琐，为了更容易顺下来，这里列出来其中几个关键的等式/不等式（为了简便省略了下标）：</p>
+<ol type="1">
+<li><span
+class="math inline">\(\gamma^+-m\theta=(1-\theta)\gamma\)</span>（易证）</li>
+<li><span class="math inline">\(\gamma^+v^+=\gamma ^+ v+
+m\theta(y-v)-\theta G_t(y)\)</span></li>
+<li><span class="math inline">\(\begin{aligned}
+f\left(x^{+}\right)-f^{\star} \leq
+&amp;(1-\theta)\left(f(x)-f^{\star}\right)-G_{t}(y)^{T}\left((1-\theta)
+x+\theta x^{\star}-y\right)
+-\frac{t}{2}\left\|G_{t}(y)\right\|_{2}^{2}-\frac{m
+\theta}{2}\left\|x^{\star}-y\right\|_{2}^{2} \end{aligned}\)</span></li>
+<li><span class="math inline">\(\begin{aligned}
+\frac{\gamma^{+}}{2}\left\|v^{+}-x^{\star}\right\|_{2}^{2} \leq &amp;
+\frac{\gamma^{+}-m
+\theta}{2}\left\|v-x^{\star}\right\|_{2}^{2}+G_{t}(y)^{T}\left(\theta
+x^{\star}+(1-\theta) x-y\right)
++\frac{t}{2}\left\|G_{t}(y)\right\|_{2}^{2}+\frac{m
+\theta}{2}\left\|x^{\star}-y\right\|_{2}^{2} \end{aligned}\)</span></li>
+</ol>
+<p>(3,4) 条结合就能得到上面的迭代关系式，很多项刚好消掉。下面就是要证明
+<span class="math inline">\(\lambda_k\sim O(1/k^2)\)</span>： <span
+class="math display">\[
+\gamma_{k+1}=(1-\theta_k)\gamma_k+m\theta_k
+\\\lambda_{i+1}=\left(1-\theta_{i}\right)
+\lambda_{i}=\frac{\gamma_{i+1}-\theta_{i} m}{\gamma_{i}} \lambda_{i}
+\leq \frac{\gamma_{i+1}}{\gamma_{i}} \lambda_{i} \Longrightarrow
+\lambda_k\le \gamma_k/\gamma_1 \\\frac{1}{\sqrt{\lambda_{i+1}}}-
+\frac{1}{\sqrt{\lambda_{i}}} \ge
+\frac{\theta_i}{2\sqrt{\lambda_{i+1}}}=\frac{1}{2}\sqrt{\gamma_1t_i}
+\]</span> 然后就可以有 <span class="math display">\[
+\lambda_{k} \leq \frac{4}{\left(2+\sqrt{\gamma_{1}} \sum_{i=1}^{k-1}
+\sqrt{t_{i}}\right)^{2}}=\frac{4 t_{0}}{\left(2 \sqrt{t_{0}}+\theta_{0}
+\sum_{i=1}^{k-1} \sqrt{t_{i}}\right)^{2}}
+\]</span> 如果取 <span
+class="math inline">\(t_0=t_k=1/L,\theta_0=1\)</span>，则有 <span
+class="math display">\[
+\lambda_k\le \frac{4}{(k+1)^2}
+\]</span> 如果有强凸性质，也即 <span
+class="math inline">\(m&gt;0\)</span>，那么取 <span
+class="math inline">\(\theta_0\ge\sqrt{mt_0}\Longrightarrow \theta_k\ge
+\sqrt{mt_k}\)</span> <span class="math display">\[
+\lambda_k \le \Pi_{i=1}^{k-1}(1-\sqrt{mt_i})
+\]</span> 这就可以变成线性收敛了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/APG-%E7%AE%97%E6%B3%95/">APG 算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/FISTA-%E7%AE%97%E6%B3%95/">FISTA 算法</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/04/music/TroubleImIn/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Trouble I'm In</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/23/optimization/ch20-dual-proximal-gradient/">
+                        <span class="hidden-mobile">凸优化笔记20：对偶近似点梯度下降</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

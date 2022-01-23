@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="4.1 泊松过程的定义与基本性质 定义 4.1：随机过程 \(\{N(t),t\ge0\}\) 称为时齐泊松过程，若满足下列条件：  他是一个计数过程，且 \(N(0)&#x3D;0\)； （独立增量）任取 \(0 &lt; t_1 &lt; t_2 &lt; \cdots &lt; t_n\)，\(N(t_1),N(t_2)-N(t_1),...,N(t_n)-N(t_{n-1})\) 相互">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】泊松过程1 | 定义与基本性质">
+<meta property="og:url" content="http://example.com/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="4.1 泊松过程的定义与基本性质 定义 4.1：随机过程 \(\{N(t),t\ge0\}\) 称为时齐泊松过程，若满足下列条件：  他是一个计数过程，且 \(N(0)&#x3D;0\)； （独立增量）任取 \(0 &lt; t_1 &lt; t_2 &lt; \cdots &lt; t_n\)，\(N(t_1),N(t_2)-N(t_1),...,N(t_n)-N(t_{n-1})\) 相互">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-02T00:49:28.000Z">
+<meta property="article:modified_time" content="2021-11-02T00:53:00.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="泊松过程">
+<meta property="article:tag" content="指数分布">
+<meta property="article:tag" content="顺序统计量">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】泊松过程1 | 定义与基本性质 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】泊松过程1 | 定义与基本性质">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-02 08:49" pubdate>
+        November 2, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】泊松过程1 | 定义与基本性质</h1>
+            
+            <div class="markdown-body">
+              <h2 id="泊松过程的定义与基本性质">4.1 泊松过程的定义与基本性质</h2>
+<p><strong>定义 4.1</strong>：随机过程 <span
+class="math inline">\(\{N(t),t\ge0\}\)</span>
+称为时齐泊松过程，若满足下列条件：</p>
+<ol type="1">
+<li>他是一个计数过程，且 <span
+class="math inline">\(N(0)=0\)</span>；</li>
+<li>（独立增量）任取 <span class="math inline">\(0 &lt; t_1 &lt; t_2
+&lt; \cdots &lt; t_n\)</span>，<span
+class="math inline">\(N(t_1),N(t_2)-N(t_1),...,N(t_n)-N(t_{n-1})\)</span>
+相互独立；</li>
+<li>（平稳增量）<span class="math inline">\(\forall
+s,t\ge0,n\ge0\)</span>，<span class="math inline">\(P(N(s+t)-N(s)=n) =
+P(N(t)=n)\)</span>；</li>
+<li>对任意 <span class="math inline">\(t&gt;0\)</span> 和充分小的 <span
+class="math inline">\(\Delta t&gt;0\)</span>，有 <span
+class="math inline">\(P(N(t+\Delta t)-N(t)=1) = \lambda \Delta t +
+o(\Delta t)\)</span>，<span class="math inline">\(P(N(t+\Delta
+t)-N(t)\ge 2)=o(\Delta t)\)</span>；</li>
+</ol>
+<p>其中 <span class="math inline">\(\lambda&gt;0\)</span>
+称为强度常数，<span class="math inline">\(o(\Delta t)\)</span>
+为高阶无穷小。</p>
+<span id="more"></span>
+<p><strong>定义 4.2</strong>：计数过程 <span
+class="math inline">\(\{N(t),t\ge0\}\)</span>，被称为参数为 <span
+class="math inline">\(\lambda\)</span>
+的时齐泊松过程，若满足如下条件：</p>
+<ol type="1">
+<li><span class="math inline">\(N(0)=0\)</span>；</li>
+<li>它是独立增量过程；</li>
+<li><span class="math inline">\(\forall s,t\ge0,N(s+t)-N(s)\)</span>
+是参数为 <span class="math inline">\(\lambda t\)</span> 的泊松分布，即
+<span class="math inline">\(P(N(t+s)-N(s)=k) = \frac{(\lambda t)^k}{k!}
+e^{-\lambda t}\)</span>。</li>
+</ol>
+<blockquote>
+<p>两种定义是等价的。</p>
+</blockquote>
+<p>基本性质：</p>
+<ol type="1">
+<li>均值 <span class="math inline">\({\mathbb E}[N(t)] = \lambda
+t\)</span>；</li>
+<li>方差 <span class="math inline">\(\text{var}(N(t)) = {\mathbb
+E}[(N(t)-\lambda t)^2] = \lambda t\)</span>；</li>
+<li>特征函数 <span class="math inline">\(\phi_{N(t)}(x) = {\mathbb
+E}[\exp(-j N(t)x)] = \exp(-\lambda t e^{jx})\)</span>；</li>
+<li><span class="math inline">\({\mathbb E}[N(t)^2] = (\lambda t)^2 +
+\lambda t\)</span>；</li>
+<li>自相关函数 <span class="math inline">\(R(t+\tau,t) = {\mathbb
+E}[N(t+\tau)N(t)] = (\lambda t)^2 + \lambda t + \lambda^2
+t\tau,(\tau&gt;0)\)</span>（非平稳过程）</li>
+</ol>
+<p><em>栗子 4.1</em>：<span class="math inline">\(\{N(t),
+t\ge0\}\)</span> 是参数为 <span class="math inline">\(\lambda\)</span>
+的时齐泊松过程，<span class="math inline">\(S_0=0,S_n\)</span> 为第
+<span class="math inline">\(n\)</span> 个事件发生的时刻，则 <span
+class="math inline">\(N(t)\)</span> 关于 <span
+class="math inline">\(\{S_n,n\ge0\}\)</span> 不是停时，但是 <span
+class="math inline">\(N(t)+1\)</span> 关于 <span
+class="math inline">\(\{S_n,n\ge0\}\)</span> 是停时。</p>
+<p>证明：<span class="math inline">\(\{N(t)=n\} \iff \{S_n\le t &lt;
+S_{n+1} \}=\{S_n\le t \} - \{S_{n+1}\le t \}\)</span>，因此 <span
+class="math inline">\(\{N(t)=n\}\)</span> 可以由 <span
+class="math inline">\(\{S_0,...,S_{n+1} \}\)</span> 构成的事件表示，因此
+<span class="math inline">\(N(t)+1\)</span> 关于 <span
+class="math inline">\(\{S_n,n\ge0\}\)</span> 是停时。</p>
+<h2 id="泊松过程与指数分布的关系">4.2 泊松过程与指数分布的关系</h2>
+<p><span class="math inline">\(N(t),t\ge0\)</span> 是计数过程，令 <span
+class="math inline">\(S_0=0,S_n\)</span> 表示第 <span
+class="math inline">\(n\)</span> 个事件发生的时刻，<span
+class="math inline">\(X_n=S_n-S_{n-1}\)</span> 表示第 <span
+class="math inline">\(n\)</span> 个与第 <span
+class="math inline">\(n-1\)</span> 个事件之间的间隔，于是有 <span
+class="math inline">\(S_n=\inf\{t:N(t)=n \},n\ge1\)</span>。相应的 <span
+class="math inline">\(N(t)\)</span> 可以表示为 <span
+class="math inline">\(N(t)=\sum_{n=1}^{\infty}
+I_{[0,t]}(S_n)\)</span>。</p>
+<p><span class="math inline">\(P(S_n \le t) = P(N(t)\ge n) =
+1-e^{-\lambda t} \sum_{k=0}^{n-1} \frac{(\lambda
+t)^k}{k!}\)</span>，特别当 <span class="math inline">\(n=1\)</span>
+时，有 <span class="math inline">\(P(S_1\le t) = P(X_1\le t) =
+1-e^{-\lambda t}\)</span>，即 <span class="math inline">\(X_1\sim
+E(\lambda)\)</span> 是参数为 <span
+class="math inline">\(\lambda\)</span> 的指数分布。同样的可以得到 <span
+class="math inline">\(X_n(n\ge2)\)</span> 也服从指数分布，均值为 <span
+class="math inline">\(1/\lambda\)</span>，方差为 <span
+class="math inline">\(1/\lambda^2\)</span>。</p>
+<p><strong>定理
+4.1</strong>：计数过程是泊松过程的<strong>充要条件</strong>是 <span
+class="math inline">\(\{X_n,n\ge1\}\)</span>
+是独立的同<strong>指数分布</strong>。</p>
+<p>证明：略。</p>
+<h2 id="到达时间的条件分布">4.3 到达时间的条件分布</h2>
+<h3 id="到达时间的条件分布-1">4.3.1 到达时间的条件分布</h3>
+<p><strong>定理 4.2</strong>：设 <span
+class="math inline">\(N(t),t\ge0\)</span> 是泊松过程，则对 <span
+class="math inline">\(\forall 0&lt; s &lt; t\)</span> 有 <span
+class="math inline">\(P(X_1\le s | N(t)=1) = s/t\)</span>。</p>
+<p>证明：<span class="math inline">\(P(X_1\le s | N(t)=1) = P(X_1\le s,
+N(t)=1) / P(N(t)=1) = P(N(s)=1, N(t)-N(s)=0) / P(N(t)=1)\)</span>。</p>
+<p><strong>定理 4.3</strong>：设 <span
+class="math inline">\(N(t),t\ge0\)</span> 是泊松过程，则对 <span
+class="math inline">\(\forall 0&lt; s &lt; t,k\le n\)</span> 有 <span
+class="math inline">\(P(S_k \le s | N(t)=n) = \sum_{l=k}^n
+\frac{n!}{l!(n-l)!}(\frac{s}{t})^l
+(1-\frac{s}{t})^{n-l}\)</span>。特别当 <span
+class="math inline">\(k=n\)</span> 时，有 <span
+class="math inline">\(P(S_n\le s | N(t)=n) =
+(\frac{s}{t})^n\)</span>。</p>
+<p>证明：略。</p>
+<h3 id="顺序统计量">4.3.2 顺序统计量</h3>
+<p><span class="math inline">\(Y_1,...,Y_n\)</span> 是 <span
+class="math inline">\(n\)</span> 个随机变量，如果 <span
+class="math inline">\(Y_{(k)}\)</span> 是 <span
+class="math inline">\(Y_1,...,Y_n\)</span> 中第 <span
+class="math inline">\(k\)</span> 个最小的随机变量，我们称 <span
+class="math inline">\(Y_{(1)},...,Y_{(n)}\)</span> 是关于 <span
+class="math inline">\(Y_1,...,Y_n\)</span> 的顺序统计量。如果 <span
+class="math inline">\(Y_1,...,Y_n\)</span>
+是独立同分布的连续随机变量，其概率密度分布为 <span
+class="math inline">\(f(y)\)</span>，则 <span
+class="math inline">\(Y_{(1)},...,Y_{(n)}\)</span>
+的联合分布概率密度函数为 <span class="math display">\[
+f(y_1,...,y_n) = n! \Pi_{k=1}^n f(y_k), ~ y_1 &lt; y_2 &lt; \cdots &lt;
+y_n
+\]</span> 特别的，当 <span class="math inline">\(Y_1,...,Y_n\)</span> 为
+<span class="math inline">\((0,t)\)</span>
+上独立的均匀分布随机变量时，相应的顺序统计量 <span
+class="math inline">\(Y_{(1)},...,Y_{(n)}\)</span>
+的联合分布概率密度函数为 <span class="math display">\[
+f(y_1,...,y_n) = n! / t^n, ~ 0&lt; y_1 &lt; y_2 &lt; \cdots &lt; y_n
+&lt; t
+\]</span> <strong>定理 4.4</strong>：设 <span
+class="math inline">\(N(t),t\ge0\)</span> 为泊松过程，则在已给 <span
+class="math inline">\(N(t)=n\)</span> 时事件相继发生的时间 <span
+class="math inline">\(S_1,...,S_n\)</span> 的条件概率密度为 <span
+class="math display">\[
+f(t_1,t_2,...,t_n) = \begin{cases}n!/t^n, &amp; 0&lt; t_1 &lt; t_2 &lt;
+\cdots &lt; t_n \\ 0, &amp; others \end{cases}
+\]</span> 证明：对任取的 <span class="math inline">\(0=t_0 &lt; t_1 &lt;
+t_2 &lt; \cdots &lt; t_n &lt; t_{n+1}=t\)</span>，取 <span
+class="math inline">\(h_0=h_{n+1}=0\)</span> 及充分小的 <span
+class="math inline">\(h_i\)</span>，则 <span class="math display">\[
+\begin{aligned}
+&amp;P(t_i &lt; S_i \le t_i+h_i, 1\le i\le n | N(t)=n) \\
+=&amp; \frac{P(N(t_i+h_i)-N(t_i)=1,1\le i\le n, ~
+N(t_{j+1})-N(t_j+h_j)=0, 1\le j\le n)}{P(N(t)=n)} \\
+=&amp; \frac{n!}{t^n} h_1 h_2 \cdots h_n
+\end{aligned}
+\]</span> 取极限即可得证。</p>
+<blockquote>
+<p><strong>Remark</strong>：上述定理表明，若非负函数 <span
+class="math inline">\(g(x_1,...,x_n)\)</span> 是关于 <span
+class="math inline">\(x_i, i=1,...,n\)</span>
+的对称函数，即对任意一种排列模式 <span
+class="math inline">\(\phi\)</span>，有 <span
+class="math inline">\(g(x_1,...,x_n) = g(x_{\phi(1)}, x_{\phi(2)},...,
+x_{\phi(n)})\)</span>（也就是函数值与各分量的顺序无关），则在概率分布的意义上下列等式成立
+<span class="math display">\[
+g(S_1,...,S_n|N(t)=n) \overset{d}{=} g(Y_{(1)},...,Y_{(n)}) =
+g(Y_1,...,Y_n)
+\]</span> 其中 <span class="math inline">\(Y_1,...,Y_n\)</span> 为 <span
+class="math inline">\((0,t)\)</span> 上独立的均匀分布随机变量。</p>
+</blockquote>
+<p><em>栗子 4.2</em>：设某工地有一工程任务，工人到达工地遵照参数为 <span
+class="math inline">\(\lambda\)</span> 的泊松流，求在时刻 <span
+class="math inline">\(t\)</span> 工人完成的总的工程量的期望值。</p>
+<p>解：设第 <span class="math inline">\(i\)</span>
+个工人到达工地的时刻为 <span class="math inline">\(S_i\)</span>，在
+<span class="math inline">\([0,t]\)</span> 内工人完成的总工程量为 <span
+class="math inline">\(S(t)=\sum_{i=1}^{N(t)}(t-S_i)\)</span>。有 <span
+class="math inline">\({\mathbb E}[S(t) | N(t)=n] = nt - {\mathbb
+E}[\sum_{i=1}^n S_i | N(t)=n]=nt - {\mathbb E}[\sum_{j=1}^n Y_j |
+N(t)=n]=nt/2\)</span>，于是 <span class="math inline">\({\mathbb
+E}[S(t)] = {\mathbb E}[{\mathbb E}[S(t) | N(t)=n]] = \lambda
+t^2/2\)</span>.</p>
+<p><strong>定理 4.5</strong>：设 <span
+class="math inline">\(N(t),t\ge0\)</span> 是参数为 <span
+class="math inline">\(\lambda\)</span> 的泊松过程，<span
+class="math inline">\(S_k,k\ge1\)</span> 为到达时刻，则对任意的 <span
+class="math inline">\([0,+\infty)\)</span> 上可积函数 <span
+class="math inline">\(f\)</span> 有 <span class="math inline">\({\mathbb
+E}[\sum_{n=1}^{\infty} f(S_n)] = \lambda\int_0^\infty
+f(s)ds\)</span>.</p>
+<p>证明：当 <span class="math inline">\(t\ge0\)</span> 时，有 <span
+class="math inline">\(\{S_n\le t\}=\{N(t)\ge n\}\)</span>，因此有 <span
+class="math inline">\(P(S_n\le t)=P(N(t)\ge n) = \sum_{j=n}^\infty
+\frac{(\lambda t)^j}{j!} e^{-\lambda t}\)</span>，求导得到 <span
+class="math inline">\(S_n\)</span> 的概率密度为 <span
+class="math inline">\(f_{S_n}(t)=\lambda \frac{(\lambda
+t)^{n-1}}{(n-1)!} e^{-\lambda t}I_{\{t\ge0\}}\)</span>，因此 <span
+class="math inline">\({\mathbb E}[f(S_n)] = \lambda \int_0^\infty
+f(s)\frac{(\lambda s)^{n-1}}{(n-1)!} e^{-\lambda s} ds\)</span>，再对
+<span class="math inline">\(n\)</span> 求和即可得证。</p>
+<p><em>栗子 4.3</em>：题干同上面的栗子 4.2.</p>
+<p>解：定义 <span
+class="math inline">\(f(s)=I_{[0,t]}(s)(t-s)\)</span>，则 <span
+class="math inline">\(S(t)=\sum_{i=1}^{\infty} f(s_i)\)</span>，利用定理
+4.5 结论即可得到 <span class="math inline">\({\mathbb E}[S(t)] = \lambda
+t^2 /2\)</span>。</p>
+<h2 id="泊松过程的分流">4.4 泊松过程的分流</h2>
+<p><strong>定理 4.6</strong>：设 <span
+class="math inline">\(N(t),t\ge0\)</span> 是参数为 <span
+class="math inline">\(\lambda\)</span>
+的泊松过程，到达事件的类型取决于它到达的时间。如果某到达时间是 <span
+class="math inline">\(s&gt;0\)</span>，则它属于类型 1 的概率为 <span
+class="math inline">\(P(s)\)</span>，输于类型 2 的概率为 <span
+class="math inline">\(1-P(s)\)</span>。假设 <span
+class="math inline">\(N_m(t),(m=1,2)\)</span> 表示 <span
+class="math inline">\((0,t]\)</span> 内到达的类型 <span
+class="math inline">\(m\)</span> 的事件数，则 <span
+class="math inline">\(N_1(t)\)</span> 和 <span
+class="math inline">\(N_2(t)\)</span>
+是两个独立的泊松变量，相应的均值分别为 <span
+class="math inline">\(\lambda pt\)</span> 和 <span
+class="math inline">\(\lambda(1-p)t\)</span>，其中 <span
+class="math inline">\(p=\frac{1}{t}\int_0^t P(s) ds\)</span>。</p>
+<p>证明：<span class="math inline">\(P(N_1(t)=k, N_2(t)=l) = P(N_1(t)=k,
+N_2(t)=l | N(t)=k+l) P(N(t)=k+l)\)</span>，考虑发生在 <span
+class="math inline">\((0,t]\)</span> 的事件，如果事件在时刻 <span
+class="math inline">\(s\)</span> 发生，由于其在 <span
+class="math inline">\((0,t]\)</span> 服从均匀分布，那么该事件是类型 1
+的概率为 <span class="math inline">\(p=\frac{1}{t}\int_0^t
+P(s)ds\)</span>。</p>
+<p>另外由于这些事件相互独立，因此 <span
+class="math inline">\(P(N_1(t)=k, N_2(t)=l |
+N(t)=k+l)=\tbinom{k+l}{k}p^k(1-p)^l\)</span>。证毕。</p>
+<blockquote>
+<p><strong>Remark</strong>：如果 <span
+class="math inline">\(P(s)\)</span> 与 <span
+class="math inline">\(s\)</span>
+无关，那么分流之后将得到两个新的泊松流，否则不是泊松流。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">泊松过程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83/">指数分布</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/">顺序统计量</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【随机过程2】泊松过程2 | 泊松过程扩展</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/24/essay/2021-1024/">
+                        <span class="hidden-mobile">Happy 1024 day!</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

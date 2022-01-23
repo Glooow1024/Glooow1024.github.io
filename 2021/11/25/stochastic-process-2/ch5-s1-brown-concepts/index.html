@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="5.1 布朗运动概念 定义：若一个随机过程 \(\{X(t),t\ge0\}\) 满足  \(X(t)\) 是独立增量过程； \(\forall s,t\ge0, X(t+s)-X(s)\sim {\mathcal N}(0,c^2t)\)； \(X(t)\) 关于 \(t\) 是连续函数；  则称 \(X(t)\) 是布朗运动或维纳过程。 可以验证 \(R(t_1,t_2)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】布朗运动1 | 定义与基本性质">
+<meta property="og:url" content="http://example.com/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="5.1 布朗运动概念 定义：若一个随机过程 \(\{X(t),t\ge0\}\) 满足  \(X(t)\) 是独立增量过程； \(\forall s,t\ge0, X(t+s)-X(s)\sim {\mathcal N}(0,c^2t)\)； \(X(t)\) 关于 \(t\) 是连续函数；  则称 \(X(t)\) 是布朗运动或维纳过程。 可以验证 \(R(t_1,t_2)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-25T01:46:08.000Z">
+<meta property="article:modified_time" content="2021-11-25T01:55:34.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="布朗运动">
+<meta property="article:tag" content="高斯过程">
+<meta property="article:tag" content="维纳过程">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】布朗运动1 | 定义与基本性质 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】布朗运动1 | 定义与基本性质">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-25 09:46" pubdate>
+        November 25, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】布朗运动1 | 定义与基本性质</h1>
+            
+            <div class="markdown-body">
+              <h2 id="布朗运动概念">5.1 布朗运动概念</h2>
+<p><strong>定义</strong>：若一个随机过程 <span
+class="math inline">\(\{X(t),t\ge0\}\)</span> 满足</p>
+<ol type="1">
+<li><span class="math inline">\(X(t)\)</span> 是独立增量过程；</li>
+<li><span class="math inline">\(\forall s,t\ge0, X(t+s)-X(s)\sim
+{\mathcal N}(0,c^2t)\)</span>；</li>
+<li><span class="math inline">\(X(t)\)</span> 关于 <span
+class="math inline">\(t\)</span> 是连续函数；</li>
+</ol>
+<p>则称 <span class="math inline">\(X(t)\)</span>
+是布朗运动或维纳过程。</p>
+<p>可以验证 <span class="math inline">\(R(t_1,t_2) = {\mathbb
+E}[X(t_1)X(t_2)]=c^2(t_1\wedge
+t_2)\)</span>，所以布朗运动是<strong>非平稳过程</strong>。</p>
+<span id="more"></span>
+<h2 id="正态分布相关理论">5.2 正态分布相关理论</h2>
+<h3 id="柯西分布与高斯随机变量">5.2.1 柯西分布与高斯随机变量</h3>
+<p>问题 1：求 <span class="math inline">\(Z=X/Y\)</span>
+的概率分布与分布密度函数。</p>
+<p><strong>定理 5.1</strong>：设 <span
+class="math inline">\(X_1,X_2\)</span> 是独立的均值为 <span
+class="math inline">\(0\)</span>，方差为 <span
+class="math inline">\(1\)</span> 的正态分布随机变量，则 <span
+class="math inline">\(X_1/|X_2|\)</span> 服从 Cauchy
+分布，分布密度函数为：<span class="math inline">\(f(x)=1/\pi(1+x^2),
+-\infty &lt; x &lt; \infty\)</span>，相应的概率分布函数为 <span
+class="math inline">\(F(x)=1/2 + \pi^{-1}\arctan x, -\infty &lt; x &lt;
+\infty\)</span>。</p>
+<h3 id="区域分布与互相关系数的关系">5.2.2
+区域分布与互相关系数的关系</h3>
+<p>定义 <span class="math inline">\(\sin \alpha = \frac{ {\mathbb
+E}[XY]}{\sqrt{ {\mathbb E}[X^2]{\mathbb E}[Y^2]} }=r\)</span>，那么
+<span class="math inline">\(P(X &gt; 0,Y &gt; 0) = P(X &lt; 0, Y &lt;
+0)=1/4 + \alpha / 2\pi\)</span>，<span class="math inline">\(P(X &lt;
+0,Y &gt; 0) = P(X &gt; 0, Y &lt; 0)=1/4 - \alpha / 2\pi\)</span>。</p>
+<p>证明：略。</p>
+<h3 id="贝叶斯定理与条件分布密度表示理论">5.2.3
+贝叶斯定理与条件分布密度表示理论</h3>
+<p><strong>贝叶斯定理</strong>：<span
+class="math inline">\(f_Y(y|X=x)=\frac{f_X(x|Y=y)f_Y(y)}{f_X(x)}\)</span>。</p>
+<p>该定理在讨论条件概率问题时，把需要利用分布函数讨论的问题转化为利用分布密度函数来讨论，简化了问题的讨论。</p>
+<h3 id="联合正态分布的边缘分布密度与条件分布密度">5.2.4
+联合正态分布的边缘分布密度与条件分布密度</h3>
+<p>略。</p>
+<h3 id="几个基本关系式">5.2.5 几个基本关系式</h3>
+<p>假设 <span class="math inline">\(X,Y\)</span> 服从均值为 0
+的联合正态分布，则 <span class="math inline">\({\mathbb E}[XY] =
+r\sigma_1\sigma_2\)</span>，<span class="math inline">\({\mathbb
+E}[X^2Y^2]={\mathbb E}[X^2]{\mathbb E}[Y^2] + 2{\mathbb
+E}^2[XY]\)</span>，<span class="math inline">\({\mathbb E}[|XY|] =
+\frac{2\sigma_1\sigma_2}{\pi}(\cos\alpha+\sin\alpha)\)</span>，其中
+<span class="math inline">\(r=\sin\alpha, -\pi/2 &lt; \alpha \le
+\pi/2\)</span>。</p>
+<p>证明：略。</p>
+<h3 id="反正弦率">5.2.6 反正弦率</h3>
+<p>设 <span class="math inline">\(X(t)\)</span> 为平稳过程，且 <span
+class="math inline">\(X(t+\tau),X(t)\)</span> 的联合分布服从正态分布，对
+<span class="math inline">\(X(t)\)</span> 进行非线性运算 <span
+class="math display">\[
+Y(t) = \begin{cases} 1, &amp; X(t)\ge0 \\ -1, &amp; X(t) &lt; 0
+\end{cases}
+\]</span> 那么有 <span class="math inline">\({\mathbb
+E}[Y(t+\tau)Y(t)]=2\alpha / \pi\)</span>。随机变量 <span
+class="math inline">\(X(t+\tau),X(t)\)</span> 联合正态，那么 <span
+class="math inline">\(r=R(\tau)/R(0)=\sin\alpha\)</span>，于是有 <span
+class="math inline">\(R_Y(\tau)= \frac{2}{\pi}
+\arcsin{\frac{R(\tau)}{R(0)}}\)</span>。</p>
+<h3 id="零交叉问题">5.2.7 零交叉问题</h3>
+<p>略。</p>
+<h3 id="正态分布拖尾概率估计">5.2.8 正态分布拖尾概率估计</h3>
+<p><strong>定理 5.2（Mill比值）</strong>：对任意的 <span
+class="math inline">\(x &gt; 0\)</span> 有 <span
+class="math inline">\(\frac{x}{1+x^2} e^{-x^2/2} &lt; \int_x^\infty
+e^{-u^2/2}du &lt; \frac{1}{x} e^{-x^2/2}\)</span>。特别的，当 <span
+class="math inline">\(x\to\infty\)</span> 时有 <span
+class="math inline">\(\int_x^\infty e^{-u^2/2}du \approx \frac{1}{x}
+e^{-x^2/2}\)</span>。</p>
+<h2 id="布朗运动">5.3 布朗运动</h2>
+<h3 id="有限维联合概率密度">5.3.1 有限维联合概率密度</h3>
+<p><strong>定理 5.3</strong>：设 <span
+class="math inline">\(\{B(t),t\ge0\}\)</span> 为标准的布朗运动，令 <span
+class="math inline">\(x_0=0,t_0=0\)</span>，则当 <span
+class="math inline">\(B(0)=0\)</span> 时，对 <span
+class="math inline">\(\forall 0 &lt; t_1 &lt; t_2 &lt; \cdots &lt;
+t_n\)</span>，<span
+class="math inline">\((B(t_1),B(t_2),...,B(t_n))\)</span>
+的联合概率密度函数为 <span class="math inline">\(g(x_1,x_2,...,x_n;
+t_1,t_2,...,t_n) = \Pi_{i=1}^n p(x_i-x_{i-1};
+t_i-t_{i-1})\)</span>，其中 <span
+class="math inline">\(p(x;t)=\frac{1}{\sqrt{2\pi
+t}}\exp(-x^2/2t)\)</span>。</p>
+<h3 id="布朗运动的性质">5.3.2 布朗运动的性质</h3>
+<p>下面考虑标准布朗运动（即取 <span
+class="math inline">\(c=1\)</span>）的性质。</p>
+<p><strong>平移特性</strong>：对任意的 <span class="math inline">\(s
+&gt; 0\)</span>，<span
+class="math inline">\(B_s(t)=B(t+s)-B(s),t\ge0\)</span>
+是标准布朗运动；</p>
+<p><strong>伸缩性</strong>：对任意的 <span class="math inline">\(c &gt;
+0\)</span>，<span class="math inline">\(\{\sqrt{c} B(t/c),
+t\ge0\}\)</span> 是标准布朗运动；</p>
+<p><strong>对称性</strong>：<span
+class="math inline">\(\{-B(t),t\ge0\}\)</span> 是标准布朗运动；</p>
+<p><strong>鞅性</strong>：略。</p>
+<p>其余还有正态过程性质、马尔可夫性质、反射性质、时间可逆性等在后面详细解释。</p>
+<h3 id="正态过程">5.3.3 正态过程</h3>
+<p><strong>定义</strong>：若随机过程 <span
+class="math inline">\(\{X(t),t\in T\}\)</span>，对任意 <span
+class="math inline">\(t_i\in T,i=1,2,...,n\)</span> 有 <span
+class="math inline">\(X(t_1),...,X(t_n)\)</span> 的联合分布为 <span
+class="math inline">\(n\)</span> 维正态分布，则称 <span
+class="math inline">\(\{X(t),t\in T\}\)</span> 为正态过程。</p>
+<p><strong>定理 5.4</strong>：设 <span class="math inline">\(\{B(t),t\ge
+0\}\)</span> 是正态过程，轨道连续，<span
+class="math inline">\(B(0)=0,\forall s,t&gt;0\)</span>，有 <span
+class="math inline">\({\mathbb E}B(t)=0, {\mathbb E}[B(s)B(t)]=s\wedge
+t\)</span>，则 <span class="math inline">\(\{B(t),t\ge0\}\)</span>
+是布朗运动，反之亦然。</p>
+<p>证明：充分性易证。必要性证明，验证布朗运动有关条件：1）<span
+class="math inline">\(\forall t, s \ge0\)</span>，可以验证增量 <span
+class="math inline">\(B(t)-B(s) \sim {\mathcal N}(0,|t-s|)\)</span>
+是零均值正态随机变量；2）再验证独立增量过程，而验证两个高斯分布的独立性只需要证明他们的互相关为
+0，细节略。</p>
+<h3 id="马尔可夫性">5.3.4 马尔可夫性</h3>
+<p><strong>正向马尔可夫性</strong>：<span class="math inline">\(\forall
+t_1 &lt; t_2 &lt; \cdots &lt; t_n\)</span>，在给定 <span
+class="math inline">\(B(t_1),..,B(t_{n-1})\)</span> 下，<span
+class="math inline">\(B(t_n)\)</span> 的条件概率密度函数与只给定 <span
+class="math inline">\(B(t_{n-1})\)</span> 下 <span
+class="math inline">\(B(t_n)\)</span> 的条件概率密度相同。</p>
+<p><strong>反向马尔可夫性</strong>：同理。</p>
+<p><strong>中间关于两侧的马尔可夫性</strong>：<span
+class="math inline">\(\forall t_1 &lt; t_2 &lt; \cdots &lt;
+t_n\)</span>，在给定 <span
+class="math inline">\(...,B(t_{i-1}),B(t_{i+1}),...\)</span> 下，<span
+class="math inline">\(B(t_i)\)</span> 的条件概率密度函数与只给定 <span
+class="math inline">\(B(t_{i-1}), B(t_{i+1})\)</span> 下 <span
+class="math inline">\(B(t_i)\)</span> 的条件概率密度相同。</p>
+<p>下面讨论 <span class="math inline">\(B(t_2)\)</span> 关于给定 <span
+class="math inline">\(B(t_1),B(t_3)\)</span> 的条件概率密度。</p>
+<p><strong>定理5.5</strong>：对 <span class="math inline">\(0\le t_1
+&lt; t &lt;t_2\)</span>，给定 <span class="math inline">\(B(t_1)=a,
+B(t_2)=b, B(0)=0\)</span>，则 <span class="math inline">\(B(t)\)</span>
+的条件概率密度是一个正态密度，其均值为 <span class="math inline">\(a +
+(b-a)(t-t_1)/(t_2-t_1)\)</span>，方差为 <span
+class="math inline">\((t_2-t)(t-t_1) / (t_2-t_1)\)</span></p>
+<p>证明：由于 <span class="math inline">\(B(t)\)</span>
+为正态过程，<span
+class="math inline">\(\boldsymbol{b}=B(t_1),B(t),B(t_2)\)</span>
+服从联合高斯分布，其均值为 <span class="math inline">\({\boldsymbol
+\mu}=[0,0,0]^{\mathrm T}\)</span>，协方差矩阵 <span
+class="math display">\[
+\Sigma = {\mathbb E}[{\boldsymbol b}{\boldsymbol b}^{\mathrm T}] =
+\begin{bmatrix} t_1 &amp; t_1 &amp; t_1 \\ t_1 &amp; t &amp; t \\ t_1
+&amp; t &amp; t_2 \end{bmatrix}
+\]</span> 直接根据高斯分布向量的条件分布即可得到。</p>
+<p><strong>Remark</strong>：实际上 <span class="math inline">\({\mathbb
+E}[B(t) | B(t_1),B(t_2)]\)</span> 是关于 <span
+class="math inline">\(t\)</span> 的线性函数。</p>
+<p><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/brown_conditional.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="反射性">5.3.5 反射性</h3>
+<p><strong>反射性</strong>：对 <span class="math inline">\(a &gt;
+0\)</span>，定义 <span class="math inline">\(\tau_a=\inf\{t:
+B(t)=a\}\)</span> 表示首次击中时间，定义 <span
+class="math inline">\(B^{\ast}(t)=\begin{cases} B(t), &amp; t \le \tau_a
+\\ 2a-B(t), &amp; t &gt; \tau_a \end{cases}\)</span>，则 <span
+class="math inline">\(\{B^\ast(t),t\ge0\}\)</span> 是标准布朗运动；</p>
+<p>证明：略。</p>
+<h3 id="时间可逆性">5.3.6 时间可逆性</h3>
+<p><strong>时间可逆性</strong>：定义 <span
+class="math inline">\(B&#39;(t)=\begin{cases} tB(1/t), &amp; t &gt; 0 \\
+0, &amp; t=0 \end{cases}\)</span>，则 <span
+class="math inline">\(\{B&#39;(t),t\ge0\}\)</span> 是标准布朗运动；</p>
+<p>证明：<span class="math inline">\(B(t)\)</span>
+是正态过程，根据前面正态过程的定义，可以得到 <span
+class="math inline">\(tB(1/t)\)</span> 也是正态过程。再根据定理 5.4
+可以验证条件 <span class="math inline">\({\mathbb
+E}[B&#39;(t)B&#39;(s)]=s\wedge t\)</span>，关于在 <span
+class="math inline">\(t=0\)</span> 点的连续性稍复杂，省略。由此可以证明
+<span class="math inline">\(B&#39;(t)\)</span> 是布朗运动。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">布朗运动</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/">高斯过程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BB%B4%E7%BA%B3%E8%BF%87%E7%A8%8B/">维纳过程</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【高等数值分析】多项式插值</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/17/music/Onion/">
+                        <span class="hidden-mobile">洋葱</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,826 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面讲了梯度下降、次梯度下降、近似点梯度下降方法并分析了收敛性。一开始我们还讲了对偶原理，那么如果原问题比较难求解的时候，我们可不可以转化为对偶问题并应用梯度法求解呢？当然可以，不过有一个问题就是对偶函数的梯度或者次梯度怎么计算呢？这就是这一节要关注的问题。 首先一个问题是哪些形式的问题，其对偶问题相比于原问题更简单呢？可能有很多种，这一节主要关注一种：线性等式&#x2F;不等式约束的优化问题。之所以考虑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记20：对偶近似点梯度下降">
+<meta property="og:url" content="http://example.com/2020/04/23/optimization/ch20-dual-proximal-gradient/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面讲了梯度下降、次梯度下降、近似点梯度下降方法并分析了收敛性。一开始我们还讲了对偶原理，那么如果原问题比较难求解的时候，我们可不可以转化为对偶问题并应用梯度法求解呢？当然可以，不过有一个问题就是对偶函数的梯度或者次梯度怎么计算呢？这就是这一节要关注的问题。 首先一个问题是哪些形式的问题，其对偶问题相比于原问题更简单呢？可能有很多种，这一节主要关注一种：线性等式&#x2F;不等式约束的优化问题。之所以考虑">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-23T10:35:56.000Z">
+<meta property="article:modified_time" content="2020-05-27T09:30:56.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="拉格朗日函数">
+<meta property="article:tag" content="近似点算子">
+<meta property="article:tag" content="共轭函数">
+<meta property="article:tag" content="PG 算法">
+<meta property="article:tag" content="ALM">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记20：对偶近似点梯度下降 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记20：对偶近似点梯度下降">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-23 18:35" pubdate>
+        April 23, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      69 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记20：对偶近似点梯度下降</h1>
+            
+            <div class="markdown-body">
+              <p>前面讲了梯度下降、次梯度下降、近似点梯度下降方法并分析了收敛性。一开始我们还讲了对偶原理，那么如果原问题比较难求解的时候，我们可不可以转化为对偶问题并应用梯度法求解呢？当然可以，不过有一个问题就是对偶函数的梯度或者次梯度怎么计算呢？这就是这一节要关注的问题。</p>
+<p>首先一个问题是哪些形式的问题，其对偶问题相比于原问题更简单呢？可能有很多种，这一节主要关注一种：<strong>线性等式/不等式约束的优化问题</strong>。之所以考虑此类问题是因为如果有线性的等式/不等式约束，应用
+Lagrange
+对偶原理之后，我们可以自然的用原函数的<strong>共轭函数</strong>来表示其<strong>对偶问题</strong>，而共轭函数的次梯度是容易求解的，因为我们可以用
+<strong>Legendre
+transformation</strong>。那么接下来就是详细的原理和例子了。</p>
+<span id="more"></span>
+<h2 id="对偶分解原理">1. 对偶分解原理</h2>
+<p>假如我们考虑如下无约束优化问题，通过添加线性等式约束以及对偶原理可以容易获得对偶问题的形式
+<span class="math display">\[
+\begin{aligned}
+(P)\quad\min \ &amp; f(x)+g(Ax) \\
+(D)\quad\max \ &amp; -g^\star(z)-f^\star(-A^Tz)
+\end{aligned}
+\]</span>
+如果我们现在想对偶问题应用梯度下降方法，一个关键的问题就是如何求解 <span
+class="math inline">\(f^\star,g^\star\)</span>
+的梯度/次梯度？会议一下前面讲共轭函数的时候提到了一些性质：</p>
+<blockquote>
+<p>关于共轭函数有以下性质</p>
+<ol type="1">
+<li>若 <span class="math inline">\(f\)</span> 为凸的且是闭的(<span
+class="math inline">\(\text{epi }f\)</span> 为闭集)，则 <span
+class="math inline">\(f^{**}=f\)</span>
+(可以联系上面提到一系列支撑超平面)</li>
+<li>(Fenchel's inequality) <span class="math inline">\(f(x)+f^*(y)\ge
+x^Ty\)</span>，这可以类比均值不等式</li>
+<li>(<strong>Legendre transform</strong>)如果 <span
+class="math inline">\(f\)</span> 且为<strong>凸的、闭的</strong>，设
+<span class="math inline">\(x^*=\arg\max\{y^Tx-f(x)\}\)</span>，那么有
+<span class="math inline">\(x^*\in\partial f^*(y)\iff y\in\partial
+f(x^*)\)</span>。这可以用来求极值，比如 <span class="math inline">\(\min
+f(x)\Longrightarrow 0\in\partial f(x)\iff x\in\partial
+f^*(0)\)</span></li>
+</ol>
+</blockquote>
+<p>所以只需要找到 <span class="math display">\[
+\hat{x}=\arg\max_x -z^TAx-f(x) = \arg\min_x z^TAx+f(x)
+\]</span> 就可以有 <span class="math inline">\(\hat{x}\in\partial
+f^\star(-A^Tz)\)</span>。如果函数 <span class="math inline">\(f\)</span>
+为<strong>严格凸函数</strong>，意味着上面的 <span
+class="math inline">\(\hat{x}\)</span> 唯一，也说明 <span
+class="math inline">\(\partial f^\star=\nabla
+f^\star\)</span>；如果条件加强，<span class="math inline">\(f\)</span>
+为<span class="math inline">\(\mu\)</span>-强凸函数那么就有 <span
+class="math display">\[
+\left\|\nabla f^{*}(y)-\nabla f^{*}\left(y^{\prime}\right)\right\| \leq
+\frac{1}{\mu}\left\|y-y^{\prime}\right\|_{*} \quad \text { for all } y,
+y^{\prime}
+\]</span> 也就是说共轭函数的梯度是 Lipschitz continuous 的，也即共轭函数
+<span class="math inline">\(f^\star\)</span> 是 <span
+class="math inline">\(1/\mu\)</span>-smooth
+的，因此我们也能证明对偶问题下用梯度方法的收敛性。</p>
+<p><strong><em>例子</em></strong>：现在我们把上面的 <span
+class="math inline">\(g\)</span>
+换成一个指示函数，也即表示一个线性等式约束 <span class="math display">\[
+\begin{aligned}
+(P)\quad\text{minimize } \quad&amp; f(x) \\
+\text{subject to } \quad&amp; Ax=b \\
+(D)\quad\text{minimize } \quad&amp; -b^Tz-f^\star(-A^Tz)
+\end{aligned}
+\]</span> 怎么做梯度下降呢？ <span class="math display">\[
+\begin{aligned}
+\hat{x} &amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+z^{T} A
+x\right) \\
+z^{+} &amp;=z+t(A \hat{x}-b)
+\end{aligned}
+\]</span> 上面第一步就是为了求解 <span
+class="math inline">\(f^\star\)</span> 的次梯度，第二部就是对 <span
+class="math inline">\(z\)</span> 进行梯度上升。我们再来观察一下 Lagrange
+函数 <span class="math display">\[
+\begin{aligned}
+L(x,z)&amp;=f(x)+z^T(Ax-b) \\
+&amp;=-b^Tz+(f(x)+z^TAx)
+\end{aligned}
+\]</span> 我么前面说过最优解实际上是拉格朗日函数的鞍点，也就是关于 <span
+class="math inline">\(x\)</span> 的极小值点，关于 <span
+class="math inline">\(z\)</span>
+的极大值点。而这里我们要做的两部就分别是对 <span
+class="math inline">\(x\)</span> 求一个极小值点 <span
+class="math inline">\(\hat{x}\)</span>，然后对 <span
+class="math inline">\(z\)</span>
+并没有求极大值点，而是做了一个梯度上升。</p>
+<p>好了，对偶问题的梯度下降方法原理就这些，但是标题里面“对偶分解”还有一个“<strong>分解</strong>”是什么意思呢？我们说如果原问题比较复杂就可以考虑解对偶问题，那么具体是哪一种问题呢？看个例子
+<span class="math display">\[
+\begin{aligned}
+\text{minimize } \quad&amp; f_1(x_1)+f_2(x_2) \\
+\text{subject to } \quad&amp; A_1x_1+A_2x_2\preceq b \\
+\end{aligned}
+\]</span> 这个问题有什么特点呢？目标函数实际上是由两个不相关的函数 <span
+class="math inline">\(f_1(x_1),f_2(x_2)\)</span> 求和得到的，注意不仅是
+<span class="math inline">\(f_1,f_2\)</span> 不同，他们的自变量 <span
+class="math inline">\(x_1,x_2\)</span>
+也是相互独立的，也即是说假如没有这个约束条件，我们完全可以分解为两个独立的最小化问题分别求解。但是现在<strong>由于这个约束条件，这两个问题耦合在一起了</strong>，这就有点麻烦了。那么在对偶问题中能不能解耦合呢？好消息是可以！他们的对偶问题可以写为
+<span class="math display">\[
+\begin{aligned}
+\text{minimize } \quad&amp; -f_1^\star(-A_1^Tz)-f_2^\star(-A_2^Tz)-b^Tz
+\\
+\text{subject to } \quad&amp; z\succeq 0 \\
+\end{aligned}
+\]</span> 这个时候我们只需要分别求解 <span
+class="math inline">\(f_1^\star,f_2^\star\)</span>
+的次梯度，这两个是可以并行计算的，即下面的 <span
+class="math inline">\(\hat{x}_1,\hat{x}_2\)</span> 可以并行计算 <span
+class="math display">\[
+\begin{aligned}
+&amp;\hat{x}_{j}=\underset{x_{j}}{\operatorname{argmin}}\left(f_{j}\left(x_{j}\right)+z^{T}
+A_{j} x_{j}\right) \quad \text { for } j=1,2\\
+&amp;z^{+}=\left(z+t\left(A_{1} \hat{x}_{1}+A_{2}
+\hat{x}_{2}-b\right)\right)_{+}
+\end{aligned}
+\]</span> 所以每次迭代我们都可以先并行计算 <span
+class="math inline">\(\hat{x}_j\)</span>，然后把他们传给中心节点，中心节点再对
+<span class="math inline">\(z\)</span>
+计算梯度上升。需要注意的一点是这里对 <span
+class="math inline">\(z^+\)</span> 只取正值，这是因为有 <span
+class="math inline">\(z\succeq 0\)</span> 的约束，从另一个角度理解也是向
+<span class="math inline">\(C=\{z|z\succeq0\}\)</span>
+做了投影（回忆上一节的近似点算子与投影的关系，以及近似点梯度下降实际上就是先算梯度再做投影）。</p>
+<p><strong><em>例子 1</em></strong>：来看一个二次优化的例子，假设其中的
+<span class="math inline">\(P_j\succ0\)</span> <span
+class="math display">\[
+\begin{array}{ll}
+\text { minimize } &amp; \sum_{j=1}^{r}\left(\frac{1}{2} x_{j}^{T} P_{j}
+x_{j}+q_{j}^{T} x_{j}\right) \\
+\text { subject to } &amp; B_{j} x_{j} \preceq d_{j}, \quad j=1, \ldots,
+r \\
+&amp; \sum_{j=1}^{r} A_{j} x_{j} \preceq b
+\end{array}
+\]</span> 这里约束条件比较多，我们可以转化一下，考虑 <span
+class="math inline">\(f_j(x_j)=\frac{1}{2} x_{j}^{T} P_{j}
+x_{j}+q_{j}^{T} x_{j}\)</span>，定义域为 <span
+class="math inline">\(\{x_j|B_jx_j\preceq
+d_j\}\)</span>。对偶问题就变成了 <span class="math display">\[
+\begin{aligned}
+\text{minimize } \quad&amp; -b^Tz-\sum_{j=1}^r f_j^\star(-A_j^Tz) \\
+\text{subject to } \quad&amp; z\succeq 0 \\
+\end{aligned}
+\]</span> 为了保证梯度下降方法的收敛性，还需要验证目标函数的 Lipschitz
+smooth 性质，考虑 <span class="math inline">\(h(z)=\sum_j
+f_j^\star(-A_j^Tz)\)</span>，有 <span class="math display">\[
+\left\|\nabla h(z)-\nabla h\left(z^{\prime}\right)\right\|_{2} \leq
+\frac{\|A\|_{2}^{2}}{\min _{j} \lambda_{\min
+}\left(P_{j}\right)}\left\|z-z^{\prime}\right\|_{2}
+\]</span> 其中 <span
+class="math inline">\(A=[\begin{array}{ccc}A_1&amp;\cdots&amp;A_r\end{array}]\)</span>。那么怎么求
+<span class="math inline">\(\hat{x}_j=\partial
+f_j^\star(-A_j^Tz)\)</span> 呢？就是求解下面的优化问题 <span
+class="math display">\[
+\begin{array}{ll}
+\text { minimize } &amp; \frac{1}{2} x_{j}^{T} P_{j}
+x_{j}+(q_{j}+A_j^Tz)^T x_{j} \\
+\text { subject to } &amp; B_{j} x_{j} \preceq d_{j}
+\end{array}
+\]</span> <strong><em>例子 2</em></strong>：网络优化问题 <span
+class="math display">\[
+\begin{aligned}
+(P) \quad \text { maximize } \quad&amp; \sum_{j=1}^{n}
+U_{j}\left(x_{j}\right)\\
+\text { subject to } \quad&amp; R x \leq c\\
+(D) \quad \text { minimize } \quad&amp; c^{T}
+z+\sum_{j=1}^{n}\left(-U_{j}\right)^{*}\left(-r_{j}^{T} z\right)\\
+\text { subject to } \quad&amp; z \geq 0
+\end{aligned}
+\]</span> 只需要将 <span class="math inline">\(R\)</span>
+的各列拆分开就行了。</p>
+<h2 id="对偶近似点梯度方法">2. 对偶近似点梯度方法</h2>
+<p>这节的一开始我们考虑的问题是 <span class="math display">\[
+\begin{aligned}
+(P)\quad\min \ &amp; f(x)+g(Ax) \\
+(D)\quad\min \ &amp; g^\star(z)+f^\star(-A^Tz)
+\end{aligned}
+\]</span> 不过举得几个例子中都没有见到 <span
+class="math inline">\(g\)</span>
+的影子，这是因为我们都加了线性等式/不等式约束，也就等价于 <span
+class="math inline">\(g=\delta_C(x)\)</span>
+是一个指示函数的形式。那如果考虑一般的(不光滑的) <span
+class="math inline">\(g\)</span>
+呢？很简单，我们本质上还是在做梯度下降(上升)，如果函数不光滑，就可以用上一篇文章的近似点梯度方法，还记得近似点梯度下降的公式吗？
+<span class="math display">\[
+z^{+}=\operatorname{prox}_{t g^{*}}\left(z+t A \nabla f^{*}\left(-A^{T}
+z\right)\right)
+\]</span>
+实际上刚刚举得几个例子也都是在做近似点梯度下降，只不过对于指示函数的近似点就是在做投影，比较简单。所以对上面的问题求解实际上就是两步：
+<span class="math display">\[
+\begin{aligned}
+\hat{x} &amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+z^{T} A
+x\right) \\
+z^{+} &amp;=\operatorname{prox}_{t g^{*}}(z+t A \hat{x})
+\end{aligned}
+\]</span> 如果有时候 <span class="math inline">\(g^\star\)</span>
+的近似点不好计算，也可以利用 Moreau
+分解(参见上上一节近似点算子)，那么可以计算 <span class="math display">\[
+z^{+} =z+tA\hat{x}-t\operatorname{prox}_{t^{-1} g}(t^{-1}z+A \hat{x})
+\]</span>
+这个式子其实可以跟增广拉格朗日方法(后面会讲)联系起来。我们可以令 <span
+class="math inline">\(\hat{y}\)</span> 为 <span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;=\operatorname{prox}_{t^{-1} g}\left(t^{-1} z+A
+\hat{x}\right) \\
+&amp;=\underset{y}{\operatorname{argmin}}\left(g(y)+\frac{t}{2}\left\|A
+\hat{x}-t^{-1} z-y\right\|_{2}^{2}\right) \\
+&amp;=\underset{y}{\operatorname{argmin}}\left(g(y)+z^{T}(A
+\hat{x}-y)+\frac{t}{2}\|A \hat{x}-y\|_{2}^{2}\right)
+\end{aligned}
+\]</span> 那么就有 <span
+class="math inline">\(z^{+}=z+t(A\hat{x}-\hat{y})\)</span>，所以这里
+<span class="math inline">\(\hat{y}\)</span> 一定程度上可以理解为 <span
+class="math inline">\(g^\star(z)\)</span>
+的次梯度。把前面的分析综合起来，我们梯度下降的每次迭代过程实际上可以由下面
+3 个步骤组成 <span class="math display">\[
+\begin{aligned}
+\hat{x} &amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+z^{T} A
+x\right) \\
+\hat{y} &amp;=\underset{y}{\operatorname{argmin}}\left(g(y)-z^{T}
+y+\frac{t}{2}\|A \hat{x}-y\|_{2}^{2}\right) \\
+z^{+} &amp;=z+t(A \hat{x}-\hat{y})
+\end{aligned}
+\]</span> 这个时候可以跟<strong>增广拉格朗日方法(augmented Lagrangian
+method)</strong>比较一下，ALM 的计算公式为 <span class="math display">\[
+(\hat{x}, \hat{y})=\underset{x,
+y}{\operatorname{argmin}}\left(f(x)+g(y)+z^{T}(A x-y)+\frac{t}{2}\|A
+x-y\|_{2}^{2}\right)
+\]</span> 首先 ALM
+要优化的这个增广拉格朗日函数函数是在普通拉格朗日函数的基础上加了一个最后的二阶项，然后对增广拉函数优化
+<span
+class="math inline">\(x,y\)</span>。而前面的对偶近似梯度方法是怎么做呢？观察增广拉函数实际上可以分解为两项
+<span class="math display">\[
+L(x,y,z)=\left(f(x)+z^{T}A x\right)+\left(g(y)-z^Ty+\frac{t}{2}\|A
+x-y\|_{2}^{2}\right)
+\]</span> 而对偶近似梯度方法实际上就是先优化第一项，只考虑 <span
+class="math inline">\(x\)</span>，计算得到 <span
+class="math inline">\(\hat{x}\)</span> 以后再代入到第二项单独优化 <span
+class="math inline">\(y\)</span> 得到 <span
+class="math inline">\(\hat{y}\)</span>，最后对 <span
+class="math inline">\(z\)</span>
+做梯度上升！巧妙不巧妙！显然对偶近似梯度方法计算起来更简单，但是也有代价，那就是
+ALM 并不要求函数 <span class="math inline">\(f\)</span>
+是强凸的，而对偶近似梯度方法则要求 <span
+class="math inline">\(f\)</span> 为强凸的。</p>
+<p>基本的理论就完了，下面主要是一些例子。</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(g\)</span> 为范数正则项 <span
+class="math display">\[
+\begin{aligned}
+(P)\quad\text{minimize}\quad&amp; f(x)+\|A x-b\| \\
+(D)\quad\text{maximize} \quad&amp; -b^{T} z-f^{*}\left(-A^{T} z\right)\\
+\text{subject to} \quad&amp; \|z\|_{*} \leq 1
+\end{aligned}
+\]</span> 我们可以取 <span class="math inline">\(g(y)=\Vert
+y-b\Vert\)</span> <span class="math display">\[
+g^{*}(z)=\left\{\begin{array}{ll}
+b^{T} z &amp; \|z\|_{*} \leq 1 \\
++\infty &amp; \text { otherwise }
+\end{array} \quad \operatorname{prox}_{t g *}(z)=P_{C}(z-t b)\right.
+\]</span> 对偶近似梯度下降方法每次迭代过程为 <span
+class="math display">\[
+\begin{aligned}
+\hat{x} &amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+z^{T} A
+x\right) \\
+z^{+} &amp;=P_{C}(z+t(A \hat{x}-b))
+\end{aligned}
+\]</span> <strong><em>例子 2(重要)</em></strong>：前面都只有 1 个 <span
+class="math inline">\(g\)</span>，这次考虑 <span
+class="math inline">\(g\)</span> 为多个 <span
+class="math inline">\(g_i\)</span> 求和 <span class="math display">\[
+\begin{aligned}
+(P) \quad \text { minimize } \quad&amp; f(x)+\sum_{i=1}^{p}\left\|B_{i}
+x\right\|_{2}\\
+(D) \quad \text { maximize } \quad&amp; -f^{*}\left(-B_{1}^{T}
+z_{1}-\cdots-B_{p}^{T} z_{p}\right)\\
+\text { subject to }\quad&amp; \left\|z_{i}\right\|_{2} \leq 1, \quad
+i=1, \ldots, p
+\end{aligned}
+\]</span> 这个推导就有点麻烦了，我们考虑一般的情况 <span
+class="math inline">\(g(x)=g_1(B_1x)+...+g_p(B_px)\)</span>，那么可以取
+<span class="math inline">\(B=[B_1;...;B_p]\)</span>(排成一列)，<span
+class="math inline">\(g(x)=\hat{g}(Bx)\)</span>，那么原问题实际上等价于
+<span class="math display">\[
+\begin{aligned}
+\text{minimize } \quad&amp; f(x)+\hat{g}(y) \\
+\text{subject to } \quad&amp; y=Bx \\
+\end{aligned}
+\]</span> 拉格朗日函数为 <span
+class="math inline">\(L(x,y,z)=f(x)+\sum_i g_i(y_i) + \sum_i
+z_i^T(B_ix-y_i)\)</span>，对偶问题就变成了 <span class="math display">\[
+\text{maximize}\quad -f^\star(-\sum_i B_i^Tz_i) - \sum_i g_i^\star(z_i)
+\]</span> 注意到对偶问题中 <span class="math inline">\(g^\star(z)=\sum_i
+g^\star_i(z_i)\)</span>，利用近似点算子公式就可以得到 <span
+class="math display">\[
+\operatorname{prox}_{tg^\star}(x)=\left[\begin{array}{c}\operatorname{prox}_{tg^\star_1}(x_1)\\
+\vdots \\ \operatorname{prox}_{tg^\star_p}(x_p) \end{array}\right]
+\]</span> 所以我们的 <span class="math inline">\(z_i^+\)</span>
+之间的计算是互不相关的，可以并行进行，也即下面的式子中 <span
+class="math inline">\(\hat{x}\)</span>此时不能并行计算了，但是 <span
+class="math inline">\(z_i^+\)</span>可以分别计算 <span
+class="math display">\[
+\begin{aligned}
+\hat{x}
+&amp;=\underset{x}{\operatorname{argmin}}\left(f(x)+\left(\sum_{i=1}^{p}
+B_{i}^{T} z_{i}\right)^{T} x\right) \\
+z_{i}^{+} &amp;=P_{C_{i}}\left(z_{i}+t B_{i} \hat{x}\right), \quad i=1,
+\ldots, p
+\end{aligned}
+\]</span> 注意第一部分当中我们考虑 <span
+class="math inline">\(f_1(x_1)+f_2(x_2)\)</span>
+形式的优化问题，这使得对偶问题可以分解为 <span
+class="math inline">\(\sum_i f^\star(-A_i^Tz)\)</span>，可以并行计算
+<span class="math inline">\(\hat{x}_i\)</span>，而这里我们考虑 <span
+class="math inline">\(\sum_i g(x)\)</span> 则对偶问题可以表示为 <span
+class="math inline">\(\sum_i
+g^\star(z_i)\)</span>，这使得计算近似点梯度的时候可以对 <span
+class="math inline">\(z_i^+\)</span> 并行计算，非常的对称！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">共轭函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ALM/">ALM</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/24/optimization/ch21-apg-fista/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记21：加速近似点梯度下降</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/17/optimization/ch19-proximal-gradient/">
+                        <span class="hidden-mobile">凸优化笔记19：近似点梯度下降</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

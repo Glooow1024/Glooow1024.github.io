@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在过程控制中，按偏差的比例（P）、积分（I）和微分（D）进行控制的PID控制器（亦称PID调节器）是应用最为广泛的一种自动控制器。它具有原理简单，易于实现，适用面广，控制参数相互独立，参数的选定比较简单等优点.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PID 控制器">
+<meta property="og:url" content="http://example.com/2020/02/21/cybernetics/pid/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="在过程控制中，按偏差的比例（P）、积分（I）和微分（D）进行控制的PID控制器（亦称PID调节器）是应用最为广泛的一种自动控制器。它具有原理简单，易于实现，适用面广，控制参数相互独立，参数的选定比较简单等优点.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-21T08:53:27.000Z">
+<meta property="article:modified_time" content="2020-12-27T03:44:44.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="PID">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>PID 控制器 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PID 控制器">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-21 16:53" pubdate>
+        February 21, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PID 控制器</h1>
+            
+            <div class="markdown-body">
+              <p>在过程控制中，按偏差的比例（P）、积分（I）和微分（D）进行控制的PID控制器（亦称PID调节器）是应用最为广泛的一种自动控制器。它具有原理简单，易于实现，适用面广，控制参数相互独立，参数的选定比较简单等优点.</p>
+<span id="more"></span>
+<h2 id="基本原理">1. 基本原理</h2>
+<p><strong>PID控制器</strong>（比例-积分-微分控制器），由比例单元（P）、积分单元（I）和微分单元（D）组成。可以透过调整这三个单元的增益
+<span class="math inline">\(K_p\)</span>，<span
+class="math inline">\(K_i\)</span> 和 <span
+class="math inline">\(K_d\)</span>
+来调定其特性。PID控制器主要适用于基本上线性，且动态特性不随时间变化的系统。</p>
+<p>PID控制器的比例单元(P)、积分单元(I)和微分单元(D)分别对应目前误差、过去累计误差及未来误差。若是不知道受控系统的特性，一般认为PID控制器是最适用的控制器。</p>
+<!--more-->
+<h2 id="控制算法">2. 控制算法</h2>
+<p>若定义 <span class="math inline">\(u(t)\)</span>
+为控制输出，PID算法可以用下式表示 <span class="math display">\[
+\mathrm{u}(t)=\mathrm{MV}(t)=K_{p} e(t)+K_{i} \int_{0}^{t} e(\tau) d
+\tau+K_{d} \frac{d}{d t} e(t)
+\]</span> 其中 <span class="math inline">\(e(t)\)</span> 表示误差。</p>
+<h3 id="比例控件">2.1 比例控件</h3>
+<p>比例控制考虑当前误差，误差值和一个正值的常数 <span
+class="math inline">\(K_p\)</span>（表示比例）相乘。<span
+class="math inline">\(K_p\)</span>
+只是在控制器的输出和系统的误差成比例的时候成立。 <span
+class="math display">\[
+P_{\text{out}} = K_p e(t)
+\]</span>
+若比例增益大，在相同误差量下，会有较大的输出，但若比例增益太大，会使系统不稳定。相反的，若比例增益小，若在相同误差量下，其输出较小，因此控制器会较不敏感的。若比例增益太小，当有干扰出现时，其控制信号可能不够大，无法修正干扰的影响。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/PID_varyingP.jpg" srcset="/img/loading.gif" lazyload
+alt="Change K_p" />
+<figcaption aria-hidden="true">Change K_p</figcaption>
+</figure>
+<p>上图即为改变 <span class="math inline">\(K_p\)</span>
+对应的控制器。</p>
+<h3 id="积分控件">2.2 积分控件</h3>
+<p>积分控制考虑过去误差，将误差值过去一段时间和（误差和）乘以一个正值的常数
+<span class="math inline">\(K_i\)</span>。 <span class="math display">\[
+I_{\mathrm{out}}=K_{i} \int_{0}^{t} e(\tau) d \tau
+\]</span>
+积分控制会<strong>加速</strong>系统趋近设定值的过程，并且消除纯比例控制器会出现的稳态误差。积分增益越大，趋近设定值的速度越快，不过因为积分控制会累计过去所有的误差，可能会使回授值出现<strong>过冲</strong>的情形。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/Change_with_Ki.png" srcset="/img/loading.gif" lazyload
+alt="Change K_i" />
+<figcaption aria-hidden="true">Change K_i</figcaption>
+</figure>
+<p>上图即为改变 <span class="math inline">\(K_i\)</span>
+对应的控制器。</p>
+<h3 id="微分控件">2.3 微分控件</h3>
+<p>微分控制考虑将来误差，计算误差的一阶导，并和一个正值的常数 <span
+class="math inline">\(K_d\)</span>
+相乘。这个导数的控制会对系统的改变作出反应。导数的结果越大，那么控制系统就对输出结果作出更快速的反应。这个
+<span class="math inline">\(K_d\)</span>
+参数也是PID被称为可预测的控制器的原因。<span
+class="math inline">\(K_d\)</span>
+参数对减少控制器短期的改变很有帮助。一些实际中的速度缓慢的系统可以不需要
+<span class="math inline">\(K_d\)</span> 参数。 <span
+class="math display">\[
+D_{\mathrm{out}}=K_{d} \frac{d}{d t} e(t)
+\]</span>
+微分控制可以提升整定时间及系统<strong>稳定性</strong>。不过因为纯微分器不是因果系统，因此在PID系统实现时，一般会为微分控制加上一个低通滤波器以限制高频增益及噪声。实际上较少用到微分控制，估计PID控制器中只有约20%有用到微分控制。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/Change_with_Kd.png" srcset="/img/loading.gif" lazyload
+alt="Change K_d" />
+<figcaption aria-hidden="true">Change K_d</figcaption>
+</figure>
+<p>上图即为改变 <span class="math inline">\(K_d\)</span>
+对应的控制器。</p>
+<h2 id="位置式和增量式pid算法">3. 位置式和增量式PID算法</h2>
+<p>PID 一般有两种：<strong>位置式 PID</strong> 和<strong>增量式
+PID</strong>。在小车里一般用增量式，因为位置式 PID
+的输出与过去的所有状态有关，计算时要对历史上每一次的控制误差进行累加，这个计算量非常大，而且没有必要。增量式则子需要计算每次控制量的变化量。</p>
+<p>将 PID 公式离散化，可以推导出位置式 PID 公式 <span
+class="math display">\[
+\begin{aligned}
+u(k)&amp;=K_p\left[e_{k}+\frac{1}{T_i} \sum_{j=0}^{k} e_{j}+T_d
+\frac{e_{k}-e_{k-1}}{T}\right] \\
+&amp;=K_p \cdot e_{k}+\frac{K_p}{T_i} \sum_{j=0}^{k} e_{j}+K_p \cdot T_d
+\frac{e_{k}-e_{k-1}}{T} \\
+&amp;=A e_{k}+B\left(\sum_{j=0}^{k-1}
+e_{j}+e_{k}\right)+C\left(e_{k}-e_{k-1}\right)
+\end{aligned}
+\]</span> 其中把 <span class="math inline">\(K_i,K_d\)</span> 表示为
+<span class="math inline">\(K_p/T_i,K_p\cdot T_d\)</span>。</p>
+<p>在此基础上可以推导出增量式 PID 公式 <span class="math display">\[
+\begin{aligned}
+\Delta u_{k}&amp;=u_{k}-u_{k-1}=K_p\left[e_{k}-e_{k-1}+\frac{T}{T_i}
+e_{k}+T_d \frac{e_{k}-2 e_{k-1}+e_{k-2}}{T}\right] \\
+&amp;=K_p\left(1+\frac{T}{T_i}+\frac{T_d}{T}\right)
+e_{k}-K_p\left(1+\frac{2 T_d}{T}\right) e_{k-1}+K_p \frac{T_d}{T}
+e_{k-2} \\
+&amp;=A e_{k}+B e_{k-1}+C e_{k-2}
+\end{aligned}
+\]</span> 其中误差 <span class="math inline">\(e_k = y_0(kT) -
+y(kT)\)</span>，<span class="math inline">\(y_0\)</span>
+表示目标值，<span class="math inline">\(y(kT)\)</span> 表示第 <span
+class="math inline">\(k\)</span> 个时刻的值。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Cybernetics/">Cybernetics</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PID/">PID</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/22/optimization/ch0-intro/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记 0：绪论</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/20/cybernetics/lasalle/">
+                        <span class="hidden-mobile">LaSalle's invariance principle 拉萨尔不变性原理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

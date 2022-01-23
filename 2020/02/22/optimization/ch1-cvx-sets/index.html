@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 凸集 区分两种集合的定义（下面的描述并不是严格的数学语言，领会意思就行了）：  仿射集(Affine set)：\(x&#x3D;\theta x_1 + (1-\theta)x_2,\quad \theta\in\mathbb{R}\) 凸集(Convex set)：\(x&#x3D;\theta x_1 + (1-\theta)x_2,\quad \theta\in[0,1]\)  主要的区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记 1：Convex Sets">
+<meta property="og:url" content="http://example.com/2020/02/22/optimization/ch1-cvx-sets/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. 凸集 区分两种集合的定义（下面的描述并不是严格的数学语言，领会意思就行了）：  仿射集(Affine set)：\(x&#x3D;\theta x_1 + (1-\theta)x_2,\quad \theta\in\mathbb{R}\) 凸集(Convex set)：\(x&#x3D;\theta x_1 + (1-\theta)x_2,\quad \theta\in[0,1]\)  主要的区">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-22T11:14:03.000Z">
+<meta property="article:modified_time" content="2020-03-27T09:59:38.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="凸集">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记 1：Convex Sets - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记 1：Convex Sets">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-22 19:14" pubdate>
+        February 22, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记 1：Convex Sets</h1>
+            
+            <div class="markdown-body">
+              <h2 id="凸集">1. 凸集</h2>
+<p>区分两种集合的定义（下面的描述并不是严格的数学语言，领会意思就行了）：</p>
+<ul>
+<li><strong>仿射集(Affine set)</strong>：<span
+class="math inline">\(x=\theta x_1 + (1-\theta)x_2,\quad
+\theta\in\mathbb{R}\)</span></li>
+<li><strong>凸集(Convex set)</strong>：<span
+class="math inline">\(x=\theta x_1 + (1-\theta)x_2,\quad
+\theta\in[0,1]\)</span></li>
+</ul>
+<p>主要的区别就在于后面 <span class="math inline">\(\theta\)</span>
+的取值范围，简单理解就是说仿射集类似<strong>直线</strong>，凸集类似<strong>线段</strong>。</p>
+<p>更一般的，仿射集都可以表示为线性方程组的解集，也即 <span
+class="math inline">\(\{x|Ax=b\}\)</span></p>
+<span id="more"></span>
+<h2 id="常见凸集">2. 常见凸集</h2>
+<h3 id="凸包convec-hull">2.1 凸包(Convec hull)</h3>
+<p>假如集合 <span
+class="math inline">\(S=\{x_1,...,x_k\}\)</span>，则其<strong>凸包</strong>可以表示为
+<span class="math display">\[
+\left\{\sum_{i=1}^k\theta_i x_i \vert \sum\theta_i=1,
+\theta_i\ge0\right\}
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/cvx_hull.PNG" srcset="/img/loading.gif" lazyload
+alt="cvx hull" /></p>
+<h3 id="超平面hyperplanes">2.2 超平面(Hyperplanes)</h3>
+<p>类比三维空间中的平面，可以有<strong>超平面</strong>的定义 <span
+class="math display">\[
+\left\{x\vert a^Tx=b\right\}(a\ne0)
+\]</span> 其中 <span class="math inline">\(a\)</span>
+就是该平面的法向量。</p>
+<h3 id="半空间halfspaces">2.3 半空间(Halfspaces)</h3>
+<p>类似的，有<strong>半空间</strong>定义为 <span class="math display">\[
+\left\{x\vert a^Tx\le b\right\}(a\ne0)
+\]</span></p>
+<h3 id="多面体polyhedra">2.4 多面体(Polyhedra)</h3>
+<p>高维空间中的<strong>多面体</strong>定义为 <span
+class="math display">\[
+\left\{x\vert A x \preceq b, \quad C x=d \right\}
+\]</span> 其中 <span class="math inline">\(\preceq\)</span>
+表示对每个元素都作比较。实际上就是求很多个半空间以及半平面的交集，与三维空间是类似的。</p>
+<h3 id="欧几里得球与椭球euclidean-balls-and-ellipsoids">2.5
+欧几里得球与椭球(Euclidean balls and ellipsoids)</h3>
+<p>高维空间中的<strong>欧几里得球</strong>的定义为 <span
+class="math display">\[
+B\left(x_{c}, r\right)=\left\{x |\left\|x-x_{c}\right\|_{2} \leq
+r\right\}=\left\{x_{c}+r u |\|u\|_{2} \leq 1\right\}
+\]</span> <strong>椭球</strong>的定义为 <span class="math display">\[
+\left\{x |\left(x-x_{c}\right)^{T} P^{-1}\left(x-x_{c}\right) \leq
+1\right\} = \left\{x_{c}+A u |\|u\|_{2} \leq 1\right\}
+\]</span> 其中 <span class="math inline">\(P \in
+\mathbf{S}_{++}^{n}\)</span> (也即 <span
+class="math inline">\(P\)</span> 为对称正定矩阵)。中间的矩阵 <span
+class="math inline">\(P\)</span>
+的作用就相当于在各个特征向量方向上进行了放缩。</p>
+<blockquote>
+<p><strong>Remarks</strong>：关于矩阵性质，可以参考我的矩阵论学习笔记，这里复习一个知识点。</p>
+<ul>
+<li><strong>正规矩阵</strong>的定义为满足 <span
+class="math inline">\(A^HA=AA^H\)</span> 的矩阵 <span
+class="math inline">\(A\)</span>
+即为正规矩阵，因此<strong>对称矩阵、Hermit矩阵、酉矩阵</strong>都是正规矩阵。而正规矩阵有什么性质呢？正规矩阵可以<strong>对角化</strong>，且<strong>存在一组正交的特征向量</strong>！</li>
+<li><strong>正定矩阵</strong>的定义为满足 <span
+class="math inline">\(x^TAx&gt;0\)</span> 的矩阵 <span
+class="math inline">\(A\)</span>，实际上也就是说矩阵 <span
+class="math inline">\(A\)</span> 的<strong>特征值均大于
+0</strong>！</li>
+<li>因此对称正定矩阵的性质有：所有特征向量正交，所有特征值大于 0。</li>
+</ul>
+</blockquote>
+<h3 id="范数球norm-balls">2.6 范数球(norm balls)</h3>
+<p><strong>范数</strong> <span
+class="math inline">\(\Vert\cdot\Vert\)</span> 需要满足以下性质</p>
+<ul>
+<li><span class="math inline">\(\Vert x \Vert\ge0;\ \Vert x\Vert=0 \iff
+x=0\)</span></li>
+<li><span class="math inline">\(\|t x\|=|t|\|x\|\)</span> for <span
+class="math inline">\(t \in \mathbf{R}\)</span></li>
+<li><span class="math inline">\(\|x+y\| \leq\|x\|+\|y\|\)</span></li>
+</ul>
+<p>向量范数如 <span class="math inline">\(\Vert x\Vert_0, \Vert
+x\Vert_1, \Vert x\Vert_2, \Vert x\Vert_p, \Vert
+x\Vert_\infty\)</span></p>
+<p>矩阵范数如 <span class="math inline">\(\Vert X\Vert_2, \Vert
+X\Vert_p\)</span></p>
+<p><strong>范数球</strong>的定义为 <span class="math display">\[
+\left\{x |\left\|x-x_{c}\right\| \leq r\right\}
+\]</span></p>
+<h3 id="凸锥convex-cone">2.7 凸锥(Convex cone)</h3>
+<p>我们先来看看锥的定义</p>
+<ul>
+<li><strong>锥(cone)</strong>：<span class="math inline">\(x\in
+C\Rightarrow \theta x\in C, \forall \theta\ge0\)</span></li>
+<li><strong>凸锥(Convex cone)</strong>：<span
+class="math inline">\(x_1,x_2\in C \Rightarrow x=\theta_1 x_1+\theta_2
+x_2 \in C,\forall \theta_1,\theta_2\ge0\)</span></li>
+</ul>
+<p>注意锥一定包含原点
+0。锥不一定是凸的，反例如下，这是一个锥，但不是凸锥</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/cone.PNG" srcset="/img/loading.gif" lazyload
+alt="cone" />
+<figcaption aria-hidden="true">cone</figcaption>
+</figure>
+<h3 id="范数锥norm-cone">2.8 范数锥(norm cone)</h3>
+<p><strong>范数锥</strong>定义如下 <span class="math display">\[
+\{(x, t) |\|x\| \leq t\}
+\]</span> 也被称为 Ice cream
+cone。其中欧几里得范数锥被称为<strong>二阶锥</strong>(second-order
+cone)</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/norm_cone.PNG" srcset="/img/loading.gif" lazyload
+alt="norm cone" />
+<figcaption aria-hidden="true">norm cone</figcaption>
+</figure>
+<h3 id="半正定锥positive-semidefinite-cone">2.9 半正定锥(Positive
+semidefinite cone)</h3>
+<p>定义几个符号</p>
+<ul>
+<li><span class="math inline">\(\mathbf{S}^{n}\)</span> 为 <span
+class="math inline">\(n\)</span> 阶对称矩阵</li>
+<li><span class="math inline">\(\mathbf{S}_{+}^{n}=\left\{X \in
+\mathbf{S}^{n} | X \succeq 0\right\}\)</span>
+为对称半正定矩阵，为凸锥</li>
+<li><span class="math inline">\(\mathbf{S}_{++}^{n}=\left\{X \in
+\mathbf{S}^{n} | X \succ 0\right\}\)</span> 为对称正定矩阵</li>
+</ul>
+<p>例如给定二阶矩阵 <span class="math display">\[
+\left[\begin{array}{ll}
+{x} &amp; {y} \\
+{y} &amp; {z}
+\end{array}\right] \in \mathrm{S}_{+}^{2}
+\]</span> 其坐标满足如下图</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/semidef_cone.PNG" srcset="/img/loading.gif" lazyload
+alt="positive semidefinite cone" />
+<figcaption aria-hidden="true">positive semidefinite cone</figcaption>
+</figure>
+<h2 id="保凸变换">3. 保凸变换</h2>
+<p>上面是一些常见的凸集，对于更复杂的情况，怎么判断是否为凸集呢？</p>
+<ul>
+<li>根据定义 <span class="math inline">\(x_{1}, x_{2} \in C, \quad 0
+\leq \theta \leq 1 \quad \Longrightarrow \quad \theta x_{1}+(1-\theta)
+x_{2} \in C\)</span></li>
+<li>凸集经过<strong>保凸变换</strong>以后仍然是凸集，如
+<ul>
+<li>凸集的交集</li>
+<li>仿射变换</li>
+<li>投影变换</li>
+<li>分式线性映射</li>
+</ul></li>
+</ul>
+<h3 id="凸集的交集">3.1 凸集的交集</h3>
+<p>任意个(可以是无数个)凸集的交集仍然是凸集</p>
+<p><strong><em>例子 1</em></strong>：<span
+class="math inline">\(S=\left\{x \in \mathbf{R}^{m}|| p(t) | \leq 1
+\text { for }|t| \leq \pi / 3\right\}\)</span>，其中 <span
+class="math inline">\(p(t)=x_{1} \cos t+x_{2} \cos 2 t+\cdots+x_{m} \cos
+m t\)</span></p>
+<h3 id="仿射变换">3.2 仿射变换</h3>
+<p>若映射 <span class="math inline">\(f: \mathbf{R}^{n} \rightarrow
+\mathbf{R}^{m}\)</span> 是仿射变换 <span class="math display">\[
+f(x)=A x+b \text { with } A \in \mathbf{R}^{m \times n}, b \in
+\mathbf{R}^{m}
+\]</span> 则有</p>
+<ul>
+<li><span class="math inline">\(S \subseteq \mathbf{R}^{n}\)</span>
+convex <span class="math inline">\(\Longrightarrow f(S)=\{f(x) | x \in
+S\}\)</span> convex</li>
+<li><span class="math inline">\(C \subseteq \mathbf{R}^{m}\)</span>
+convex <span class="math inline">\(\Longrightarrow f^{-1}(C)=\left\{x
+\in \mathbf{R}^{n} | f(x) \in C\right\}\)</span> convex</li>
+</ul>
+<p><strong><em>例子 2</em></strong>：双曲锥 <span
+class="math inline">\(\left\{x | x^{T} P x \leq\left(c^{T} x\right)^{2},
+c^{T} x \geq 0\right\}\left(\text { with } P \in
+\mathbf{S}_{+}^{n}\right)\)</span>，因为其可以转化为二阶锥</p>
+<p><strong><em>例子 3</em></strong>：<span
+class="math inline">\(\left\{x | x_{1} A_{1}+\cdots+x_{m} A_{m} \preceq
+B\right\}\)</span>(with <span class="math inline">\(A_i,P\in
+S^p\)</span>)<strong>？？？</strong></p>
+<h3 id="投影变换">3.3 投影变换</h3>
+<p><strong>投影函数</strong> <span class="math inline">\(P:
+\mathbf{R}^{n+1} \rightarrow \mathbf{R}^{n}\)</span> <span
+class="math display">\[
+P(x, t)=x / t, \quad \operatorname{dom} P=\{(x, t) | t&gt;0\}
+\]</span> <strong>Proof</strong>：略。应用凸集定义</p>
+<h3 id="分式线性函数">3.4 分式线性函数</h3>
+<p>分式线性映射 <span class="math inline">\(f: \mathbf{R}^{n}
+\rightarrow \mathbf{R}^{m}\)</span> 为 <span class="math display">\[
+f(x)=\frac{A x+b}{c^{T} x+d}, \quad \text { dom } f=\left\{x | c^{T}
+x+d&gt;0\right\}
+\]</span> 其可以看作先仿射变换再投影变换。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%87%B8%E9%9B%86/">凸集</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/26/optimization/ch2-separa-hyper/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记 2：超平面分离定理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/22/optimization/ch0-intro/">
+                        <span class="hidden-mobile">凸优化笔记 0：绪论</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

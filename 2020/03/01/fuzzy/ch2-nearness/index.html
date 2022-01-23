@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 贴近度 给定 \(A,B,C\in \mathcal{F}(U)\)，\(\sigma(*,*)\) 满足以下几个条件时，被称为贴近度  \(\sigma(A,A)&#x3D;1\) \(\sigma(A,B)&#x3D;\sigma(B,A)\) 若 \(A\subset B\subset C\)，则 \(\sigma(A,B)\ge\sigma(A,C),\sigma(B,C)\ge\sig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模糊数学笔记 2：贴近度">
+<meta property="og:url" content="http://example.com/2020/03/01/fuzzy/ch2-nearness/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. 贴近度 给定 \(A,B,C\in \mathcal{F}(U)\)，\(\sigma(*,*)\) 满足以下几个条件时，被称为贴近度  \(\sigma(A,A)&#x3D;1\) \(\sigma(A,B)&#x3D;\sigma(B,A)\) 若 \(A\subset B\subset C\)，则 \(\sigma(A,B)\ge\sigma(A,C),\sigma(B,C)\ge\sig">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-01T09:42:59.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:06:56.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="贴近度">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>模糊数学笔记 2：贴近度 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="模糊数学笔记 2：贴近度">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-01 17:42" pubdate>
+        March 1, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">模糊数学笔记 2：贴近度</h1>
+            
+            <div class="markdown-body">
+              <h2 id="贴近度">1. 贴近度</h2>
+<p>给定 <span class="math inline">\(A,B,C\in
+\mathcal{F}(U)\)</span>，<span
+class="math inline">\(\sigma(*,*)\)</span>
+满足以下几个条件时，被称为<strong>贴近度</strong></p>
+<ol type="1">
+<li><span class="math inline">\(\sigma(A,A)=1\)</span></li>
+<li><span class="math inline">\(\sigma(A,B)=\sigma(B,A)\)</span></li>
+<li>若 <span class="math inline">\(A\subset B\subset C\)</span>，则
+<span
+class="math inline">\(\sigma(A,B)\ge\sigma(A,C),\sigma(B,C)\ge\sigma(A,C)\)</span></li>
+<li><span class="math inline">\(\sigma(U,\varnothing)=0\)</span></li>
+</ol>
+<span id="more"></span>
+<p><strong>严格贴近度</strong>的定义为</p>
+<ol type="1">
+<li><span class="math inline">\(\sigma(A,B)=1 \iff A=B\)</span></li>
+<li>上述 2.-4. 条</li>
+</ol>
+<p>贴近度的例子：</p>
+<ul>
+<li>严格贴近度：<span class="math inline">\(\sigma(A, B)=\frac{\sum_{n}
+a_{n} \wedge b_{n}}{\sum_n a_{n} \vee b_{n}}\)</span></li>
+<li><span class="math inline">\(\sigma(A,
+B)=1-t\left(\sum_{1}^{n}\left|a_{k}-b_{k}\right|^{p}\right)^{q}\)</span></li>
+<li><span class="math inline">\(\sigma(A, B)=\frac{\sum_{n} a_{n} \wedge
+b_{n}}{\sum_n (a_{n} + b_{n})/2}\)</span></li>
+<li><span class="math inline">\(\sigma(A,
+B)=\exp\left(-t\left(\sum_{1}^{n}\left|a_{k}-b_{k}\right|^{p}\right)^{q}\right)\)</span></li>
+</ul>
+<h2 id="内外积">2. 内外积</h2>
+<h3 id="定义">2.1 定义</h3>
+<p><strong>内积</strong>：<span
+class="math inline">\(A,B\in\mathcal{F}(U)\)</span>，称 <span
+class="math inline">\(A\circ B=\underset{u \in U}{\vee}(A(u) \wedge
+B(u))\)</span> 为 <span class="math inline">\(A,B\)</span> 的内积</p>
+<p><strong>外积</strong>：<span
+class="math inline">\(A,B\in\mathcal{F}(U)\)</span>，称 <span
+class="math inline">\(A \hat{\circ} B=\underset{u \in U}{\wedge}(A(u)
+\vee B(u))\)</span> 为 <span class="math inline">\(A,B\)</span>
+的外积</p>
+<blockquote>
+<p><strong>Remarks</strong>：内外积本身并不是用来表述两个集合的相似程度的，就像向量的内外积，还与向量自身的模长有关。</p>
+</blockquote>
+<h3 id="性质">2.2 性质</h3>
+<ul>
+<li><span class="math inline">\(A \hat{\circ} B = A^c\circ B^c,(A\circ
+B)^c=A^c \hat{\circ} B^c\)</span></li>
+<li><span class="math inline">\(A {\circ} B\le \bar{a}\wedge\bar{b},A
+\hat{\circ} B\ge\underline{a}\vee\underline{b}\)</span></li>
+<li><span class="math inline">\(A\circ A=\bar{a},A \hat{\circ}
+A=\underline{a}\)</span></li>
+<li><span class="math inline">\(\underset{B \in \mathcal{F}(U)}{\vee}(A
+\circ B)=\bar{a}, \quad \underset{B \in \mathcal{F}(U)}{\wedge}\left(A
+{\hat{\circ}} B\right)=\underline{a}\)</span></li>
+<li><span class="math inline">\(A \subseteq B \Rightarrow A \circ
+B=\bar{a}, A{\hat{\circ}} B=\underline{b}\)</span></li>
+<li><span class="math inline">\(A \circ A^{c} \leq \frac{1}{2}, \quad
+A{\hat{\circ}} B \geq \frac{1}{2}\)</span></li>
+<li><span class="math inline">\(A \subseteq B \Rightarrow A \circ C \leq
+B \circ C, A{\hat{\circ}} C \leq B{\hat{o}} C\)</span></li>
+</ul>
+<h2 id="格贴近度">3. 格贴近度</h2>
+<p>给定F集A，让F集B靠近A，会使内积增大而外积减少。即当内积较大且外积较小时，A与B比较贴近。
+所以，以内外积相结合的“格贴近度”来刻 划两个F集的贴近程度。</p>
+<p><strong>格贴近度</strong>：<span class="math inline">\(N_{1}(A, B)=(A
+\circ B) \wedge\left(A\hat{\circ} B\right)^{c}\)</span></p>
+<p>格贴近度有以下性质</p>
+<ul>
+<li><span class="math inline">\(0\le N_1(A,B)\le1\)</span></li>
+<li><span class="math inline">\(N_1(A,B)=N_1(B,A)\)</span></li>
+<li><span
+class="math inline">\(N_1(A,A)=\bar{a}\wedge(1-\underline{a})\)</span></li>
+<li><span class="math inline">\(A \subseteq B \subseteq C \Rightarrow
+N_1(A, C) \leq N_1(A, B) \wedge N_1(B, C)\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Remarks</strong>：注意根据第 3
+条性质可知，格贴近度并不适合描述两个模糊集的相似程度，比如 <span
+class="math inline">\(N_1(U,U)=0\)</span></p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%B4%B4%E8%BF%91%E5%BA%A6/">贴近度</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/01/fuzzy/ch3-extension/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">模糊数学笔记 3：扩展原理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/29/optimization/ch4-cvx-function/">
+                        <span class="hidden-mobile">凸优化笔记 4：凸函数 Convex Function</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

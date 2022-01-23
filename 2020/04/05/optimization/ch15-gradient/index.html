@@ -1,0 +1,922 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记15：梯度方法 Gradient Method">
+<meta property="og:url" content="http://example.com/2020/04/05/optimization/ch15-gradient/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-05T10:12:30.000Z">
+<meta property="article:modified_time" content="2020-05-09T06:06:40.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="利普希兹连续">
+<meta property="article:tag" content="co-coercivity">
+<meta property="article:tag" content="强凸函数">
+<meta property="article:tag" content="梯度下降">
+<meta property="article:tag" content="线搜索">
+<meta property="article:tag" content="BB方法">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记15：梯度方法 Gradient Method - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记15：梯度方法 Gradient Method">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-05 18:12" pubdate>
+        April 5, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      81 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记15：梯度方法 Gradient Method</h1>
+            
+            <div class="markdown-body">
+              <p>前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT
+条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的<strong>梯度方法</strong>。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函数值不断减小。
+<span class="math display">\[
+x_{k+1}=x_{k}-t_k \nabla f(x_k),\quad k=0,1,...
+\]</span> 上面的式子看起来简单，但是真正应用时你会发现有各种问题：</p>
+<ol type="1">
+<li>下降方向怎么选？<span class="math inline">\(\nabla f(x_k)\)</span>
+吗？选择其他方向会不会好一点呢？</li>
+<li>如果 <span class="math inline">\(f(x)\)</span>
+(在某些点)不可导又怎么办呢？</li>
+<li>步长 <span class="math inline">\(t_k\)</span>
+怎么选呢？固定值？变化值？选多大比较好？</li>
+<li>收敛速度怎么样呢？我怎么才能知道是否达到精度要求呢？</li>
+<li>...</li>
+</ol>
+<span id="more"></span>
+<h2 id="凸函数">1. 凸函数</h2>
+<p>前面讲凸函数的时候我们提到了很多等价定义：Jensen's
+不等式、“降维打击”、一阶条件、二阶条件。这里我们主要关注其中两个：</p>
+<ol type="1">
+<li>Jensen's 不等式：<span class="math inline">\(f(\theta x+(1-\theta)
+y) \leq \theta f(x)+(1-\theta) f(y)\)</span></li>
+<li>一阶条件等价于<strong>梯度单调性</strong>：<span
+class="math inline">\((\nabla f(x)-\nabla f(y))^{T}(x-y) \geq 0 \quad
+\text { for all } x, y \in \operatorname{dom} f\)</span></li>
+</ol>
+<p>也就是说凸函数的梯度 <span class="math inline">\(\nabla f: R^n\to
+R^n\)</span> 是一个<strong>单调映射</strong>。</p>
+<h2 id="lipschitz-continuity">2. Lipschitz continuity</h2>
+<p>函数 <span class="math inline">\(f\)</span>
+的梯度满足<strong>利普希茨连续(Lipschitz continuous)</strong>的定义为
+<span class="math display">\[
+\|\nabla f(x)-\nabla f(y)\|_{*} \leq L\|x-y\| \quad \text { for all } x,
+y \in \operatorname{dom} f
+\]</span> 也被称为
+<strong>L-smooth</strong>。有了这个条件，我们可以推出很多个等价性质，这里省略了证明过程</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-lipschitz.PNG" srcset="/img/loading.gif" lazyload
+alt="lipschitz" />
+<figcaption aria-hidden="true">lipschitz</figcaption>
+</figure>
+<blockquote>
+<p>也就是说下面的式子都是等价的 <span class="math display">\[
+\|\nabla f(x)-\nabla f(y)\|_{*} \leq L\|x-y\| \quad \text { for all } x,
+y \in \operatorname{dom} f
+\]</span></p>
+<p><span class="math display">\[
+(\nabla f(x)-\nabla f(y))^{T}(x-y) \leq L\|x-y\|^{2} \quad \text { for
+all } x, y \in \operatorname{dom} f
+\]</span></p>
+<p><span class="math display">\[
+f(y) \leq f(x)+\nabla f(x)^{T}(y-x)+\frac{L}{2}\|y-x\|^{2} \quad \text {
+for all } x, y \in \operatorname{dom} f
+\]</span></p>
+<p><span class="math display">\[
+(\nabla f(x)-\nabla f(y))^{T}(x-y) \geq \frac{1}{L}\|\nabla f(x)-\nabla
+f(y)\|_{*}^{2} \quad \text { for all } x, y
+\]</span></p>
+<p><span class="math display">\[
+g(x)=\frac{L}{2}\Vert x\Vert_2^2-f(x) \ \text{ is convex}
+\]</span></p>
+<p><strong>Remarks 1</strong>：</p>
+<p>上面的第 3 个式子 <span class="math display">\[
+f(y) \leq f(x)+\nabla f(x)^{T}(y-x)+\frac{L}{2}\Vert y-x\Vert^{2} \quad
+\text { for all } x, y \in \operatorname{dom} f
+\]</span>
+实际上定义了一个<strong>二次曲线</strong>，这个曲线是原始函数的
+<strong>Quadratic upper bound</strong></p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-quadra-upper.PNG" srcset="/img/loading.gif" lazyload
+alt="Quadratic upper bound" />
+<figcaption aria-hidden="true">Quadratic upper bound</figcaption>
+</figure>
+<p>并且由这个式子可以推导出 <span class="math display">\[
+\frac{1}{2 L}\Vert\nabla f(z)\Vert_{*}^{2} \leq
+f(z)-f\left(x^{\star}\right) \leq \frac{L}{2}\left\Vert
+z-x^{\star}\right\Vert^{2} \quad \text { for all } z
+\]</span> 这个式子中的上界 <span
+class="math inline">\(\frac{L}{2}\left\|z-x^{\star}\right\|^{2}\)</span>
+带有 <span class="math inline">\(x^\star\)</span>
+是未知的，而下界只与当前值 <span class="math inline">\(z\)</span>
+有关，因此在优化过程中我们可以判断当前的 <span
+class="math inline">\(f(z)\)</span> 与最优值的距离至少为 <span
+class="math inline">\(\frac{1}{2 L}\|\nabla
+f(z)\|_{*}^{2}\)</span>，如果这个值大于0，那么我们一定还没得到最优解。</p>
+<p><strong>Remarks 2</strong>：</p>
+<p>上面的最后一个式子 <span class="math display">\[
+(\nabla f(x)-\nabla f(y))^{T}(x-y) \geq \frac{1}{L}\|\nabla f(x)-\nabla
+f(y)\|_{*}^{2} \quad \text { for all } x, y
+\]</span> 被称为 <span class="math inline">\(\nabla f\)</span> 的
+<strong>co-coercivity</strong> 性质。（这其实有点像 <span
+class="math inline">\(\nabla f\)</span> 的反函数的 L-smooth
+性质，所以它跟 <span class="math inline">\(\nabla f\)</span> 的 L-smooth
+性质是等价的）</p>
+</blockquote>
+<h2 id="强凸函数">3. 强凸函数</h2>
+<p>满足如下性质的函数被称为 <strong>m-强凸(m-strongly convex)</strong>的
+<span class="math display">\[
+f(\theta x+(1-\theta) y) \leq \theta f(x)+(1-\theta) f(y)-\frac{m}{2}
+\theta(1-\theta)\|x-y\|^{2} \quad \text { for all } x,
+y\in\text{dom}f,\theta\in[0,1]
+\]</span> m-强凸跟前面的 L-smooth
+实际上非常像，只不过一个定义了上界，另一个定义了下界。</p>
+<blockquote>
+<p>类似上面的 L-smooth
+性质，我们课可以得到下面几个式子是<strong>等价</strong>的 <span
+class="math display">\[
+f \text{ is m-strongly convex}
+\]</span></p>
+<p><span class="math display">\[
+(\nabla f(x)-\nabla f(y))^{T}(x-y) \geq m\|x-y\|^{2} \quad \text { for
+all } x, y \in \operatorname{dom} f
+\]</span></p>
+<p><span class="math display">\[
+f(y) \geq f(x)+\nabla f(x)^{T}(y-x)+\frac{m}{2}\|y-x\|^{2} \quad \text {
+for all } x, y \in \operatorname{dom} f
+\]</span></p>
+<p><span class="math display">\[
+g(x) = f(x)-\frac{m}{2}\Vert x\Vert^2 \ \text{ is convex}
+\]</span></p>
+</blockquote>
+<p>注意上面第3个式子不等号右遍实际上又定义了一个二次曲线，这个二次曲线是原函数的下界。与前面的二次上界类比可以得到</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quadratic lower bound</th>
+<th>Quadratic upper bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-quadra-lower.PNG" srcset="/img/loading.gif" lazyload
+alt="Quadratic lower bound" /></td>
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-quadra-upper.PNG" srcset="/img/loading.gif" lazyload
+alt="Quadratic upper bound" /></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(f(y) \geq f(x)+\nabla
+f(x)^{T}(y-x)+\frac{m}{2}\Vert y-x\Vert^{2}\)</span></td>
+<td><span class="math inline">\(f(y) \leq f(x)+\nabla
+f(x)^{T}(y-x)+\frac{L}{2}\Vert y-x\Vert^{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\Longrightarrow \frac{m}{2}\left\Vert
+z-x^{\star}\right\Vert^{2} \leq f(z)-f\left(x^{\star}\right) \leq
+\frac{1}{2 m}\Vert\nabla f(z)\Vert_{*}^{2}\)</span></td>
+<td><span class="math inline">\(\Longrightarrow \frac{1}{2 L}\Vert\nabla
+f(z)\Vert_{*}^{2} \leq f(z)-f\left(x^{\star}\right) \leq
+\frac{L}{2}\left\Vert z-x^{\star}\right\Vert^{2}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>例子</em></strong>：如果函数 <span
+class="math inline">\(f\)</span> 既是 m-强凸的，又是(关于2范数) L-smooth
+的，那么</p>
+<ol type="1">
+<li>函数 <span class="math inline">\(h(x)=f(x)-\frac{m}{2}\Vert
+x\Vert^2\)</span> 是 <strong>(L-m)-smooth</strong> 的</li>
+<li>函数 <span class="math inline">\(h\)</span> 的 co-coercivity
+可以写为</li>
+</ol>
+<p><span class="math display">\[
+(\nabla f(x)-\nabla f(y))^{T}(x-y) \geq \frac{m
+L}{m+L}\|x-y\|_{2}^{2}+\frac{1}{m+L}\|\nabla f(x)-\nabla f(y)\|_{2}^{2}
+\quad \text { for all } x, y \in \operatorname{dom} f
+\]</span></p>
+<h2 id="梯度方法收敛性分析">4. 梯度方法收敛性分析</h2>
+<p>下面给出一些常见梯度下降方法的分析。先回顾一下梯度方法的一般表达式
+<span class="math display">\[
+x_{k+1}=x_{k}-t_k \nabla f(x_k)
+\]</span> 首先有一些假设</p>
+<ol type="1">
+<li><span class="math inline">\(f\)</span> convex 且可导，<span
+class="math inline">\(\text{dom}f=R^n\)</span></li>
+<li><span class="math inline">\(\nabla f\)</span> 关于2范数 L-Lipschitz
+continuous</li>
+<li>最优解有限且可取</li>
+</ol>
+<h3 id="固定步长">4.1 固定步长</h3>
+<p>固定步长为 <span class="math inline">\(t\)</span>，则 <span
+class="math inline">\(x^+=x-t\nabla f(x)\)</span>，根据 L-smooth 性质有
+<span class="math display">\[
+f(x-t \nabla f(x)) \leq f(x)-t\left(1-\frac{L t}{2}\right)\|\nabla
+f(x)\|_{2}^{2}
+\]</span> 如果 <span class="math inline">\(0 &lt; t \leq
+1/L\)</span>，则有 <span class="math display">\[
+f\left(x^{+}\right) \leq f(x)-\frac{t}{2}\|\nabla f(x)\|_{2}^{2}
+\]</span> 这表明(只要步长 <span class="math inline">\(t\)</span>
+比较小)<strong>函数值总是在不断减小</strong>的。从上面的式子结合凸函数性质我们还可以得到
+<span class="math display">\[
+\begin{aligned}
+f\left(x^{+}\right)-f^{\star} &amp; \leq \nabla
+f(x)^{T}\left(x-x^{\star}\right)-\frac{t}{2}\|\nabla f(x)\|_{2}^{2} \\
+&amp;=\frac{1}{2
+t}\left(\left\|x-x^{\star}\right\|_{2}^{2}-\left\|x-x^{\star}-t \nabla
+f(x)\right\|_{2}^{2}\right) \\
+&amp;=\frac{1}{2
+t}\left(\left\|x-x^{\star}\right\|_{2}^{2}-\left\|x^{+}-x^{\star}\right\|_{2}^{2}\right)
+\end{aligned}
+\]</span> 从这个式子可以得到我们<strong>到最优点 <span
+class="math inline">\(x^\star\)</span>
+的距离在不断减小</strong>。那么可以得到下面的式子 <span
+class="math display">\[
+\begin{aligned}
+\sum_{i=1}^{k}\left(f\left(x_{i}\right)-f^{\star}\right) &amp; \leq
+\frac{1}{2 t}
+\sum_{i=1}^{k}\left(\left\|x_{i-1}-x^{\star}\right\|_{2}^{2}-\left\|x_{i}-x^{\star}\right\|_{2}^{2}\right)
+\\
+&amp;=\frac{1}{2
+t}\left(\left\|x_{0}-x^{\star}\right\|_{2}^{2}-\left\|x_{k}-x^{\star}\right\|_{2}^{2}\right)
+\\
+&amp; \leq \frac{1}{2 t}\left\|x_{0}-x^{\star}\right\|_{2}^{2}
+\end{aligned} \\
+\Longrightarrow
+f(x_k)-f^\star\leq\frac{1}{k}\sum_{i=1}^{k}\left(f\left(x_{i}\right)-f^{\star}\right)
+\leq \frac{1}{2 kt}\left\|x_{0}-x^{\star}\right\|_{2}^{2}
+\]</span> 因此普通的固定步长的梯度下降有以下收敛性质</p>
+<ol type="1">
+<li><span class="math inline">\(f(x_{k+1}) &lt; f(x_k)\)</span></li>
+<li><span class="math inline">\(\Vert x_{k+1}-x^\star\Vert &lt; \Vert
+x_{k}-x^\star\Vert\)</span></li>
+<li><span class="math inline">\(f(x_k)-f^\star\leq \frac{1}{2
+kt}\left\|x_{0}-x^{\star}\right\|_{2}^{2}\)</span>，要想满足精度 <span
+class="math inline">\(f(x_k)-f^\star \leq \epsilon\)</span>
+需要的迭代次数为 <span class="math inline">\(O(1/\epsilon)\)</span></li>
+</ol>
+<h3 id="线搜索">4.2 线搜索</h3>
+<p>线搜索就是每步都要计算合适的步长，计算方法为不断地迭代 <span
+class="math inline">\(t_k:=\beta t_k,0&lt;\beta&lt;1\)</span> 直到 <span
+class="math inline">\(t_k\)</span> 满足下面的条件 <span
+class="math display">\[
+f\left(x_{k}-t_{k} \nabla
+f\left(x_{k}\right)\right)&lt;f\left(x_{k}\right)-\alpha
+t_{k}\left\|\nabla f\left(x_{k}\right)\right\|_{2}^{2}
+\]</span> 形象理解就是下面这幅图，一开始我们的 <span
+class="math inline">\(t_k\)</span>
+可能很大，表示梯度下降的步长过大，不能使函数值减小，那我们就减小步长
+<span class="math inline">\(t_k=\beta
+t_k\)</span>，直到进入绿线与蓝线交点左侧这部分，我们就可以保证一定有
+<span
+class="math inline">\(f(x_{k+1})&lt;f(x_k)\)</span>，这时就是我们要取的
+<span
+class="math inline">\(t_k\)</span>，这也是线搜索的含义，线搜索实际上就是在搜索合适的步长
+<span class="math inline">\(t_k\)</span>。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-line-search.PNG" srcset="/img/loading.gif" lazyload
+alt="line search" />
+<figcaption aria-hidden="true">line search</figcaption>
+</figure>
+<p>主要到上面的式子中有一个参数 <span
+class="math inline">\(\alpha\)</span> 会影响我们的搜索结果，比如上图中
+<span class="math inline">\(\alpha\)</span>
+越大，则绿线的斜率越大，那么最终搜索到的 <span
+class="math inline">\(t_k\)</span>
+应该就越小，表示我们每一步的步长都会更小。实际中往往取 <span
+class="math inline">\(\alpha=1/2\)</span>，此时理想的搜索结果实际上就是
+quadratic upper bound
+的最小值点。也就是说我们用二次上界曲线来近似待优化的函数，而二次上界的最小值点对应的步长就是
+<span
+class="math inline">\(t=1/L\)</span>，但由于我们是线搜索，实际得到的
+<span class="math inline">\(t_k\)</span> 一般会比这个值略小一点。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-line-search2.PNG" srcset="/img/loading.gif" lazyload
+alt="line search" />
+<figcaption aria-hidden="true">line search</figcaption>
+</figure>
+<p>另一方面为了保证线搜索在有限步能够终止，还需要满足 <span
+class="math inline">\(t_k\ge t_\min
+=\min\{\hat{t},\beta/L\}\)</span>，其中 <span
+class="math inline">\(\hat{t}\)</span> 是预先指定的一个参数。</p>
+<p>那么线搜索的收敛性怎么样呢？首先根据线搜索的定义一定有 <span
+class="math display">\[
+\begin{aligned}
+f\left(x_{i+1}\right) &amp; \leq
+f\left(x_{i}\right)-\frac{t_{i}}{2}\left\|\nabla
+f\left(x_{i}\right)\right\|_{2}^{2} \\
+&amp; \leq f^{\star}+\nabla
+f\left(x_{i}\right)^{T}\left(x_{i}-x^{\star}\right)-\frac{t_{i}}{2}\left\|\nabla
+f\left(x_{i}\right)\right\|_{2}^{2} \\
+&amp;=f^{\star}+\frac{1}{2
+t_{i}}\left(\left\|x_{i}-x^{\star}\right\|_{2}^{2}-\left\|x_{i+1}-x^{\star}\right\|_{2}^{2}\right)
+\end{aligned}
+\]</span> 这表明 <span
+class="math inline">\(f(x_{i+1})&lt;f(x_i),\left\|x_{i}-x^{\star}\right\|_{2}&gt;\left\|x_{i+1}-x^{\star}\right\|_{2}\)</span>，类似前面固定步长的分析，可以得到
+<span class="math display">\[
+f(x_k)-f^\star\leq\frac{1}{k}\sum_{i=1}^{k}\left(f\left(x_{i}\right)-f^{\star}\right)
+\leq \frac{1}{2 kt_\min}\left\|x_{0}-x^{\star}\right\|_{2}^{2}
+\]</span> 因此对于线搜索的方法，我们可以得到如下的收敛性质</p>
+<ol type="1">
+<li><span class="math inline">\(f(x_{i+1})&lt;f(x_i)\)</span></li>
+<li><span
+class="math inline">\(\left\|x_{i}-x^{\star}\right\|_{2}&gt;\left\|x_{i+1}-x^{\star}\right\|_{2}\)</span></li>
+<li><span class="math inline">\(f(x_k)-f^\star\leq \frac{1}{2
+kt_\min}\left\|x_{0}-x^{\star}\right\|_{2}^{2}\)</span></li>
+</ol>
+<p>所以线搜索实际上并不能提高收敛速度的阶，他与固定步长的方法都是 <span
+class="math inline">\(O(1/k)\)</span> 的，为 <strong>sublinear
+收敛</strong>。</p>
+<h3 id="一阶方法的收敛极限">4.3 一阶方法的收敛极限</h3>
+<p>不管是固定步长还是线搜索，前面的方法都是一阶方法，即 <span
+class="math display">\[
+x_{k+1}\in x_{0}+\operatorname{span}\left\{\nabla f\left(x_{0}\right),
+\nabla f\left(x_{1}\right), \ldots, \nabla f\left(x_{k}\right)\right\}
+\]</span> 而理论上也证明一阶方法的收敛速度存在极限。</p>
+<p><strong>定理(Nesterov)</strong>： for every integer <span
+class="math inline">\(k ≤ (n−1)/2\)</span> and every <span
+class="math inline">\(x_0\)</span>, there exist functions in the problem
+class such that for any ﬁrst-order method <span class="math display">\[
+f\left(x_{k}\right)-f^{\star} \geq \frac{3}{32}
+\frac{L\left\|x_{0}-x^{\star}\right\|_{2}^{2}}{(k+1)^{2}}
+\]</span> 也就是说收敛速度最多也就是 <span
+class="math inline">\(O(1/k^2)\)</span>。</p>
+<h3 id="强凸函数的梯度方法">4.4 强凸函数的梯度方法</h3>
+<p>对于强凸函数，即使采用固定步长的梯度方法，也可以得到<strong>线性收敛速度</strong>！这就是强凸性带来的好处。</p>
+<p>考虑 <span class="math inline">\(0&lt;t&lt;2/(m+L)\)</span>，我们有
+<span class="math display">\[
+\begin{aligned}
+\left\|x^{+}-x^{\star}\right\|_{2}^{2} &amp;=\left\|x-t \nabla
+f(x)-x^{\star}\right\|_{2}^{2} \\
+&amp;=\left\|x-x^{\star}\right\|_{2}^{2}-2 t \nabla
+f(x)^{T}\left(x-x^{\star}\right)+t^{2}\|\nabla f(x)\|_{2}^{2} \\
+&amp; \leq\left(1-t \frac{2 m
+L}{m+L}\right)\left\|x-x^{\star}\right\|_{2}^{2}+t\left(t-\frac{2}{m+L}\right)\|\nabla
+f(x)\|_{2}^{2} \\
+&amp; \leq\left(1-t \frac{2 m
+L}{m+L}\right)\left\|x-x^{\star}\right\|_{2}^{2}
+\end{aligned}
+\]</span> 也就是说可以得到 <span class="math display">\[
+\left\|x_{k}-x^{\star}\right\|_{2}^{2} \leq
+c^{k}\left\|x_{0}-x^{\star}\right\|_{2}^{2}, \quad c=1-t \frac{2 m
+L}{m+L} \\
+f\left(x_{k}\right)-f^{\star} \leq
+\frac{L}{2}\left\|x_{k}-x^{\star}\right\|_{2}^{2} \leq \frac{c^{k}
+L}{2}\left\|x_{0}-x^{\star}\right\|_{2}^{2}
+\]</span> 注意到前面是反比例下降，这里变成了指数下降。如果要打到精度
+<span class="math inline">\(f(x_k)-f^\star \leq \epsilon\)</span>
+需要的迭代次数为 <span
+class="math inline">\(O(\log(1/\epsilon))\)</span></p>
+<h2 id="bb-方法">5. BB 方法</h2>
+<p><strong>Barzilai-Borwein (BB) method</strong>
+也是梯度下降方法的一种，他主要是通过近似牛顿方法来实现更快的收敛速度，同时避免计算二阶导数带来的计算复杂度。</p>
+<p>如果我们记 <span class="math inline">\(\boldsymbol{g}^{(k)}=\nabla
+f\left(\boldsymbol{x}^{(k)}\right) \text { and }
+\boldsymbol{F}^{(k)}=\nabla^{2}
+f\left(\boldsymbol{x}^{(k)}\right)\)</span>，那么<strong>一阶方法</strong>就是
+<span
+class="math inline">\(\boldsymbol{x}^{(k+1)}=\boldsymbol{x}^{(k)}-\alpha_{k}
+\boldsymbol{g}^{(k)}\)</span>，其中步长 <span
+class="math inline">\(\alpha_k\)</span>
+可以是固定的，也可以是线搜索获得的，一阶方法简单但是收敛速度慢。<strong>牛顿方法</strong>就是
+<span
+class="math inline">\(\boldsymbol{x}^{(k+1)}=\boldsymbol{x}^{(k)}-\left(\boldsymbol{F}^{(k)}\right)^{-1}
+\boldsymbol{g}^{(k)}\)</span>，其收敛速度更快，但是海森矩阵计算代价较大。而
+<strong>BB方法</strong>就是用 <span class="math inline">\(\alpha_{k}
+\boldsymbol{g}^{(k)}\)</span> 来近似 <span
+class="math inline">\(\left(\boldsymbol{F}^{(k)}\right)^{-1}
+\boldsymbol{g}^{(k)}\)</span>。</p>
+<p>怎么近似呢？假如定义 <span
+class="math inline">\(s^{(k-1)}:=x^{(k)}-x^{(k-1)} \text { and }
+y^{(k-1)}:=g^{(k)}-g^{(k-1)}\)</span>，那么海森矩阵实际上就是 <span
+class="math display">\[
+\boldsymbol{F}^{(k)}s^{(k-1)}=y^{(k-1)}
+\]</span> 现在的想法就是用 <span class="math inline">\((\alpha_k
+I)^{-1}\)</span> 来近似 <span
+class="math inline">\(\boldsymbol{F}^{(k)}\)</span>，那么应该有 <span
+class="math display">\[
+(\alpha_k I)^{-1}s^{(k-1)}=y^{(k-1)}
+\]</span> 这个问题用最小二乘就可以解决了，下面两种选择都可以 <span
+class="math display">\[
+\alpha_{k}^{-1}=\underset{\beta}{\arg \min } \frac{1}{2}\left\|s^{(k-1)}
+\beta-\boldsymbol{y}^{(k-1)}\right\|^{2} \Longrightarrow
+\alpha_{k}^{1}=\frac{\left(s^{(k-1)}\right)^{T}
+s^{(k-1)}}{\left(s^{(k-1)}\right)^{T} \boldsymbol{y}^{(k-1)}}
+\\\alpha_{k}=\underset{\alpha}{\arg \min }
+\frac{1}{2}\left\|s^{(k-1)}-\boldsymbol{y}^{(k-1)} \alpha\right\|^{2}
+\Longrightarrow
+\alpha_{k}^{2}=\frac{\left(\boldsymbol{s}^{(k-1)}\right)^{T}
+\boldsymbol{y}^{(k-1)}}{\left(\boldsymbol{y}^{(k-1)}\right)^{T}
+\boldsymbol{y}^{(k-1)}}
+\]</span> 这两个解有一个微妙的不同点在于 <span
+class="math inline">\(\alpha_k^1\)</span> 的分母 <span
+class="math inline">\(\left(s^{(k-1)}\right)^{T}
+\boldsymbol{y}^{(k-1)}\)</span> 有可能等于 0，这会给计算带来麻烦，而
+<span class="math inline">\(\alpha_k^2\)</span> 则不会。</p>
+<p>BB方法主要有以下几个特点：</p>
+<ol type="1">
+<li>几乎不需要额外的计算量，但是往往会带来极大的性能增益；</li>
+<li>实际应用中这两个表达式用哪个都可以，甚至还可以交换使用，用哪个更好一般与具体的问题有关；</li>
+<li>收敛性很难证明，没有收敛性的保证。比如下面的例子，他甚至不是单调下降的。</li>
+</ol>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/15-bb.PNG" srcset="/img/loading.gif" lazyload
+alt="BB method" />
+<figcaption aria-hidden="true">BB method</figcaption>
+</figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">利普希兹连续</a>
+                    
+                      <a class="hover-with-bg" href="/tags/co-coercivity/">co-coercivity</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">强凸函数</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%BF%E6%90%9C%E7%B4%A2/">线搜索</a>
+                    
+                      <a class="hover-with-bg" href="/tags/BB%E6%96%B9%E6%B3%95/">BB方法</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/08/tools/matlab-parpool/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MATLAB R2016a 无法启动并行池</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/05/optimization/ch14-sdp-rep/">
+                        <span class="hidden-mobile">凸优化笔记14：SDP Representablity</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

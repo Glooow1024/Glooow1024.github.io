@@ -1,0 +1,783 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="参数估计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(二) Estimation Problem">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch2_Estimation/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="参数估计">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T11:56:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:04:16.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="参数估计">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(二) Estimation Problem - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(二) Estimation Problem">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 19:56" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(二) Estimation Problem</h1>
+            
+            <div class="markdown-body">
+              <p>参数估计</p>
+<span id="more"></span>
+<h2 id="bayesian-parameter-estimation">1. Bayesian parameter
+estimation</h2>
+<ul>
+<li><p>Formulation</p>
+<ul>
+<li>Prior distribution <span
+class="math inline">\(p_{\mathsf{x}}(\cdot)\)</span></li>
+<li>Observation <span
+class="math inline">\(p_{\mathsf{y|x}}(\cdot|\cdot)\)</span></li>
+<li>Cost <span class="math inline">\(C(a,\hat a)\)</span></li>
+</ul></li>
+<li><p>Solution</p>
+<ul>
+<li><span class="math inline">\(\hat x(\cdot) = \arg\min_{f(\cdot)}
+\mathbb E[C(x,f(y))]\)</span></li>
+<li><span
+class="math inline">\(\hat{\mathbf{x}}(\mathbf{y})=\underset{\mathbf{a}}{\arg
+\min } \int_{\mathcal{X}} C(\mathbf{x}, \mathbf{a}) p_{\mathbf{x} |
+\mathbf{y}}(\mathbf{x} | \mathbf{y}) \mathrm{d} \mathbf{x}\)</span></li>
+</ul></li>
+<li><p>Specific case</p>
+<ul>
+<li><p><strong>MAE</strong>(Minimum absolute-error)</p>
+<ul>
+<li><span class="math inline">\(C(a,\hat a)=|a-\hat a|\)</span></li>
+<li><span class="math inline">\(\hat x\)</span> is the
+<strong>median</strong> of the belief <span
+class="math inline">\(p_{\mathsf{x|y}}(x|y)\)</span></li>
+</ul></li>
+<li><p><strong>MAP</strong>(Maximum a posteriori)</p>
+<ul>
+<li><span class="math display">\[C(a,\hat a) = \left\{
+\begin{array}{ll}{1,} &amp; {|a-\hat a|&gt;\varepsilon} \\
+{0,} &amp; {otherwise}\end{array}\right.\]</span></li>
+<li><span class="math inline">\(\hat x_{MAP}(y) = \arg \max_a
+p_{\mathsf{x|y}}(a|y)\)</span></li>
+</ul></li>
+<li><p><strong>BLS</strong>(Bayes’ least-squares)</p>
+<ul>
+<li><p><span class="math inline">\(C(a,\hat a)=||a-\hat
+a||^2\)</span></p></li>
+<li><p><span class="math inline">\(\hat x_{BLS}(y) = \mathbb E
+[\mathsf{x|y}]\)</span></p></li>
+<li><p>proposition</p>
+<ul>
+<li><p>unbiased: <span class="math inline">\(b = \mathbb
+E[\mathsf{e(x,y)}]=E[\mathsf{\hat x(y)-x}]=0\)</span></p></li>
+<li><p>误差的协方差矩阵就是
+<strong>belief</strong>（后验分布？）的协方差阵的期望 <span
+class="math display">\[
+\Lambda_{BLS}=\mathbb E[\mathsf{\Lambda_{x|y}(y)}]
+\]</span></p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>Orthogonality <span class="math display">\[
+      \hat x(\cdot)\ is\ BLS \iff \mathbb E\left[ \mathsf{[\hat
+x(y)-x]g^T(y)}\right]=0
+  \]</span></p>
+<div class="code-wrapper"><pre><code class="hljs">&gt; **Proof**:  omit</code></pre></div></li>
+</ul>
+<h2 id="linear-least-square-estimation">2. Linear least-square
+estimation</h2>
+<ul>
+<li><p>Drawback of BLS <span class="math inline">\(\hat
+x_{BLS}(y)=E[x|y]\)</span></p>
+<ul>
+<li>requires posterior <span class="math inline">\(p(x|y)\)</span>,
+which needs <span class="math inline">\(p(x)\)</span> and <span
+class="math inline">\(p(y|x)\)</span></li>
+<li>calculating posterior is complicated</li>
+<li>estimator is <strong>nonlinear</strong></li>
+</ul></li>
+<li><p>Definition of LLS</p>
+<ul>
+<li><span class="math inline">\(\hat {\mathbf{x}}_{LLS}(y) = \arg
+\min\limits_{f(\cdot) \in \mathcal{B}}
+E\left[||\mathsf{x-f(y)}||^2\right] \\
+\mathcal{B}=\{f(\cdot):f(y)=Ay+d\}\)</span></li>
+<li>注意 <span class="math inline">\(\hat
+{\mathbf{x}}(\mathsf{y})\)</span> 是一个随机变量，是关于 <span
+class="math inline">\(\mathsf{y}\)</span> 的一个函数</li>
+<li>LLS 与 BLS 都是假设 x 为一个随机变量，有先验分布，不同之处在于 LLS
+要求估计函数为关于观测值 y 的线性函数，因此 LLS 只需要知道二阶矩，而 BLS
+需要知道后验均值</li>
+</ul></li>
+<li><p>Property</p>
+<ul>
+<li><p>Orthogonality <span class="math display">\[
+\hat {\mathbf{x}}(\cdot)\ is\ LLS \iff E[\hat
+{\mathbf{x}}(\mathsf{y})-\mathsf{x}]=0\ \ and\ \ E[(\hat
+{\mathbf{x}}(\mathsf{y})-\mathsf{x})\mathsf{y}^T]=0
+\]</span></p></li>
+<li><p>推论：由正交性可得到</p>
+<ul>
+<li><span class="math inline">\(\hat
+x_{LLS}(y)=\mu_X+\Lambda_{xy}\Lambda_y^{-1}(y-\mu_y)\)</span></li>
+<li><span class="math inline">\(\Lambda_{\mathrm{LLS}} \triangleq
+\mathbb{E}\left[\left(\mathbf{x}-\hat{\mathbf{x}}_{\mathrm{LLS}}(\mathbf{y})\right)\left(\mathbf{x}-\hat{\mathbf{x}}_{\mathrm{LLS}}(\mathbf{y})\right)^{\mathrm{T}}\right]=\Lambda_{\mathrm{x}}-\Lambda_{\mathrm{xy}}
+\Lambda_{\mathrm{y}}^{-1}
+\Lambda_{\mathrm{xy}}^{\mathrm{T}}\)</span></li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>Proof</strong>: x 可以是向量</p>
+<p><span class="math inline">\(\Longrightarrow\)</span>：反证法</p>
+<ol type="1">
+<li><p>suppose <span class="math inline">\(E[\hat
+x_{LLS}(y)-x]=\mathbb{b} \ne 0\)</span>，take <span
+class="math inline">\(\hat x&#39;=\hat x_{LLS} - b\)</span> then <span
+class="math inline">\(E\left[||\hat x&#39; - x||^2\right]=E\left[||\hat
+x - x||^2\right]-b^2 &lt; E\left[||\hat x - x||^2\right]\)</span> 与 LLS
+的定义矛盾；</p></li>
+<li><p><span class="math inline">\(e=\hat x(y)-x\)</span> Take <span
+class="math inline">\(\hat x&#39; = \hat x_{LLS} -
+\Lambda_{ey}\Lambda_y^{-1}(y-\mu_y)\)</span> <span
+class="math display">\[
+\begin{align}
+M &amp;= E\left[(\hat x&#39; -x)(\hat x&#39; -x)^T \right] \\
+&amp;= E\left[(\hat x-x)(\hat
+x-x)^T\right]-\Lambda_{ey}\Lambda_y^{-1}\Lambda_{ey}^T
+\end{align}
+\]</span> 由于 <span
+class="math inline">\(E\left[||\mathsf{x-f(y)}||^2\right] =
+tr\{M\}\)</span>，LLS 的 MSE 应当最小 由于 <span
+class="math inline">\(\Lambda_y\)</span> 正定，因此应有 <span
+class="math inline">\(\Lambda_{ey}\Lambda_y^{-1}\Lambda_{ey}^T=0\)</span>
+故 <span class="math inline">\(E\left[(\hat x-\mu_x)(y-\mu_y)^T
+\right]=0 \Longrightarrow E[(\hat
+{\mathbf{x}}(\mathsf{y})-\mathsf{x})\mathsf{y}^T]=0\)</span></p></li>
+</ol>
+<p><span class="math inline">\(\Longleftarrow\)</span>：suppose another
+linear estimator <span class="math inline">\(\hat x&#39;\)</span> <span
+class="math display">\[
+\begin{align}
+E\left[(\hat x&#39;-x)(\hat x&#39;-x)^T\right] &amp;= E[(\hat
+x&#39;-\hat x+\hat x-x)(\hat x&#39;-\hat x+\hat x-x)^T] \\
+&amp;= E[(\hat x&#39;-\hat x)(\hat x&#39;-\hat x)^T] + E[(\hat x-x)(\hat
+x-x)^T] \\&amp;\ \ \ \ \  - 2E[(\hat x-x)(\hat x&#39;-\hat x)^T] \\
+&amp;= E[(\hat x&#39;-\hat x)(\hat x&#39;-\hat x)^T] + E[(\hat x-x)(\hat
+x-x)^T]
+\end{align}
+\]</span> 第三个等号是由于 <span class="math inline">\(\hat x&#39;-\hat
+x = A&#39;y+d&#39;\)</span></p>
+<p>同样的根据上面 <span class="math inline">\(MSE=tr\{M\}\)</span>
+可得到 <span class="math inline">\(\hat x\)</span> 有最小的 MSE</p>
+</blockquote></li>
+<li><p>联合高斯分布的情况</p>
+<ul>
+<li>定理：如果 x 和 y 是联合高斯分布的，那么 <span
+class="math display">\[
+\hat x_{BLS}(y) = \hat x_{LLS}(y)
+\]</span></li>
+</ul>
+<blockquote>
+<p>证明：<span class="math inline">\(e_{LLS}=\hat x_{LLS}-x\)</span>
+也是高斯分布</p>
+<p>由于 <span class="math inline">\(E[e_{LLS}\ y^T]=0\)</span>，故 <span
+class="math inline">\(e_{LLS}\)</span> 与 y 相互独立</p>
+<p><span class="math inline">\(E[e_{LLS}|y]=E[e_{LLS}]=0 \to E[\hat
+x_{LLS}|y]=\hat x_{LLS} = E[x|y]\)</span></p>
+</blockquote>
+<ul>
+<li>通常如果只有联合二阶矩信息，那么 LLS 是 minmax</li>
+</ul></li>
+</ul>
+<h2 id="non-bayesian-formulation">3. Non-Bayesian formulation</h2>
+<ul>
+<li><p>Formulation</p>
+<ul>
+<li>observation: distribution of y <strong>parameterized</strong> by x,
+<span class="math inline">\(p_\mathsf{y}(\mathbf{y;x})\)</span> not
+<strong>conditioned</strong> on x, <span
+class="math inline">\(p_\mathsf{y|x}(\mathbf{y|x})\)</span> 此时 x
+不再是一个随机变量，而是未知的一个参数</li>
+<li>bias: <span class="math inline">\(b(x)=E[\hat
+x(y)-\mathbf{x}]\)</span></li>
+<li>误差协方差矩阵 <span
+class="math inline">\(\Lambda_{\mathrm{e}}(\mathrm{x})=\mathbb{E}\left[(\mathrm{e}(\mathrm{x},
+\mathrm{y})-\mathrm{b}(\mathrm{x}))(\mathrm{e}(\mathrm{x},
+\mathrm{y})-\mathrm{b}(\mathrm{x}))^{\mathrm{T}}\right]\)</span></li>
+</ul></li>
+<li><p><strong>有效(valid)</strong>估计器不应当显式地依赖于 x</p></li>
+<li><p><strong>MVU</strong>: Minimum-variance unbiased estimator</p>
+<ul>
+<li>在 MMSE 条件下最优估计就是 MVU 估计 <span class="math display">\[
+\begin{align}
+MSE &amp;= E[e^2]=E[(\hat x-x)^2]=E[(\hat x-\mu_{\hat x}+\mu_{\hat x
+}-x)^2] \\
+&amp; =E[(\hat x-\mu_{\hat x})^2]+b^2= \Lambda_{\hat x}(x) + b^2\\
+\end{align}
+\]</span></li>
+</ul></li>
+<li><p>MVU 可能不存在</p>
+<ul>
+<li>可能不存在无偏估计，即 <span
+class="math inline">\(\mathcal{A}=\varnothing\)</span></li>
+<li>存在无偏估计 <span class="math inline">\(\mathcal{A} \ne
+\varnothing\)</span>，但是不存在某个估计量在所有情况（任意
+x）下都是最小方差</li>
+</ul></li>
+</ul>
+<h2 id="crb">4. CRB</h2>
+<p><strong>定理</strong>：满足正规条件时 <span class="math display">\[
+\mathbb{E}\left[\frac{\partial}{\partial x} \ln p_{y}(\mathbf{y} ; x)
+\right] = 0 \ \ \ \ for \ all \ \ x
+\]</span> 有 <span class="math display">\[
+\lambda_{\hat x}(X) \ge \frac{1}{J_y(x)}
+\]</span> 其中 Fisher 信息为 <span class="math display">\[
+J_{y}(x)=\mathbb{E}\left[\left(\frac{\partial}{\partial x} \ln
+p_{y}(\mathbf{y} ;
+x)\right)^{2}\right]=-\mathbb{E}\left[\frac{\partial^{2}}{\partial
+x^{2}} \ln p_{y}(\mathbf{y} ; x)\right]
+\]</span> <strong>证明</strong>：取 <span
+class="math inline">\(f(y)=\frac{\partial}{\partial x} \ln
+p_{y}(\mathbf{y} ; x)\)</span>，有 <span
+class="math inline">\(E[f(y)]=0\)</span></p>
+<p><span class="math display">\[
+cov(e(y),f(y))=\int (\hat x(y)-x)\frac{\partial}{\partial x}
+p_{y}(\mathbf{y} ; x)dy=1
+\]</span></p>
+<p><span class="math display">\[
+1=cov(e,f)\le Var(e)Var(f)
+\]</span></p>
+<p><strong>备注</strong></p>
+<ul>
+<li>正规条件不满足时，CRB 不存在</li>
+<li>Fisher 信息可以看作 <span class="math inline">\(p_{y}(\mathbf{y} ;
+x)\)</span> 的曲率</li>
+</ul>
+<h2 id="有效估计量">4. 有效估计量</h2>
+<ul>
+<li><p>定义：可以达到 CRB 的无偏估计量</p></li>
+<li><p>有效估计量一定是 MVU 估计量</p></li>
+<li><p>MVU 估计量不一定是有效估计量，也即 CRB
+不一定是紧致（tight）的，有时没有估计量可以对所有的 x 达到 CRB</p></li>
+<li><p>性质：（唯一的、无偏的，可以达到 CRB） <span
+class="math display">\[
+\hat x \ \ is \ \ efficient \iff \hat
+x(y)=x+\frac{1}{J_y(x)}\frac{\partial}{\partial x} \ln p_{y}(\mathbf{y}
+; x)
+\]</span></p></li>
+</ul>
+<blockquote>
+<p><strong>证明</strong>：有效估计量 <span
+class="math inline">\(\iff\)</span> 可以达到 CRB <span
+class="math inline">\(\iff\)</span> 取等号 <span
+class="math inline">\(Var(e)Var(f)=1\)</span> <span
+class="math inline">\(\iff\)</span> 取等号 <span
+class="math inline">\(e(y)=k(x)f(y)\)</span> <span
+class="math inline">\(\iff\)</span> <span
+class="math inline">\(e(y)=x+k(X)f(y)\)</span> <span
+class="math display">\[
+\frac{1}{J_y(x)}=E[e^2(y)]=k(x)E[e(y)f(y)]=k(x)
+\]</span></p>
+</blockquote>
+<h2 id="ml-estimation">5. ML estimation</h2>
+<ul>
+<li>Definition <span class="math display">\[
+\hat x_{ML}(\cdot)=\arg\max_{a} p(y|a)
+\]</span></li>
+</ul>
+<blockquote>
+<p><strong>Proposition</strong>: if efficient estimator exists, it's ML
+estimator <span class="math display">\[
+\hat x_{eff}(\cdot)=\hat x_{ML}(\cdot)
+\]</span> <strong>Proof</strong>: <span class="math display">\[
+\hat x_{eff}(y)=x+\frac{1}{J_y(x)}\frac{\partial}{\partial x}\ln p(y;x)
+\]</span> 由于有效(valid)估计器不应当依赖于 x，因此上式中 x
+取任意一个值都应当是相等的，可取 <span class="math inline">\(\hat
+x_{ML}(y)\)</span> <span class="math display">\[
+\hat x_{eff}(y)=\hat x_{ML}(y) + \frac{1}{J_y(x)}\frac{\partial \ln
+p(y;x)}{\partial x}\Big|_{x=\hat x_{ML}}=\hat x_{ML}(y)
+\]</span> <strong>备注</strong>：反之不一定成立，即 ML
+估计器不一定是有效的，比如有时候全局的有效估计器(efficient
+estimator)不存在，也即此时按公式计算得到的 <span
+class="math inline">\(\hat x_{eff}(y)\)</span> 实际上是依赖于 x
+的，那么此时就不存在一个全局最优的估计器，此时的 ML
+估计器也没有任何好的特性。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/">参数估计</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch3_ExponentialFamily/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(三) Exponential Family</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch1_Hypothesis%20Test/">
+                        <span class="hidden-mobile">统计推断(一) Hypothesis Test</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

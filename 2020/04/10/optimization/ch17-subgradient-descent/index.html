@@ -1,0 +1,635 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对于光滑函数，我们可以用梯度下降法，并且证明了取不同的步长，可以得到次线性收敛，如果加上强凸性质，还可以得到线性收敛速度。那如果现在对于不可导的函数，我们就只能沿着次梯度下降，同样会面临步长的选择、方向的选择、收敛性分析等问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="凸优化笔记17：次梯度下降">
+<meta property="og:url" content="http://example.com/2020/04/10/optimization/ch17-subgradient-descent/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="对于光滑函数，我们可以用梯度下降法，并且证明了取不同的步长，可以得到次线性收敛，如果加上强凸性质，还可以得到线性收敛速度。那如果现在对于不可导的函数，我们就只能沿着次梯度下降，同样会面临步长的选择、方向的选择、收敛性分析等问题。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-10T13:29:29.000Z">
+<meta property="article:modified_time" content="2020-04-17T10:00:32.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="次梯度">
+<meta property="article:tag" content="梯度下降">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>凸优化笔记17：次梯度下降 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="凸优化笔记17：次梯度下降">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-10 21:29" pubdate>
+        April 10, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">凸优化笔记17：次梯度下降</h1>
+            
+            <div class="markdown-body">
+              <p>对于光滑函数，我们可以用梯度下降法，并且证明了取不同的步长，可以得到次线性收敛，如果加上强凸性质，还可以得到线性收敛速度。那如果现在对于不可导的函数，我们就只能沿着次梯度下降，同样会面临步长的选择、方向的选择、收敛性分析等问题。</p>
+<span id="more"></span>
+<h2 id="收敛性分析">1. 收敛性分析</h2>
+<p>次梯度下降的一般形式为 <span class="math display">\[
+x^{(k)}=x^{(k-1)}-t_{k} g^{(k-1)}, \quad k=1,2, \ldots \quad
+g\in\partial f(x^{(k-1)})
+\]</span> 一般有 3 种步长的选择方式：</p>
+<ol type="1">
+<li>fix step： <span class="math inline">\(t_k\)</span> 为常数</li>
+<li>fix length：<span
+class="math inline">\(t_{k}\left\|g^{(k-1)}\right\|_{2}=\left\|x^{(k)}-x^{(k-1)}\right\|_{2}\)</span>
+为常数</li>
+<li>diminishing：<span class="math inline">\(t_{k} \rightarrow 0,
+\sum_{k=1}^{\infty} t_{k}=\infty\)</span></li>
+</ol>
+<p>要证明这几种方法的收敛性，需要先引入 Lipschitz continuous 假设，即
+<span class="math display">\[
+|f(x)-f(y)| \leq G\|x-y\|_{2} \quad \forall x, y
+\]</span> 这等价于 <span class="math inline">\(\Vert g\Vert_2\le
+G\)</span> 对任意 <span class="math inline">\(g\in\partial f(x)\)</span>
+都成立。</p>
+<p>在分析收敛性之前，我们需要引入一个<strong>非常重要的式子</strong>:arrow_down:！！！在后面的分析中会一直用到：
+<span class="math display">\[
+\begin{aligned}
+\left\|x^{+}-x^{\star}\right\|_{2}^{2} &amp;=\left\|x-t
+g-x^{\star}\right\|_{2}^{2} \\
+&amp;=\left\|x-x^{\star}\right\|_{2}^{2}-2 t
+g^{T}\left(x-x^{\star}\right)+t^{2}\|g\|_{2}^{2} \\
+&amp; \leq\left\|x-x^{\star}\right\|_{2}^{2}-2
+t\left(f(x)-f^{\star}\right)+t^{2}\|g\|_{2}^{2}
+\end{aligned}
+\]</span> 那么如果定义 <span
+class="math inline">\(f_{\mathrm{best}}^{(k)}=\min _{0 \leq i&lt;k}
+f\left(x^{(i)}\right)\)</span>，就有 <span class="math display">\[
+\begin{aligned}
+2\left(\sum_{i=1}^{k} t_{i}\right)\left(f_{\text {best
+}}^{(k)}-f^{\star}\right) &amp;
+\leq\left\|x^{(0)}-x^{\star}\right\|_{2}^{2}-\left\|x^{(k)}-x^{\star}\right\|_{2}^{2}+\sum_{i=1}^{k}
+t_{i}^{2}\left\|g^{(i-1)}\right\|_{2}^{2} \\
+&amp; \leq\left\|x^{(0)}-x^{\star}\right\|_{2}^{2}+\sum_{i=1}^{k}
+t_{i}^{2}\left\|g^{(i-1)}\right\|_{2}^{2}
+\end{aligned}
+\]</span> 根据上面的式子，就可以得到对于</p>
+<p><strong>Fixed step size</strong>：<span
+class="math inline">\(t_i=t\)</span> <span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq
+\frac{\left\|x^{(0)}-x^{\star}\right\|_{2}^{2}}{2 k t}+\frac{G^{2} t}{2}
+\]</span> <strong>Fixed step length</strong>：<span
+class="math inline">\(t_{i}=s /\left\|g^{(i-1)}\right\|_{2}\)</span>
+<span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq
+\frac{G\left\|x^{(0)}-x^{\star}\right\|_{2}^{2}}{2 k s}+\frac{G s}{2}
+\]</span> 这两个式子中的第一项都随着 <span
+class="math inline">\(k\)</span> 增大而趋于
+0，但第二项却没有办法消掉，也就是与最优解的误差不会趋于
+0。并且他们有一个微妙的不同点在于，fixed step size 情况下 <span
+class="math inline">\(G^2t/2\sim O(G^2),Gs/2\sim O(G)\)</span>，<span
+class="math inline">\(G\)</span> 一般是较大的。</p>
+<p><strong>Diminishing step size</strong>：<span
+class="math inline">\(t_{k} \rightarrow 0, \sum_{k=1}^{\infty}
+t_{k}=\infty\)</span> <span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq
+\frac{\left\|x^{(0)}-x^{\star}\right\|_{2}^{2}+G^{2} \sum_{i=1}^{k}
+t_{i}^{2}}{2 \sum_{i=1}^{k} t_{i}}
+\]</span> 可以证明，<span class="math inline">\(\left(\sum_{i=1}^{k}
+t_{i}^{2}\right) /\left(\sum_{i=1}^{k} t_{i}\right) \rightarrow
+0\)</span>，因此 <span class="math inline">\(f_{\text {best
+}}^{(k)}\)</span> 会收敛于 <span
+class="math inline">\(f^\star\)</span>。</p>
+<p>下面看几幅图片，对于优化问题 <span class="math inline">\(\min\Vert
+Ax-b\Vert_1\)</span></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fixed step length</th>
+<th>Diminishing step size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/17-fixed-step.PNG" srcset="/img/loading.gif" lazyload
+alt="fixed-step" /></td>
+<td><img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/17-diminishing.PNG" srcset="/img/loading.gif" lazyload
+alt="diminishing" /></td>
+</tr>
+</tbody>
+</table>
+<p>前面考虑了固定步长的情况，假设现在我们固定总的迭代次数为 <span
+class="math inline">\(k\)</span>，可不可以优化步长 <span
+class="math inline">\(s\)</span> 的大小来尽可能使 <span
+class="math inline">\(f_\text{best}^{(k)}\)</span> 接近 <span
+class="math inline">\(f^\star\)</span> 呢？这实际上可以表示为优化问题
+<span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq \frac{R^{2}+\sum_{i=1}^{k}
+s_{i}^{2}}{2 \sum_{i=1}^{k} s_{i}/G} \Longrightarrow \min_s
+\frac{R^{2}}{2 ks/G}+\frac{s}{2/G}
+\]</span> 其中 <span
+class="math inline">\(R=\left\|x^{(0)}-x^{\star}\right\|_{2}\)</span>，那么最优步长为
+<span class="math inline">\(s=R/\sqrt{k}\)</span>，此时 <span
+class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq \frac{GR}{\sqrt{k}}
+\]</span> 因此收敛速度为 <span
+class="math inline">\(O(1/\sqrt{k})\)</span>，对比之前光滑函数的梯度下降，收敛速度为
+<span class="math inline">\(O(1/k)\)</span>。</p>
+<p>我们对前面的收敛速度并不满意，如果有更多的信息，比如已知最优解 <span
+class="math inline">\(f^\star\)</span>
+的大小，能不能改进收敛速度呢？根据前面的式子，有 <span
+class="math display">\[
+\left\|x^{+}-x^{\star}\right\|_{2}^{2}  
+\leq\left\|x-x^{\star}\right\|_{2}^{2}-2
+t_i\left(f(x)-f^{\star}\right)+t_i^{2}\|g\|_{2}^{2}
+\]</span> 这实际上是关于 <span class="math inline">\(t_i\)</span>
+的一个二次函数，因此可以取 <span
+class="math inline">\(t_{i}=\frac{f\left(x^{(i-1)}\right)-f^{\star}}{\left\|g^{(i-1)}\right\|_{2}^{2}}\)</span>，就可以得到
+<span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq \frac{GR}{\sqrt{k}}
+\]</span> 可见还是没有改进收敛速度。</p>
+<p>如果引入<strong>强凸性质</strong>呢？如果假设满足 <span
+class="math inline">\(\mu\)</span> 强凸，则 <span
+class="math inline">\(f^\star \ge f^k+g^{kT}(x^k-x^\star)+\mu/2\Vert
+x^k-x^\star\Vert_2^2\)</span>，可以取 <span
+class="math inline">\(t_k=\frac{2}{\mu(k+1)}\)</span>，那么就可以得到
+<span class="math display">\[
+f_{\text {best }}^{(k)}-f^{\star} \leq \frac{2G^2}{\mu(k+1)}
+\]</span></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Convex-Optimization/">Convex Optimization</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/16/optimization/ch18-proximal-mapping/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">凸优化笔记18：近似点算子 Proximal Mapping</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/10/optimization/ch16-subgradient/">
+                        <span class="hidden-mobile">凸优化笔记16：次梯度 Subgradient</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一章主要介绍随机过程中的基本概念。 1. 基本概念 什么是随机过程？ 定义：设 \((\Omega, \mathcal{F},P)\) 是一个概率空间，\((E,\mathcal{E})\) 是一个可测空间，\(\mathcal{T}\) 是一个指标集，\(X_{\mathcal{T} }&#x3D;\{X_t,t\in{\mathcal T}\}\) 是一族定义在 \((\Omega, \m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程】基本概念">
+<meta property="og:url" content="http://example.com/2021/06/04/stochastic-process/ch1-stopping-time/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="第一章主要介绍随机过程中的基本概念。 1. 基本概念 什么是随机过程？ 定义：设 \((\Omega, \mathcal{F},P)\) 是一个概率空间，\((E,\mathcal{E})\) 是一个可测空间，\(\mathcal{T}\) 是一个指标集，\(X_{\mathcal{T} }&#x3D;\{X_t,t\in{\mathcal T}\}\) 是一族定义在 \((\Omega, \m">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-04T14:19:05.000Z">
+<meta property="article:modified_time" content="2021-06-04T14:33:34.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="可分性">
+<meta property="article:tag" content="样本轨道">
+<meta property="article:tag" content="循序可测">
+<meta property="article:tag" content="停时">
+<meta property="article:tag" content="首中时">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程】基本概念 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程】基本概念">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 22:19" pubdate>
+        June 4, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      38 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程】基本概念</h1>
+            
+            <div class="markdown-body">
+              <p>第一章主要介绍随机过程中的基本概念。</p>
+<h2 id="基本概念">1. 基本概念</h2>
+<p><strong>什么是随机过程？</strong></p>
+<p><strong>定义</strong>：设 <span class="math inline">\((\Omega,
+\mathcal{F},P)\)</span> 是一个概率空间，<span
+class="math inline">\((E,\mathcal{E})\)</span> 是一个可测空间，<span
+class="math inline">\(\mathcal{T}\)</span> 是一个指标集，<span
+class="math inline">\(X_{\mathcal{T} }=\{X_t,t\in{\mathcal T}\}\)</span>
+是一族定义在 <span class="math inline">\((\Omega,
+\mathcal{F},P)\)</span> 上，取值于 <span
+class="math inline">\((E,\mathcal{E})\)</span> 中的随机变量，称 <span
+class="math inline">\(X_T\)</span>
+为（E-值）<strong>随机过程</strong>。对每个 <span
+class="math inline">\(\omega\in\Omega\)</span>，<span
+class="math inline">\(X_T(\omega)=\{X_t(\omega),t\in T\}\)</span>
+称为随机过程的一个<strong>实现</strong>，或者<strong>样本轨道</strong>，或者<strong>样本函数</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：随机过程实际上是一个二元函数 <span
+class="math inline">\(X(t,\omega)\)</span>，因此这里的 <span
+class="math inline">\(\omega\)</span> 所属的样本空间 <span
+class="math inline">\(\Omega\)</span> 包含了所有时刻 <span
+class="math inline">\({\mathcal T}\)</span>
+的所有可能事件，而不是只针对某个时刻随机变量 <span
+class="math inline">\(X_t\)</span> 的样本空间。</p>
+</blockquote>
+<span id="more"></span>
+<p><strong>定义</strong>：设 <span class="math inline">\(X_T\)</span>
+是一个 <span class="math inline">\(E\)</span>-值随机过程，对任意 <span
+class="math inline">\(\Lambda=\{t_1,\cdots,t_n\}\subset T\)</span>，称
+<span class="math inline">\(\mu_\Lambda(B_\Lambda) =
+P((X_{t_1},\cdots,X_{t_n})\in B_\Lambda), B_\Lambda\in{\mathcal
+E}^\Lambda\)</span> 为 <span class="math inline">\(X_T\)</span>
+的一个<strong>有限维分布</strong>。称 <span
+class="math inline">\(\{\mu_\Lambda, \Lambda\Subset T\}\)</span> 为
+<span class="math inline">\(X_T\)</span>
+的<strong>有限维分布族</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：这里相当于是取了 <span
+class="math inline">\(X_T\)</span>
+在一个下标集子集（一般取至多可数集）上的限制，这么做一半是为了从连续时间随机过程转到离散时间，可能便于处理。</p>
+</blockquote>
+<p><strong>命题 1.1.1</strong>：<span
+class="math inline">\(\{\mu_\Lambda,\Lambda\Subset T\}\)</span>
+是<strong>相容</strong>的，也就是说对于 <span
+class="math inline">\(\Lambda_1\subset\Lambda_2\Subset T\)</span>，有
+<span class="math inline">\(\mu_{\Lambda_2}(B_{\Lambda_1}\times
+E^{\Lambda_2\backslash
+\Lambda_1})=\mu_{\Lambda_2}(B_{\Lambda_1}).\)</span></p>
+<p>证明：略。</p>
+<p><strong>定义</strong>：设 <span
+class="math inline">\(X_T,Y_T\)</span> 是两个 <span
+class="math inline">\(E\)</span> 值随机过程</p>
+<ol type="1">
+<li>若 <span class="math inline">\(X_T,Y_T\)</span>
+有相同的有限维分布族，则称 <span class="math inline">\(Y_T\)</span> 是
+<span class="math inline">\(X_T\)</span>
+的一个<strong>版本</strong>；</li>
+<li>若 <span class="math inline">\(P(X_t=Y_t)=1,\forall t\in
+T\)</span>，则称 <span class="math inline">\(Y_T\)</span> 是 <span
+class="math inline">\(X_T\)</span> 的一个<strong>修正</strong>；</li>
+<li>若 <span class="math inline">\(P(X_t=Y_t,\forall t\in
+T)=1\)</span>，则称 <span class="math inline">\(Y_T\)</span> 是 <span
+class="math inline">\(X_T\)</span>
+的一个<strong>不可区别</strong>；</li>
+</ol>
+<blockquote>
+<p><strong>注</strong>：<span
+class="math inline">\((3)\Rightarrow(2)\Rightarrow(1)\)</span>。</p>
+</blockquote>
+<h2 id="可测性">2. 可测性</h2>
+<p><strong>定义</strong>：设 <span class="math inline">\(X_T\)</span>
+是定义在 <span class="math inline">\((\Omega, \mathcal{F},P)\)</span>
+上取值于 <span class="math inline">\((E,\mathcal{E})\)</span>
+中的随机过程，若 <span
+class="math inline">\(X(t,\omega):([0,+\infty)\times\Omega, {\mathcal
+B}_{[0,+\infty)}\times{\mathcal F}) \to (E,{\mathcal E})\)</span>
+是可测的，则称过程 <span class="math inline">\(X_T\)</span>
+是<strong>可测</strong>的。</p>
+<p><strong>定义</strong>：设 <span class="math inline">\(\{ {\mathcal
+F}_t,t\in T\}(T\subset {\mathbb R}_+ \})\)</span> 是 <span
+class="math inline">\({\mathcal F}\)</span> 的一族单调上升子 <span
+class="math inline">\(\sigma\)</span> 代数（即 $st_s_t $，此时也称 <span
+class="math inline">\(\{ {\mathcal F}_t,t\in T\}\)</span> 为 <span
+class="math inline">\({\mathcal F}\)</span> 的一个子 <span
+class="math inline">\(\sigma\)</span> 域流），<span
+class="math inline">\(X_T\)</span> 是 <span
+class="math inline">\(E\)</span> 值随机过程，称 <span
+class="math inline">\(X_T\)</span> 是 <span class="math inline">\(\{
+{\mathcal F}_t,t\in T\}\)</span> <strong>适应</strong>的，若 <span
+class="math inline">\(\forall t\in T, X_t:(\Omega,{\mathcal
+F}_t)\to(E,{\mathcal E})\)</span> 可测（简单来说即 <span
+class="math inline">\(X_t\)</span> 是 <span
+class="math inline">\({\mathcal F}_t\)</span> 可测的）。若 <span
+class="math inline">\(\forall t\in T,X(s,\omega):([0,t)\times\Omega,
+{\mathcal B}_{[0,t)}\times{\mathcal F}_t) \to (E,{\mathcal E})\)</span>
+可测，则称 <span class="math inline">\(X_T\)</span>
+<strong>循序可测</strong>。</p>
+<p><strong>命题 1.2.1</strong>：设 <span
+class="math inline">\(X_T=\{X_t,t\ge0\}\)</span>
+是实值随机过程，关于域流 <span class="math inline">\(\{ {\mathcal F}_t,
+t\ge0\}\)</span> 适应，若 <span class="math inline">\(X_T\)</span>
+是右连续的，则它一定是循序可测的。</p>
+<h2 id="可分性">3. 可分性</h2>
+<p><strong>定义</strong>：设 <span
+class="math inline">\(X_T=\{X_t,t\ge0\}\)</span>
+是一个实值随机过程，<span class="math inline">\(Q\subset
+[0,+\infty)\)</span> 可数稠密，若 <span class="math inline">\(\forall
+\omega\)</span>，<span class="math inline">\(\{(t,X_t(\omega)),
+t\ge0\}\subset\{(r,X_r(\omega)), r\in Q \}^-\)</span>（<span
+class="math inline">\(A^-\)</span> 表示 <span
+class="math inline">\(A\)</span> 的闭包），则称 <span
+class="math inline">\(X_T\)</span> 关于 <span
+class="math inline">\(Q\)</span> 可分。<span
+class="math inline">\(Q\)</span> 称为一个可分集，若存在可数稠密 <span
+class="math inline">\(Q\subset [0,+\infty)\)</span> 使 <span
+class="math inline">\(X_T\)</span> 关于 <span
+class="math inline">\(Q\)</span> 可分，则称 <span
+class="math inline">\(X_T\)</span> 可分。</p>
+<blockquote>
+<p><strong>注</strong>：可分性用的比较多的大概是把原来的连续指标集 <span
+class="math inline">\(T\)</span> 转化成可数指标集 <span
+class="math inline">\(Q\)</span>，便于证明。</p>
+</blockquote>
+<p><strong>命题 1.3.1</strong>：若实值随机过程 <span
+class="math inline">\(X_T=\{X_t,t\ge0\}\)</span> 可分，则 <span
+class="math inline">\(\forall c\)</span>，<span
+class="math inline">\(\{X_t\ge c, t\ge0\}\in {\mathcal F}\)</span>。</p>
+<p>证明：利用可分性，将其表示为可数个集合的交集。</p>
+<p><strong>定理 1.3.2</strong>：任一实值随机过程必有可分修正。</p>
+<h2 id="停时">4. 停时</h2>
+<p><strong>定义</strong>：设 <span class="math inline">\((\Omega,
+\mathcal{F},P)\)</span> 是一个概率空间，<span class="math inline">\(\{
+{\mathcal F}_t,t\in T\}\)</span> 是 <span
+class="math inline">\({\mathcal F}\)</span> 的一个上升子 <span
+class="math inline">\(\sigma\)</span> 域流，<span
+class="math inline">\(T\subset {\mathbb R}_+\)</span>
+是一个时间参数集，<span class="math inline">\(\tau\)</span> 是从 <span
+class="math inline">\(\Omega\)</span> 到 <span
+class="math inline">\(T\)</span> 中的映射，若 <span
+class="math inline">\(\{\tau\le t\}\in{\mathcal F}_t,\forall t\in
+T\)</span>，则称 <span class="math inline">\(\tau\)</span> （关于 <span
+class="math inline">\(\{ {\mathcal F}_t,t\in
+T\}\)</span>）是一个<strong>停时</strong>。若 <span
+class="math inline">\(\{\tau&lt; t\}\in{\mathcal F}_t,\forall t\in
+T\)</span>，则称 <span class="math inline">\(\tau\)</span> （关于 <span
+class="math inline">\(\{ {\mathcal F}_t,t\in
+T\}\)</span>）是一个<strong>宽停时</strong>。</p>
+<blockquote>
+<p><strong>注</strong>：引用网上对于停时的直观解释：<span
+class="math inline">\(\{\tau\le t\}\in{\mathcal F}_t\)</span> 意味着到
+<span class="math inline">\(t\)</span> 时刻的信息足够判断是否在 <span
+class="math inline">\(t\)</span> 时刻或 <span
+class="math inline">\(t\)</span> 之前停下来。</p>
+</blockquote>
+<p><strong>性质 1.4.1</strong>：</p>
+<ol type="1">
+<li>若 <span class="math inline">\(\tau,\sigma\)</span> 是两个停时，则
+<span class="math inline">\(\tau \vee\sigma,
+\tau\wedge\sigma,\tau+\sigma\)</span> 也是停时；</li>
+<li>若 <span class="math inline">\(\{\tau_n,n\ge1\}\)</span>
+是一列宽停时，则 <span class="math inline">\(\sup_n \tau_n,\inf_n
+\tau_n, \liminf \tau_n,\limsup \tau_n\)</span> 也是宽停时；</li>
+<li>若 <span class="math inline">\(\{\tau_n,n\ge1\}\)</span>
+是一列停时，则 <span class="math inline">\(\sup_n \tau_n\)</span>
+也是停时；</li>
+<li><span class="math inline">\(\tau\)</span> 是 <span
+class="math inline">\(\{ {\mathcal F}_t,t\ge0\}\)</span> 停时 <span
+class="math inline">\(\iff\)</span> <span
+class="math inline">\(\tau\)</span> 关于域流 <span
+class="math inline">\({\mathcal F}_{t+}\triangleq \cap_{s&gt;t}{\mathcal
+F}_s,t\in T\)</span> 是停时；</li>
+<li>若 <span class="math inline">\(\tau\)</span>
+是宽停时，则它是一列停时，<span class="math inline">\(\tau_n\)</span>
+的递减极限，即 <span class="math inline">\(\tau_n \downarrow
+\tau\)</span>；</li>
+<li>若 <span class="math inline">\(T={\mathbb Z_+}\text{ or }{\mathbb
+N}\)</span>（可数），则 <span class="math inline">\(\tau\)</span> 是停时
+<span class="math inline">\(\iff\)</span> <span
+class="math inline">\(\{\tau=t\}\in {\mathcal F}_t,\forall t\in
+T\)</span>。</li>
+</ol>
+<p>证明：略</p>
+<p><strong>定义</strong>：设 <span class="math inline">\(\tau\)</span>
+是 <span class="math inline">\({\mathcal F}_t\)</span> 停时，定义 <span
+class="math inline">\({\mathcal F}_\tau=\{A\in{\mathcal F}, A\cap
+\{\tau\le t\}\in {\mathcal F}_t,\forall t\in T \}\)</span>，则 <span
+class="math inline">\({\mathcal F}_\tau\)</span> 是停时。</p>
+<p><strong>定理</strong>：设 <span class="math inline">\(\tau\)</span>
+是 <span class="math inline">\({\mathcal F}_t\)</span> 停时，<span
+class="math inline">\(X_t\)</span> 是 <span
+class="math inline">\({\mathcal F}_t\)</span> 适应的，则</p>
+<ol type="1">
+<li><span class="math inline">\(\tau\)</span> 是 <span
+class="math inline">\({\mathcal F}_\tau\)</span> 可测的；</li>
+<li>若 <span class="math inline">\(T={\mathbb Z}_+\text{ or }{\mathbb
+N}\)</span>，则 <span class="math inline">\(X_\tau\)</span> 是 <span
+class="math inline">\({\mathcal F}_\tau\)</span> 可测的；</li>
+<li>若 <span class="math inline">\(T=[0,+\infty)\)</span> 且 <span
+class="math inline">\(\{X_t,t\ge0\}\)</span> 是关于 <span
+class="math inline">\(\{ {\mathcal F}_t,t\ge0\}\)</span> 循序可测，则
+<span class="math inline">\(X_\tau\)</span> 是 <span
+class="math inline">\({\mathcal F}_\tau\)</span> 可测的。</li>
+</ol>
+<p>证明：略。</p>
+<p>接下来定义某个时间首次发生的时间作为首中时，实际上很多情况下首中时就是一种停时，他在很多问题中都会出现，比如赌博前决定赢1毛钱就收手，首次发生“赢1毛钱”这个事件的时刻就是一个停时。</p>
+<p><strong>定义</strong>：<span
+class="math inline">\(\{X_t,t\ge0\},(E,{\mathcal E}),B\in{\mathcal
+E}\)</span>，定义<strong>首中时</strong> <span
+class="math inline">\(\tau_B=\inf\{t:X_t(\omega)\in B\}\)</span></p>
+<p><strong>定理 1.4.2</strong>：</p>
+<ol type="1">
+<li>若 <span class="math inline">\(T={\mathbb Z}_+\)</span>，则 <span
+class="math inline">\(\forall B\in{\mathcal E}\)</span>，<span
+class="math inline">\(\tau_B\)</span> 是停时；</li>
+<li>若 <span class="math inline">\((E,{\mathcal E})\)</span>
+是距离可测空间，<span class="math inline">\(T={\mathbb
+R}_+\)</span>，<span class="math inline">\(X_t\)</span> 适应， <span
+class="math inline">\(B\)</span> 是<strong>开集</strong>，若 <span
+class="math inline">\(X_t\)</span> 是关于 <span
+class="math inline">\(t\)</span> <strong>右连续</strong>的，则 <span
+class="math inline">\(\tau_B\)</span> 是<strong>宽停时</strong>；</li>
+<li>若 <span class="math inline">\((E,{\mathcal E})\)</span>
+是距离可测空间，<span class="math inline">\(T={\mathbb
+R}_+\)</span>，<span class="math inline">\(X_t\)</span> 适应， <span
+class="math inline">\(B\)</span> 是<strong>闭集</strong>，若 <span
+class="math inline">\(X_t\)</span> 是关于 <span
+class="math inline">\(t\)</span> <strong>连续</strong>的，则 <span
+class="math inline">\(\tau_B\)</span> 是<strong>停时</strong>。</li>
+</ol>
+<p>证明：略。</p>
+<blockquote>
+<p><strong>注1</strong>：若 <span class="math inline">\(\{ {\mathcal
+F}_t\}\)</span> 右连续（即 <span class="math inline">\({\mathcal
+F}_{t+}={\mathcal F}_t,t\ge0\)</span>）则<span
+class="math inline">\(B\)</span>无论开、闭，<span
+class="math inline">\(\tau_B\)</span> 都是停时。</p>
+<p><strong>注2</strong>：这里为什么会有开集/闭集的区别？是怎么跟停时/宽停时的定义联系在一起的？以及为什么会对
+<span class="math inline">\(X_t\)</span> 的连续性有要求？</p>
+</blockquote>
+<blockquote>
+<p><strong>注</strong>：实际上我们常用的域流是自然 <span
+class="math inline">\(\sigma\)</span> 域流，即 <span
+class="math inline">\({\mathcal F}^X_t=\sigma\{X_s:s\le
+t\}\)</span>。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Stochastic-Process/">Stochastic Process</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">可分性</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%B7%E6%9C%AC%E8%BD%A8%E9%81%93/">样本轨道</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AA%E5%BA%8F%E5%8F%AF%E6%B5%8B/">循序可测</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%81%9C%E6%97%B6/">停时</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">首中时</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/09/linear-algebra/woodbury/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">转载 | Woodbury 恒等式</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/04/stochastic-process/ch0-intro/">
+                        <span class="hidden-mobile">【随机过程】绪论</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

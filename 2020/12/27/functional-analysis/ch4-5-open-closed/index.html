@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="接下来四大定理就剩下了两个：开映射定理与闭图像定理。剩下的内容相比于前面两个定理要少很多，也更简单，我们一口气讲完吧！ 1. 开映射定理 \((X_1,d_1),(X_2,d_2)\)，称 \(T:X_1\to X_2\) 为开映射，若 \(\forall G\subset X\) 为开集，都有 \(T(G)\) 在 \(X_2\) 中为开集。 NOTE：我们讲到连续映射的时候证明了一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛函分析笔记8：开映射定理与闭图像定理">
+<meta property="og:url" content="http://example.com/2020/12/27/functional-analysis/ch4-5-open-closed/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="接下来四大定理就剩下了两个：开映射定理与闭图像定理。剩下的内容相比于前面两个定理要少很多，也更简单，我们一口气讲完吧！ 1. 开映射定理 \((X_1,d_1),(X_2,d_2)\)，称 \(T:X_1\to X_2\) 为开映射，若 \(\forall G\subset X\) 为开集，都有 \(T(G)\) 在 \(X_2\) 中为开集。 NOTE：我们讲到连续映射的时候证明了一个">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-27T03:21:40.000Z">
+<meta property="article:modified_time" content="2020-12-30T09:51:06.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="开映射定理">
+<meta property="article:tag" content="闭图像定理">
+<meta property="article:tag" content="开映射">
+<meta property="article:tag" content="闭算子">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>泛函分析笔记8：开映射定理与闭图像定理 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="泛函分析笔记8：开映射定理与闭图像定理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-27 11:21" pubdate>
+        December 27, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛函分析笔记8：开映射定理与闭图像定理</h1>
+            
+            <div class="markdown-body">
+              <p>接下来四大定理就剩下了两个：开映射定理与闭图像定理。剩下的内容相比于前面两个定理要少很多，也更简单，我们一口气讲完吧！</p>
+<h2 id="开映射定理">1. 开映射定理</h2>
+<p><span class="math inline">\((X_1,d_1),(X_2,d_2)\)</span>，称 <span
+class="math inline">\(T:X_1\to X_2\)</span>
+为<strong>开映射</strong>，若 <span class="math inline">\(\forall
+G\subset X\)</span> 为开集，都有 <span
+class="math inline">\(T(G)\)</span> 在 <span
+class="math inline">\(X_2\)</span> 中为开集。</p>
+<p><strong>NOTE</strong>：我们讲到连续映射的时候证明了一个定理，即 <span
+class="math inline">\(T\)</span> 为<strong>连续映射</strong> <span
+class="math inline">\(\iff \forall G\subset X_2\)</span> 为开集，那么
+<span class="math inline">\(T^{-1}(G)=\{x\in X_1, Tx\in G\}\)</span> 是
+<span class="math inline">\(X_1\)</span>
+中的开集。注意这与开映射不同，开映射是正向的，连续映射是反向的。</p>
+<span id="more"></span>
+<p>在给出开映射定理之前我们需要先准备几条引理。</p>
+<p><strong>引理</strong>：设 <span class="math inline">\(X\)</span>
+为赋范空间，<span
+class="math inline">\(\lambda\in\mathbb{K},\lambda\ne0\)</span></p>
+<ul>
+<li>若 <span class="math inline">\(x_0\in X,r&gt;0\)</span>，则 <span
+class="math inline">\(\lambda B(x_0,r) = B(\lambda
+x_0,|\lambda|r)\)</span>；</li>
+<li>若 <span class="math inline">\(M\subset X\)</span>，则 <span
+class="math inline">\(\overline{\lambda M}=\lambda
+\overline{M}\)</span>；</li>
+<li>若 <span class="math inline">\(M\subset X\)</span>，则 <span
+class="math inline">\((\lambda M)^\circ=\lambda M^\circ\)</span>。</li>
+</ul>
+<p>证明：只证第3条，若 <span class="math inline">\(x\in (\lambda
+M)^\circ\)</span>，那么存在 <span
+class="math inline">\(r&gt;0，B(x,r)\in \lambda M\)</span>，也即 <span
+class="math inline">\(\frac{1}{\lambda} B(x,r)\in
+M\)</span>，根据第1条结论，也即 <span
+class="math inline">\(B(x/\lambda,r/|\lambda|)\in M\)</span>，因此 <span
+class="math inline">\(x/\lambda\in M^\circ\)</span>，所以有 <span
+class="math inline">\((\lambda M)^\circ\subset\lambda
+M^\circ\)</span>。反过来若 <span class="math inline">\(x\in\lambda
+M^\circ\)</span>，即 <span class="math inline">\(x/\lambda\in
+M^\circ\)</span>，类的的可以得到 <span class="math inline">\(\lambda
+M^\circ\subset(\lambda M)^\circ.\)</span> 证毕。</p>
+<p><strong>引理</strong>：<span class="math inline">\(X,Y\)</span> 为
+Banach 空间，<span class="math inline">\(T\in B(X,Y)\)</span> 为满射，则
+<span class="math inline">\(T(B_X(0,1))\)</span> 包含一个以 <span
+class="math inline">\(0\)</span> 为中心的开球，即存在 <span
+class="math inline">\(\delta&gt;0\)</span>，<span
+class="math inline">\(B_Y(0,\delta)\subset T(B_X(0,1)).\)</span></p>
+<p><strong>证明</strong>：这个引理看起来简单，证明还挺复杂的。我们记
+<span class="math inline">\(B_n=B_X(0,1/2^n)\)</span>。</p>
+<p>首先证明 <span class="math inline">\(\overline{T(B_1)}\)</span>
+包含某个开球。考虑到 <span class="math inline">\(\bigcup_{n=1}^\infty
+nT(B_1)=Y\)</span>，由于 <span class="math inline">\(Y\)</span> 为
+Banach 空间，也可以表示为 <span
+class="math inline">\(\bigcup_{n=1}^\infty
+n\overline{T(B_1)}=Y\)</span>，根据 Baire 范畴定理，一定存在 <span
+class="math inline">\(n_0\ge1\)</span> 使得 <span
+class="math inline">\(n_0\overline{T(B_1)}\)</span> 有内点，即存在 <span
+class="math inline">\(y\in Y,\delta&gt;0\)</span> 使得 <span
+class="math inline">\(B(y,\delta)\subset
+n_0\overline{T(B_1)}\)</span>，记 <span
+class="math inline">\(B(y_0,\delta_0)=B(y/n_0,\delta/n_0)\subset
+\overline{T(B_1)}\)</span>。</p>
+<p>接下来证明 <span class="math inline">\(B(0,\delta_0)\subset
+\overline{T(B_0)}\)</span>。对任意 <span class="math inline">\(y\in
+B(0,\delta_0)\)</span>，有 <span class="math inline">\(y_0+y\in
+B(y_0,\delta_0)\)</span>，所以存在 <span
+class="math inline">\(u_n,v_n\in B_1\)</span> 分别有 <span
+class="math inline">\(Tu_n\to y_0,Tv_n\to y_0+y\)</span>，此时 <span
+class="math inline">\(v_n-u_n\in B_0\)</span>，并且 <span
+class="math inline">\(T(v_n-u_n)\to y\)</span>，因此 <span
+class="math inline">\(y\in \overline{T(B_0)}\)</span>。</p>
+<p>最后证明 <span class="math inline">\(B(0,\delta_0/2)\subset
+T(B_0)\)</span>。已有 <span
+class="math inline">\(B(0,\delta_0/2^n)\subset
+\overline{T(B_n)}\)</span>，任取 <span class="math inline">\(y\in
+B(0,\delta_0/2)\)</span>，由于 <span
+class="math inline">\(B(0,\delta_0/2)\subset
+\overline{T(B_1)}\)</span>，因此存在 <span class="math inline">\(x_1\in
+B_1\)</span> 使得 <span class="math inline">\(\Vert y-Tx_1\Vert &lt;
+\delta_0/2^2\)</span>。因此 <span class="math inline">\(y-Tx_1\in
+B(0,\delta_0/2^2)\)</span>，又由于 <span
+class="math inline">\(B(0,\delta_0/2^2)\subset
+\overline{T(B_2)}\)</span>，因此存在 <span class="math inline">\(x_2\in
+B_2\)</span> 使得 <span class="math inline">\(\Vert y-Tx_1-Tx_2\Vert
+&lt; \delta_0/2^3\)</span>。依此类推，对任意的 <span
+class="math inline">\(n\ge1\)</span>，可以找到 <span
+class="math inline">\(x_n\in B_n\)</span>，使得 <span
+class="math display">\[
+\Vert y-Tx_1-Tx_2-\cdots-Tx_n\Vert &lt; \frac{\delta_0}{2^{n+1}}
+\]</span> 若令 <span
+class="math inline">\(s_n=x_1+\cdots+x_n\)</span>，则有 <span
+class="math inline">\(s_n\)</span> 为柯西列，假设 <span
+class="math inline">\(s_n\to s\in X\)</span>，则可以验证 <span
+class="math inline">\(y=Ts\)</span>。因为 <span
+class="math inline">\(\Vert s\Vert\le \sum_{n=1}^\infty \Vert
+x_n\Vert&lt;1\)</span>，因此 <span class="math inline">\(s\in
+B_0\)</span>，所以 <span class="math inline">\(y\in T(B_0)\)</span>，故
+<span class="math inline">\(B(0,\delta_0/2)\subset
+T(B_0)\)</span>。证毕。</p>
+<blockquote>
+<p><strong>开映射定理</strong>：<span class="math inline">\(X,Y\)</span>
+为 Banach 空间，<span class="math inline">\(T\in B(X,Y)\)</span>
+为满射，则 <span class="math inline">\(T\)</span> 一定是开映射。</p>
+</blockquote>
+<p>证明：由前面的引理很容易证明，略。</p>
+<blockquote>
+<p><strong>推论</strong>：<span class="math inline">\(X,Y\)</span> 为
+Banach 空间，<span class="math inline">\(T\in B(X,Y)\)</span>
+为满射，特别地，若 <span class="math inline">\(T\)</span>
+为一一映射，我们有 <span class="math inline">\(T^{-1}\in
+B(Y,X)\)</span>（即逆映射也是有界的）。</p>
+</blockquote>
+<p>证明：由于 <span class="math inline">\(T\)</span>
+为开映射且为一一映射，因此 <span class="math inline">\(T^{-1}\)</span>
+为连续的，因此 <span class="math inline">\(T^{-1}\in
+B(Y,X)\)</span>。</p>
+<p><strong>推论</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert_1),(X,\Vert
+\cdot\Vert_2)\)</span> 均为 Bananch 空间，若存在常数 <span
+class="math inline">\(\alpha&gt;0\)</span> 使得 <span
+class="math inline">\(\Vert x\Vert_1\le \alpha\Vert x\Vert_2,\forall
+x\in X\)</span>，则存在 <span class="math inline">\(\beta&gt;0\)</span>
+使得 <span class="math inline">\(\Vert x\Vert_2\le \beta\Vert
+x\Vert_1,\forall x\in X\)</span>，即 <span
+class="math inline">\(\Vert\cdot\Vert_1\)</span> 与 <span
+class="math inline">\(\Vert\cdot\Vert_2\)</span> 为等价范数。</p>
+<p>证明：考虑 <span
+class="math inline">\(T:(X,\Vert\cdot\Vert_2)\to(X,\Vert
+\cdot\Vert_1)\)</span>，有 <span class="math inline">\(T:x\mapsto
+x\)</span>。根据条件可以知道 <span class="math inline">\(T\)</span>
+为有界线性算子，并且 <span class="math inline">\(T\)</span>
+为一一映射。因此 <span class="math inline">\(T^{-1}\)</span>
+也是有界线性算子，<span class="math inline">\(\Vert x\Vert_2=\Vert
+T^{-1}x\Vert_2\le \Vert T^{-1}\Vert\Vert x\Vert_1,\forall x\in
+X\)</span>。证毕。</p>
+<h2 id="闭图像定理">2. 闭图像定理</h2>
+<p>设 <span class="math inline">\(X,Y\)</span> 为赋范空间，令 <span
+class="math inline">\(Z=X\times Y=\{(x,y): x\in X,y\in Y
+\}\)</span>，定义 <span class="math inline">\(\Vert(x,y)\Vert=\Vert
+x\Vert_X+\Vert y\Vert_Y\)</span>，可以验证 <span
+class="math inline">\(\Vert\cdot\Vert\)</span> 为 <span
+class="math inline">\(Z\)</span> 上的范数。若 <span
+class="math inline">\(X,Y\)</span> 为 Banach 空间，则 <span
+class="math inline">\(Z\)</span> 也为 Banach 空间。</p>
+<p>设 <span class="math inline">\(X,Y\)</span> 为赋范空间，<span
+class="math inline">\(D(A)\)</span> 为 <span
+class="math inline">\(X\)</span> 中的线性子空间，<span
+class="math inline">\(A:D(A)\to Y\)</span> 为线性算子，称 <span
+class="math inline">\(A\)</span> 为<strong>闭算子</strong>，若 <span
+class="math inline">\(G_A = \{(x,Ax)\in X\times Y:x\in D(A) \}\)</span>
+为闭集。</p>
+<p><strong>命题</strong>：有界线性算子 <span
+class="math inline">\(\Rightarrow\)</span> 闭算子。</p>
+<p>证明：有界线性算子 <span class="math inline">\(A\)</span>，任意 <span
+class="math inline">\((x,Ax)\in G_A\)</span>，存在 <span
+class="math inline">\(x_n\to x\)</span>，假设 <span
+class="math inline">\((x_n,Ax_n)\to (x,y)\)</span>，由于 <span
+class="math inline">\(A\)</span> 连续，因此 <span
+class="math inline">\(Ax_n\to Ax\)</span>，因此 <span
+class="math inline">\(y=Ax\)</span>，即 <span
+class="math inline">\((x,y)\in G\)</span>，因此 <span
+class="math inline">\(G_A\)</span> 为闭集。证毕。</p>
+<p><strong><em>例子 1</em></strong>(闭算子 <span
+class="math inline">\(\nRightarrow\)</span>
+有界线性算子)：考虑求导算子，<span class="math inline">\(X=Y=C[0,1],
+\Vert x\Vert_\infty=\max_{0\le t\le1}|x(t)|\)</span>。<span
+class="math inline">\(D(A)=C^1[0,1]\)</span>，<span
+class="math inline">\(A:x\mapsto x&#39;\)</span> 为线性算子，考虑 <span
+class="math inline">\(x_n(t)=t^n, \Vert x\Vert_\infty=1\)</span>，有
+<span class="math inline">\(\Vert Ax_n\Vert=n\)</span>，因此 <span
+class="math inline">\(A\)</span> 无界，但是 <span
+class="math inline">\(A\)</span> 为闭算子。</p>
+<p>证明：假设 <span class="math inline">\((x_n,x_n&#39;)\to
+(x,y)\)</span>，即 <span class="math inline">\(x_n\rightrightarrows
+x,x_n&#39;\rightrightarrows y\)</span>，现证明 <span
+class="math inline">\(y=x&#39;\)</span>。由于 <span
+class="math inline">\(x_n&#39; \rightrightarrows y\)</span>
+一致收敛，积分与极限可以换序，对于 <span
+class="math inline">\(t\in[0,1]\)</span> 有 <span
+class="math display">\[
+\begin{aligned}
+\int_0^t y(s)ds &amp;= \int_0^t \lim_{n\to\infty}
+x_n&#39;(s)ds=\lim_{n\to\infty}\int_0^t x_n&#39;(s)ds \\
+&amp;=\lim_{n\to\infty} x_n(t)-x_n(0) = x(t)-x(0)
+\end{aligned}
+\]</span> 由于 <span class="math inline">\(y\in C[0,1]\)</span>，因此
+<span class="math inline">\(\int_0^t y(s)ds\)</span>
+为连续可导函数，因此 <span class="math inline">\(x\in
+C^1[0,1]=D(A)\)</span>，并且有 <span
+class="math inline">\(x&#39;=y\)</span>，这说明 <span
+class="math inline">\((x,y)=(x,x&#39;)\in G_A\)</span>，从而 <span
+class="math inline">\(A\)</span> 为闭算子。</p>
+<p><strong>NOTE</strong>：闭算子的定义域 <span
+class="math inline">\(D(A)\)</span>
+不一定是闭集，比如上面的求导算子。</p>
+<p><strong><em>例子 2</em></strong>(有界、不闭算子)：<span
+class="math inline">\(X\)</span> 为赋范空间，<span
+class="math inline">\(X_0\subsetneq X\)</span> 为线性子空间，<span
+class="math inline">\(X_0\)</span> 不闭。算子 <span
+class="math inline">\(A:X_0\to X(x\mapsto x)\)</span>
+为线性有界算子。但是对于 <span class="math inline">\(y\in
+\bar{X}\backslash X_0\)</span>，存在 <span class="math inline">\(y_n\in
+X_0\)</span> 使得 <span class="math inline">\((y_n,Ay_n)\to (y,y)\notin
+G_A\)</span>，因此 <span class="math inline">\(A\)</span>
+不是闭算子。</p>
+<blockquote>
+<p><strong>闭图像定理</strong>：<span class="math inline">\(X,Y\)</span>
+为 <strong>Banach 空间</strong>，<span
+class="math inline">\(D(A)\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，<span
+class="math inline">\(A:D(A)\to Y\)</span> 为<strong>闭算子</strong>。若
+<span class="math inline">\(D(A)\)</span> 为 <span
+class="math inline">\(X\)</span> 的<strong>闭线性子空间</strong>，则
+<span class="math inline">\(A\)</span> <strong>有界</strong>。</p>
+</blockquote>
+<p><strong>证明</strong>：证明算子有界性可以想到一致有界性原理，但是这里并没有说
+<span class="math inline">\(D(A)\)</span> 可分，也没有说 <span
+class="math inline">\(X\)</span>
+自反，因此一致有界性原理行不通。那么又可以联想到前面开映射定理，若有界算子
+<span class="math inline">\(T\)</span> 为开映射，同时又是一一映射，那么
+<span class="math inline">\(T^{-1}\)</span> 也是有界算子。因此我们构造
+<span class="math inline">\(P:G_A\to D(A)((x,Ax)\mapsto
+x)\)</span>，其中 <span class="math inline">\(G_A\)</span> 为 Banach
+空间，并且 <span class="math inline">\(P\)</span>
+为有界线性算子，为满射、一一映射，因此 <span
+class="math inline">\(P^{-1}:D(A)\to G_A(x\mapsto (x,Ax))\)</span>
+也是有界算子，进而 <span class="math inline">\(A\)</span> 也有界。</p>
+<blockquote>
+<p><strong>推论</strong>：<span class="math inline">\(X,Y\)</span> 为
+<strong>Banach 空间</strong>，<span
+class="math inline">\(D(A)=X\)</span>，若 <span
+class="math inline">\(A:X\to Y\)</span> 为<strong>闭算子</strong>，则
+<span class="math inline">\(A\in B(X,Y).\)</span></p>
+<p><strong>NOTE</strong>：如果想直接证明 <span
+class="math inline">\(A\in B(X,Y)\)</span> 需要什么条件？<span
+class="math inline">\(\forall x_n\in X\)</span>, 设 <span
+class="math inline">\(x_n\to x\)</span>，则 1）<span
+class="math inline">\(Ax_n\)</span> 收敛；2）收敛极限为 <span
+class="math inline">\(Ax\)</span>。但如果我们有 <span
+class="math inline">\(A\)</span> 为闭算子的条件，那么不需要证明 <span
+class="math inline">\(Ax_n\)</span> 收敛，可以直接假设 <span
+class="math inline">\(Ax_n\)</span> 收敛到某 <span
+class="math inline">\(y\)</span>，只需要证明 <span
+class="math inline">\(y=Ax\)</span> 即可。</p>
+<p>这是因为我们已经假设了 <span class="math inline">\(X,Y\)</span> 均为
+Banach 空间，因此 <span class="math inline">\(X\times Y\)</span>
+也一定是 Banach 空间，所以一定有 <span
+class="math inline">\((x_n,Ax_n)\)</span> 收敛到某 <span
+class="math inline">\((x,y)\)</span>，因此 <span
+class="math inline">\(Ax_n\)</span> 也一定收敛。</p>
+</blockquote>
+<p><em>例子 3</em>：<span class="math inline">\(H\)</span> 为 Hilbert
+空间，<span class="math inline">\(A:H\to H, B:H\to H\)</span>
+均为线性算子，并且满足 <span class="math inline">\(\forall x,y\in
+H\)</span>，<span class="math inline">\(\langle Ax,y\rangle=\langle
+x,By\rangle\)</span>，则 <span class="math inline">\(A,B\)</span>
+均有界。</p>
+<p>证明：<span class="math inline">\(\langle Ax_n,y\rangle=\langle
+x_n,By\rangle\to\langle x,By\rangle=\langle Ax,y\rangle\)</span>，由于
+<span class="math inline">\(y\)</span> 任取，因此 <span
+class="math inline">\(Ax_n\to Ax\)</span>，所以 <span
+class="math inline">\(A\)</span> 为闭算子，因此 <span
+class="math inline">\(A\)</span> 有界。证毕。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Functional-Analysis/">Functional Analysis</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E6%98%A0%E5%B0%84%E5%AE%9A%E7%90%86/">开映射定理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%97%AD%E5%9B%BE%E5%83%8F%E5%AE%9A%E7%90%86/">闭图像定理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E6%98%A0%E5%B0%84/">开映射</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%97%AD%E7%AE%97%E5%AD%90/">闭算子</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/12/music/LovePea/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">红豆</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/26/functional-analysis/ch4-4-convergence/">
+                        <span class="hidden-mobile">泛函分析笔记7：弱收敛与弱星收敛</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

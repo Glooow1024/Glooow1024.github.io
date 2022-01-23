@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面三章讲了很多东西，但实际上都只是开胃小菜 &gt;__&lt;，度量空间、赋范空间、内积空间等等都是为了我们接下来要讲的四大定理做铺垫。泛函中的四大定理，即 Hahn-Banach 定理、一致有界性原理、开映射定理和闭图像定理，是整个泛函分析的基石（前面三章的内容是基石的基石）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛函分析笔记4：Hahn-Banach定理">
+<meta property="og:url" content="http://example.com/2020/12/14/functional-analysis/ch4-1-hahn-banach/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="前面三章讲了很多东西，但实际上都只是开胃小菜 &gt;__&lt;，度量空间、赋范空间、内积空间等等都是为了我们接下来要讲的四大定理做铺垫。泛函中的四大定理，即 Hahn-Banach 定理、一致有界性原理、开映射定理和闭图像定理，是整个泛函分析的基石（前面三章的内容是基石的基石）。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-14T03:38:39.000Z">
+<meta property="article:modified_time" content="2020-12-14T03:44:34.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="Hilbert空间">
+<meta property="article:tag" content="Hahn-Banach定理">
+<meta property="article:tag" content="次线性泛函">
+<meta property="article:tag" content="半范">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>泛函分析笔记4：Hahn-Banach定理 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="泛函分析笔记4：Hahn-Banach定理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-12-14 11:38" pubdate>
+        December 14, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">泛函分析笔记4：Hahn-Banach定理</h1>
+            
+            <div class="markdown-body">
+              <p>前面三章讲了很多东西，但实际上都只是开胃小菜
+&gt;__&lt;，度量空间、赋范空间、内积空间等等都是为了我们接下来要讲的四大定理做铺垫。泛函中的四大定理，即
+Hahn-Banach
+定理、一致有界性原理、开映射定理和闭图像定理，是整个泛函分析的基石（前面三章的内容是基石的基石）。</p>
+<span id="more"></span>
+<h2 id="hahn-banach-定理">1. Hahn-Banach 定理</h2>
+<p>首先介绍几个要用到的概念。对于定义了序关系 <span
+class="math inline">\(\preceq\)</span> 的集合 <span
+class="math inline">\(X\)</span>，<span class="math inline">\(N\subset
+X\)</span>，称 <span class="math inline">\(x_0\in X\)</span> 为 <span
+class="math inline">\(N\)</span> 的<strong>上界</strong>，若 <span
+class="math inline">\(x\preceq x_0,\forall x\in N\)</span>；称 <span
+class="math inline">\(y_0\in N\)</span> 为<strong>极大元</strong>，若
+<span class="math inline">\(y_0\le y,\forall y\in N \Longrightarrow
+y=y_0.\)</span></p>
+<p><strong>Zorn引理</strong>：非空半序集合 <span
+class="math inline">\((X,\preceq)\)</span>，若 <span
+class="math inline">\(X\)</span> 的任意非空全序子集均有上界，则 <span
+class="math inline">\(X\)</span> 必有极大元。</p>
+<p>Hahn-Banach 定理有很多种不同的形式，在给出第一个 Hahn-Banach
+定理之前，我们先引入次线性泛函。对于线性空间 <span
+class="math inline">\(X\)</span>，称 <span class="math inline">\(p:X\to
+\mathbb{K}\)</span> 为<strong>次线性泛函</strong>，若：</p>
+<ol type="1">
+<li><span class="math inline">\(\forall x,y\in X, p(x+y)\le
+p(x)+p(y)\)</span></li>
+<li><span class="math inline">\(\forall x\in X,
+a\ge0,p(ax)=ap(x).\)</span></li>
+</ol>
+<blockquote>
+<p><strong>定理(Hahn-Banach) 1</strong>：对于<strong>实线性空间</strong>
+<span class="math inline">\(X\)</span>，<span
+class="math inline">\(X_0\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，<span
+class="math inline">\(p\)</span> 为 <span
+class="math inline">\(X\)</span> 上的<strong>次线性泛函</strong>，<span
+class="math inline">\(f_0\in X_0^\star\)</span> 为线性泛函并且满足 <span
+class="math inline">\(f_0(x)\le p(x),\forall x\in X_0\)</span>，那么存在
+<span class="math inline">\(f\in X^\star\)</span> 使得 <span
+class="math inline">\(f|_{X_0}=f_0\)</span>，并且 <span
+class="math inline">\(f(x)\le p(x),\forall x\in X.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：要证明 <span class="math inline">\(f\)</span>
+的存在性我们就需要找到满足条件的 <span
+class="math inline">\(f\)</span>，但是给出的 <span
+class="math inline">\(f_0\)</span> 只在 <span
+class="math inline">\(X_0\)</span> 上有定义，怎么把它扩展到整个 <span
+class="math inline">\(X\)</span> 上得到我们想要的 <span
+class="math inline">\(f\)</span>
+呢？下面的构造方法非常的“山路十八弯”，我自己是想不到 orz。</p>
+<p>首先定义 <span class="math inline">\(\mathcal{E}=\{(Y,g):
+Y为X的线性子空间,X_0\subset Y,\quad g\in Y^\star ,g|_{X_0}=f_0, g(x)\le
+p(x),\forall x\in Y\}\)</span>
+（这个集合的构造就不是一般人能想到的[狗头]）。由于 <span
+class="math inline">\((X_0,f_0)\in \mathcal{E}\)</span>，因此 <span
+class="math inline">\(\mathcal{E}\)</span> 非空，我们可以定义 <span
+class="math inline">\(\mathcal{E}\)</span> 上的序关系 <span
+class="math display">\[
+(Y_1,g_1)\preceq(Y_2,g_2) \iff Y_1\subset Y_2,\ g_2|_{Y_1}=g_1
+\]</span> 那么取 <span class="math inline">\(\mathcal{E}\)</span>
+的非空全序子集 <span class="math inline">\(\mathcal{E}_1\)</span>，令
+<span class="math inline">\(W=\cup_{(Y,g)\in
+\mathcal{E}_1}Y\)</span>，对应的 <span class="math inline">\(\forall
+x\in W\)</span>，我们可以找到 <span class="math inline">\((Y,g)\in
+\mathcal{E}_1, x\in Y\)</span>，此时定义 <span
+class="math inline">\(h(x)=g(x)\)</span>。容易验证 <span
+class="math inline">\(W\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，另外由于 <span
+class="math inline">\(\mathcal{E}_1\)</span> 是全序的，也可以验证 <span
+class="math inline">\(h(x),\forall x\in W\)</span> 的定义是唯一的（与
+<span class="math inline">\((Y,g)\)</span> 的选取无关），并且 <span
+class="math inline">\(h(x)\)</span> 为 <span
+class="math inline">\(W\)</span> 上的线性泛函。因此我们有 <span
+class="math inline">\((W,h)\in\mathcal{E}.\)</span></p>
+<p>由于任意 <span
+class="math inline">\((Y,g)\in\mathcal{E}_1\)</span>，都有 <span
+class="math inline">\((Y,g)\preceq(W,h)\)</span>，即 <span
+class="math inline">\((W,h)\)</span> 为 <span
+class="math inline">\(\mathcal{E}_1\)</span> 的上界，<span
+class="math inline">\(\mathcal{E}\)</span>
+中任意非空全序子集都有上界，根据 Zorn 引理，<span
+class="math inline">\(\mathcal{E}\)</span> 有极大元 <span
+class="math inline">\((Y_0,g_0).\)</span></p>
+<p>到这里我们就把 <span class="math inline">\((X_0,f_0)\)</span>
+扩展到了一个更大的空间 <span class="math inline">\((Y_0,g_0)\)</span>
+上面，但是 <span class="math inline">\(Y_0\)</span> 是否就是 <span
+class="math inline">\(X\)</span> 呢？感觉应该是，但是需要证明一下。</p>
+<p>假如 <span class="math inline">\(Y_0\subsetneq X\)</span>，可以取
+<span class="math inline">\(y\in Y_0^c\)</span>，考虑 <span
+class="math inline">\(V=\text{span}(Y_0\cup \{y\})\)</span>，那么 <span
+class="math inline">\(\forall x\in V\)</span> 都可以唯一的表示为 <span
+class="math inline">\(x=w+\lambda y,w\in
+Y_0,\lambda\in\mathbb{R}\)</span>，此时定义 <span
+class="math display">\[
+h(x)=g_0(w)+\lambda a
+\]</span> 容易验证 <span class="math inline">\(h\)</span> 为 <span
+class="math inline">\(V\)</span> 上的线性泛函，并且有 <span
+class="math inline">\(h_{Y_0}=g_0\)</span>，因此我们就对 <span
+class="math inline">\(g_0\)</span> 又进行了扩展，只需要证明 <span
+class="math inline">\((V,h)\in\mathcal{E}\)</span>
+就能导出矛盾（因为已经证明 <span
+class="math inline">\((Y_0,g_0)\)</span> 为极大元）从而说明 <span
+class="math inline">\(Y_0=X\)</span>。这就需要满足 <span
+class="math inline">\(h(x)\le p(x),\forall x\in V\)</span>。考虑 <span
+class="math inline">\(\lambda&gt;0\)</span>，这等价于 <span
+class="math inline">\(h(x/\lambda)=g_0(w/\lambda)+a\le
+p(w/\lambda+y)\)</span>，也等价于 <span class="math inline">\(\forall
+w\in Y_0, g_0(w)+a\le p(w+y)\)</span>。类似得取 <span
+class="math inline">\(x=w-\lambda y,\lambda&gt;0\)</span> 就可以得到
+<span class="math inline">\(g_0(w)-a\le p(w-y)\)</span>。因此 <span
+class="math inline">\(a\)</span> 需要满足以下条件： <span
+class="math display">\[
+g_0(w)-p(w-y) \le a \le p(w+y) - g_0(w)
+\]</span> 因此就需要满足 <span class="math inline">\(2g_0(w) \le
+p(w-y)+p(w+y)\)</span>，由于 <span class="math inline">\(2g_0(w)\le
+p(2w) \le p(w+y+w-y)\le
+p(w+y)+p(w-y)\)</span>，因此上式一定可以满足，即能找到合适的 <span
+class="math inline">\(a\)</span> 使得 <span
+class="math inline">\((V,h)\in\mathcal{E}\)</span>，因为 <span
+class="math inline">\(Y_0\subsetneq V\)</span>，这就说明 <span
+class="math inline">\((Y_0,g_0)\)</span> 不是 <span
+class="math inline">\(\mathcal{E}\)</span> 的极大元，导出矛盾，因此有
+<span class="math inline">\(Y_0=X\)</span>。至此我们就找到了 <span
+class="math inline">\(g_0\)</span> 满足定理要求的全部条件。</p>
+<p>证毕。</p>
+<p>上面的定理只研究了实线性空间的情况，对于复线性空间有相似的结论，不过我们需要对条件稍加修改。</p>
+<p>首先将上面 <span class="math inline">\(p\)</span>
+的次线性泛函假设改为更强的假设——半范。对于线性空间 <span
+class="math inline">\(X\)</span>，<span
+class="math inline">\(p:X\to\mathbb{R}\)</span> 称为 <span
+class="math inline">\(X\)</span> 上的<strong>半范</strong>，若满足：</p>
+<ol type="1">
+<li><span class="math inline">\(p(x)\ge0, \forall x\in X\)</span></li>
+<li><span class="math inline">\(p(x+y)\le p(x)+p(y),\forall x,y\in
+X\)</span></li>
+<li><span class="math inline">\(p(ax)=|a|p(x),\forall x\in
+X,a\in\mathbb{K}\)</span></li>
+</ol>
+<p>半范与范数的概念相比，少了一个条件即 <span
+class="math inline">\(p(x)=0\iff x=0\)</span>，因此说明可能存在 <span
+class="math inline">\(x\ne0,p(x)=0\)</span>。另外半范可以导出次线性。</p>
+<blockquote>
+<p><strong>定理(Hahn-Banach) 2</strong>：<span
+class="math inline">\(X\)</span> 为 <span
+class="math inline">\(\mathbb{K}\)</span> 上的线性空间，<span
+class="math inline">\(X_0\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，<span
+class="math inline">\(p:X\to \mathbb{R}\)</span> 为半范，<span
+class="math inline">\(f_0\in X_0^\star\)</span> 并且有 <span
+class="math inline">\(|f_0(x)|\le p(x),\forall x\in
+X_0\)</span>，那么存在 <span class="math inline">\(f\in X^\star\)</span>
+使得 <span class="math inline">\(f|_{X_0}=f_0\)</span>，并且 <span
+class="math inline">\(f(x)\le p(x),\forall x\in X.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：
+要想把原来的结论从实线性空间扩展到复线性空间，首先要考虑复线性空间有什么特殊的性质。如果用两个实线性泛函来表示
+<span
+class="math inline">\(f(x)=f_1(x)+if_2(x)\)</span>，我们可以想一下复线性空间可以粗略的看成两个实线性空间的组合，<span
+class="math inline">\(\forall
+a\in\mathbb{R},f(ax)=af_1(x)+iaf_2(x)\)</span>。但是实际上并没有这么简单，因为
+<span class="math inline">\(a\)</span> 还可以取自复空间，那么我们令
+<span class="math inline">\(a=i\)</span> 就可以得到 <span
+class="math display">\[
+\begin{aligned}
+if(x)&amp;=f(ix) \\
+if_1(x)-f_2(x)&amp;=f_1(ix)+if_2(x)
+\end{aligned}
+\]</span> 由于 <span class="math inline">\(x\in X\)</span>
+任取，实部虚部需要分别相等，因此 <span
+class="math inline">\(f_2(x)=-f_1(ix),\forall x\in
+X\)</span>，即<strong>复线性泛函 <span class="math inline">\(f\)</span>
+的实部和虚部是相互约束的</strong>！另一方面，实部和虚部只需要知道其中一个，另一个也就确定了。那么也就是说给定一个复线性泛函
+<span class="math inline">\(f\)</span> 我们可以唯一的用某个实线性泛函
+<span class="math inline">\(f_1\)</span> 来表示 <span
+class="math inline">\(f\)</span>。</p>
+<blockquote>
+<p><strong>NOTE</strong>：读者如果了解信号的相干解调的话，这里可以联想到
+Hilbert 变换。实际上。</p>
+</blockquote>
+<p>对于定理中的 <span class="math inline">\(f_0\)</span>
+我们可以将其表示为 <span
+class="math inline">\(f_0(x)=f_1(x)+if_2(x)\)</span>。容易验证 <span
+class="math inline">\(f_1(x)\le p(x)\)</span>，根据上一个 Hahn-Banach
+定理，就能找到一个实线性泛函 <span
+class="math inline">\(g_1\)</span>，使得 <span
+class="math inline">\(g_1|_{X_0}=f_1, g_1(x)\le
+p(x)\)</span>。那么我们再定义 <span
+class="math inline">\(g(x)=g_1(x)-ig_1(ix)\)</span>，容易验证 <span
+class="math inline">\(g\in X^\star,g|_{X_0}=f_0\)</span>，接下来验证
+<span class="math inline">\(|g(x)|\le p(x)\)</span> 的方法也有一点巧妙：
+<span class="math display">\[
+|g(x)|=g(x)e^{-i\theta} = g(e^{-i\theta}x)=g_1(e^{-i\theta}x)\le
+p(e^{-i\theta}x)=p(x)
+\]</span> 证毕。</p>
+<p>接下来再把 <span class="math inline">\(X\)</span>
+限制在赋范空间上，就能得到有界线性泛函的保范延拓定理，这也是 Hahn-Banach
+定理最重要的应用。我们这里讲前面两个定理基本上也是为下面一个定理做铺垫。他们的基本含义都是将一个线性泛函从较小的线性子空间延拓到整个空间。</p>
+<blockquote>
+<p><strong>定理(Hahn-Banach/保范延拓定理) 3</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，<span
+class="math inline">\(X_0\)</span> 为 <span
+class="math inline">\(X\)</span> 的线性子空间，<span
+class="math inline">\(\forall f_0\in X_0&#39;\)</span>，则 <span
+class="math inline">\(\exists f\in X&#39;\)</span>，<span
+class="math inline">\(f|_{X_0}=f_0\)</span> 且 <span
+class="math inline">\(\Vert f\Vert = \Vert f_0\Vert.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：我们还是要对 <span
+class="math inline">\(f_0\)</span>
+进行延拓，那么怎么样才能应用上面两个定理的结论呢？首先需要构造一个半范
+<span class="math inline">\(p\)</span>，可以定义 <span
+class="math inline">\(p(x)=\Vert f_0\Vert\cdot \Vert
+x\Vert\)</span>，容易验证其为半范（在这里能看出来半范的好处，由于不要求
+<span class="math inline">\(p(x+y)=p(x)+p(y)\)</span>，因此 <span
+class="math inline">\(p\)</span> 可以含有 <span
+class="math inline">\(\Vert x\Vert\)</span> 项）。那么就能找到 <span
+class="math inline">\(f\in X^\star,f|_{X_0}=f_0,|f(x)|\le \Vert
+f_0\Vert\cdot \Vert x\Vert\)</span>，之后容易验证 <span
+class="math inline">\(\Vert f\Vert=\Vert f_0\Vert.\)</span> 证毕。</p>
+<p>对上一定义的假设条件进行增强，把 <span
+class="math inline">\(X\)</span> 限制为 Hilbert 空间，回忆上一章提到了
+<strong>Hilbert
+空间</strong>上的<strong>线性泛函</strong>都可以<strong>唯一的</strong>表示为
+<span class="math inline">\(f(x)=\langle x,z_0\rangle\)</span>
+的形式，那么我们可以把上面的保范延拓定理进一步加强，获得唯一性！</p>
+<blockquote>
+<p><strong>推论 1</strong>：若 <span class="math inline">\(X\)</span> 为
+HIlbert 空间，<span class="math inline">\(X_0\)</span> 为 <span
+class="math inline">\(X\)</span> 的闭线性子空间，<span
+class="math inline">\(f_0\in
+X_0&#39;\)</span>，则<strong>存在唯一的</strong> <span
+class="math inline">\(f\in X&#39;\)</span>，<span
+class="math inline">\(f|_{X_0}=f_0\)</span> 且 <span
+class="math inline">\(\Vert f\Vert = \Vert f_0\Vert.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：<span class="math inline">\(X_0\)</span> 也是
+Hilbert 空间，因此 <span class="math inline">\(\exists! z_0\in
+X_0\)</span>，使得 <span class="math inline">\(f_0(x)=\langle
+x,z_0\rangle\)</span>，因此很方便地可以取 <span
+class="math inline">\(f_0(x)=\langle x,z_0\rangle, \forall x\in
+X\)</span>，并且可以验证 <span class="math inline">\(f\)</span> 满足条件
+<span class="math inline">\(f|_{X_0}=f_0, \Vert f\Vert = \Vert
+f_0\Vert=\Vert z_0\Vert.\)</span></p>
+<p>接下来就需要证明 <span class="math inline">\(f\)</span>
+的唯一性。假设还有 <span class="math inline">\(g\)</span> 满足条件，那么
+<span class="math inline">\(\exists! z_1\in X\)</span>，<span
+class="math inline">\(g(x)=\langle x,z_1\rangle\)</span> <span
+class="math display">\[
+\forall x\in X_0.f(x)-g(x)=\langle x,z_0-z_1\rangle=0 \Longrightarrow
+z_0-z_1\in X_0^{\perp} \\
+\Vert g_0\Vert=\Vert z_1\Vert^2 = \Vert z_1-z_0\Vert^2+\Vert
+z_0\Vert^2=\Vert f_0\Vert^2 \Longrightarrow z_1=z_0
+\]</span> 证毕。</p>
+<blockquote>
+<p><strong>定理(Hahn-Banach) 4</strong>：<span
+class="math inline">\((X,\Vert\cdot\Vert)\)</span>，<span
+class="math inline">\(x_0\in X, x_0\ne 0\)</span>，则 <span
+class="math inline">\(\exists f\in X&#39;, \Vert f\Vert=1\)</span>，使得
+<span class="math inline">\(f(x_0)=\Vert x_0\Vert.\)</span></p>
+</blockquote>
+<p><strong>证明</strong>：可以取 <span
+class="math inline">\(X_0=\mathbb{K}x_0=\{\lambda
+x_0,\lambda\in\mathbb{K}\}\)</span>，定义 <span
+class="math inline">\(f_0(\lambda x_0)=\lambda \Vert x_0\Vert \in
+X_0&#39;\)</span>，<span class="math inline">\(\Vert
+f_0\Vert=1\)</span>，再应用上一推论自然就出来了。证毕。</p>
+<p><strong>NOTE</strong>：对于 <span class="math inline">\(\forall
+x,y\in X,x\ne y\)</span>，那么我们取 <span
+class="math inline">\(x_0=x-y\ne0\)</span>，根据上面的定理，一定存在
+<span class="math inline">\(f\in X&#39;\)</span> 使得 <span
+class="math inline">\(f(x_0)=f(x)-f(y)\ne0\)</span>。这说明只要 <span
+class="math inline">\(x\ne y\)</span>，就一定存在某个 <span
+class="math inline">\(f\in X&#39;,\Vert f\Vert=1\)</span> 使得 <span
+class="math inline">\(f(x)\ne f(y).\)</span> 可以表述为 <span
+class="math display">\[
+x=y \iff f(x)=f(y),\forall f\in X&#39;
+\]</span></p>
+<blockquote>
+<p><strong>推论 2</strong>：<span
+class="math inline">\(X\ne\{0\}\)</span> 为赋范空间，<span
+class="math inline">\(x_0\in X,x_0\ne 0\)</span>，则 <span
+class="math display">\[
+\Vert x_0\Vert = \max_{f\in X&#39;,\Vert f\Vert=1} |f(x_0)| = \max_{f\in
+X&#39;,\Vert f\Vert\le1} |f(x_0)| = \max_{f\ne0} \frac{|f(x_0)|}{\Vert
+f\Vert}
+\]</span> <strong>NOTE</strong>：回忆 <span class="math inline">\(\Vert
+f\Vert=\sup_{x\in X,\Vert
+x\Vert\le1}|f(x)|\)</span>，从这个结论来看，<span
+class="math inline">\(X\)</span> 与 <span
+class="math inline">\(X&#39;\)</span> 有某种的对称性。证明略。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Functional-Analysis/">Functional Analysis</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Hilbert%E7%A9%BA%E9%97%B4/">Hilbert空间</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Hahn-Banach%E5%AE%9A%E7%90%86/">Hahn-Banach定理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%AC%A1%E7%BA%BF%E6%80%A7%E6%B3%9B%E5%87%BD/">次线性泛函</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8D%8A%E8%8C%83/">半范</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/26/functional-analysis/ch4-2-application/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">泛函分析笔记5：Hahn-Banach定理的应用</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/11/functional-analysis/ch3-hilbert-space/">
+                        <span class="hidden-mobile">泛函分析笔记3：内积空间</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,811 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信息几何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计推断(四) Information Geometry">
+<meta property="og:url" content="http://example.com/2020/02/03/statistic/SI_Ch4_InformationGeometry/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="信息几何">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-03T11:58:00.000Z">
+<meta property="article:modified_time" content="2020-03-27T10:04:22.000Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="信息几何">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>统计推断(四) Information Geometry - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="统计推断(四) Information Geometry">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-02-03 19:58" pubdate>
+        February 3, 2020 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      53 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">统计推断(四) Information Geometry</h1>
+            
+            <div class="markdown-body">
+              <p>信息几何</p>
+<span id="more"></span>
+<h2 id="generalized-bayesian-decision">1. Generalized Bayesian
+decision</h2>
+<ul>
+<li><p>Formulation</p>
+<ul>
+<li>Soft decision: <span
+class="math inline">\(q_x(\cdot|y)\)</span></li>
+<li>Cost function: <span class="math inline">\(C(x,q_x)\)</span></li>
+</ul></li>
+<li><p>Cost function</p>
+<ul>
+<li><strong>proper</strong>: <span
+class="math inline">\(p_{x|y}(\cdot|y)=\arg\min\limits_{\{q_x\ge0:\sum_a
+q(a)=1\}} E[C(x,q_x(\cdot))|\mathsf{y}=y]\)</span></li>
+<li><strong>local</strong>: <span
+class="math inline">\(C(x,q_x)=\phi(x,q_x(x))\)</span></li>
+</ul></li>
+<li><p>Log-loss criterion: <span class="math inline">\(C(x,q)=-A\log
+q_x(x) + B(x), \ \ \ A&gt;0\)</span></p>
+<ul>
+<li><em>proper</em> and <em>local</em></li>
+</ul>
+<blockquote>
+<p><strong>Theorem</strong>: When the alphabet <span
+class="math inline">\(\mathcal{X}\)</span> consists of at least 3 values
+(<span class="math inline">\(|\mathcal{X}| \triangleq L ≥ 3\)</span>),
+then the log-loss is the <strong>only</strong> smooth local, proper cost
+function.</p>
+<p><strong>Proof</strong>: Let <span class="math inline">\(q_{l}
+\triangleq q_{\times}\left(x_{l}\right), p_{l} \triangleq p_{x |
+y}\left(x_{l} | y\right), \phi_{l}(\cdot) \triangleq \phi\left(x_{l},
+\cdot\right)\)</span></p>
+<ul>
+<li><p><span class="math display">\[
+proper \Longrightarrow p_{1}, \ldots, p_{L}=\underset{\left\{q_{1},
+\ldots, q_{L} \geq 0: \sum_{l=1}^{L} q_{l}=1\right\}} {\arg\min}
+\sum_{l=1}^{L} p_{l} \phi_{l}\left(q_{l}\right)
+\]</span></p></li>
+<li><p><span class="math display">\[
+拉格朗日乘子法 \Longrightarrow
+p_{1}, \ldots, p_{L}=\underset{q_{1}, \ldots, q_{L}}{\arg \min }
+\varphi, \quad \text { with } \varphi=\sum_{l=1}^{L} p_{l}
+\phi_{l}\left(q_{l}\right)+\lambda\left(p_{1}, \ldots,
+p_{L}\right)\left[\sum_{l=1}^{L} q_{l}-1\right]
+\]</span></p></li>
+<li><p><span class="math display">\[
+proper \Longrightarrow \left.\frac{\partial \varphi}{\partial
+q_{k}}\right|_{q=p_{l}, l=1, \ldots, L}=p_{k}
+\dot{\phi}_{k}\left(p_{k}\right)+\lambda\left(p_{1}, \ldots,
+p_{L}\right)=0, \quad k=1, \ldots, L
+\]</span></p></li>
+<li><p>由 locality 可推出 <span class="math inline">\(\lambda\)</span>
+为常数，<span class="math inline">\(\phi_k(q)=-\lambda \ln q + c_k, \ \
+\ k=1,...,L\)</span></p></li>
+</ul>
+</blockquote></li>
+<li><p>Gibbs inequality <span class="math display">\[
+if \ \ \ x\sim p_x(\cdot),\ \ \  \forall q(\cdot) \\
+we\ \ have \ \ E_x[\log p(x)] \ge E[\log q(x)] \\
+\sum_x p(x)\log p(x) \ge \sum_x p(x)\log q(x) \\
+&quot;=&quot; \iff p(x)=q(x)
+\]</span></p></li>
+</ul>
+<h2 id="discrete-information-theory">2. Discrete information theory</h2>
+<ul>
+<li><p><strong>Entropy</strong>: <span
+class="math inline">\(H(\mathrm{x}) \triangleq \min _{q_{\mathrm{x}}}
+\mathbb{E}\left[C\left(\mathrm{x},
+q_{\mathrm{x}}\right)\right]\)</span></p></li>
+<li><p><strong>Conditional entropy</strong>: <span
+class="math inline">\(H(\mathrm{x} | \mathrm{y}) \triangleq \sum_{y}
+p_{\mathrm{y}}(y) H(\mathrm{x} | \mathrm{y}=y)\)</span> <span
+class="math inline">\(H(x | y=y) \triangleq \min _{q_{x}}
+\mathbb{E}\left[C\left(x, q_{x}\right) | y=y\right]\)</span></p></li>
+<li><p><strong>Mutual information</strong>: <span
+class="math inline">\(I(\mathrm{x} ; \mathrm{y}) \triangleq
+H(\mathrm{x})-H(\mathrm{x} | \mathrm{y}) =
+H(x)+H(y)-H(xy)\)</span></p></li>
+<li><p><strong>Conditional mutual information</strong>: <span
+class="math inline">\(I(\mathrm{x} ; \mathrm{y} | \mathrm{z}) \triangleq
+H(\mathrm{x} | \mathrm{z})-H(\mathrm{x} | \mathrm{y},
+\mathrm{z})\)</span></p></li>
+<li><p>Chain rule: <span class="math inline">\(I(x ; y, z)=I(x ; z)+I(x
+; y | z)\)</span></p></li>
+<li><figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/venn.jpg" srcset="/img/loading.gif" lazyload
+alt="venn" />
+<figcaption aria-hidden="true">venn</figcaption>
+</figure></li>
+<li><p><strong>Information divergence</strong>(KL distance)</p>
+<ul>
+<li>Definition</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned} D\left(p_{\times} \| q_{\mathbf{x}}\right) &amp;
+\triangleq \mathbb{E}_{p_{\mathbf{x}}}\left[-\log
+q_{\mathbf{x}}(\mathbf{x})\right]-\mathbb{E}_{p_{\mathbf{x}}}\left[-\log
+p_{\mathbf{x}}(\mathbf{x})\right] \\ &amp;=\sum_{a} p_{\mathbf{x}}(a)
+\log \frac{p_{\mathbf{x}}(a)}{q_{\mathbf{x}}(a)} \end{aligned}
+\]</span></p>
+<ul>
+<li><p>Properties</p>
+<ul>
+<li><p><span class="math inline">\(\ge 0\)</span>（<em>只有 p=q
+的时候才能取 = 吗？</em>）</p></li>
+<li><p><span class="math inline">\(I(x;y) = D(p_{x,y}||p_x
+p_y)\)</span></p></li>
+<li><p><span class="math display">\[
+\lim _{\delta \rightarrow 0} \frac{D\left(p_{y}(\cdot ; x) \|
+p_{y}(\cdot ; x+\delta)\right)}{\delta^{2}}=\frac{1}{2} J_{y}(x)​
+\]</span></p></li>
+</ul></li>
+</ul></li>
+<li><p>Data processing inequality (<strong>DPI</strong>)</p></li>
+</ul>
+<blockquote>
+<p><strong>Theorem</strong>: if <span class="math inline">\(x
+\leftrightarrow y \leftrightarrow t\)</span> is a
+<strong>Markov</strong> chain, then <span class="math display">\[
+I(x;y) \ge I(x;t)
+\]</span> with "=" <span class="math inline">\(\iff\)</span> <span
+class="math inline">\(x \leftrightarrow t \leftrightarrow y\)</span> is
+a Markov chain</p>
+<p><strong>Corollary</strong>: deterministic <span
+class="math inline">\(g(\cdot)\)</span>, <span
+class="math inline">\(I(x;y) \ge I(x;g(y))\)</span></p>
+<p><strong>Corollary</strong>: t=t(y) is <strong>sufficient</strong>
+<span class="math inline">\(\iff I(x;y)=I(x;t)\)</span></p>
+<p><strong>Proof</strong>: 应用互信息链式法则</p>
+<p><strong>Remark</strong>: 证明不等式的时候注意取等号的条件 <span
+class="math inline">\(I(x;y|t)=0\)</span></p>
+<hr />
+<p><strong>Theorem</strong>: 若 <span
+class="math inline">\(q_{\mathrm{x}^{\prime}}(b)=\sum_{a \in
+\mathcal{X}} W(b | a) p_{\mathrm{x}}(a), \quad
+q_{\mathrm{y}^{\prime}}(b)=\sum_{a \in \mathcal{X}} W(b | a)
+p_{\mathrm{y}}(a)\)</span> 那么对任意 <span
+class="math inline">\(W(\cdot|\cdot)\)</span> 有 <span
+class="math inline">\(D(q_{x&#39;}||q_{y&#39;}) \le
+D(p_x||p_y)\)</span></p>
+<p><strong>Proof</strong>: 待完成 ...</p>
+<p><strong>Theorem</strong>: 对确定性函数 <span
+class="math inline">\(\phi(\cdot)\)</span>，<span
+class="math inline">\(\mathsf{w}=\phi(\mathsf{z})\)</span>，有 <span
+class="math inline">\(J_{\mathsf{w}}(x)=J_{\mathsf{z}}(x)\)</span></p>
+<p><strong>Proof</strong>: 待完成 ...</p>
+</blockquote>
+<h2 id="information-geometry">3. Information geometry</h2>
+<ul>
+<li><p>Probability simplex</p>
+<ul>
+<li>若字符集有 M 个字符，则概率单形为 <strong>M-1
+维</strong>的超平面，且只位于第一象限</li>
+</ul>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/probability_simplex.jpg" srcset="/img/loading.gif" lazyload
+alt="probability_simplex" />
+<figcaption aria-hidden="true">probability_simplex</figcaption>
+</figure></li>
+<li><p>Boundary</p>
+<ul>
+<li>根据 p,q 是否位于边界(即存在 <span
+class="math inline">\(p(y&#39;)=0\)</span>) 可决定 <span
+class="math inline">\(D(p||q)&lt;\infty\)</span> 还是 <span
+class="math inline">\(D(p||q)=\infty\)</span></li>
+</ul></li>
+<li><p>Local information geometry</p>
+<blockquote>
+<p>取 <span class="math inline">\(p_0 \in
+\text{int}(\mathcal{P^Y})\)</span>，对任意分布(向量) <span
+class="math inline">\(p\)</span> 定义其归一化表示 <span
+class="math display">\[
+\phi(y)=\frac{p(y)-p_0(y)}{\sqrt{2p_0(y)}}
+\]</span> <span class="math inline">\(p_0\)</span> 的邻域被定义为一个球
+<span class="math display">\[
+\{p: |\phi_p(y)|\le B, \ \ \forall y \}
+\]</span> 那么对小邻域内的两个分布 <span
+class="math inline">\(p_1,p_2\)</span> 有 <span class="math display">\[
+D(p_1 || p_2) = \sum_y |\phi_1(y)-\phi_2(y)|^2(1+o(1)) \approx
+||\phi_1-\phi_2||^2
+\]</span> 证明：代入散度公式，应用泰勒级数展开化简。其中需要注意到 <span
+class="math display">\[
+\sum_y \sqrt{2p_0(y)}\phi(y)=\sum_y p(y)-p_0(y) = 0
+\]</span></p>
+<p><strong>Remark</strong>：直观理解就是小邻域内散度近似为欧氏距离</p>
+</blockquote></li>
+</ul>
+<h2 id="information-projection">4. Information projection</h2>
+<ul>
+<li>Definition: q 向<strong>闭集</strong> <span
+class="math inline">\(\mathcal{P}\)</span> 内的投影 <span
+class="math inline">\(p*=\arg\min_{p\in\mathcal{P}}D(p||q)\)</span>
+<ul>
+<li>存在性：由于 <span class="math inline">\(D(p||q)\)</span> 非负且对 p
+连续，而 <span class="math inline">\(\mathcal{P}\)</span>
+非空且为闭集，因此一定存在</li>
+<li>唯一性：不一定唯一，但如果 <span
+class="math inline">\(\mathcal{P}\)</span> 为<strong>凸集</strong>，则
+p* 唯一</li>
+</ul></li>
+<li>Pythagoras’ Theorem</li>
+</ul>
+<blockquote>
+<p><strong>Theorem(Pythagoras’ Theorem)</strong>: p* 是 q
+向非空<strong>闭凸集</strong> <span
+class="math inline">\(\mathcal{P}\)</span> 上的投影，那么任意 <span
+class="math inline">\(p\in\mathcal{P}\)</span> 有 <span
+class="math display">\[
+D(p||q) \ge D(p||p^*) + D(p^*||q)
+\]</span> <strong>Proof</strong>: 取 <span
+class="math inline">\(p_{\lambda}=\lambda p + (1-\lambda)p^* \in
+\mathcal{P}\)</span></p>
+<p>由投影定义可知 <span class="math inline">\(\frac{\partial}{\partial
+\lambda} D(p_\lambda||q) \Big|_{\lambda=0} \ge 0\)</span></p>
+<p>代入化简可得证</p>
+<p><strong>Remark</strong>:
+直观理解就是不可能通过多次中间投影，使整体的<strong>KL距离</strong>(散度)减小</p>
+<hr />
+<p><strong>Corollary</strong>: 如果 q 不在 <span
+class="math inline">\(\mathcal{P^y}\)</span>
+的边界上，那么其在<strong>线性分布族</strong> <span
+class="math inline">\(\mathcal{P}\)</span> 上的投影 <span
+class="math inline">\(p^*\)</span> 也不可能在 <span
+class="math inline">\(\mathcal{P^y}\)</span> 的边界上，除非 <span
+class="math inline">\(\mathcal{P}\)</span>
+中的所有元素都在某个边界上</p>
+<p><strong>Proof</strong>: 应用散度的 Boundary、毕达哥拉斯定理</p>
+</blockquote>
+<ul>
+<li><p><strong>Linear families</strong></p>
+<ul>
+<li><p>Definition: <span class="math inline">\(\mathcal{L}\)</span>
+是一个线性分布族，如果对于一组映射函数 <span
+class="math inline">\(t(\cdot)=[t_1(), ..., t_K()]^T\)</span>
+和对应的常数 <span class="math inline">\(\bar t = [\bar t_1, ..., \bar
+t_K]^T\)</span>，有 <span
+class="math inline">\(\mathbb{E}_{p}\left[t_{i}(\mathrm{y})\right]=\bar{t}_{i},
+\quad i=1, \ldots, K \quad\)</span> for all <span
+class="math inline">\(p \in \mathcal{L}\)</span> <span
+class="math display">\[
+\underbrace{\left[\begin{array}{ccc}{t_{1}(1)-\bar{t}_{1}} &amp;
+{\cdots} &amp; {t_{1}(M)-\bar{t}_{1}} \\ {\vdots} &amp; {\ddots} &amp;
+{\vdots} \\ {t_{K}(1)-\bar{t}_{K}} &amp; {\cdots} &amp;
+{t_{K}(M)-\bar{t}_{K}}\end{array}\right]}_{\triangleq
+\mathbf{T}}\left[\begin{array}{c}{p(1)} \\ {\vdots} \\
+{p(M)}\end{array}\right]=\mathbf{0}
+\]</span></p></li>
+<li><p>性质</p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}\)</span> 的维度为
+M-rank(T)-1</li>
+<li><span class="math inline">\(\mathcal{L}\)</span>
+是一个闭集、凸集</li>
+<li><span class="math inline">\(p_1,p_2 \in \mathcal{L}\)</span>，那么
+<span class="math inline">\(p=\lambda p_{1}+(1-\lambda) p_{2} \in
+\mathcal{P}^{\mathcal{Y}}, \ \ \lambda\in R\)</span>，注意 <span
+class="math inline">\(\lambda\)</span> 可以取 [0,1] 之外的数</li>
+</ul>
+<blockquote>
+<p><strong>Theorem(Pythagoras’ Identity)</strong>: q 向线性分布族 <span
+class="math inline">\(\mathcal{L}\)</span> 的投影 <span
+class="math inline">\(p^*\)</span> 满足以下性质 <span
+class="math display">\[
+D(p \| q)=D\left(p \| p^{*}\right)+D\left(p^{*} \| q\right), \quad \text
+{ for all } p \in \mathcal{L}
+\]</span> <strong>Proof</strong>: 类似前面不等式的证明，只不过现在由于
+<span class="math inline">\(\lambda\in R\)</span>
+所以不等号变成了等号</p>
+</blockquote>
+<blockquote>
+<p><strong>Theorem(Orthogonal families)</strong>: <span
+class="math inline">\(p*\in\mathcal{P^Y}\)</span>
+为任一分布，则向线性分布族 <span
+class="math inline">\(\mathcal{L_t}(p^*)\)</span> 的投影为 <span
+class="math inline">\(p^*\)</span> 的所有分布都属于一个指数分布 <span
+class="math inline">\(\mathcal{\varepsilon}_t(p^*)\)</span> $$
+_{}(p^{<em>}) {p ^{}: <em>{p}[()]= </em>{p^{</em>}}[()]} \</p>
+<span class="math display">\[\begin{aligned}
+\mathcal{E}_{\mathbf{t}}\left(p^{*}\right) \triangleq\left\{q \in
+\mathcal{P}^{\mathcal{Y}}: q(y)=p^{*}(y) \exp
+\left\{\mathbf{x}^{\mathrm{T}}
+\mathbf{t}(y)-\alpha(\mathbf{x})\right\}\right.\\ \text { for all
+}\left.y \in \mathcal{Y}, \text { some } \mathbf{x} \in
+\mathbb{R}^{K}\right\} \end{aligned}\]</span>
+<p>$$ 其中需要注意的是 <span
+class="math inline">\(\mathcal{L}_{\mathbf{t}}\left(p^{*}\right),\mathcal{E}_{\mathbf{t}}\left(p^{*}\right)\)</span>
+的表达形式并不唯一，括号内的 <span class="math inline">\(p^*\)</span>
+均可以替换为对应集合内的任意一个其他分布，他们表示的是同一个集合</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2019/exp_projection_linear.jpg" srcset="/img/loading.gif" lazyload
+alt="exp_projection_linear" />
+<figcaption aria-hidden="true">exp_projection_linear</figcaption>
+</figure>
+<p><strong>Remarks</strong>：</p>
+<ol type="1">
+<li>根据上面的定理，可以由 <span class="math inline">\(t(\cdot), \bar
+t\)</span> 求出 q 向线性分布族的投影 p*</li>
+<li>在小邻域范围内，可以发现 <span
+class="math inline">\(\mathcal{L}_{\mathbf{t}}\left(p^{*}\right),\mathcal{E}_{\mathbf{t}}\left(p^{*}\right)\)</span>
+的正规化表示 <span class="math inline">\(\phi_\mathcal{L}^T
+\phi_\mathcal{E}=0\)</span>，即二者是正交的</li>
+</ol>
+</blockquote></li>
+</ul></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/">统计推断</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%BF%A1%E6%81%AF%E5%87%A0%E4%BD%95/">信息几何</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch5_EMAlgorithm/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">统计推断(五)  EM algorithm</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/03/statistic/SI_Ch3_ExponentialFamily/">
+                        <span class="hidden-mobile">统计推断(三) Exponential Family</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

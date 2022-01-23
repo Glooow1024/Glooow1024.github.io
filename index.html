@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="你是下雨天">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Glooow">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bus.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/23/hello-world/" target="_self">
+          Hello World
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/23/hello-world/" target="_self">
+          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-23 19:47" pubdate>
+              2022-01-23
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
+          【高等数值分析】常微分方程数值解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
+          
+          1. 预备理论 求解常微分方程初值问题数值解 \[ \begin{align} &amp;\frac{dy}{dx} &#x3D; f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\ &amp;y(a) &#x3D; y_0 \end{align} \] 存在唯一性定理：若 \(f(x,y)\) 连续，对 \(y\) 满足 Lipschitz 条件，那么
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-14 09:26" pubdate>
+              2022-01-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">常微分方程</a>
+            
+              <a href="/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/">刚性问题</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
+          【高等数值分析】数值积分和数值微分
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
+          
+          1. 预备理论 根据Newton-Leibniz公式有 \(\int_a^x f(t)dt &#x3D; F(x)-F(a)\)，但是绝大部分情况很难解析求解，需要数值积分。例如中点公式 \[ \int_a^b f(x)dx \approx f(\frac{a+b}{2})(b-a) \] 若 \(f(x)\in C^2[a,b]\)，则中点公式截断误差为 \[ \int_a^b f(x)d
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-09 21:55" pubdate>
+              2022-01-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/">数值积分</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" target="_self">
+          【高等数值分析】函数逼近
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" target="_self">
+          
+          1. 预备理论 函数插值当中我们只有几个离散的的插值节点及其函数值，在函数逼近里我们考虑的是有一个 \(f(x),x\in[a,b]\) 已知，但是希望用一组简单的基函数 \(\{\phi_0,...,\phi_n\}\) 逼近 \(f(x)\)。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-07 23:47" pubdate>
+              2022-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%80%BC%E8%BF%91/">多项式逼近</a>
+            
+              <a href="/tags/Pade%E9%80%BC%E8%BF%91/">Pade逼近</a>
+            
+              <a href="/tags/Lengdre%E5%A4%9A%E9%A1%B9%E5%BC%8F/">Lengdre多项式</a>
+            
+              <a href="/tags/Chebyshev%E5%A4%9A%E9%A1%B9%E5%BC%8F/">Chebyshev多项式</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" target="_self">
+          【高等数值分析】多项式插值
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" target="_self">
+          
+          1. 预备理论 假设有离散的 \(\{x_0,x_1,...,x_n\}\) 插值节点，以及对应的函数值 \(\{f(x_0),....,f(x_n)\}\)，希望用函数 \(\phi(x)\) 来近似 \(f(x)\)，使其满足插值条件 \(\phi(x_i)&#x3D;f(x_i),i&#x3D;0,...,n\)。一般选择多项式插值函数 \(p(x)&#x3D;a_0+a_1x+\cdots+a_n x^n \in
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-07 23:46" pubdate>
+              2022-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8F%92%E5%80%BC/">插值</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" target="_self">
+          【随机过程2】布朗运动1 | 定义与基本性质
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" target="_self">
+          
+          5.1 布朗运动概念 定义：若一个随机过程 \(\{X(t),t\ge0\}\) 满足  \(X(t)\) 是独立增量过程； \(\forall s,t\ge0, X(t+s)-X(s)\sim {\mathcal N}(0,c^2t)\)； \(X(t)\) 关于 \(t\) 是连续函数；  则称 \(X(t)\) 是布朗运动或维纳过程。 可以验证 \(R(t_1,t_2)
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-25 09:46" pubdate>
+              2021-11-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">布朗运动</a>
+            
+              <a href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/">高斯过程</a>
+            
+              <a href="/tags/%E7%BB%B4%E7%BA%B3%E8%BF%87%E7%A8%8B/">维纳过程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/17/music/Onion/" target="_self">
+          洋葱
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/17/music/Onion/" target="_self">
+          
+          洋葱🧅
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-17 15:04" pubdate>
+              2021-11-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Music/">Music</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" target="_self">
+          【随机过程2】泊松过程2 | 泊松过程扩展
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" target="_self">
+          
+          4.5 非时齐次泊松过程 定义：一个计数过程若满足：  \(N(0)&#x3D;0\)； 它是独立增量过程； 对充分小的 \(\Delta t&gt;0\)，有 \(P(N(t+\Delta t)-N(t)&#x3D;1) &#x3D; \lambda(t) \Delta t + o(\Delta t)\)，\(P(N(t+\Delta t)-N(t)\ge 2)&#x3D;o(\Delta t)\)；  则称它为具
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-09 10:03" pubdate>
+              2021-11-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">泊松过程</a>
+            
+              <a href="/tags/%E6%9B%B4%E6%96%B0%E8%BF%87%E7%A8%8B/">更新过程</a>
+            
+              <a href="/tags/Wald%E7%AD%89%E5%BC%8F/">Wald等式</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" target="_self">
+          【随机过程2】泊松过程1 | 定义与基本性质
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" target="_self">
+          
+          4.1 泊松过程的定义与基本性质 定义 4.1：随机过程 \(\{N(t),t\ge0\}\) 称为时齐泊松过程，若满足下列条件：  他是一个计数过程，且 \(N(0)&#x3D;0\)； （独立增量）任取 \(0 &lt; t_1 &lt; t_2 &lt; \cdots &lt; t_n\)，\(N(t_1),N(t_2)-N(t_1),...,N(t_n)-N(t_{n-1})\) 相互
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-02 08:49" pubdate>
+              2021-11-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">泊松过程</a>
+            
+              <a href="/tags/%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83/">指数分布</a>
+            
+              <a href="/tags/%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/">顺序统计量</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/10/24/essay/2021-1024/" target="_self">
+          Happy 1024 day!
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/10/24/essay/2021-1024/" target="_self">
+          
+          :fireworks:
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-24 19:34" pubdate>
+              2021-10-24
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#board">10</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

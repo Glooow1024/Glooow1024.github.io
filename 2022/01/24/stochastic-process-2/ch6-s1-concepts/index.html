@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="6.1 基本概念 马尔科夫链的定义很常见了，在此不再赘述。简单而言就是 \[ P(X_{n+1}&#x3D;s_{n+1}|X_0&#x3D;s_0,...,X_{n}&#x3D;s_n) &#x3D; P(X_{n+1}&#x3D;s_{n+1}|X_{n}&#x3D;s_n) \] 还可以定义一步转移概率、转移概率矩。如果转移概率不随时间变化，就是时间齐次马尔科夫链。 定理 6.1：设随机过程 \(\{X_n,n\ge0\}\) 满足">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】马尔可夫过程1 | 基本概念">
+<meta property="og:url" content="http://example.com/2022/01/24/stochastic-process-2/ch6-s1-concepts/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="6.1 基本概念 马尔科夫链的定义很常见了，在此不再赘述。简单而言就是 \[ P(X_{n+1}&#x3D;s_{n+1}|X_0&#x3D;s_0,...,X_{n}&#x3D;s_n) &#x3D; P(X_{n+1}&#x3D;s_{n+1}|X_{n}&#x3D;s_n) \] 还可以定义一步转移概率、转移概率矩。如果转移概率不随时间变化，就是时间齐次马尔科夫链。 定理 6.1：设随机过程 \(\{X_n,n\ge0\}\) 满足">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-24T09:28:23.000Z">
+<meta property="article:modified_time" content="2022-01-24T09:34:31.279Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="Markov过程">
+<meta property="article:tag" content="常返">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】马尔可夫过程1 | 基本概念 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】马尔可夫过程1 | 基本概念">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-24 17:28" pubdate>
+        January 24, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      48 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】马尔可夫过程1 | 基本概念</h1>
+            
+            <div class="markdown-body">
+              <h2 id="基本概念">6.1 基本概念</h2>
+<p>马尔科夫链的定义很常见了，在此不再赘述。简单而言就是 <span
+class="math display">\[
+P(X_{n+1}=s_{n+1}|X_0=s_0,...,X_{n}=s_n) = P(X_{n+1}=s_{n+1}|X_{n}=s_n)
+\]</span>
+还可以定义一步转移概率、转移概率矩。如果转移概率不随时间变化，就是时间齐次马尔科夫链。</p>
+<p><strong>定理 6.1</strong>：设随机过程 <span
+class="math inline">\(\{X_n,n\ge0\}\)</span> 满足</p>
+<ol type="1">
+<li><span class="math inline">\(X_n =
+f(X_{n-1},\xi_n)(n\ge1)\)</span>，其中 <span
+class="math inline">\(f:S\times S\to S\)</span>；</li>
+<li><span class="math inline">\(\{\xi_n,n\ge1 \}\)</span>
+为独立同分布随机序列，且 <span class="math inline">\(X_0\)</span> 与
+<span class="math inline">\(\{\xi_n,n\ge1\}\)</span> 也相互独立；</li>
+</ol>
+<p>则 <span class="math inline">\(\{X_n,n\ge0\}\)</span>
+是马尔科夫链，并且一步转移概率为 <span
+class="math inline">\(p_{ij}=P(f(i,\xi_n)=j)\)</span>.</p>
+<p>证明：根据条件 1 可知 <span class="math inline">\(\xi_{n+1}\)</span>
+与 <span class="math inline">\(X_0,...,X_n\)</span> 独立，从而有 <span
+class="math display">\[
+\begin{aligned}
+&amp;P(X_{n+1}=s_{n+1} | X_0=s_0,...,X_n=s_n) \\
+=&amp; P(f(X_n,\xi_{n+1})=s_{n+1} | X_0=s_0,...,X_n=s_n) \\
+=&amp; P(f(s_n,\xi_{n+1})=s_{n+1}) = P(X_{n+1}=s_{n+1} | X_n = s_n)
+\end{aligned}
+\]</span> 证毕。</p>
+<blockquote>
+<p><strong>Note</strong>：这个定理实际上是在说 <span
+class="math inline">\(X_n\)</span> 只由 <span
+class="math inline">\(X_{n-1}\)</span> 和一个与之完全独立的随机变量
+<span class="math inline">\(\xi_n\)</span>
+决定，这与马尔可夫性质异曲同工。并且如果 <span
+class="math inline">\(\xi_n,n\ge1\)</span>
+同分布，那么这个马尔可夫过程是时间齐次的，否则是非齐次的。</p>
+<p>如果把随机变量看作是信息的话，<span
+class="math inline">\(\xi_n\)</span> 就可以看成是从 <span
+class="math inline">\(X_{n-1}\)</span> 到 <span
+class="math inline">\(X_n\)</span> 变化的信息量。</p>
+</blockquote>
+<p><em>栗子 1</em>：设 <span
+class="math inline">\(\{\xi_n,n\ge0\}\)</span>
+独立同分布，取值为非负整数，<span
+class="math inline">\(P(\xi_n=i)=a_i\)</span>。令 <span
+class="math inline">\(X_0=0,X_n=\sum_{k=1}^n \xi_k\)</span>，则易证
+<span class="math inline">\(\{X_n,n\ge0\}\)</span>
+是一个马尔科夫链，因为有 <span class="math inline">\(f(X_n,\xi_{n+1}) =
+X_n+\xi_{n+1}\)</span>。还可以得到转移概率为 <span
+class="math inline">\(p_{ij} = \begin{cases}a_{j-i}, &amp; i\ge i \\ 0,
+&amp; i &lt; i \end{cases}.\)</span></p>
+<p><em>栗子
+2</em>（带吸收壁的随机游动）：对称随机游动，每次只能向左或向右移动一个单位，或者原地不动，随机移动限制在
+<span class="math inline">\(S=\{0,1,...,b\}\)</span> 内。用 <span
+class="math inline">\(\xi_n\)</span> 表示第 <span
+class="math inline">\(n\)</span> 次移动的距离，<span
+class="math inline">\(X_n\)</span> 为 <span
+class="math inline">\(n\)</span> 次移动后的位置，则 <span
+class="math inline">\(X_{n+1} = f(X_n,\xi_{n+1}) = X_n +
+(1-\delta(X_n-b)-\delta(X_n))\xi_{n+1}\)</span>。</p>
+<p><em>栗子
+3</em>（G/M/1排队模型）：G表示顾客到达服务台的时间间隔，一般假设为独立同分布，分布函数为
+<span
+class="math inline">\(G(x)\)</span>；M表示服务时间，假设为独立同指数分布，且与顾客到达过程独立；1表示单个服务员。</p>
+<p>记 <span class="math inline">\(X_n\)</span> 表示第 <span
+class="math inline">\(n\)</span> 个顾客到达服务台时系统内的顾客数，<span
+class="math inline">\(T_n\)</span> 表示第 <span
+class="math inline">\(n\)</span> 个顾客到达时刻。易证 <span
+class="math inline">\(X_n\)</span> 为一个马尔科夫链。</p>
+<p>各顾客服务时间独立，且服从参数为 <span
+class="math inline">\(\mu\)</span> 的指数分布，<span
+class="math inline">\((0,t)\)</span> 时间内服务完的顾客服从参数为 <span
+class="math inline">\(\mu\)</span> 的泊松分布，因此 <span
+class="math display">\[
+P(X_{n+1}=i+1-j | X_n=i) = \int_0^\infty e^{-\mu t}\frac{(\mu t)^j}{j!}
+dG(t)
+\]</span></p>
+<h2 id="转移概率矩阵">6.2 转移概率矩阵</h2>
+<p><strong>定义</strong>：若 <span class="math inline">\(a_{ij}\ge0, ~
+i,j\in S\)</span> 且满足 <span class="math inline">\(\sum_{j\in S}
+a_{ij} = 1\)</span>，则称矩阵 <span
+class="math inline">\(A=(a_{ij})\)</span> 为随机矩阵。</p>
+<p>记 <span class="math inline">\(\pi_i(n)=P(X_n=i)\)</span>，向量 <span
+class="math inline">\(\pi(n)=(\pi_1(n),\pi_2(n),...)\)</span> 表示 <span
+class="math inline">\(n\)</span>
+时刻的概率分布向量。一个马尔科夫链的性质完全由初始分布向量和一步转移概率矩阵决定。</p>
+<p><strong>定理 6.2（C-K方程）</strong>：<span
+class="math inline">\(P^{(m+n)} = P^{(m)} P^{(n)}\)</span>.</p>
+<p><strong>Remark</strong>：上面的C-K方程可以联想到卷积形式，即 <span
+class="math inline">\(P_{ij}^{(n)}=\sum_{k}P_{ik}^{(l)}P_{kj}^{(n-l)}\)</span>，于是又可以联想到用傅里叶变换
+/ z变换进行处理，以避免卷积。</p>
+<h2 id="markov链状态的分类">6.3 Markov链状态的分类</h2>
+<h3 id="状态分类">6.3.1 状态分类</h3>
+<p><strong>定义</strong>：对于 <span class="math inline">\(i,j\in
+S\)</span>，若存在自然数 <span class="math inline">\(n\)</span> 使得
+<span class="math inline">\(p_{ij}^{(n)} &gt; 0\)</span>，则称自状态
+<span class="math inline">\(i\)</span> 出发可达状态 <span
+class="math inline">\(j\)</span>，记为 <span class="math inline">\(i\to
+j\)</span>。若 <span class="math inline">\(i\to j\)</span> 且 <span
+class="math inline">\(j\to i\)</span>，则称 <span
+class="math inline">\(i,j\)</span> <strong>相通</strong>，记为 <span
+class="math inline">\(i\leftrightarrow j\)</span>。如果 Markov
+链的任意两个状态都相通，则称为<strong>不可约链</strong>。</p>
+<p><strong>定义</strong>：<strong>首达时间</strong> <span
+class="math display">\[
+\tau_{ij}=\min \{n:n\ge1,X_n=j,X_0=i \}
+\]</span> 若右边为空集，则令 <span
+class="math inline">\(\tau_{ij}=\infty\)</span>。</p>
+<p><strong>定义</strong>：<strong>首达概率</strong> <span
+class="math display">\[
+f_{ij}^{(n)}=P(\tau_{ij}=n | X_0=i)=P(X_n=j,X_k\ne j,1\le k\le n-1 |
+X_0=i)
+\]</span> <span class="math inline">\(f_{ij}=\sum_{n=1}^\infty
+f_{ij}^{(n)}\)</span> 表示从 <span class="math inline">\(i\)</span>
+出发，经有限步首次到达 <span class="math inline">\(j\)</span>
+的概率。</p>
+<p><strong>定义</strong>：若 <span
+class="math inline">\(f_{ii}=1\)</span>，则称 <span
+class="math inline">\(i\)</span> 为<strong>常返态</strong>；若 <span
+class="math inline">\(f_{ii} &lt; 1\)</span>，称状态 <span
+class="math inline">\(i\)</span> 为非常返态。</p>
+<p><strong>定义</strong>：若 <span
+class="math inline">\(f_{ii}=1\)</span>，此时定义 <span
+class="math inline">\(\mu_i=\sum_{n=1}^\infty nf_{ii}^{(n)}\)</span>，则
+<span class="math inline">\(\mu_i\)</span> 表示从状态 <span
+class="math inline">\(i\)</span> 出发再回到状态 <span
+class="math inline">\(i\)</span> 的<strong>平均回转时间</strong>。若
+<span class="math inline">\(\mu_i &lt; \infty\)</span> 称 <span
+class="math inline">\(i\)</span> 为<strong>正常返态</strong>；若 <span
+class="math inline">\(\mu_i=\infty\)</span>
+称为<strong>零常返态</strong>。</p>
+<p><strong>定义</strong>：若集合 <span
+class="math inline">\(\{n:n\ge1,p_{ii}^{(n)} &gt;
+0\}\ne\varnothing\)</span>，称该数集的最大公约数 <span
+class="math inline">\(d(i)\)</span> 为状态 <span
+class="math inline">\(i\)</span> 的周期。若 <span
+class="math inline">\(d(i) &gt; 1\)</span> 称状态 <span
+class="math inline">\(i\)</span> 为<strong>周期</strong>的；若 <span
+class="math inline">\(d(i)=1\)</span>
+称为<strong>非周期</strong>的。</p>
+<p><strong>定义</strong>：若状态 <span class="math inline">\(i\)</span>
+为正常返态且为非周期的，则称状态 <span class="math inline">\(i\)</span>
+为<strong>遍历状态</strong>（ergodic state）。</p>
+<h3 id="一些基本关系式">6.3.2 一些基本关系式</h3>
+<p><strong>定理 6.3</strong>：对 <span class="math inline">\(\forall
+i,j\in S,n\ge1\)</span> 有</p>
+<ol type="1">
+<li><span class="math inline">\(p_{ij}^{(n)} = \sum_{l=1}^n
+f_{ij}^{(l)}p_{jj}^{(n-l)}\)</span></li>
+<li><span class="math inline">\(f_{ij}^{(n)} = \sum_{k\ne
+j}p_{ik}f_{kj}^{(n-1)}I_{\{n &gt; 1\}} + p_{ij}
+I_{\{n=1\}}\)</span>.</li>
+</ol>
+<p>下面给出一些关于该定理的讨论。</p>
+<p><strong>Discussion（常返性判定准则）</strong>：对于特殊情况 <span
+class="math inline">\(i=j\)</span> 时，上面的第 1 条变成 <span
+class="math inline">\(p_{ii}^{(n)} = \sum_{l=1}^n
+f_{ii}^{(l)}p_{ii}^{(n-l)}\)</span>，这是卷积的形式，取 z 变换 <span
+class="math inline">\(P_i(z)=\sum_{n=1}^{\infty}
+p_{ii}^{(n)}z^{-n}\)</span>，<span
+class="math inline">\(F_i(z)=\sum_{n=1}^{\infty}f_{ii}^{(n)}z^{-n}\)</span>，那么根据上式有
+<span class="math inline">\(P_i(z)=1+F_i(z)P_i(z)\)</span>，从而 <span
+class="math inline">\(P_i(z)=\frac{1}{1-F_i(z)}\)</span>。当 <span
+class="math inline">\(z\to1\)</span>时，有 <span
+class="math inline">\(P_i(z)\to\sum_{n=1}^{\infty}p_{ii}^{(n)}\)</span>，<span
+class="math inline">\(F_i(z)\to \sum_{n=1}^{\infty}f_{ii}^{(n)} =
+f_{ii}\)</span>。</p>
+<p><strong>推论 6.3.1</strong>：状态 <span
+class="math inline">\(i\)</span> 为常返的充要条件为 <span
+class="math inline">\(\sum_{n=1}^{\infty}p_{ii}^{(n)}=+\infty\)</span>；状态
+<span class="math inline">\(i\)</span> 非常返的充要条件为 <span
+class="math inline">\(\sum_{n=1}^{\infty}p_{ii}^{(n)} &lt;
+\infty\)</span>。</p>
+<p>如果记 <span class="math inline">\(I_n(i)=\begin{cases}0,&amp;X_n\ne
+i \\ 1,&amp; X_n=i \end{cases}\)</span>，<span
+class="math inline">\(S(i)=\sum_{n=1}^\infty I_n(i)\)</span> 为到达状态
+<span class="math inline">\(i\)</span> 的次数，那么 <span
+class="math inline">\({\mathbb E}[S(i) |
+X_0=i]=\sum_{n=1}^{\infty}p_{ii}^{(n)}\)</span> 即表示从状态 <span
+class="math inline">\(i\)</span> 出发返回 <span
+class="math inline">\(i\)</span> 的平均次数。当 <span
+class="math inline">\(i\)</span> 为常返态，直观上即平均返回 <span
+class="math inline">\(i\)</span>
+的次数为无穷，与上面的推论是一致的。对于非常返态，平均返回次数有限。</p>
+<p><strong>Discussion（<span
+class="math inline">\(p_{ii}^{(n)}\)</span>与正常返、零常返的关系）</strong>：</p>
+<p>（1）当状态是非周期的，定义 <span
+class="math inline">\(v_n=p_{ii}^{(n)} - p_{ii}^{(n-1)},n &gt;
+1\)</span>，<span
+class="math inline">\(v_0=p_{ii}^{(0)}\)</span>，于是有 <span
+class="math inline">\(V(z)=\sum_{n=0}^{\infty} v_nz^{-n} =
+\frac{1-z^{-1} }{1-F_i(z)}\)</span>，利用洛必达法则有 <span
+class="math inline">\(\lim_{z\to 1}V(z) = -1/F_i&#39;(1) =
+1/\mu_i\)</span>。另一方面 <span
+class="math inline">\(\lim_{z\to1}V(z)=\lim_{n\to\infty}\sum_{k=0}^\infty
+v_k=\lim_{n\to\infty} p_{ii}^{(n)}\)</span>，因此有 <span
+class="math display">\[
+\lim_{n\to\infty} p_{ii}^{(n)}=1/\mu_i
+\]</span></p>
+<blockquote>
+<p>根据正常返和零常返的定义知道：</p>
+<p>当 <span class="math inline">\(i\)</span> 是正常返时，<span
+class="math inline">\(\lim_{n\to\infty}
+p_{ii}^{(n)}=1/\mu_i\ne0\)</span>；</p>
+<p>当 <span class="math inline">\(i\)</span> 是零常返时，<span
+class="math inline">\(\lim_{n\to\infty}
+p_{ii}^{(n)}=1/\mu_i=0\)</span>。</p>
+</blockquote>
+<p>（2）当状态是周期的，记状态 <span class="math inline">\(i\)</span>
+的周期为 <span class="math inline">\(T\)</span>，当 <span
+class="math inline">\(n\)</span> 不是 <span
+class="math inline">\(T\)</span> 的整数倍时有 <span
+class="math inline">\(f_{ii}^{(n)}=0\)</span>，<span
+class="math inline">\(F_i(z)=\sum_{k=0}^\infty
+f_{ii}^{(kT)}z^{-kT}=\psi(z^T)\)</span>，相应的 <span
+class="math inline">\(P_i(z)=\frac{1}{1-\psi(z^T)}\)</span>。类似非周期情况的讨论可以得到
+<span class="math display">\[
+p_{ii}^{(nT)}\to T/\mu_i
+\]</span></p>
+<blockquote>
+<p>当 <span class="math inline">\(i\)</span> 是正常返时，<span
+class="math inline">\(\lim_{n\to\infty}
+p_{ii}^{(nT)}=T/\mu_i\ne0\)</span>，<span
+class="math inline">\(\lim_{n\to\infty} p_{ii}^{(nT+k)}=0,0 &lt; k &lt;
+T\)</span>；</p>
+<p>当 <span class="math inline">\(i\)</span> 是零常返时，<span
+class="math inline">\(\lim_{n\to\infty}
+p_{ii}^{(n)}=1/\mu_i=0\)</span>。</p>
+</blockquote>
+<p><strong>Discussion（<span
+class="math inline">\(p_{ij}^{(n)}\)</span>与正常返、零常返的关系）</strong>：由于
+<span class="math inline">\(p_{ij}^{(n)} = \sum_{l=1}^n
+f_{ij}^{(l)}p_{jj}^{(n-l)}\)</span>，定义相应的 z 变换可以得到 <span
+class="math inline">\(P_{ij}(z)=F_{ij}(z)P_j(z) =
+\frac{F_{ij}(z)}{1-F_j(z)}\)</span>。当 <span
+class="math inline">\(j\)</span> 为常返态时，利用洛必达法则有 <span
+class="math inline">\(\lim_{z\to1+}(1-z^{-1})P_{ij}(z) =
+\lim_{z\to1+}\frac{1}{F_j&#39;(z)}\lim_{z\to1+}F_{ij}(z) =
+f_{ij}/\mu_j\)</span>，而左端等于（利用Hardy-Littlewood引理） <span
+class="math inline">\(\lim_{z\to1+}(1-z^{-1})P_{ij}(z) =
+\lim_{n\to\infty} \frac{1}{n+1}\sum_{k=0}^\infty
+p_{ij}^{(k)}\)</span>，因此有 <span class="math display">\[
+\lim_{n\to\infty} \frac{1}{n+1}\sum_{k=0}^\infty p_{ij}^{(k)} =
+\frac{f_{ij} }{\mu_j}
+\]</span></p>
+<blockquote>
+<p>当 <span class="math inline">\(j\)</span> 是正常返时，<span
+class="math inline">\(\lim_{n\to\infty} \frac{1}{n+1}\sum_{k=0}^\infty
+p_{ij}^{(k)} = {f_{ij} }/{\mu_j}\)</span> 为有限值；</p>
+<p>当 <span class="math inline">\(j\)</span> 是零常返时，<span
+class="math inline">\(\lim_{n\to\infty} \frac{1}{n+1}\sum_{k=0}^\infty
+p_{ij}^{(k)}=0\)</span>。</p>
+</blockquote>
+<h3 id="状态间的等价关系">6.3.3 状态间的等价关系</h3>
+<p>对马尔科夫链而言，状态互通是一种等价关系，对于状态进行归类有助于简化后续分析过程。</p>
+<p><strong>定理 6.4</strong>：</p>
+<ol type="1">
+<li>若状态 <span class="math inline">\(i\)</span> 常返，并且 <span
+class="math inline">\(i\to j\)</span>，则状态 <span
+class="math inline">\(j\)</span> 也是常返的，并且 <span
+class="math inline">\(f_{ji}=1\)</span>；</li>
+<li>如果 <span class="math inline">\(i\leftrightarrow j\)</span>，则状态
+<span class="math inline">\(i,j\)</span>
+同为常返或非常返态；若为常返态，则他们同为正常返或零常返；</li>
+<li>如果 <span class="math inline">\(i\leftrightarrow j\)</span>，则状态
+<span class="math inline">\(i,j\)</span> 有相同的周期。</li>
+</ol>
+<p>证明：（1）存在 <span class="math inline">\(N\)</span> 使得 <span
+class="math inline">\(p_{ij}^{(N)} &gt; 0\)</span>，从 <span
+class="math inline">\(i\)</span> 出发到 <span
+class="math inline">\(j\)</span> 不返回 <span
+class="math inline">\(i\)</span> 的概率为 <span
+class="math inline">\(p_{ij}^{(N)}(1-f_{ji})=0\)</span>，因此 <span
+class="math inline">\(f_{ji}=1\)</span>。由于 <span
+class="math inline">\(i\leftrightarrow j\)</span>，存在 <span
+class="math inline">\(N_1,N_2\)</span> 有 <span
+class="math inline">\(p_{ij}^{(N_1)} &gt; 0,p_{ji}^{(N_2)} &gt;
+0\)</span>，那么 <span class="math inline">\(p_{jj}^{(N_1+n+N_2)} \ge
+p_{ij}^{(N_1)}p_{ii}^{(n)}p_{ji}^{(N_2)}=abp_{ii}^{(n)}\)</span>，因此有
+<span class="math inline">\(\sum_{n=0}^{\infty} p_{jj}^{(n)} =
+\infty\)</span>，因此状态 <span class="math inline">\(j\)</span>
+是常返的。</p>
+<p>（2，3）略。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Markov%E8%BF%87%E7%A8%8B/">Markov过程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B8%B8%E8%BF%94/">常返</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【高等数值分析】Krylov子空间方法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/23/hello-world/">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"iw199srhJNXO53sMUbMWkSxL-gzGzoHsz","appKey":"ogmo6qYs8PSc7MBFk8A1PDUl","path":"window.location.pathname","placeholder":"说点啥子吧 ^_^ 留下邮箱可以收到回复通知哦 ~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

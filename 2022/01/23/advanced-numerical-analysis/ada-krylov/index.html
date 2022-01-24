@@ -16,15 +16,15 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="test">
+    <meta name="description" content="1. 预备理论 现在需要求解一个大规模稀疏方程组 \(Ax&#x3D;b\)，可以用迭代法比如 Jacobi 迭代法、Gauss-Seidel 迭代法等，不过这一节要讨论的是 Krylov 子空间方法，核心部分是 Arnoldi 迭代。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【高等数值分析】Krylov子空间方法">
 <meta property="og:url" content="http://example.com/2022/01/23/advanced-numerical-analysis/ada-krylov/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="test">
+<meta property="og:description" content="1. 预备理论 现在需要求解一个大规模稀疏方程组 \(Ax&#x3D;b\)，可以用迭代法比如 Jacobi 迭代法、Gauss-Seidel 迭代法等，不过这一节要讨论的是 Krylov 子空间方法，核心部分是 Arnoldi 迭代。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-23T13:35:19.000Z">
-<meta property="article:modified_time" content="2022-01-23T13:36:54.603Z">
+<meta property="article:modified_time" content="2022-01-24T09:20:51.742Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="线性方程组">
 <meta property="article:tag" content="Arnoldi过程">
@@ -210,7 +210,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4 字
+      6.5k 字
     </span>
   
 
@@ -219,7 +219,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      55 分钟
     </span>
   
 
@@ -251,7 +251,275 @@
             <h1 style="display: none">【高等数值分析】Krylov子空间方法</h1>
             
             <div class="markdown-body">
-              <p>test</p>
+              <h2 id="预备理论">1. 预备理论</h2>
+<p>现在需要求解一个大规模稀疏方程组 <span
+class="math inline">\(Ax=b\)</span>，可以用迭代法比如 Jacobi
+迭代法、Gauss-Seidel 迭代法等，不过这一节要讨论的是 Krylov
+子空间方法，核心部分是 Arnoldi 迭代。</p>
+<span id="more"></span>
+<h3 id="krylov-子空间">1.1 Krylov 子空间</h3>
+<p><strong>定理（Cayley-Hamilton）</strong>：设 <span
+class="math inline">\(A\in{\mathbb C}^{n\times n}\)</span>，则 <span
+class="math inline">\(A\)</span> 的特征多项式 <span
+class="math inline">\(\chi(z)\)</span> 是 <span
+class="math inline">\(A\)</span> 的零化多项式，也即 <span
+class="math inline">\(\chi(A)=0\)</span>。</p>
+<p>假设特征多项式 <span class="math inline">\(\chi(z)=z^n +
+c_{n-1}z^{n-1} + \cdots + c_1 z+ c_0=(-1)^n
+\operatorname{det}(A)\)</span>，那么根据 <span
+class="math inline">\(\chi(A)=0\)</span> 可以得到 <span
+class="math display">\[
+A^{-1} = -\frac{1}{c_0} A^{n-1} - \frac{c_{n-1}}{c_0} A^{n-2} + \cdots
+-\frac{c_1}{c_0} I = q_{n-1}(A)
+\]</span> 利用这个等式，在求解线性方程组的时候，给定任意初值 <span
+class="math inline">\(x_0\)</span>，都有 <span
+class="math inline">\(Ax^{\ast}-Ax_0=b-Ax_0 \equiv r_0\)</span>，于是
+<span class="math inline">\(x^{\ast} = x_0 +
+q_{n-1}(A)r_0\)</span>，因此理论上可以在空间 <span
+class="math display">\[
+\mathcal{K}=\left\{\boldsymbol{r}_{0}, A \boldsymbol{r}_{0}, \cdots,
+A^{m} \boldsymbol{r}_{0}, \cdots, A^{n-1} \boldsymbol{r}_{0}\right\}
+\]</span> 中找到方程组的准确解，但是科学与工程计算问题中 <span
+class="math inline">\(n\)</span> 可以达到 <span
+class="math inline">\(10^6\)</span>
+量级，直接求解代价太高。因此希望在其一个低维子空间中搜索近似解。</p>
+<p>定义 <span class="math inline">\(m\)</span> 维 <strong>Krylov
+子空间</strong>为 <span class="math display">\[
+\mathcal{K}_{m}=\operatorname{span}\left(\boldsymbol{r}_{0}, A
+\boldsymbol{r}_{0}, A^{2} \boldsymbol{r}_{0}, \cdots, A^{m-1}
+\boldsymbol{r}_{0}\right)
+\]</span> 方程组求解问题转化为 <span class="math display">\[
+\min_{x\in x_0+{\mathcal K}_m} \Vert x^{\ast} - x\Vert.
+\]</span></p>
+<h3 id="最佳逼近">1.2 最佳逼近</h3>
+<p>现在的问题就是在何种范数意义下求解问题 <span
+class="math inline">\(\min_{x\in x_0+{\mathcal K}_m} \Vert x^{\ast} -
+x\Vert\)</span>。假设 <span class="math inline">\({\mathcal
+K}_m\)</span> 的一组基作为列向量构成矩阵 <span
+class="math inline">\(V_m\)</span>，最优解为 <span
+class="math inline">\(x_m = x_0 + V_m y^{\ast} \in x_0 + {\mathcal K}_m,
+~ y^{\ast}\in{\mathbb R}^{m}\)</span>。</p>
+<h4 id="方法一最佳平方逼近">1.2.1 方法一：最佳平方逼近</h4>
+<p>取 <span class="math inline">\(2\)</span> 范数 <span
+class="math inline">\(\min_{x\in x_0+{\mathcal K}_m} \Vert x^{\ast} -
+x\Vert_2\)</span>，那么根据最佳平方逼近条件（对<span
+class="math inline">\(x\)</span>求导，取零点），或者 <strong>Galerkin
+正交条件</strong>，可以推出<strong>法方程</strong>为 <span
+class="math display">\[
+\begin{align}
+&amp;\langle x^{\ast} - x_m, y \rangle = 0, ~ \forall y\in {\mathcal
+K}_m \\
+\iff &amp; V_m^{\rm T}(x^{\ast}-x_m) = 0
+\end{align}
+\]</span> 但是这个方法<strong>不可行</strong>！因为要求 <span
+class="math inline">\(x_m\)</span> 就需要知道 <span
+class="math inline">\(x^{\ast}\)</span>。</p>
+<h4 id="方法二假设-a-对称正定">1.2.2 方法二：假设 <span
+class="math inline">\(A\)</span> 对称正定</h4>
+<p>若 <span class="math inline">\(A\)</span>
+对称正定，那么可以改求解问题 <span class="math inline">\(\min_{x\in
+x_0+{\mathcal K}_m} \langle A(x-x^{\ast}),
+x-x^{\ast}\rangle\)</span>，根据<strong>Galerkin
+正交条件</strong>有法方程 <span class="math display">\[
+\begin{align}
+&amp;\langle A(x^{\ast} - x_m), y \rangle = 0, ~ \forall y\in {\mathcal
+K}_m \\
+\iff &amp; r_m = A(x^{\ast}-x_m) \perp {\mathcal K}_m \\
+\iff &amp; V_m^{\rm T}(r_0 - Ax_m) = 0
+\end{align}
+\]</span>
+这个方法<strong>可行</strong>！后面需要做两件事情：1）求出一组基 <span
+class="math inline">\(V_m\)</span>；2）解法方程。</p>
+<blockquote>
+<p><strong>Note</strong>：这里为了得到法方程，需要假设 <span
+class="math inline">\(A\)</span> 对称正定。但是在后面的 FOM 方法中，不论
+<span class="math inline">\(A\)</span> 是否正定，都基于 Galerkin
+条件直接采用了这一法方程来求解线性方程组。至于这么做是否有理论支持我也不太清楚，就姑且相信它是合理的。</p>
+</blockquote>
+<h4 id="方法三残差2范数">1.2.3 方法三：残差2范数</h4>
+<p>当 <span class="math inline">\(A\)</span> 非奇异，不去求解 <span
+class="math inline">\(\min \Vert x^{\ast} - x\Vert\)</span>，而是求解
+<span class="math inline">\(\min_{x\in x_0+{\mathcal K}_m} \Vert
+A(x^{\ast} - x)\Vert_2\)</span>，那么再次根据 <strong>Galerkin
+条件</strong>，可以导出<strong>法方程</strong> <span
+class="math display">\[
+\begin{align}
+&amp;\langle A(x^{\ast} - x_m), Ay \rangle = 0, ~ \forall y\in {\mathcal
+K}_m \\
+\iff &amp; r_m = A(x^{\ast}-x_m) \perp A{\mathcal K}_m \\
+\iff &amp; V_m^{\rm T}A^{\rm T}(r_0 - Ax_m) = 0
+\end{align}
+\]</span> 这个方法也是<strong>可行</strong>的。</p>
+<p>不论如何，上面几种方法最后都归结为两个问题：</p>
+<ol type="1">
+<li>获得 <span class="math inline">\({\mathcal K}_m\)</span> 的基底
+<span class="math inline">\(V_m\)</span>：Gram-Schmidt 正交化方法；</li>
+<li>求解法方程，并且计算残差：低维线性方程组求解。</li>
+</ol>
+<h2 id="基底正交化">2. 基底正交化</h2>
+<p>获得正交基底的方法主要有 Arnoldi 过程（CGS）、改进 Arnoldi
+过程（MGS）、以及 Lanczos 过程。名字起的很
+fancy，别被吓到，其实他们都只是 Gram-Schmidt 正交化方法。</p>
+<h3 id="arnoldi-过程cgs">2.1 Arnoldi 过程（CGS）</h3>
+<p>迭代过程可以归结为 <span class="math display">\[
+\begin{aligned}
+\boldsymbol{v}_{1} &amp;= \boldsymbol{r}_{0} / \Vert \boldsymbol{r}_{0}
+\Vert \\
+\boldsymbol{w}_{j} &amp;=A \boldsymbol{v}_{j}-\langle A
+\boldsymbol{v}_{j}, \boldsymbol{v}_{1}\rangle \boldsymbol{v}_{1}-\langle
+A \boldsymbol{v}_{j},
+\boldsymbol{v}_{2}\rangle  \boldsymbol{v}_{2}-\cdots-\langle A
+\boldsymbol{v}_{j}, \boldsymbol{v}_{j}\rangle \boldsymbol{v}_{j} \\
+\boldsymbol{v}_{j+1}
+&amp;=\frac{\boldsymbol{w}_{j}}{\left\|\boldsymbol{w}_{j}\right\|_{2}},
+j=1,2, \cdots \\
+h_{i,j} &amp;= \langle A \boldsymbol{v}_{j}, \boldsymbol{v}_{i}\rangle
+\end{aligned}
+\]</span> 得到的 <span class="math inline">\(\{ v_1, v_2, ..., v_m,...,
+v_n \}\)</span> 是单位正交基。由 <span
+class="math inline">\(h_{i,j}\)</span> 作为元素构成矩阵 <span
+class="math inline">\(H_m \in {\mathbb R}^{m\times m}\)</span>，可以验证
+<span class="math inline">\(H_m\)</span> 为 Hessenberg 阵，并且 <span
+class="math inline">\(h_{i+1,i}=\Vert \boldsymbol{w}_{i}
+\Vert_2\)</span>。在 <span class="math inline">\(H_m\)</span>
+的基础上可以定义 <span class="math inline">\(\bar{H}_m \in {\mathbb
+R}^{(m+1)\times m}\)</span>，也就是在最后一行下面再加一行 <span
+class="math inline">\([0,...,0,h_{m+1,m}]\)</span>。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/ada-cgs.png" srcset="/img/loading.gif" lazyload
+alt="CGS-psudocode" />
+<figcaption aria-hidden="true">CGS-psudocode</figcaption>
+</figure>
+<p>可以验证他们满足如下等式，这三个式子在后面会频繁用到，极其重要！
+<span class="math display">\[
+\begin{align}
+AV_m &amp;= V_m H_m + \boldsymbol{w}_{m} \boldsymbol{e}_{m}^{\rm T} \\
+&amp;= V_{m+1} \bar{H}_m \\
+V_m^{\rm T} A V_m &amp;= H_m
+\end{align}
+\]</span> <img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/ada-arnoldi.png" srcset="/img/loading.gif" lazyload
+alt="Arnoldi" /></p>
+<h3 id="改进-arnoldi-过程mgs">2.2 改进 Arnoldi 过程（MGS）</h3>
+<p>前面的 Arnoldi 过程在计算 <span
+class="math inline">\(\boldsymbol{w}_{j}\)</span> 的时候，相当于把 <span
+class="math inline">\(A \boldsymbol{v}_{j}\)</span> 分别计算了 <span
+class="math inline">\(j\)</span> 次投影，每次都是向一个一维的子空间
+<span class="math inline">\(\operatorname{span}\{ \boldsymbol{v}_{i}
+\}\)</span>
+投影，可能会有计算不稳定的问题。对其进行改进的方法如下，交换顺序之后，每次都是向一个
+<span class="math inline">\(n-1\)</span> 维子空间投影。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/ada-mgs.png" srcset="/img/loading.gif" lazyload
+alt="MGS-psudocode" />
+<figcaption aria-hidden="true">MGS-psudocode</figcaption>
+</figure>
+<h3 id="lanczos过程">2.3 Lanczos过程</h3>
+<p>是 Arnoldi 过程的特殊情况，当 <span class="math inline">\(A=A^{\rm
+T}\)</span>，那么 <span class="math inline">\(H_m\)</span>
+为三对角矩阵，那么 <span
+class="math inline">\(\boldsymbol{w}_{j}\)</span> 的计算简化为 <span
+class="math display">\[
+\boldsymbol{w}_{j} = A \boldsymbol{v}_{j}-\langle A \boldsymbol{v}_{j},
+\boldsymbol{v}_{j-1}\rangle \boldsymbol{v}_{j-1}-\langle A
+\boldsymbol{v}_{j}, \boldsymbol{v}_{j}\rangle \boldsymbol{v}_{j}
+\]</span></p>
+<h2 id="方程组求解">3. 方程组求解</h2>
+<p>针对上面几种不同的迭代过程，可以有不同的求解方法。</p>
+<h3 id="全正交方法-fom">3.1 全正交方法 (FOM)</h3>
+<p>FOM (Full orthogonalization method) 根据 Galerkin 条件，<span
+class="math inline">\(r_m\perp {\mathcal K}_m\)</span>，根据法方程 <span
+class="math inline">\(V_m^{\rm T}(r_0 - AV_my)=0\)</span>，因此有 <span
+class="math display">\[
+\begin{align}
+&amp; r_m\perp {\mathcal K}_m \iff V_m^{\rm T}(r_0 - AV_my)=0
+\Longrightarrow H_m y = \Vert r_0\Vert \boldsymbol{e}_1
+\end{align}
+\]</span> 伪代码为</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/ada-fom.png" srcset="/img/loading.gif" lazyload
+alt="FOM" />
+<figcaption aria-hidden="true">FOM</figcaption>
+</figure>
+<p>根据 <span class="math inline">\(x_m = x_0 + V_m y\)</span>，残差有
+<span class="math inline">\(r_m = r_0-AV_my=r_0-(V_m H_m +
+\boldsymbol{w}_{m} \boldsymbol{e}_{m}^{\rm T})y = -\boldsymbol{w}_{m}
+\boldsymbol{e}_{m}^{\rm T} y\)</span>。</p>
+<h3 id="d-lanczos方法">3.2 D-Lanczos方法</h3>
+<p>若 <span class="math inline">\(A\)</span> 对称，那么 <span
+class="math inline">\(H_m\)</span> 为三对角阵，特别地记为 <span
+class="math inline">\(T_m\)</span> <span class="math display">\[
+T_{m}=\left(\begin{array}{ccccc}
+\alpha_{1} &amp; \beta_{2} &amp; &amp; &amp; \\
+\beta_{2} &amp; \alpha_{2} &amp; \beta_{3} &amp; &amp; \\
+&amp; \ddots &amp; \ddots &amp; \ddots &amp; \\
+&amp; &amp; \beta_{m-1} &amp; \alpha_{m-1} &amp; \beta_{m} \\
+&amp; &amp; &amp; \beta_{m} &amp; \alpha_{m}
+\end{array}\right) \in \mathbb{R}^{m \times m}
+\]</span> 记 <span class="math inline">\(T_m\)</span> 的 LU 分解为 <span
+class="math display">\[
+T_{m}=L_{m} U_{m}=\left(\begin{array}{ccccc}
+1 &amp; &amp; &amp; &amp; \\
+\lambda_{2} &amp; 1 &amp; &amp; &amp; \\
+&amp; \ddots &amp; \ddots &amp; &amp; \\
+&amp; &amp; \lambda_{m-1} &amp; 1 &amp; \\
+&amp; &amp; &amp; \lambda_{m} &amp; 1
+\end{array}\right)\left(\begin{array}{ccccc}
+\eta_{1} &amp; \omega_{2} &amp; &amp; &amp; \\
+&amp; \eta_{2} &amp; \omega_{3} &amp; &amp; \\
+&amp; &amp; \ddots &amp; \ddots &amp; \\
+&amp; &amp; &amp; \eta_{m-1} &amp; \omega_{m} \\
+&amp; &amp; &amp; &amp; \eta_{m}
+\end{array}\right)
+\]</span> 其中 <span
+class="math inline">\(\omega_{m}=\beta_{m}\)</span>, <span
+class="math inline">\(\quad
+\lambda_{m}=\frac{\beta_{m}}{\eta_{m-1}}\)</span>, <span
+class="math inline">\(\quad \eta_{m}=\alpha_{m}-\lambda_{m}
+\omega_{m}\)</span>。那么根据下面这一性质，Lanczos过程可以迭代进行 <span
+class="math display">\[
+\begin{align}
+L_{m}=\left(\begin{array}{c|c}
+L_{m-1} &amp; \mathbf{0} \\
+\hline \boldsymbol{l}_{m-1}^{T} &amp; 1
+\end{array}\right), \quad
+&amp;U_{m}=\left(\begin{array}{c|c}
+U_{m-1} &amp; \boldsymbol{y}_{m-1} \\
+\hline \mathbf{0}^{T} &amp; \eta_{m}
+\end{array}\right) \\
+L_{m}^{-1} = \left(\begin{array}{c|c}
+L_{m-1}^{-1} &amp; \mathbf{0} \\
+\hline -\boldsymbol{l}_{m-1}^{T}L_{m-1}^{-1} &amp; 1
+\end{array}\right), \quad
+&amp; U_{m}^{-1}=\left(\begin{array}{c|c}
+U_{m-1}^{-1} &amp; -\frac{1}{\eta_m} U_{m-1}^{-1} \boldsymbol{y}_{m-1}
+\\
+\hline \mathbf{0}^{T} &amp; 1/\eta_{m}
+\end{array}\right)
+\end{align}
+\]</span>
+根据这个方法，还可以到处<strong>CG（共轭梯度）法</strong>的形式。</p>
+<h3 id="广义极小残量法gmres">3.3 广义极小残量法（GMRES）</h3>
+<p>Generalized minimal residual method (GMRES)
+实际上就是最小化参量的二范数，即 <span class="math inline">\(\min \Vert
+r_m \Vert_2 = \min_{x\in x_0+{\mathcal K}_m} \Vert A(x^{\ast} -
+x)\Vert_2\)</span>，根据 Galerkin 条件，应有 <span
+class="math inline">\(r_m\perp A{\mathcal K}_m \iff V_m^{\rm T}A^{\rm
+T}AV_my = V_m^{\rm T}A^{\rm T}r_0, ~ y\in{\mathbb R}^m\)</span>。</p>
+<p>另个一思路是 <span class="math inline">\(\min\Vert r_0-AV_my\Vert =
+\min \Vert V_{m+1} (\Vert r_0\Vert e_1 - \bar{H}_my)\Vert = \min \Vert
+\Vert r_0\Vert e_1 - \bar{H}_my\Vert\)</span>，最小二乘解 <span
+class="math inline">\(\bar{H}_m^{\rm T}(\bar{H}_my - \Vert r_0\Vert
+e_1)=0\)</span>。</p>
+<h3 id="minres-方法">3.4 MINRES 方法</h3>
+<p>是 GMRES 的特殊情况，当 <span class="math inline">\(A=A^{\rm
+T}\)</span> 的时候，<span class="math inline">\(H_m\)</span> 为三对角阵
+<span class="math inline">\(T_m\)</span>，<span
+class="math inline">\(\min \Vert r_m\Vert_2 = \min \Vert \Vert r_0\Vert
+e_1 - T_m y \Vert\)</span>。</p>
 
             </div>
             <hr>

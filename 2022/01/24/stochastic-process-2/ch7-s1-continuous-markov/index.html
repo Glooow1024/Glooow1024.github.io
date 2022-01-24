@@ -16,15 +16,15 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="6.4 状态空间的分解 定义：设 \(A\subset S\)，若对任意 \(i\in A\) 及 \(j\notin A\)，都有 \(p_{ij}&#x3D;0\)，称 \(A\) 为闭集。若 \(A\) 的状态是相通的，则 \(A\) 为不可约的。 引理 6.1：\(A\) 为闭集的充要条件为：任意 \(i\in A\) 及 \(j\notin A\) 都有 \(p_{ij}^{(n)}&#x3D;">
+    <meta name="description" content="7.1 定义与基本概念 定义：设随机过程 \(X&#x3D;\{X(t),t\ge0\}\)，状态空间 \(S\)，对任意 \(0\le t_0 &lt; t_1 &lt; \cdots &lt; t_n &lt; t_{n+1}\)，\(i_k\in S\)，若 \(P(X(T_k)&#x3D;i_k,0\le k\le n) &gt; 0\) 有 \[ P(X(t_{n+1})&#x3D;i_{n+1} | X(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【随机过程2】马尔可夫过程2 | 状态空间">
-<meta property="og:url" content="http://example.com/2022/01/24/stochastic-process-2/ch6-s2-states/index.html">
+<meta property="og:title" content="【随机过程2】连续参数马尔可夫链">
+<meta property="og:url" content="http://example.com/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="6.4 状态空间的分解 定义：设 \(A\subset S\)，若对任意 \(i\in A\) 及 \(j\notin A\)，都有 \(p_{ij}&#x3D;0\)，称 \(A\) 为闭集。若 \(A\) 的状态是相通的，则 \(A\) 为不可约的。 引理 6.1：\(A\) 为闭集的充要条件为：任意 \(i\in A\) 及 \(j\notin A\) 都有 \(p_{ij}^{(n)}&#x3D;">
+<meta property="og:description" content="7.1 定义与基本概念 定义：设随机过程 \(X&#x3D;\{X(t),t\ge0\}\)，状态空间 \(S\)，对任意 \(0\le t_0 &lt; t_1 &lt; \cdots &lt; t_n &lt; t_{n+1}\)，\(i_k\in S\)，若 \(P(X(T_k)&#x3D;i_k,0\le k\le n) &gt; 0\) 有 \[ P(X(t_{n+1})&#x3D;i_{n+1} | X(">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-01-24T09:28:24.000Z">
-<meta property="article:modified_time" content="2022-01-24T09:36:34.992Z">
+<meta property="article:published_time" content="2022-01-24T09:28:25.000Z">
+<meta property="article:modified_time" content="2022-01-24T09:37:07.848Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="Markov过程">
 <meta property="article:tag" content="平稳分布">
@@ -32,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>【随机过程2】马尔可夫过程2 | 状态空间 - 你是下雨天</title>
+  <title>【随机过程2】连续参数马尔可夫链 - 你是下雨天</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -190,7 +190,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="【随机过程2】马尔可夫过程2 | 状态空间">
+            <span class="h2" id="subtitle" title="【随机过程2】连续参数马尔可夫链">
               
             </span>
 
@@ -211,7 +211,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3k 字
+      1.9k 字
     </span>
   
 
@@ -220,7 +220,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25 分钟
+      17 分钟
     </span>
   
 
@@ -249,166 +249,109 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【随机过程2】马尔可夫过程2 | 状态空间</h1>
+            <h1 style="display: none">【随机过程2】连续参数马尔可夫链</h1>
             
             <div class="markdown-body">
-              <h2 id="状态空间的分解">6.4 状态空间的分解</h2>
-<p><strong>定义</strong>：设 <span class="math inline">\(A\subset
-S\)</span>，若对任意 <span class="math inline">\(i\in A\)</span> 及
-<span class="math inline">\(j\notin A\)</span>，都有 <span
-class="math inline">\(p_{ij}=0\)</span>，称 <span
-class="math inline">\(A\)</span> 为<strong>闭集</strong>。若 <span
-class="math inline">\(A\)</span> 的状态是相通的，则 <span
-class="math inline">\(A\)</span> 为<strong>不可约</strong>的。</p>
-<p><strong>引理 6.1</strong>：<span class="math inline">\(A\)</span>
-为闭集的充要条件为：任意 <span class="math inline">\(i\in A\)</span> 及
-<span class="math inline">\(j\notin A\)</span> 都有 <span
-class="math inline">\(p_{ij}^{(n)}=0,n\ge1\)</span>。</p>
-<p><strong>推论</strong>：若 <span class="math inline">\(A\)</span>
-是闭集，对任意状态 <span class="math inline">\(i\in A\)</span> 恒有
-<span class="math inline">\(\sum_{j\in A}p_{ij}^{(n)}=1\)</span>。</p>
-<blockquote>
-<p><strong>定理 6.5</strong>：所有常返态构成一个闭集。</p>
-<p><strong>推论</strong>：不可约马尔科夫链，所有状态都是常返的，或者所有状态都是非常返的。</p>
-</blockquote>
-<p><strong>定理 6.6</strong>：状态空间 <span
-class="math inline">\(S\)</span> 可以分解为 <span
-class="math inline">\(S = T\cup C = T\cup C_1 \cdots \cup C_h
-\cdots\)</span>，其中 <span class="math inline">\(T\)</span>
-表示非常返状态的集合，<span class="math inline">\(C_i\)</span>
-为基本的常返闭集，且有</p>
-<ol type="1">
-<li>对任一确定的 <span class="math inline">\(k,C_k\)</span>
-中任意两个状态互通；</li>
-<li><span class="math inline">\(C_k\cap C_l = \varnothing,\forall h\ne
-l\)</span>。</li>
-</ol>
-<blockquote>
-<p><strong>定理 6.7</strong>：有限状态马尔科夫链具有如下性质：</p>
-<ol type="1">
-<li>状态空间 <span class="math inline">\(S\)</span> 可分解为 <span
-class="math inline">\(S = T\cup C = T\cup C_1 \cdots \cup
-C_h\)</span>，其中 <span class="math inline">\(T\)</span>
-表示非常返状态的集合，<span class="math inline">\(C_i\)</span>
-为基本的常返闭集；</li>
-<li>非常返状态集合 <span class="math inline">\(T\)</span>
-一定不是闭集；</li>
-<li>没有零常返状态；</li>
-<li>必有正常返状态；</li>
-<li>不可约马氏链的的状态都是正常返态；</li>
-<li>任意闭集 <span class="math inline">\(C_i\)</span> 上的 <span
-class="math inline">\(n\)</span> 步转移矩阵为随机矩阵。</li>
-</ol>
-</blockquote>
-<h2 id="极限特性与平稳分布">6.5 极限特性与平稳分布</h2>
-<h3 id="极限特性">6.5.1 极限特性</h3>
-<p><strong>定理 6.7</strong>：若状态 <span
-class="math inline">\(j\)</span> 为非常返态或零常返态，则对任意 <span
-class="math inline">\(i \in S\)</span>，有 <span
-class="math inline">\(\lim_{n\to\infty}p_{ij}^{(n)}=0\)</span>。</p>
-<p><strong>推论
-6.7.1</strong>：若马尔科夫链有一个零常返态，则必有无穷多个零常返态。</p>
-<h3 id="平稳分布">6.5.2 平稳分布</h3>
-<p><strong>定义</strong>：一个定义在 <span
-class="math inline">\(S\)</span> 上的概率分布 <span
-class="math inline">\(\pi=(\pi_1,\pi_2,...,\pi_i,...)\)</span>
-称为马尔科夫链的平稳分布，如果有 <span class="math inline">\(\pi=\pi
-P\)</span>。</p>
-<p><strong>定理 6.9</strong>：若马尔科夫链是不可约的遍历链，则 <span
-class="math inline">\(\{\pi_i = 1 / \mu_i\}\)</span> 是 <span
-class="math inline">\(\pi=\pi P(\pi_i\ge0,\sum_{i\in S}\pi_i=1)\)</span>
-的<strong>唯一解</strong>。</p>
-<p><strong>推论 6.9.1</strong>：不可约遍历链恒有唯一的平稳分布，且 <span
-class="math inline">\(\pi_j=\lim_{n\to\infty}
-p_{ij}^{(n)}\)</span>。</p>
-<p><strong>定理 6.10</strong>：令 <span
-class="math inline">\(C_+\)</span>
-为马尔科夫链中全体正常返状态构成的集合，则有</p>
-<ol type="1">
-<li>平稳分布不存在的充要条件为 <span
-class="math inline">\(C_+=\varnothing\)</span>；</li>
-<li>平稳分布唯一存在的充要条件为只有一个基本正常返闭集；</li>
-<li>若马尔科夫链有多于一个基本正常返闭集，则其平稳分布有无穷多个。</li>
-</ol>
-<p><strong>定理 6.11</strong>：关于有限状态的马尔科夫链</p>
-<ol type="1">
-<li>有限状态马尔科夫链的平稳分布总存在；</li>
-<li>有限不可约非周期的马尔科夫链存在唯一的平稳分布；</li>
-<li>若有多于一个基本正常返闭集，则其平稳分布有无穷多个；</li>
-</ol>
-<p><em>栗子</em>（平衡方程及其应用）：对非周期正常返的离散马氏链，平稳分布存在且满足
-<span class="math inline">\(\pi P=\pi\)</span>，可以写成 <span
-class="math inline">\(\pi_j(1-P_{jj}) = \sum_{i\ne j,i\in S} \pi_i
-P_{ij}\)</span>，这被称为离散马氏链的平衡方程。左边表示从状态 <span
-class="math inline">\(j\)</span> 流出的量，右边表示从其他状态流入状态
-<span class="math inline">\(j\)</span>
-的量，在讨论一些实际工程问题时，可以借助平衡方程求解系统平稳分布。</p>
-<h2 id="转移矩阵的平均极限">6.6 转移矩阵的平均极限</h2>
-<p>一般情况下，<span class="math inline">\(n\to\infty\)</span> 时 <span
-class="math inline">\(P^n\)</span> 的极限未必存在，主要是因为 <span
-class="math inline">\(P^n\)</span>
-可能有周期性。为了消除周期性，最直接的方法就是取平均。</p>
-<p><strong>定理 6.12</strong>：设 <span class="math inline">\(P\)</span>
-为有限马氏链的转移矩阵，则 <span
-class="math inline">\(L:=\lim_{n\to\infty}
-\frac{1}{n}(I+P+\cdots+P^{n-1})\)</span> 存在，且满足 <span
-class="math inline">\(LP = PL = L = L^2\)</span>。</p>
-<p><strong>推论</strong>：设有限不可约马氏链的转移矩阵为 <span
-class="math inline">\(P\)</span>，平稳分布为 <span
-class="math inline">\(\pi\)</span>，<span
-class="math inline">\(L=(l_{ij})=\lim_{n\to\infty}
-\frac{1}{n}(I+P+\cdots+P^{n-1})\)</span>，则 <span
-class="math inline">\(\pi L=\pi\)</span>，且 <span
-class="math inline">\(\pi_j=l_{ij} / \sum_{k=1}^N l_{ik}\)</span>。</p>
-<p><strong>定理 6.13</strong>：设 <span class="math inline">\(P\)</span>
-是有 <span class="math inline">\(m\)</span>
-个状态的不可约马氏链的转移矩阵，则平稳分布概率为</p>
-<p><span class="math inline">\(\pi = (1,...,1)(I-P+{\mathbb
-1})^{-1}\)</span>，其中 <span class="math inline">\({\mathbb 1}\)</span>
-为全 1 的 <span class="math inline">\(m\times m\)</span> 矩阵。</p>
-<p>证明：关键是要证明矩阵 <span class="math inline">\((I-P+{\mathbb
-1})\)</span> 可逆。</p>
-<blockquote>
-<p><strong>Note</strong>：马尔科夫链在随机过程里面是比较简单的部分，大部分结论都很直观，凭直观感觉就能得到。</p>
-<p>实际上这章马尔科夫链的主要内容就是在讨论几种状态：非常返态、正常返态、零常返态。归结起来，现在想象一个马尔可夫链的状态转移图，有很多节点（状态）和有向边（转移概率）。</p>
-<p>首先对于几种状态的区别：</p>
-<ol type="1">
-<li>正常返态就是说从一个状态开始，经过有限步总能再次回到当前状态，并且这个平均回转时间是有限的（中华好男人，常回家看看）；</li>
-<li>零常返态就是说从一个状态开始，经过有限步总能再次回到当前状态，但这个平均回转时间是无穷的（渣男海王，开空头支票）；</li>
-<li>非常返态就是说从一个状态开始，经过有限步之后就再也不能返回当前状态了（恩断义绝）；</li>
-</ol>
-<p>如何判断每个节点的状态类型，基本只需要下面两条原则：</p>
-<ol type="1">
-<li>如果两个状态相通，那么他们同为常返态或非常返态。
-<ol type="1">
-<li>那么如果两个节点之间有双向边，他们一定是同一类型态；要出现常返态和非常返态的区别一定是由于单向边的存在；</li>
-<li>进一步的，一个连通子图里面的所有状态一定是同一类型；要出现常返态和非常返态的区别，一定是两个连通子图
-<span class="math inline">\(A,B\)</span> 之间只有单向边；</li>
-<li>假如只有 <span class="math inline">\(A\)</span> 到 <span
-class="math inline">\(B\)</span> 的单向边，那么连通子图 <span
-class="math inline">\(B\)</span> 中的节点一定都是非常返态。</li>
-</ol></li>
-<li>零常返态只可能出现在状态个数为无穷的时候。</li>
-</ol>
-<p>极限分布/平稳分布是怎样：</p>
-<ol type="1">
-<li>极限分布与初始分布有关，平稳分布只与状态转移链本身的性质有关；</li>
-<li>由于最终一定会收敛到常返态，平稳分布一定是只对常返态非零；</li>
-<li>只考虑常返态的集合，平稳分布就是转移概率矩阵 <span
-class="math inline">\(P\)</span> 的左特征向量；</li>
-</ol>
-<p>下面讲个故事。</p>
-<p>把概率想象成手里的money，初始分布概率就是每个节点手里的本钱；一个（不可约的）连通子图就是一个家族，家族里的每个人之间可以相互借钱来回周转；不同连通子图就是不同的家族。</p>
-<p>（不可约的）连通子图内部，一个家族里面的钱再怎么周转也都是内部消化，每个人借出去的总能还回来，所以钱不会消失，总会有一个平衡。</p>
-<p>如果有两个连通子图，并且它们之间只有单向边，相当于 <span
-class="math inline">\(A\)</span> 总是把一部分 money 白送给 <span
-class="math inline">\(B\)</span>，再厚的家底也得被掏空了。最后 <span
-class="math inline">\(A\)</span>
-家族就破产了（非常返态，不是闭集）。</p>
-<p>如果 <span class="math inline">\(B\)</span>
-家族的钱只进不出，也就是没有向外的有向边（闭集），那么他们就会完成资本的积累，最终钱总会聚集到他们那里（常返态）。</p>
-<p>如果有两个连通子图，他们相互之间没有任何边相联系，那就是他们互不打扰，两不相欠（各自有一个平稳分布）。100年之后各自有多少钱取决于现在各自有多少钱，不多不少（联合组成无穷个平稳分布，因为初始分布有无穷种情况）。</p>
-</blockquote>
+              <h2 id="定义与基本概念">7.1 定义与基本概念</h2>
+<p><strong>定义</strong>：设随机过程 <span
+class="math inline">\(X=\{X(t),t\ge0\}\)</span>，状态空间 <span
+class="math inline">\(S\)</span>，对任意 <span
+class="math inline">\(0\le t_0 &lt; t_1 &lt; \cdots &lt; t_n &lt;
+t_{n+1}\)</span>，<span class="math inline">\(i_k\in S\)</span>，若
+<span class="math inline">\(P(X(T_k)=i_k,0\le k\le n) &gt; 0\)</span> 有
+<span class="math display">\[
+P(X(t_{n+1})=i_{n+1} | X(t_k)=i_k,0\le k\le n) = P(X(t_{n+1})=i_{n+1} |
+X(t_n)=i_n)
+\]</span> 则称 <span class="math inline">\(X\)</span>
+为<strong>连续参数的马氏链</strong>。若对任意的 <span
+class="math inline">\(s,t\ge0\)</span>，<span
+class="math inline">\(i,j\in S\)</span> 有 <span class="math display">\[
+P(X(s+t)=j | X(s)=i) = P(X(t)=j|X(0)=i) = P_{ij}(t)
+\]</span> 称 <span class="math inline">\(X\)</span>
+为<strong>齐次马氏链</strong>。</p>
+<p>对于连续参数马氏链，在原点处有 <span
+class="math inline">\(P_{ij}(0)=\delta_{ij}\)</span>，因此 <span
+class="math inline">\(P(0)=I\)</span>。除此之外假设其在原点处连续，即
+<span class="math inline">\(\lim_{t\to 0}
+P_{ij}(t)=\delta_{ij},\lim_{t\to0}P(t)=I\)</span>。类比离散参数的马氏链，可以得到类似的
+C-K 方程 <span class="math inline">\(P(s+t)=P(s)P(t)\)</span>。</p>
+<h2 id="转移概率矩阵">7.2 转移概率矩阵</h2>
+<p>根据 C-K 方程可以猜测 <span
+class="math inline">\(P(t)=e^{tQ}\)</span>，泰勒展开表示为 <span
+class="math inline">\(P(t)=I + \sum_{n=1}^{\infty}
+\frac{t^n}{n!}Q^n\)</span>，<span class="math inline">\(P(t)\)</span>
+完全由 <span class="math inline">\(Q\)</span> 确定，并且有 <span
+class="math inline">\(P&#39;(0)=\lim_{t\to0}\frac{P(t)-I}{t}=Q\)</span>。</p>
+<p>上面只是猜测，那么是否真的存在这样一个 <span
+class="math inline">\(Q\)</span> 呢？下面两个定理给出结论。</p>
+<p><strong>定理 7.1</strong>：对 <span class="math inline">\(i\in
+S\)</span>，极限 <span
+class="math inline">\(-q_{ii}=\lim_{t\to0}\frac{1-P_{ii}(t)}{t}\)</span>
+存在，但可能是无穷。</p>
+<p><strong>定理 7.2</strong>：对 <span class="math inline">\(i\in
+S\)</span>，极限 <span
+class="math inline">\(q_{ij}=\lim_{t\to0}\frac{P_{ij}(t)}{t}\)</span>
+存在且有限。</p>
+<p>证明：略。</p>
+<p><strong>Remark</strong>：实际应用中，<span
+class="math inline">\(P(t)\)</span> 很难获得，一般可以求得 <span
+class="math inline">\(Q\)</span>，此时 <span
+class="math inline">\(e^{tQ} = \lim_{n\to\infty}(I +
+Qt/n)^n\)</span>。如果取 <span class="math inline">\(n=2^k\)</span>
+的形式，只需要 <span class="math inline">\(k\)</span>
+次矩阵乘法即可。</p>
+<p><strong>推论 7.1</strong>：对任意 <span class="math inline">\(i\in
+S\)</span>，<span class="math inline">\(0\le \sum_{i\ne j}q_{ij}\le
+q_{ii}\)</span>。</p>
+<p>证明： <span class="math display">\[
+q_{ii}=\varliminf_{t\to0} \frac{1-P_{ii}(t)}{t} = \varliminf_{t\to0}
+\sum_{j\ne i}\frac{P_{ij}(t)}{t} \ge \sum_{j\ne
+i}\varliminf_{t\to0}\frac{P_{ij}(t)}{t} = \sum_{j\ne i}q_{ij}
+\]</span> <strong>推论 7.2</strong>：当 <span
+class="math inline">\(S\)</span> 为有限状态空间时，<span
+class="math inline">\(\sum_{i\ne j}q_{ij}= q_{ii} &lt;
+\infty\)</span>。</p>
+<h2 id="kolmogorov前向后向微分方程">7.3 Kolmogorov前向后向微分方程</h2>
+<p><strong>定义</strong>：如果 <span class="math inline">\(Q\)</span>
+满足 <span class="math inline">\(\forall i\in S\)</span>，<span
+class="math inline">\(\sum_{j\ne i}q_{ij} = q_{ii} &lt;
+\infty\)</span>，则称 <span class="math inline">\(Q\)</span>
+为保守矩阵。</p>
+<p><strong>定理 7.3</strong>：设马氏链 <span
+class="math inline">\(X=\{X(t),t\ge0\}\)</span>，<span
+class="math inline">\(Q=P&#39;(0)\)</span>，当 <span
+class="math inline">\(S\)</span> 为<strong>有限集</strong>时，<span
+class="math inline">\(P&#39;(t)=P(t)Q=QP(t)\)</span>。</p>
+<p><strong>Remark</strong>：当 <span class="math inline">\(S\)</span>
+为可数状态时，前向方程与后向方程不一定成立，根据 Fatu 引理有 <span
+class="math inline">\(P&#39;(t)\ge P(t)Q,P&#39;(t)\ge QP(t)\)</span></p>
+<p><strong>定理 7.4</strong>：当 <span class="math inline">\(S\)</span>
+为<strong>可列个状态</strong>，<span class="math inline">\(Q\)</span>
+为保守矩阵时，后向方程 <span
+class="math inline">\(P&#39;(t)=QP(t)\)</span> 成立。</p>
+<h2 id="平稳分布与极限分布及其矩阵计算">7.4
+平稳分布与极限分布及其矩阵计算</h2>
+<p>类似离散马氏链，可以定义状态的连通关系。</p>
+<p><strong>定义</strong>：若 <span class="math inline">\(\int_0^\infty
+P_{ii}(t)dt = +\infty\)</span>，则称状态 <span
+class="math inline">\(i\)</span>
+为<strong>常返态</strong>，否则称为非常返态。</p>
+<p><strong>定义</strong>：设 <span class="math inline">\(i\)</span>
+为常返态，若 <span class="math inline">\(\lim_{t\to\infty}P_{ii}(t) &gt;
+0\)</span>，则称为正常返态，若 <span
+class="math inline">\(\lim_{t\to\infty}P_{ii}(t) =
+0\)</span>，称为零常返态。</p>
+<p><strong>定义</strong>：若概率分布 <span
+class="math inline">\(\pi=\{\pi_i,i\in S\}\)</span> 满足 <span
+class="math inline">\(\pi=\pi P(t)\)</span>，称 <span
+class="math inline">\(\pi\)</span> 为 <span
+class="math inline">\(X\)</span> 的平稳分布。</p>
+<p><strong>定理 7.5</strong>：设 <span class="math inline">\(X\)</span>
+是有限不可约连续马氏链，对任意 <span class="math inline">\(i,j\in
+S\)</span>，有 <span
+class="math inline">\(\lim_{t\to\infty}P_{ij}(t)=p_j\)</span>
+存在，且与状态 <span class="math inline">\(i\)</span> 无关。</p>
+<p>证明：略。</p>
 
             </div>
             <hr>
@@ -447,9 +390,9 @@ class="math inline">\(A\)</span>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/">
+                      <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【随机过程2】连续参数马尔可夫链</span>
+                        <span class="hidden-mobile">【高等数值分析】Krylov子空间方法</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -457,8 +400,8 @@ class="math inline">\(A\)</span>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/">
-                        <span class="hidden-mobile">【随机过程2】马尔可夫过程1 | 基本概念</span>
+                      <a href="/2022/01/24/stochastic-process-2/ch6-s2-states/">
+                        <span class="hidden-mobile">【随机过程2】马尔可夫过程2 | 状态空间</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -50,6 +50,35 @@
   
   
   <entry>
+    <title>【随机过程2】连续参数马尔可夫链</title>
+    <link href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/"/>
+    <url>/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/</url>
+    
+    <content type="html"><![CDATA[<h2 id="定义与基本概念">7.1 定义与基本概念</h2><p><strong>定义</strong>：设随机过程 <spanclass="math inline">\(X=\{X(t),t\ge0\}\)</span>，状态空间 <spanclass="math inline">\(S\)</span>，对任意 <spanclass="math inline">\(0\le t_0 &lt; t_1 &lt; \cdots &lt; t_n &lt;t_{n+1}\)</span>，<span class="math inline">\(i_k\in S\)</span>，若<span class="math inline">\(P(X(T_k)=i_k,0\le k\le n) &gt; 0\)</span> 有<span class="math display">\[P(X(t_{n+1})=i_{n+1} | X(t_k)=i_k,0\le k\le n) = P(X(t_{n+1})=i_{n+1} |X(t_n)=i_n)\]</span> 则称 <span class="math inline">\(X\)</span>为<strong>连续参数的马氏链</strong>。若对任意的 <spanclass="math inline">\(s,t\ge0\)</span>，<spanclass="math inline">\(i,j\in S\)</span> 有 <span class="math display">\[P(X(s+t)=j | X(s)=i) = P(X(t)=j|X(0)=i) = P_{ij}(t)\]</span> 称 <span class="math inline">\(X\)</span>为<strong>齐次马氏链</strong>。</p><p>对于连续参数马氏链，在原点处有 <spanclass="math inline">\(P_{ij}(0)=\delta_{ij}\)</span>，因此 <spanclass="math inline">\(P(0)=I\)</span>。除此之外假设其在原点处连续，即<span class="math inline">\(\lim_{t\to 0}P_{ij}(t)=\delta_{ij},\lim_{t\to0}P(t)=I\)</span>。类比离散参数的马氏链，可以得到类似的C-K 方程 <span class="math inline">\(P(s+t)=P(s)P(t)\)</span>。</p><h2 id="转移概率矩阵">7.2 转移概率矩阵</h2><p>根据 C-K 方程可以猜测 <spanclass="math inline">\(P(t)=e^{tQ}\)</span>，泰勒展开表示为 <spanclass="math inline">\(P(t)=I + \sum_{n=1}^{\infty}\frac{t^n}{n!}Q^n\)</span>，<span class="math inline">\(P(t)\)</span>完全由 <span class="math inline">\(Q\)</span> 确定，并且有 <spanclass="math inline">\(P&#39;(0)=\lim_{t\to0}\frac{P(t)-I}{t}=Q\)</span>。</p><p>上面只是猜测，那么是否真的存在这样一个 <spanclass="math inline">\(Q\)</span> 呢？下面两个定理给出结论。</p><p><strong>定理 7.1</strong>：对 <span class="math inline">\(i\inS\)</span>，极限 <spanclass="math inline">\(-q_{ii}=\lim_{t\to0}\frac{1-P_{ii}(t)}{t}\)</span>存在，但可能是无穷。</p><p><strong>定理 7.2</strong>：对 <span class="math inline">\(i\inS\)</span>，极限 <spanclass="math inline">\(q_{ij}=\lim_{t\to0}\frac{P_{ij}(t)}{t}\)</span>存在且有限。</p><p>证明：略。</p><p><strong>Remark</strong>：实际应用中，<spanclass="math inline">\(P(t)\)</span> 很难获得，一般可以求得 <spanclass="math inline">\(Q\)</span>，此时 <spanclass="math inline">\(e^{tQ} = \lim_{n\to\infty}(I +Qt/n)^n\)</span>。如果取 <span class="math inline">\(n=2^k\)</span>的形式，只需要 <span class="math inline">\(k\)</span>次矩阵乘法即可。</p><p><strong>推论 7.1</strong>：对任意 <span class="math inline">\(i\inS\)</span>，<span class="math inline">\(0\le \sum_{i\ne j}q_{ij}\leq_{ii}\)</span>。</p><p>证明： <span class="math display">\[q_{ii}=\varliminf_{t\to0} \frac{1-P_{ii}(t)}{t} = \varliminf_{t\to0}\sum_{j\ne i}\frac{P_{ij}(t)}{t} \ge \sum_{j\nei}\varliminf_{t\to0}\frac{P_{ij}(t)}{t} = \sum_{j\ne i}q_{ij}\]</span> <strong>推论 7.2</strong>：当 <spanclass="math inline">\(S\)</span> 为有限状态空间时，<spanclass="math inline">\(\sum_{i\ne j}q_{ij}= q_{ii} &lt;\infty\)</span>。</p><h2 id="kolmogorov前向后向微分方程">7.3 Kolmogorov前向后向微分方程</h2><p><strong>定义</strong>：如果 <span class="math inline">\(Q\)</span>满足 <span class="math inline">\(\forall i\in S\)</span>，<spanclass="math inline">\(\sum_{j\ne i}q_{ij} = q_{ii} &lt;\infty\)</span>，则称 <span class="math inline">\(Q\)</span>为保守矩阵。</p><p><strong>定理 7.3</strong>：设马氏链 <spanclass="math inline">\(X=\{X(t),t\ge0\}\)</span>，<spanclass="math inline">\(Q=P&#39;(0)\)</span>，当 <spanclass="math inline">\(S\)</span> 为<strong>有限集</strong>时，<spanclass="math inline">\(P&#39;(t)=P(t)Q=QP(t)\)</span>。</p><p><strong>Remark</strong>：当 <span class="math inline">\(S\)</span>为可数状态时，前向方程与后向方程不一定成立，根据 Fatu 引理有 <spanclass="math inline">\(P&#39;(t)\ge P(t)Q,P&#39;(t)\ge QP(t)\)</span></p><p><strong>定理 7.4</strong>：当 <span class="math inline">\(S\)</span>为<strong>可列个状态</strong>，<span class="math inline">\(Q\)</span>为保守矩阵时，后向方程 <spanclass="math inline">\(P&#39;(t)=QP(t)\)</span> 成立。</p><h2 id="平稳分布与极限分布及其矩阵计算">7.4平稳分布与极限分布及其矩阵计算</h2><p>类似离散马氏链，可以定义状态的连通关系。</p><p><strong>定义</strong>：若 <span class="math inline">\(\int_0^\inftyP_{ii}(t)dt = +\infty\)</span>，则称状态 <spanclass="math inline">\(i\)</span>为<strong>常返态</strong>，否则称为非常返态。</p><p><strong>定义</strong>：设 <span class="math inline">\(i\)</span>为常返态，若 <span class="math inline">\(\lim_{t\to\infty}P_{ii}(t) &gt;0\)</span>，则称为正常返态，若 <spanclass="math inline">\(\lim_{t\to\infty}P_{ii}(t) =0\)</span>，称为零常返态。</p><p><strong>定义</strong>：若概率分布 <spanclass="math inline">\(\pi=\{\pi_i,i\in S\}\)</span> 满足 <spanclass="math inline">\(\pi=\pi P(t)\)</span>，称 <spanclass="math inline">\(\pi\)</span> 为 <spanclass="math inline">\(X\)</span> 的平稳分布。</p><p><strong>定理 7.5</strong>：设 <span class="math inline">\(X\)</span>是有限不可约连续马氏链，对任意 <span class="math inline">\(i,j\inS\)</span>，有 <spanclass="math inline">\(\lim_{t\to\infty}P_{ij}(t)=p_j\)</span>存在，且与状态 <span class="math inline">\(i\)</span> 无关。</p><p>证明：略。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>随机过程2</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Markov过程</tag>
+      
+      <tag>平稳分布</tag>
+      
+      <tag>极限分布</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【随机过程2】马尔可夫过程2 | 状态空间</title>
     <link href="/2022/01/24/stochastic-process-2/ch6-s2-states/"/>
     <url>/2022/01/24/stochastic-process-2/ch6-s2-states/</url>

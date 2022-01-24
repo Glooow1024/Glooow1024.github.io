@@ -1,0 +1,719 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="6.4 状态空间的分解 定义：设 \(A\subset S\)，若对任意 \(i\in A\) 及 \(j\notin A\)，都有 \(p_{ij}&#x3D;0\)，称 \(A\) 为闭集。若 \(A\) 的状态是相通的，则 \(A\) 为不可约的。 引理 6.1：\(A\) 为闭集的充要条件为：任意 \(i\in A\) 及 \(j\notin A\) 都有 \(p_{ij}^{(n)}&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【随机过程2】马尔可夫过程2 | 状态空间">
+<meta property="og:url" content="http://example.com/2022/01/24/stochastic-process-2/ch6-s2-states/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="6.4 状态空间的分解 定义：设 \(A\subset S\)，若对任意 \(i\in A\) 及 \(j\notin A\)，都有 \(p_{ij}&#x3D;0\)，称 \(A\) 为闭集。若 \(A\) 的状态是相通的，则 \(A\) 为不可约的。 引理 6.1：\(A\) 为闭集的充要条件为：任意 \(i\in A\) 及 \(j\notin A\) 都有 \(p_{ij}^{(n)}&#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-24T09:28:24.000Z">
+<meta property="article:modified_time" content="2022-01-24T09:36:34.992Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="Markov过程">
+<meta property="article:tag" content="平稳分布">
+<meta property="article:tag" content="极限分布">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>【随机过程2】马尔可夫过程2 | 状态空间 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【随机过程2】马尔可夫过程2 | 状态空间">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-24 17:28" pubdate>
+        January 24, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【随机过程2】马尔可夫过程2 | 状态空间</h1>
+            
+            <div class="markdown-body">
+              <h2 id="状态空间的分解">6.4 状态空间的分解</h2>
+<p><strong>定义</strong>：设 <span class="math inline">\(A\subset
+S\)</span>，若对任意 <span class="math inline">\(i\in A\)</span> 及
+<span class="math inline">\(j\notin A\)</span>，都有 <span
+class="math inline">\(p_{ij}=0\)</span>，称 <span
+class="math inline">\(A\)</span> 为<strong>闭集</strong>。若 <span
+class="math inline">\(A\)</span> 的状态是相通的，则 <span
+class="math inline">\(A\)</span> 为<strong>不可约</strong>的。</p>
+<p><strong>引理 6.1</strong>：<span class="math inline">\(A\)</span>
+为闭集的充要条件为：任意 <span class="math inline">\(i\in A\)</span> 及
+<span class="math inline">\(j\notin A\)</span> 都有 <span
+class="math inline">\(p_{ij}^{(n)}=0,n\ge1\)</span>。</p>
+<p><strong>推论</strong>：若 <span class="math inline">\(A\)</span>
+是闭集，对任意状态 <span class="math inline">\(i\in A\)</span> 恒有
+<span class="math inline">\(\sum_{j\in A}p_{ij}^{(n)}=1\)</span>。</p>
+<blockquote>
+<p><strong>定理 6.5</strong>：所有常返态构成一个闭集。</p>
+<p><strong>推论</strong>：不可约马尔科夫链，所有状态都是常返的，或者所有状态都是非常返的。</p>
+</blockquote>
+<p><strong>定理 6.6</strong>：状态空间 <span
+class="math inline">\(S\)</span> 可以分解为 <span
+class="math inline">\(S = T\cup C = T\cup C_1 \cdots \cup C_h
+\cdots\)</span>，其中 <span class="math inline">\(T\)</span>
+表示非常返状态的集合，<span class="math inline">\(C_i\)</span>
+为基本的常返闭集，且有</p>
+<ol type="1">
+<li>对任一确定的 <span class="math inline">\(k,C_k\)</span>
+中任意两个状态互通；</li>
+<li><span class="math inline">\(C_k\cap C_l = \varnothing,\forall h\ne
+l\)</span>。</li>
+</ol>
+<blockquote>
+<p><strong>定理 6.7</strong>：有限状态马尔科夫链具有如下性质：</p>
+<ol type="1">
+<li>状态空间 <span class="math inline">\(S\)</span> 可分解为 <span
+class="math inline">\(S = T\cup C = T\cup C_1 \cdots \cup
+C_h\)</span>，其中 <span class="math inline">\(T\)</span>
+表示非常返状态的集合，<span class="math inline">\(C_i\)</span>
+为基本的常返闭集；</li>
+<li>非常返状态集合 <span class="math inline">\(T\)</span>
+一定不是闭集；</li>
+<li>没有零常返状态；</li>
+<li>必有正常返状态；</li>
+<li>不可约马氏链的的状态都是正常返态；</li>
+<li>任意闭集 <span class="math inline">\(C_i\)</span> 上的 <span
+class="math inline">\(n\)</span> 步转移矩阵为随机矩阵。</li>
+</ol>
+</blockquote>
+<h2 id="极限特性与平稳分布">6.5 极限特性与平稳分布</h2>
+<h3 id="极限特性">6.5.1 极限特性</h3>
+<p><strong>定理 6.7</strong>：若状态 <span
+class="math inline">\(j\)</span> 为非常返态或零常返态，则对任意 <span
+class="math inline">\(i \in S\)</span>，有 <span
+class="math inline">\(\lim_{n\to\infty}p_{ij}^{(n)}=0\)</span>。</p>
+<p><strong>推论
+6.7.1</strong>：若马尔科夫链有一个零常返态，则必有无穷多个零常返态。</p>
+<h3 id="平稳分布">6.5.2 平稳分布</h3>
+<p><strong>定义</strong>：一个定义在 <span
+class="math inline">\(S\)</span> 上的概率分布 <span
+class="math inline">\(\pi=(\pi_1,\pi_2,...,\pi_i,...)\)</span>
+称为马尔科夫链的平稳分布，如果有 <span class="math inline">\(\pi=\pi
+P\)</span>。</p>
+<p><strong>定理 6.9</strong>：若马尔科夫链是不可约的遍历链，则 <span
+class="math inline">\(\{\pi_i = 1 / \mu_i\}\)</span> 是 <span
+class="math inline">\(\pi=\pi P(\pi_i\ge0,\sum_{i\in S}\pi_i=1)\)</span>
+的<strong>唯一解</strong>。</p>
+<p><strong>推论 6.9.1</strong>：不可约遍历链恒有唯一的平稳分布，且 <span
+class="math inline">\(\pi_j=\lim_{n\to\infty}
+p_{ij}^{(n)}\)</span>。</p>
+<p><strong>定理 6.10</strong>：令 <span
+class="math inline">\(C_+\)</span>
+为马尔科夫链中全体正常返状态构成的集合，则有</p>
+<ol type="1">
+<li>平稳分布不存在的充要条件为 <span
+class="math inline">\(C_+=\varnothing\)</span>；</li>
+<li>平稳分布唯一存在的充要条件为只有一个基本正常返闭集；</li>
+<li>若马尔科夫链有多于一个基本正常返闭集，则其平稳分布有无穷多个。</li>
+</ol>
+<p><strong>定理 6.11</strong>：关于有限状态的马尔科夫链</p>
+<ol type="1">
+<li>有限状态马尔科夫链的平稳分布总存在；</li>
+<li>有限不可约非周期的马尔科夫链存在唯一的平稳分布；</li>
+<li>若有多于一个基本正常返闭集，则其平稳分布有无穷多个；</li>
+</ol>
+<p><em>栗子</em>（平衡方程及其应用）：对非周期正常返的离散马氏链，平稳分布存在且满足
+<span class="math inline">\(\pi P=\pi\)</span>，可以写成 <span
+class="math inline">\(\pi_j(1-P_{jj}) = \sum_{i\ne j,i\in S} \pi_i
+P_{ij}\)</span>，这被称为离散马氏链的平衡方程。左边表示从状态 <span
+class="math inline">\(j\)</span> 流出的量，右边表示从其他状态流入状态
+<span class="math inline">\(j\)</span>
+的量，在讨论一些实际工程问题时，可以借助平衡方程求解系统平稳分布。</p>
+<h2 id="转移矩阵的平均极限">6.6 转移矩阵的平均极限</h2>
+<p>一般情况下，<span class="math inline">\(n\to\infty\)</span> 时 <span
+class="math inline">\(P^n\)</span> 的极限未必存在，主要是因为 <span
+class="math inline">\(P^n\)</span>
+可能有周期性。为了消除周期性，最直接的方法就是取平均。</p>
+<p><strong>定理 6.12</strong>：设 <span class="math inline">\(P\)</span>
+为有限马氏链的转移矩阵，则 <span
+class="math inline">\(L:=\lim_{n\to\infty}
+\frac{1}{n}(I+P+\cdots+P^{n-1})\)</span> 存在，且满足 <span
+class="math inline">\(LP = PL = L = L^2\)</span>。</p>
+<p><strong>推论</strong>：设有限不可约马氏链的转移矩阵为 <span
+class="math inline">\(P\)</span>，平稳分布为 <span
+class="math inline">\(\pi\)</span>，<span
+class="math inline">\(L=(l_{ij})=\lim_{n\to\infty}
+\frac{1}{n}(I+P+\cdots+P^{n-1})\)</span>，则 <span
+class="math inline">\(\pi L=\pi\)</span>，且 <span
+class="math inline">\(\pi_j=l_{ij} / \sum_{k=1}^N l_{ik}\)</span>。</p>
+<p><strong>定理 6.13</strong>：设 <span class="math inline">\(P\)</span>
+是有 <span class="math inline">\(m\)</span>
+个状态的不可约马氏链的转移矩阵，则平稳分布概率为</p>
+<p><span class="math inline">\(\pi = (1,...,1)(I-P+{\mathbb
+1})^{-1}\)</span>，其中 <span class="math inline">\({\mathbb 1}\)</span>
+为全 1 的 <span class="math inline">\(m\times m\)</span> 矩阵。</p>
+<p>证明：关键是要证明矩阵 <span class="math inline">\((I-P+{\mathbb
+1})\)</span> 可逆。</p>
+<blockquote>
+<p><strong>Note</strong>：马尔科夫链在随机过程里面是比较简单的部分，大部分结论都很直观，凭直观感觉就能得到。</p>
+<p>实际上这章马尔科夫链的主要内容就是在讨论几种状态：非常返态、正常返态、零常返态。归结起来，现在想象一个马尔可夫链的状态转移图，有很多节点（状态）和有向边（转移概率）。</p>
+<p>首先对于几种状态的区别：</p>
+<ol type="1">
+<li>正常返态就是说从一个状态开始，经过有限步总能再次回到当前状态，并且这个平均回转时间是有限的（中华好男人，常回家看看）；</li>
+<li>零常返态就是说从一个状态开始，经过有限步总能再次回到当前状态，但这个平均回转时间是无穷的（渣男海王，开空头支票）；</li>
+<li>非常返态就是说从一个状态开始，经过有限步之后就再也不能返回当前状态了（恩断义绝）；</li>
+</ol>
+<p>如何判断每个节点的状态类型，基本只需要下面两条原则：</p>
+<ol type="1">
+<li>如果两个状态相通，那么他们同为常返态或非常返态。
+<ol type="1">
+<li>那么如果两个节点之间有双向边，他们一定是同一类型态；要出现常返态和非常返态的区别一定是由于单向边的存在；</li>
+<li>进一步的，一个连通子图里面的所有状态一定是同一类型；要出现常返态和非常返态的区别，一定是两个连通子图
+<span class="math inline">\(A,B\)</span> 之间只有单向边；</li>
+<li>假如只有 <span class="math inline">\(A\)</span> 到 <span
+class="math inline">\(B\)</span> 的单向边，那么连通子图 <span
+class="math inline">\(B\)</span> 中的节点一定都是非常返态。</li>
+</ol></li>
+<li>零常返态只可能出现在状态个数为无穷的时候。</li>
+</ol>
+<p>极限分布/平稳分布是怎样：</p>
+<ol type="1">
+<li>极限分布与初始分布有关，平稳分布只与状态转移链本身的性质有关；</li>
+<li>由于最终一定会收敛到常返态，平稳分布一定是只对常返态非零；</li>
+<li>只考虑常返态的集合，平稳分布就是转移概率矩阵 <span
+class="math inline">\(P\)</span> 的左特征向量；</li>
+</ol>
+<p>下面讲个故事。</p>
+<p>把概率想象成手里的money，初始分布概率就是每个节点手里的本钱；一个（不可约的）连通子图就是一个家族，家族里的每个人之间可以相互借钱来回周转；不同连通子图就是不同的家族。</p>
+<p>（不可约的）连通子图内部，一个家族里面的钱再怎么周转也都是内部消化，每个人借出去的总能还回来，所以钱不会消失，总会有一个平衡。</p>
+<p>如果有两个连通子图，并且它们之间只有单向边，相当于 <span
+class="math inline">\(A\)</span> 总是把一部分 money 白送给 <span
+class="math inline">\(B\)</span>，再厚的家底也得被掏空了。最后 <span
+class="math inline">\(A\)</span>
+家族就破产了（非常返态，不是闭集）。</p>
+<p>如果 <span class="math inline">\(B\)</span>
+家族的钱只进不出，也就是没有向外的有向边（闭集），那么他们就会完成资本的积累，最终钱总会聚集到他们那里（常返态）。</p>
+<p>如果有两个连通子图，他们相互之间没有任何边相联系，那就是他们互不打扰，两不相欠（各自有一个平稳分布）。100年之后各自有多少钱取决于现在各自有多少钱，不多不少（联合组成无穷个平稳分布，因为初始分布有无穷种情况）。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Markov%E8%BF%87%E7%A8%8B/">Markov过程</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B9%B3%E7%A8%B3%E5%88%86%E5%B8%83/">平稳分布</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9E%81%E9%99%90%E5%88%86%E5%B8%83/">极限分布</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【高等数值分析】Krylov子空间方法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/">
+                        <span class="hidden-mobile">【随机过程2】马尔可夫过程1 | 基本概念</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"iw199srhJNXO53sMUbMWkSxL-gzGzoHsz","appKey":"ogmo6qYs8PSc7MBFk8A1PDUl","path":"window.location.pathname","placeholder":"说点啥子吧 ^_^ 留下邮箱可以收到回复通知哦 ~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

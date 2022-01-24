@@ -24,7 +24,7 @@
 <meta property="og:description" content="5.4 最大值与首中时的分布特性 设 \(\{B(t),t\ge0\}\) 是标准布朗运动，不妨设 \(B(0)&#x3D;0\)。 定义：首次击中 \(a\) 的时间 \(\tau_a&#x3D;\inf\{t:t\ge0,B(t)&#x3D;a\}\)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-24T09:28:21.000Z">
-<meta property="article:modified_time" content="2022-01-24T09:46:42.125Z">
+<meta property="article:modified_time" content="2022-01-24T09:47:26.489Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="首中时">
 <meta property="article:tag" content="布朗运动">
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.7k 字
+      4.1k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      32 分钟
+      35 分钟
     </span>
   
 
@@ -404,6 +404,26 @@ v)dudv=\frac{\delta^2}{2}(t-\frac{\delta}{3})
 <p>考虑增量比，固定 <span class="math inline">\(\Delta t &gt;
 0\)</span>，令 <span class="math inline">\(\frac{B(t+\Delta
 t)-B(t)}{\Delta t} = \frac{\Delta B(t)}{\Delta t}\)</span>，</p>
+<h2 id="带漂移的布朗运动">5.8 带漂移的布朗运动</h2>
+<p><strong>定义</strong>：设 <span
+class="math inline">\(\{B(t),t\ge0\}\)</span> 为标准布朗运动，记 <span
+class="math inline">\(X(t)=B(t)+\eta t\)</span>，其中 <span
+class="math inline">\(\eta\)</span> 为常数，称 <span
+class="math inline">\(\{X(t),t\ge0\}\)</span> 为带漂移的布朗运动。</p>
+<h3 id="移出区间的概率计算">5.8.1 移出区间的概率计算</h3>
+<p><strong>定理 5.9</strong>：对任意 <span class="math inline">\(A &gt;
+0, B &gt; 0\)</span>，定义停时 <span
+class="math inline">\(\tau=\inf\{t:X(t)=A ~ or ~ X(t)=-B \}\)</span>，则
+<span class="math inline">\(P_{A}=P(X(\tau)=A) = \frac{e^{2\eta
+B}-1}{e^{2\eta B}-e^{2\eta a} }\)</span>.</p>
+<h3 id="首中时问题">5.8.2 首中时问题</h3>
+<h2 id="布朗运动的轨道性质">5.9 布朗运动的轨道性质</h2>
+<p><strong>轨道处处连续，几乎处处不可导</strong>。</p>
+<p><strong>定理</strong>：标准布朗运动 <span
+class="math inline">\(B(t)\)</span>，对任意的 <span
+class="math inline">\(t\ge0\)</span>，有 <span class="math display">\[
+P(\lim_{h\to 0}\sup\left|\frac{B(t+h)-B(t)}{h}\right|=+\infty) = 1
+\]</span> 证明：略。</p>
 
             </div>
             <hr>

@@ -24,7 +24,7 @@
 <meta property="og:description" content="5.4 最大值与首中时的分布特性 设 \(\{B(t),t\ge0\}\) 是标准布朗运动，不妨设 \(B(0)&#x3D;0\)。 定义：首次击中 \(a\) 的时间 \(\tau_a&#x3D;\inf\{t:t\ge0,B(t)&#x3D;a\}\)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-24T09:28:21.000Z">
-<meta property="article:modified_time" content="2022-01-24T09:47:49.771Z">
+<meta property="article:modified_time" content="2022-01-24T09:48:33.572Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="首中时">
 <meta property="article:tag" content="布朗运动">
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.5k 字
+      5.4k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38 分钟
+      46 分钟
     </span>
   
 
@@ -426,6 +426,46 @@ class="math inline">\(\operatorname{cov}[B_{00}(s),B_{00}(t)]=s(1-t)\)</span>；
 的分布与 <span class="math inline">\(\{B(t), t\ge0 \}\)</span> 在 <span
 class="math inline">\(B(1)=0\)</span> 下的条件分布相同。</li>
 </ol>
+<h3 id="经验分布与布朗桥的关系">5.7.2 经验分布与布朗桥的关系</h3>
+<p>工程统计中，经常独立抽取多个样本 <span
+class="math inline">\(X_1,...,X_n\)</span>
+来统计某参量的统计特性，定义经验分布 <span
+class="math inline">\(\hat{F}_n(x) = \frac{1}{n}\sum_{i=1}^n I_{\{X_i\le
+x\} }\)</span>。假设 <span class="math inline">\(X_1,...,X_n\)</span>
+独立同分布，且 <span class="math inline">\(X_n\sim
+F(x)\)</span>，则有：</p>
+<ol type="1">
+<li><span class="math inline">\({\mathbb E}[\hat{F}_n(x)] =
+F(x)\)</span></li>
+<li><span
+class="math inline">\(\operatorname{Var}[\hat{F}_n(x)]=\frac{1}{n}F(x)(1-F(x))\)</span></li>
+<li>任意给定 <span class="math inline">\(x\)</span>，利用强大数定理得到
+任意给定 <span class="math inline">\(x\)</span>，利用强大数定理得到<span
+class="math inline">\(P(\lim_{n\to\infty}
+\hat{F}_n(x)=F(x))=1\)</span></li>
+<li>任意给定 <span
+class="math inline">\(x\)</span>，利用中心极限定理得到 <span
+class="math inline">\(n\to\infty\)</span> 时有（依分布收敛）</li>
+</ol>
+<p><span class="math display">\[
+\frac{\sum_{i=1}^n (I_{\{X_i\le x\} }-F(x)) }{\sqrt{nF(x)(1-F(x))} }
+\overset{d}{=} {\mathcal N}(0,1)
+\]</span></p>
+<p>证明：（2）<span
+class="math inline">\(\operatorname{Var}[\hat{F}_n(x)]={\mathbb
+E}[\hat{F}_n(x)^2] - F(x)^2 = \frac{1}{n^2}{\mathbb E}[\sum_{i=1}^n
+I_{\{X_i\le x\} } \sum_{j=1}^n I_{\{X_j\le x\} }
+]\)</span>，展开化简就可以得到性质 2.</p>
+<p>（4）记 <span
+class="math inline">\(G_n(x)=\sqrt{n}(\hat{F}_n(x)-F(x))\)</span>，容易证明
+<span class="math inline">\({\mathbb
+E}G_n(x)=0,\operatorname{Var}G_n(x)=F(x)(1-F(x))\)</span>，特别的，根据中心极限定理，当
+<span class="math inline">\(n\to\infty\)</span> 时有 <span
+class="math inline">\(G_n(x)\overset{d}{=}G(x)\)</span>，其中 <span
+class="math inline">\(G(x)\sim {\mathcal
+N}(0,F(x)(1-F(x)))\)</span>。</p>
+<h3 id="经验分布的误差估计">5.7.3 经验分布的误差估计</h3>
+<p>略。</p>
 <h2 id="带漂移的布朗运动">5.8 带漂移的布朗运动</h2>
 <p><strong>定义</strong>：设 <span
 class="math inline">\(\{B(t),t\ge0\}\)</span> 为标准布朗运动，记 <span

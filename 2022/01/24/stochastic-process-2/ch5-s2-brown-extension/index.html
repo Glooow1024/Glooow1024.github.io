@@ -24,7 +24,7 @@
 <meta property="og:description" content="5.4 最大值与首中时的分布特性 设 \(\{B(t),t\ge0\}\) 是标准布朗运动，不妨设 \(B(0)&#x3D;0\)。 定义：首次击中 \(a\) 的时间 \(\tau_a&#x3D;\inf\{t:t\ge0,B(t)&#x3D;a\}\)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-24T09:28:21.000Z">
-<meta property="article:modified_time" content="2022-01-24T09:48:33.572Z">
+<meta property="article:modified_time" content="2022-01-24T09:49:18.399Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="首中时">
 <meta property="article:tag" content="布朗运动">
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.4k 字
+      6k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      46 分钟
+      50 分钟
     </span>
   
 
@@ -464,6 +464,40 @@ E}G_n(x)=0,\operatorname{Var}G_n(x)=F(x)(1-F(x))\)</span>，特别的，根据�
 class="math inline">\(G_n(x)\overset{d}{=}G(x)\)</span>，其中 <span
 class="math inline">\(G(x)\sim {\mathcal
 N}(0,F(x)(1-F(x)))\)</span>。</p>
+<p><strong>引理 5.1</strong>：如果 <span class="math inline">\(x_1 &lt;
+x_2\)</span>，则 <span class="math inline">\({\mathbb
+E}[G_n(x_1)G_n(x_2)] = F(x_1)(1-F(x_2))\)</span>。</p>
+<p>证明：代入展开化简即可得到。</p>
+<blockquote>
+<p><strong>Remark</strong>：根据上述引理和 <span
+class="math inline">\(G_n(x)\)</span> 的性质可知，当 <span
+class="math inline">\(F_n(x)=x\)</span> 时，即 <span
+class="math inline">\(X_1,...,X_n\)</span> 服从 <span
+class="math inline">\([0,1]\)</span> 上的均匀分布时，<span
+class="math inline">\(G_n(x)\)</span> 的极限分别 <span
+class="math inline">\(G(x)\)</span> 是布朗桥。</p>
+<p>事实上，对于一般的连续分布函数 <span
+class="math inline">\(F(x)\)</span>，<span
+class="math inline">\(G_n(x)\)</span> 的极限分布 <span
+class="math inline">\(G(x)\)</span>
+也可以用布朗桥表示。为此，首先给出如下引理。</p>
+</blockquote>
+<p><strong>引理 5.2</strong>：随机变量 <span
+class="math inline">\(X\)</span> 的分布函数 <span
+class="math inline">\(F(x)\)</span> 连续，则 <span
+class="math inline">\(Y=F(X)\)</span> 是一个 <span
+class="math inline">\([0,1]\)</span> 均匀分布的随机变量。</p>
+<p>证明：<span class="math inline">\(\forall y\in[0,1]\)</span>，定义
+<span class="math inline">\(x=\inf\{u:F(u)\ge y\}\)</span>，因此有 <span
+class="math inline">\(P(F(X)\ge y)) = P(Y\ge
+y)=1-F(x)=1-y\)</span>，从而有 <span class="math inline">\(P(Y &lt; y) =
+y\)</span>，证毕。</p>
+<p>基于引理 5.2，可以定义 <span class="math inline">\(G^{ \#
+}(x)=B_{00}(F(x))\)</span>，利用布朗桥性质有 <span
+class="math inline">\(G^{ \# }(x)\)</span> 与 <span
+class="math inline">\(G(x)\)</span> 有相同的分布特性，从而可以推得 <span
+class="math inline">\(G_n(x)\)</span> 的极限分布为以 <span
+class="math inline">\(F(x)\)</span> 为参变量的布朗桥。</p>
 <h3 id="经验分布的误差估计">5.7.3 经验分布的误差估计</h3>
 <p>略。</p>
 <h2 id="带漂移的布朗运动">5.8 带漂移的布朗运动</h2>

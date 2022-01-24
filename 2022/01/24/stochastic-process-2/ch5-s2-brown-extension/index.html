@@ -24,7 +24,7 @@
 <meta property="og:description" content="5.4 最大值与首中时的分布特性 设 \(\{B(t),t\ge0\}\) 是标准布朗运动，不妨设 \(B(0)&#x3D;0\)。 定义：首次击中 \(a\) 的时间 \(\tau_a&#x3D;\inf\{t:t\ge0,B(t)&#x3D;a\}\)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-24T09:28:21.000Z">
-<meta property="article:modified_time" content="2022-01-24T09:46:10.398Z">
+<meta property="article:modified_time" content="2022-01-24T09:46:42.125Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="首中时">
 <meta property="article:tag" content="布朗运动">
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      3.7k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17 分钟
+      32 分钟
     </span>
   
 
@@ -339,6 +339,71 @@ a)\)</span>.</p>
 class="math inline">\(f_{M,B}(\xi,x) = \sqrt{\frac{2}{\pi}
 }(\frac{2\xi-x}{t^{3/2} }) \exp(-(2\xi-x)^2/2t)
 I_{[0,\infty)}(\xi)I_{(-\infty,\xi]}(x)\)</span>.</p>
+<h2 id="过零点的反正弦定理">5.5 过零点的反正弦定理</h2>
+<p><span class="math inline">\(\forall t_1 &lt; t_2\)</span>，记事件
+<span class="math inline">\(o(t_1,t_2)=\{\exists t\in(t_1,t_2),
+B(t)=0\}\)</span>，利用全概率公式有 <span class="math display">\[
+P(o(t_1,t_2)) = \int_{-\infty}^{\infty} P(o(t_1,t_2) | B(t_1)=x)
+\frac{1}{\sqrt{2\pi t_1} }e^{-x^2/2t_1} dx
+\]</span> 利用布朗运动的连续性和对称性有 <span class="math display">\[
+P(o(t_1,t_2)|B(t_1)=x) = P(\tau_x\le t_2-t_1) =
+\frac{2}{\sqrt{2\pi(t_2-t_1)} }\int_x^{\infty} e^{-u^2/2(t_2-t_1)} du
+\]</span> 于是有 <span class="math display">\[
+P(o(t_1,t_2)) = \frac{1}{\pi\sqrt{t_1(t_2-t_1)}
+}\int_0^{\infty}\int_x^{\infty} e^{-\frac{y^2}{2(t_2-t_1)} }dy \cdot
+e^{-\frac{x^2}{2t_1} }dx
+\]</span>
+这个积分的直接求解非常困难，为求此积分，采用另外的方法，也即反正弦定理。</p>
+<p><strong>定理 5.8（反正弦定理）</strong>：设 <span
+class="math inline">\(B(t)\)</span> 是标准布朗运动，记 <span
+class="math inline">\(\bar{o}(t_1,t_2)=\{B(t)\ne 0,\forall
+t\in(t_1,t_2)\}\)</span>，则 <span
+class="math inline">\(P(\bar{o}(t_1,t_2))=\frac{2}{\pi}
+\arcsin\sqrt{\frac{t_1}{t_2} }\)</span>，且当 <span
+class="math inline">\(t_1=xt, t_2=t, 0 &lt; x &lt; 1\)</span> 时，有
+<span class="math inline">\(P(\bar{o}(xt,t))=\frac{2}{\pi} \arcsin
+\sqrt{x}\)</span>.</p>
+<p><strong>Remark</strong>：这说明布朗运动处处连续但处处不可导。</p>
+<h2 id="布朗运动的推广">5.6 布朗运动的推广</h2>
+<h3 id="带吸收点的布朗运动">5.6.1 带吸收点的布朗运动</h3>
+<p>设 <span class="math inline">\(Z(t)=\begin{cases}B(t), &amp; t &lt;
+\tau_x \\ x, &amp; t\ge \tau_x \end{cases}\)</span>，为求 <span
+class="math inline">\(Z(t)\)</span> 的分布，不妨设 <span
+class="math inline">\(x &gt; 0\)</span></p>
+<p>（1）当 <span class="math inline">\(y &gt; x\)</span> 时，<span
+class="math inline">\(P(Z(t) \le y)=1\)</span>；</p>
+<p>（2）当 <span class="math inline">\(y=x\)</span> 时，<span
+class="math inline">\(P(Z(t)=x) = P(\tau_x\le t) = \frac{2}{\sqrt{2\pi
+t} }\int_x^\infty e^{-u^2/2t} du\)</span>；</p>
+<p>（3）当 <span class="math inline">\(y &lt; x\)</span> 时，</p>
+<h3 id="原点反射的布朗运动">5.6.2 原点反射的布朗运动</h3>
+<h3 id="几何布朗运动">5.6.3 几何布朗运动</h3>
+<p>令 <span
+class="math inline">\(W(t)=e^{B(t)}\)</span>，称它为几何布朗运动，取
+<span class="math inline">\(B(t)\)</span> 的矩母函数 <span
+class="math inline">\(\phi(s)={\mathbb E}[e^{sB(t)}]\)</span>，则 <span
+class="math inline">\(\phi(s)=e^{ts^2/2}\)</span>，因此 <span
+class="math inline">\({\mathbb E}[W(t)]=\phi(1)=e^{t/2}\)</span>，<span
+class="math inline">\(D[W(t)] = {\mathbb E}[W^2(t)]-({\mathbb
+E}[W(t)])^2=\phi(2)-e^t = e^{2t}-e^t\)</span>.</p>
+<p><em>栗子 5.2</em>：考虑股票市场收益率，<span
+class="math inline">\(S_0,S_n\)</span> 分别表示最初价位和最终价位，<span
+class="math inline">\(S_n=S_0 e^{B(t_1)-B(t_0)}\cdots
+e^{B(t_n)-B(t_{n-1})}\)</span>.</p>
+<h3 id="布朗运动的积分">5.6.4 布朗运动的积分</h3>
+<p>令 <span class="math inline">\(S(t)=\int_0^t
+B(u)du\)</span>，根据正态分布的性质知道他是正态过程，<span
+class="math inline">\({\mathbb E}S(t)=0\)</span>，<span
+class="math inline">\(\forall 0\le \delta \le t\)</span>，有 <span
+class="math display">\[
+\operatorname{cov}[S(\delta),S(t)] = {\mathbb E}[\int_0^\delta\int_0^t
+B(u)B(v)dudv] = \int_0^\delta\int_0^t(u\wedge
+v)dudv=\frac{\delta^2}{2}(t-\frac{\delta}{3})
+\]</span></p>
+<h3 id="布朗运动的形式导数">5.6.5 布朗运动的形式导数</h3>
+<p>考虑增量比，固定 <span class="math inline">\(\Delta t &gt;
+0\)</span>，令 <span class="math inline">\(\frac{B(t+\Delta
+t)-B(t)}{\Delta t} = \frac{\Delta B(t)}{\Delta t}\)</span>，</p>
 
             </div>
             <hr>

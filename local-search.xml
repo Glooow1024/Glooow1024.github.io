@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>SLAM综述</title>
+    <link href="/2022/03/02/research/SLAM-survey/"/>
+    <url>/2022/03/02/research/SLAM-survey/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>关于SLAM（simultaneous localization andmapping）问题一个很粗糙的总结。</p></blockquote><p>对于SLAM的发展历程，Leonard和Reid大佬将SLAM到目前为止的发展过程总结为三个阶段：</p><ol type="1"><li>classicalage（1986-2004）：早期阶段，SLAM问题的定义、基于概率框架的建模和求解方法；</li><li>algorithm-analysisage（2004-2015）：深入研究SLAM问题的一些性质，比如稀疏性、收敛性、一致性等，更多样、更高效的算法也被相继提出；</li><li>robust-perceptionage（2015-）：开始考虑算法的鲁棒性、可扩展性、资源约束下的高效算法、高层语义认知任务导向等；</li></ol><p>SALM系统主要包括前端和后端两部分，前端负责从传感器数据中提取特征、dataassociation（如特征提取、回环检测）等，后端负责最大后验估计、滤波等；</p><figure><imgsrc="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/slam-1.png"alt="SLAM" /><figcaption aria-hidden="true">SLAM</figcaption></figure><p>根据<strong>感知手段</strong>可以分为几类：</p><ul><li>测距测角：传感器比如毫米波雷达、声纳等；</li><li>视觉相机：各种相机，比如RGB-D相机等；需要从图像中提取特征点，例如SIFT等；纯视觉导航有专门的研究方向，即VO（VisualOdometry），VO+全局地图优化（例如回环检测）=visual SLAM；</li><li>激光雷达；</li><li>惯性导航：IMU，配合视觉传感器可以实现VIO；</li></ul><p>根据<strong>地图结构</strong>可以分为几类（地图结构与感知手段紧密相关）：</p><ul><li>基于landmarkd的，传感器通常是测距测角的，或者视觉中提取特征点；</li><li>栅格地图（2D）、点云地图（3D），主要是激光雷达；</li><li>基于边/表面的几何地图；</li></ul><p>根据<strong>求解方法</strong>可以分为几类：</p><ul><li>基于贝叶斯框架递归滤波的：如EKF、PF、Information Filter等；</li><li>基于优化的：一种是光束平差法（用于视觉，实际上是最小二乘）；另一种是图优化（graphSLAM，实际上就是概率图模型，似乎是现在的主流）；</li><li>Set Membership 类的方法、以及定性方法等；</li></ul><p>要考虑的科学问题包括：</p><ul><li>地图构建和机器人位姿估计，因此实际上是参数估计/求解问题；</li><li>多传感器数据融合，以及与已有地图信息的融合；</li><li>回环检测，纠正累积误差；</li><li>降低复杂度，比如每次只更新相关的部分地图和状态，而不是所有参数一起更新；</li><li>数据关联；</li></ul><figure><imgsrc="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/slam-2.jpg"alt="SLAM" /><figcaption aria-hidden="true">SLAM</figcaption></figure><p>除了基本的SLAM问题，还有一些发展方向：</p><ul><li>ActiveSLAM：同时考虑机器人的运动控制，与exploration-exploitation问题相关；</li><li>多机SLAM，相比于单机需要考虑的问题：<ul><li>多机协作的架构：集中式（online or offline？）、分布式；</li><li>相邻机器之间的数据交互，防止数据伦理问题，即一个数据在多个机器上重复使用多次；</li><li>每个机器的地图更新方法；</li><li>数据关联问题；</li><li>通信负载、数据压缩、地图结构优化等；</li></ul></li></ul><h2 id="reference">Reference</h2><ol type="1"><li>Dissanayake, MWM Gamini, et al. "A solution to the simultaneouslocalization and map building (SLAM) problem." <em>IEEE Transactions onrobotics and automation</em> 17.3 (2001): 229-241.</li><li>Durrant-Whyte, Hugh, and Tim Bailey. "Simultaneous localization andmapping: part I." <em>IEEE robotics &amp; automation magazine</em> 13.2(2006): 99-110.</li><li>Bailey, Tim, and Hugh Durrant-Whyte. "Simultaneous localization andmapping (SLAM): Part II." <em>IEEE robotics &amp; automationmagazine</em> 13.3 (2006): 108-117.</li><li>Bresson, Guillaume, et al. "Simultaneous localization and mapping: Asurvey of current trends in autonomous driving." <em>IEEE Transactionson Intelligent Vehicles</em> 2.3 (2017): 194-220.</li><li>Taketomi, Takafumi, Hideaki Uchiyama, and Sei Ikeda. "Visual SLAMalgorithms: A survey from 2010 to 2016." <em>IPSJ Transactions onComputer Vision and Applications</em> 9.1 (2017): 1-11.</li><li>Cadena, Cesar, et al. "Past, present, and future of simultaneouslocalization and mapping: Toward the robust-perception age." <em>IEEETransactions on robotics</em> 32.6 (2016): 1309-1332.</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>SLAM</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>我的电脑（不时更新）</title>
     <link href="/2022/01/24/software/prepare-my-pc/"/>
     <url>/2022/01/24/software/prepare-my-pc/</url>

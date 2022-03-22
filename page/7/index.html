@@ -51,7 +51,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.1"></head>
+<meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -203,6 +204,63 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2020/04/05/optimization/ch15-gradient/" target="_self">
+          凸优化笔记15：梯度方法 Gradient Method
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/04/05/optimization/ch15-gradient/" target="_self">
+          
+          前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-04-05 18:12" pubdate>
+              2020-04-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">利普希兹连续</a>
+            
+              <a href="/tags/co-coercivity/">co-coercivity</a>
+            
+              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">强凸函数</a>
+            
+              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%90%9C%E7%B4%A2/">线搜索</a>
+            
+              <a href="/tags/BB%E6%96%B9%E6%B3%95/">BB方法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2020/04/05/optimization/ch14-sdp-rep/" target="_self">
           凸优化笔记14：SDP Representablity
         </a>
@@ -283,15 +341,15 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">KKT条件</a>
+            
+              <a href="/tags/%E4%BA%92%E8%A1%A5%E6%80%A7%E6%9D%A1%E4%BB%B6/">互补性条件</a>
+            
               <a href="/tags/LP/">LP</a>
             
               <a href="/tags/SOCP/">SOCP</a>
             
               <a href="/tags/SDP/">SDP</a>
-            
-              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">KKT条件</a>
-            
-              <a href="/tags/%E4%BA%92%E8%A1%A5%E6%80%A7%E6%9D%A1%E4%BB%B6/">互补性条件</a>
             
           </div>
         
@@ -487,15 +545,15 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">凸优化问题</a>
-            
               <a href="/tags/LP/">LP</a>
             
               <a href="/tags/SOCP/">SOCP</a>
             
-              <a href="/tags/QP/">QP</a>
-            
               <a href="/tags/SDP/">SDP</a>
+            
+              <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">凸优化问题</a>
+            
+              <a href="/tags/QP/">QP</a>
             
               <a href="/tags/GP/">GP</a>
             
@@ -639,55 +697,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E5%AF%B9%E6%95%B0%E5%87%B9%E5%87%BD%E6%95%B0/">对数凹函数</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/03/11/software/next-beautify/" target="_self">
-          Hexo NexT 7.7 主题美化
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/03/11/software/next-beautify/" target="_self">
-          
-          网上很多关于主题美化的教程都是老版本 next 5.1 的，最近更新到 next 7 之后摸索了好久才找到简单有效的自定义主题方式，下面是具体的操作。
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-03-11 16:07" pubdate>
-              2020-03-11
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Hexo/">Hexo</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/hexo/">hexo</a>
-            
-              <a href="/tags/next/">next</a>
             
           </div>
         

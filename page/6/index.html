@@ -51,7 +51,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.1"></head>
+<meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -196,6 +197,57 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/" target="_self">
+          凸优化笔记23：算子分裂法 &amp; ADMM
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/" target="_self">
+          
+          前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-05-10 09:52" pubdate>
+              2020-05-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+            
+              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">算子分裂法</a>
+            
+              <a href="/tags/ADMM/">ADMM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -531,9 +583,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
-            
               <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+            
+              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
             
           </div>
         
@@ -628,63 +680,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/matlab/">matlab</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2020/04/05/optimization/ch15-gradient/" target="_self">
-          凸优化笔记15：梯度方法 Gradient Method
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2020/04/05/optimization/ch15-gradient/" target="_self">
-          
-          前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-05 18:12" pubdate>
-              2020-04-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
-            
-              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">利普希兹连续</a>
-            
-              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">强凸函数</a>
-            
-              <a href="/tags/co-coercivity/">co-coercivity</a>
-            
-              <a href="/tags/%E7%BA%BF%E6%90%9C%E7%B4%A2/">线搜索</a>
-            
-              <a href="/tags/BB%E6%96%B9%E6%B3%95/">BB方法</a>
             
           </div>
         

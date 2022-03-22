@@ -234,9 +234,9 @@ class=&quot;math inline&quot;&gt;\(\tau_a=\inf\{t:t\ge0,B(t)=a\}\)&lt;/span&gt;&
     <category term="随机过程2" scheme="http://example.com/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/"/>
     
     
-    <category term="布朗运动" scheme="http://example.com/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/"/>
-    
     <category term="首中时" scheme="http://example.com/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/"/>
+    
+    <category term="布朗运动" scheme="http://example.com/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/"/>
     
     <category term="反正弦定理" scheme="http://example.com/tags/%E5%8F%8D%E6%AD%A3%E5%BC%A6%E5%AE%9A%E7%90%86/"/>
     
@@ -606,9 +606,9 @@ class=&quot;math inline&quot;&gt;\(\{Y_n,n\ge0\}\)&lt;/span&gt;
     <category term="随机过程2" scheme="http://example.com/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/"/>
     
     
-    <category term="鞅" scheme="http://example.com/tags/%E9%9E%85/"/>
-    
     <category term="停时" scheme="http://example.com/tags/%E5%81%9C%E6%97%B6/"/>
+    
+    <category term="鞅" scheme="http://example.com/tags/%E9%9E%85/"/>
     
     <category term="停时定理" scheme="http://example.com/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/"/>
     

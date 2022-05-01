@@ -16,15 +16,15 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. IEEE论文爬虫 2. IEEE论文数据统计 3. 写一个图形界面 3.1 弹出提示窗口 在写代码过程中有时候需要测试功能是否成功实现，于是想要加一个弹出窗口的函数可以显示调试信息，用以验证想要的功能是否正常实现。主要难点在于根据内容自动调整窗口大小，以获得较好的显示效果。 采用的方法是利用 QLabel.adjust() 函数获取文本显示的宽度，并据此调整窗口的大小。 123">
+    <meta name="description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IEEE论文爬虫及数据统计">
 <meta property="og:url" content="http://example.com/2022/03/19/diy/paper-collector/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="1. IEEE论文爬虫 2. IEEE论文数据统计 3. 写一个图形界面 3.1 弹出提示窗口 在写代码过程中有时候需要测试功能是否成功实现，于是想要加一个弹出窗口的函数可以显示调试信息，用以验证想要的功能是否正常实现。主要难点在于根据内容自动调整窗口大小，以获得较好的显示效果。 采用的方法是利用 QLabel.adjust() 函数获取文本显示的宽度，并据此调整窗口的大小。 123">
+<meta property="og:description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-19T05:51:48.000Z">
-<meta property="article:modified_time" content="2022-03-27T08:07:40.923Z">
+<meta property="article:modified_time" content="2022-05-01T07:55:57.598Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="spider">
 <meta property="article:tag" content="PyQt">
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.1k 字
+      12k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      59 分钟
+      103 分钟
     </span>
   
 
@@ -262,24 +262,54 @@
             
             <div class="markdown-body">
               <h2 id="ieee论文爬虫">1. IEEE论文爬虫</h2>
+<p>爬虫代码网上有很多了，这部分是直接用的网上可以跑通的<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465/">Python爬虫——爬取IEEE论文
+- 乐 ShareLe的博客 - CSDN博客
+"&gt;[1]</span></a></sup>。使用的时候直接调用
+<code>get_article_info()</code>，其中参数 <code>conferenceID</code>
+需要手动在 IEEE 上查询会议的 ID 号，参数 <code>saceFileName</code>
+为希望保存的 <code>csv</code> 文件名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取issueNumber</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_issueNumber</span>(<span class="hljs-params">conferenceID</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Get the issueNumber from the website.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    conferenceID = <span class="hljs-built_in">str</span>(conferenceID)<br>    gheaders = &#123;<br>        <span class="hljs-string">&#x27;Referer&#x27;</span>: <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/xpl/conhome/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/proceeding&#x27;</span>,<br>        <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36&#x27;</span><br>    &#125;<br>    md_url = <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/rest/publication/home/metadata?pubid=&#x27;</span>+conferenceID<br>    md_res = requests.get(md_url, headers = gheaders)<br>    md_dic = json.loads(md_res.text)<br>    issueNumber = <span class="hljs-built_in">str</span>(md_dic[<span class="hljs-string">&#x27;currentIssue&#x27;</span>][<span class="hljs-string">&#x27;issueNumber&#x27;</span>])<br>    <span class="hljs-keyword">return</span> issueNumber<br><br><span class="hljs-comment"># 爬取论文及其下载链接</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">conferenceID, saveFileName</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Collect the published paper data, and save into the csv file &quot;saveFileName&quot;.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 获取issueNumber</span><br>    issueNumber = <span class="hljs-built_in">str</span>(get_issueNumber(conferenceID))<br>    conferenceID = <span class="hljs-built_in">str</span>(conferenceID)<br><br>    <span class="hljs-comment"># 记录论文数据</span><br>    dataframe = pd.DataFrame(&#123;&#125;)<br>    paper_title = []<br>    paper_author = []<br>    paper_year = []<br>    paper_citation = []<br>    paper_abstract = []<br>    paper_ieee_kwd = []<br><br>    <span class="hljs-comment"># 从第一页开始下载</span><br>    pageNumber = <span class="hljs-number">1</span><br>    count = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">True</span>):<br>        <span class="hljs-comment"># 获取会议文章目录</span><br>        toc_url = <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/rest/search/pub/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/issue/&#x27;</span>+issueNumber+<span class="hljs-string">&#x27;/toc&#x27;</span><br>        payload = <span class="hljs-string">&#x27;&#123;&quot;pageNumber&quot;:&#x27;</span>+<span class="hljs-built_in">str</span>(pageNumber)+<span class="hljs-string">&#x27;,&quot;punumber&quot;:&quot;&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;&quot;,&quot;isnumber&quot;:&#x27;</span>+issueNumber+<span class="hljs-string">&#x27;&#125;&#x27;</span><br>        headers = &#123;<br>            <span class="hljs-string">&#x27;Host&#x27;</span>: <span class="hljs-string">&#x27;ieeexplore.ieee.org&#x27;</span>,<br>            <span class="hljs-string">&#x27;User-Agent&#x27;</span>:<span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36&#x27;</span>,<br>            <span class="hljs-string">&#x27;Referer&#x27;</span>: <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/xpl/conhome/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/proceeding?pageNumber=&#x27;</span>+<span class="hljs-built_in">str</span>(pageNumber),<br>        &#125;<br>        toc_res = requests.post(toc_url, headers = headers, data=payload)<br>        toc_dic = json.loads(toc_res.text)<br>        <span class="hljs-keyword">try</span>:<br>            articles = toc_dic[<span class="hljs-string">&#x27;records&#x27;</span>]<br>        <span class="hljs-keyword">except</span> KeyError:<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">for</span> article <span class="hljs-keyword">in</span> articles:<br>                title = article[<span class="hljs-string">&#x27;highlightedTitle&#x27;</span>]<br>                paper_link = IEEE_root_url + article[<span class="hljs-string">&#x27;htmlLink&#x27;</span>]<br>                paper_info = requests.get(url=paper_link, headers=headers, timeout=<span class="hljs-number">10</span>)<br>                soup = BeautifulSoup(paper_info.text, <span class="hljs-string">&#x27;lxml&#x27;</span>)                  <span class="hljs-comment"># 解析</span><br>                <span class="hljs-comment"># 正则表达式 创建模式对象</span><br>                pattern = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;xplGlobal.document.metadata=(.*?)&quot;&#125;;&#x27;</span>, re.MULTILINE | re.DOTALL)<br>                script = soup.find(<span class="hljs-string">&quot;script&quot;</span>, text=pattern)                     <span class="hljs-comment"># 根据模式对象进行搜索</span><br>                <span class="hljs-keyword">try</span>:<br>                    res_dic = pattern.search(script.string).group(<span class="hljs-number">1</span>)+<span class="hljs-string">&#x27;&quot;&#125;&#x27;</span>      <span class="hljs-comment"># 配合search找到字典，匹配结尾字符串，降低文章摘要中也出现这种字符串的概率</span><br>                    <span class="hljs-comment"># 解析异常，一般是因为文章 abstract 中出现了字符串 &#x27;&quot;&#125;;&#x27;</span><br>                    json_data = json.loads(res_dic)                            <span class="hljs-comment"># 将json格式数据转换为字典</span><br>                <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                    <span class="hljs-built_in">print</span>(pattern.search(script.string).group(<span class="hljs-number">0</span>))<br>                    <span class="hljs-built_in">print</span>(res_dic)<br>                <span class="hljs-comment"># 保存文章信息</span><br>                paper_title.append(title)<br>                paper_year.append(json_data[<span class="hljs-string">&#x27;publicationYear&#x27;</span>])<br>                <span class="hljs-built_in">print</span>(json_data.keys())<br>                <span class="hljs-comment">#a = input(&#x27;input anything...&#x27;)</span><br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;author&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_author.append(json_data[<span class="hljs-string">&#x27;author&#x27;</span>])<br>                <span class="hljs-keyword">else</span>:<br>                    paper_author.append(<span class="hljs-literal">None</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;abstract&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_abstract.append(json_data[<span class="hljs-string">&#x27;abstract&#x27;</span>])<br>                <span class="hljs-keyword">else</span>:<br>                    paper_abstract.append(<span class="hljs-literal">None</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;keywords&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_ieee_kwd.append(json_data[<span class="hljs-string">&#x27;keywords&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;kwd&#x27;</span>])       <span class="hljs-comment"># ieee有三种 key words</span><br>                <span class="hljs-keyword">else</span>:<br>                    paper_ieee_kwd.append(<span class="hljs-literal">None</span>)<br>                count=count+<span class="hljs-number">1</span><br>                <span class="hljs-comment">#link = &#x27;https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&amp;arnumber=&#x27;+article[&#x27;articleNumber&#x27;]+&#x27;&amp;ref=&#x27;</span><br>                <span class="hljs-comment">#alf.write(title.replace(&#x27;\n&#x27;,&#x27;&#x27;)+&#x27;&gt;_&lt;&#x27;+link+&#x27;\n&#x27;)</span><br>            <br>            <span class="hljs-comment"># 写入csv文件</span><br>            dataframe = pd.DataFrame(&#123;<span class="hljs-string">&#x27;title&#x27;</span>:paper_title, <span class="hljs-string">&#x27;year&#x27;</span>:paper_year, <span class="hljs-string">&#x27;abstract&#x27;</span>:paper_abstract, <span class="hljs-string">&#x27;key words&#x27;</span>:paper_ieee_kwd&#125;)<br>            dataframe.to_csv(saveFileName, index=<span class="hljs-literal">True</span>, sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Page &#x27;</span>, pageNumber, <span class="hljs-string">&#x27;, total &#x27;</span>, count, <span class="hljs-string">&#x27;papers.&#x27;</span>)<br>            pageNumber = pageNumber+<span class="hljs-number">1</span><br>            <span class="hljs-comment"># 停一下防禁ip</span><br>            <span class="hljs-keyword">import</span> time<br>            time.sleep(<span class="hljs-number">3</span>)<br><br>    <span class="hljs-comment"># 写入csv文件</span><br>    dataframe = pd.DataFrame(&#123;<span class="hljs-string">&#x27;title&#x27;</span>:paper_title, <span class="hljs-string">&#x27;year&#x27;</span>:paper_year, <span class="hljs-string">&#x27;abstract&#x27;</span>:paper_abstract, <span class="hljs-string">&#x27;key words&#x27;</span>:paper_ieee_kwd&#125;)<br>    dataframe.to_csv(saveFileName, index=<span class="hljs-literal">True</span>, sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br>    <span class="hljs-keyword">return</span><br></code></pre></td></tr></table></figure>
 <h2 id="ieee论文数据统计">2. IEEE论文数据统计</h2>
 <h2 id="写一个图形界面">3. 写一个图形界面</h2>
 <h3 id="弹出提示窗口">3.1 弹出提示窗口</h3>
 <p>在写代码过程中有时候需要测试功能是否成功实现，于是想要加一个弹出窗口的函数可以显示调试信息，用以验证想要的功能是否正常实现。主要难点在于根据内容自动调整窗口大小，以获得较好的显示效果。</p>
 <p>采用的方法是利用 <code>QLabel.adjust()</code>
-函数获取文本显示的宽度，并据此调整窗口的大小。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt6.QtWidgets <span class="hljs-keyword">import</span> (QWidget, QDialog, QLabel, QPushButton)<br><span class="hljs-keyword">from</span> PyQt6.QtCore <span class="hljs-keyword">import</span> (QSize, QRect)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        self.dialog_btn = QPushButton(<span class="hljs-string">&#x27;Click&#x27;</span>)<br>        self.dialog_btn.clicked.connect(self.click_callback)<br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">200</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;IEEE paper collector (by Glooow)&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">click_callback</span>(<span class="hljs-params">self</span>):</span><br>        self.show_dialog(<span class="hljs-string">&#x27;You clicked me!&#x27;</span>)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show_dialog</span>(<span class="hljs-params">self, info</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Pop up dialogs for debug.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        hint_dialog = QDialog()<br>        hint_dialog.setWindowTitle(<span class="hljs-string">&#x27;Hint info&#x27;</span>)<br>        <span class="hljs-comment">#hint_dialog.setWindowModality(PyQt6.QtCore.Qt.NonModal)</span><br><br>        hint_info = QLabel(info, hint_dialog)<br>        hint_info.adjustSize()<br>        padding = <span class="hljs-number">20</span><br>        max_width = <span class="hljs-number">360</span><br>        <span class="hljs-comment"># set the maximum width</span><br>        <span class="hljs-keyword">if</span> hint_info.size().width() &gt; max_width:<br>            hint_info.setGeometry(QRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, max_width, <span class="hljs-number">80</span>))<br>            hint_info.setWordWrap(<span class="hljs-literal">True</span>)<br>        hint_info.move(padding, padding)<br><br>        hint_dialog.resize(hint_info.size() + QSize(padding*<span class="hljs-number">2</span>, padding*<span class="hljs-number">2</span>))<br>        hint_dialog.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+函数获取文本显示的宽度，并据此调整窗口的大小<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt
+中文教程 (gitbook.io)
+">[2]</span></a></sup>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt6.QtWidgets <span class="hljs-keyword">import</span> (QWidget, QDialog, QLabel, QPushButton)<br><span class="hljs-keyword">from</span> PyQt6.QtCore <span class="hljs-keyword">import</span> (QSize, QRect)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        self.dialog_btn = QPushButton(<span class="hljs-string">&#x27;Click&#x27;</span>)<br>        self.dialog_btn.clicked.connect(self.click_callback)<br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">200</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;IEEE paper collector (by Glooow)&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">click_callback</span>(<span class="hljs-params">self</span>):</span><br>        self.show_dialog(<span class="hljs-string">&#x27;You clicked me!&#x27;</span>)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show_dialog</span>(<span class="hljs-params">self, info</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Pop up dialogs for debug.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        hint_dialog = QDialog()<br>        hint_dialog.setWindowTitle(<span class="hljs-string">&#x27;Hint info&#x27;</span>)<br>        <span class="hljs-comment">#hint_dialog.setWindowModality(PyQt6.QtCore.Qt.NonModal)</span><br><br>        hint_info = QLabel(info, hint_dialog)<br>        hint_info.adjustSize()<br>        padding = <span class="hljs-number">20</span><br>        max_width = <span class="hljs-number">360</span><br>        <span class="hljs-comment"># set the maximum width</span><br>        <span class="hljs-keyword">if</span> hint_info.size().width() &gt; max_width:<br>            hint_info.setGeometry(QRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, max_width, <span class="hljs-number">80</span>))<br>            hint_info.setWordWrap(<span class="hljs-literal">True</span>)<br>        hint_info.move(padding, padding)<br><br>        hint_dialog.resize(hint_info.size() + QSize(padding*<span class="hljs-number">2</span>, padding*<span class="hljs-number">2</span>))<br>        hint_dialog.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
 <h3 id="文本框显示爬取日志">3.2 文本框显示爬取日志</h3>
-<p>我希望在窗口中增加一个文本框，将爬取过程中的日志信息打印出来，便于实时监测。</p>
+<p>我希望在窗口中增加一个文本框，将爬取过程中的日志信息打印出来，便于用户实时监测。</p>
 <p>采用的思路是定义一个
 <code>logging.Logger</code>，将其日志信息同时输出到窗口的文本框和控制台中打印，通过自定义
-<code>logging.Handler</code> 可以实现这一功能。实现方式为：</p>
+<code>logging.Handler</code>
+可以实现这一功能<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588/">python日志：logging模块使用
+- 知乎
+"&gt;[3]</span></a></sup><sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41176319/python-logging-output-on-both-gui-and-console">python
+logging output on both GUI and console - stackoverflow
+"&gt;[5]</span></a></sup><sup id="fnref:6" class="footnote-ref"><a href="#fn:6" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://stackoverflow.com/questions/24371274/how-to-dynamically-update-qtextedit">How
+to dynamically update QTextEdit - stackoverflow
+"&gt;[6]</span></a></sup>。实现方式为：</p>
 <ol type="1">
 <li><p>继承 <code>logging.Handler</code>
 类，并初始化阶段将整个窗口(<code>QWidget</code>类)作为参数传入，便于后续修改窗口的信息；</p></li>
 <li><p>自定义实现 <code>emit</code> 函数，在 <code>emit</code> 函数中将
 log 信息同时输出到窗口文本框、打印到控制台；</p></li>
-<li><p>创建 <code>logger</code> 的时候设置 Handler</p>
+<li><p>创建 <code>logger</code> 的时候设置
+Handler<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37541097/article/details/108317762">python3
+自定义logging.Handler, Formatter, Filter模块 - 太阳花的小绿豆的博客 -
+CSDN博客 "&gt;[4]</span></a></sup></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">ex = PaperCollector()<br>logger = logging.getLogger(<span class="hljs-string">&quot;logger&quot;</span>)<br>handler = LogHandler(ex)<br>logger.addHandler(handler)<br></code></pre></td></tr></table></figure></li>
 </ol>
 <p>下面是这部分功能相关的代码。</p>
@@ -289,7 +319,11 @@ log 信息同时输出到窗口文本框、打印到控制台；</p></li>
 <code>logger.info(...)</code> 即可。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">conferenceID, saveFileName, logger</span>):</span><br>    logger.info(<span class="hljs-string">&#x27;collecting paper......&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <h3 id="多线程避免卡顿">3.3 多线程避免卡顿</h3>
-<p>上述打印日志的方法不能做到实时输出信息到窗口文本框，而是会等到所有论文爬取完毕之后再一股脑的更新，这是因为PyQt的界面线程是主线程，当爬虫开始工作时，也是运行在主线程中，这时主界面就无法更新，看起来就像是卡死了。解决方法就是开一个子线程运行爬虫工作。</p>
+<p>上述打印日志的方法不能做到实时输出信息到窗口文本框，而是会等到所有论文爬取完毕之后再一股脑的更新，这是因为PyQt的界面线程是主线程，当爬虫开始工作时，也是运行在主线程中，这时主界面就无法更新，看起来就像是卡死了。解决方法就是开一个子线程运行爬虫工作<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/article/details/109240670">PyQt
+- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客
+"&gt;[7]</span></a></sup>。</p>
 <p>具体实现细节为：</p>
 <ol type="1">
 <li>新建类 <code>SpiderThread</code> 继承 <code>QObject</code>，自定义
@@ -298,7 +332,15 @@ log 信息同时输出到窗口文本框、打印到控制台；</p></li>
 pyqtSignal()</code>，该信号用于告知主线程爬虫子线程已完成工作</li>
 <li>在 <code>PaperCollector</code> 类中定义一个 <code>_start_spider =
 pyqtSignal(str, str,
-logging.Logger)</code>，该信号用于启动爬虫子线程；</li>
+logging.Logger)</code>，该信号用于启动爬虫子线程<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/gong_xufei/article/details/89786272">pyqt
+带单个参数/多个参数信号&amp;槽总结 - gong xufei的博客 - CSDN博客
+"&gt;[8]</span></a></sup><sup id="fnref:9" class="footnote-ref"><a href="#fn:9" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39560620/article/details/105711799">PyQt5
+pyqtSignal: 自定义信号传入的参数方法 - Mic28的博客 - CSDN博客
+"&gt;[9]</span></a></sup>；</li>
 <li>通过 <code>pyqtSignal.connect</code>
 分别将各个信号连接到对应的槽（处理函数）上；</li>
 </ol>
@@ -326,37 +368,74 @@ logging.Logger)</code>，该信号用于启动爬虫子线程；</li>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IEEESpider</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.flag_running = <span class="hljs-literal">False</span><br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">self, conferenceID, saveFileName, logger</span>):</span><br>        <span class="hljs-keyword">while</span>(self.flag_running):<br>            <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpiderThread</span>(<span class="hljs-params">QObject</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-comment">#self.flag_running = False</span><br>        self.ieee_spider = IEEESpider()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self, conference_ID, save_filename, logger</span>):</span><br>        self.ieee_spider.flag_running = <span class="hljs-literal">True</span><br>        self.ieee_spider.get_article_info(conference_ID, save_filename, logger)<br>        self._spider_finish.emit()<br>        <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.thread.isRunning():<br>            <span class="hljs-keyword">return</span><br>        self.spiderT.ieee_spider.flag_running = <span class="hljs-literal">False</span><br>        time.sleep(<span class="hljs-number">15</span>)<br>        self.thread.quit()      <span class="hljs-comment"># 退出</span><br>        <span class="hljs-comment">#self.thread.wait()      # 回收资源</span><br>        self.show_dialog(<span class="hljs-string">&#x27;stop!&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <h1 id="referencce">Referencce</h1>
-<ol type="1">
-<li><a
-target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465">Python爬虫——爬取IEEE论文
-- 乐 ShareLe的博客 - CSDN博客</a></li>
-<li><a target="_blank" rel="noopener" href="https://maicss.gitbook.io/pyqt-chinese-tutoral/">PyQt
-中文教程 (gitbook.io)</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">python日志：logging模块使用
-- 知乎</a></li>
-<li><a
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465/">Python爬虫——爬取IEEE论文
+- 乐 ShareLe的博客 - CSDN博客</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2"
+class="footnote-text"><span><a target="_blank" rel="noopener" href="https://maicss.gitbook.io/pyqt-chinese-tutoral/">PyQt
+中文教程 (gitbook.io)</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:3" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588/">python日志：logging模块使用
+- 知乎</a> <a href="#fnref:3" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:4" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37541097/article/details/108317762">python3
 自定义logging.Handler, Formatter, Filter模块 - 太阳花的小绿豆的博客 -
-CSDN博客</a></li>
-<li><a
+CSDN博客</a> <a href="#fnref:4" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:5" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41176319/python-logging-output-on-both-gui-and-console">python
-logging output on both GUI and console - stackoverflow</a></li>
-<li><a
+logging output on both GUI and console - stackoverflow</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:6" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://stackoverflow.com/questions/24371274/how-to-dynamically-update-qtextedit">How
-to dynamically update QTextEdit - stackoverflow</a></li>
-<li><a
+to dynamically update QTextEdit - stackoverflow</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:7" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/article/details/109240670">PyQt
-- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客</a></li>
-<li><a
+- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:8" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/gong_xufei/article/details/89786272">pyqt
-带单个参数/多个参数信号&amp;槽总结 - gong xufei的博客 -
-CSDN博客</a></li>
-<li><a
+带单个参数/多个参数信号&amp;槽总结 - gong xufei的博客 - CSDN博客</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:9" class="footnote-text"><span><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39560620/article/details/105711799">PyQt5
-pyqtSignal: 自定义信号传入的参数方法 - Mic28的博客 - CSDN博客</a></li>
-<li></li>
+pyqtSignal: 自定义信号传入的参数方法 - Mic28的博客 - CSDN博客</a>
+<a href="#fnref:9" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
 </ol>
+</div>
+</section>
 
             </div>
             <hr>

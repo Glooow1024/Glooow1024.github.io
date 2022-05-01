@@ -16,15 +16,15 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动">
+    <meta name="description" content="1. IEEE论文爬虫 爬虫代码网上有很多了[1]，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IEEE论文爬虫及数据统计">
 <meta property="og:url" content="http://example.com/2022/03/19/diy/paper-collector/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动">
+<meta property="og:description" content="1. IEEE论文爬虫 爬虫代码网上有很多了[1]，这部分是直接用的网上可以跑通的&lt;span class&#x3D;&quot;hint--top hint--rounded&quot; aria-label&#x3D;&quot;Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客 &quot;&gt;[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-19T05:51:48.000Z">
-<meta property="article:modified_time" content="2022-05-01T07:55:57.598Z">
+<meta property="article:modified_time" content="2022-05-01T08:16:37.040Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="spider">
 <meta property="article:tag" content="PyQt">
@@ -262,9 +262,9 @@
             
             <div class="markdown-body">
               <h2 id="ieee论文爬虫">1. IEEE论文爬虫</h2>
-<p>爬虫代码网上有很多了，这部分是直接用的网上可以跑通的<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;span
+<p>爬虫代码网上有很多了<sup>[1]</sup>，这部分是直接用的网上可以跑通的<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;span
 class="hint--top hint--rounded" aria-label="<a
-target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465/">Python爬虫——爬取IEEE论文
+target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465">Python爬虫——爬取IEEE论文
 - 乐 ShareLe的博客 - CSDN博客
 "&gt;[1]</span></a></sup>。使用的时候直接调用
 <code>get_article_info()</code>，其中参数 <code>conferenceID</code>
@@ -367,13 +367,16 @@ pyqtSignal: 自定义信号传入的参数方法 - Mic28的博客 - CSDN博客
 <p>下面是这部分功能的代码。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IEEESpider</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.flag_running = <span class="hljs-literal">False</span><br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">self, conferenceID, saveFileName, logger</span>):</span><br>        <span class="hljs-keyword">while</span>(self.flag_running):<br>            <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpiderThread</span>(<span class="hljs-params">QObject</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-comment">#self.flag_running = False</span><br>        self.ieee_spider = IEEESpider()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self, conference_ID, save_filename, logger</span>):</span><br>        self.ieee_spider.flag_running = <span class="hljs-literal">True</span><br>        self.ieee_spider.get_article_info(conference_ID, save_filename, logger)<br>        self._spider_finish.emit()<br>        <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.thread.isRunning():<br>            <span class="hljs-keyword">return</span><br>        self.spiderT.ieee_spider.flag_running = <span class="hljs-literal">False</span><br>        time.sleep(<span class="hljs-number">15</span>)<br>        self.thread.quit()      <span class="hljs-comment"># 退出</span><br>        <span class="hljs-comment">#self.thread.wait()      # 回收资源</span><br>        self.show_dialog(<span class="hljs-string">&#x27;stop!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>[1]:<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465">Python爬虫——爬取IEEE论文
+- 乐 ShareLe的博客 - CSDN博客</a></p>
 <h1 id="referencce">Referencce</h1>
 <section class="footnotes">
 <div class="footnote-list">
 <ol>
 <li>
 <span id="fn:1" class="footnote-text"><span><a
-target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465/">Python爬虫——爬取IEEE论文
+target="_blank" rel="noopener" href="https://blog.csdn.net/wp7xtj98/article/details/112711465">Python爬虫——爬取IEEE论文
 - 乐 ShareLe的博客 - CSDN博客</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref">
 ↩︎</a></span></span>

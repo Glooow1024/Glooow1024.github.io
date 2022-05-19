@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/kiwi_fruit.png">
+  <link rel="icon" href="/img/kiwi_fruit.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Glooow">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动在 IEEE 上查询会议的 ID 号，参数 saceFileName 为希望保存的 csv 文件名。 123456789101112131415161718192021222324252627282930">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IEEE论文爬虫及数据统计">
+<meta property="og:url" content="http://example.com/2022/03/19/diy/paper-collector/index.html">
+<meta property="og:site_name" content="你是下雨天">
+<meta property="og:description" content="1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动在 IEEE 上查询会议的 ID 号，参数 saceFileName 为希望保存的 csv 文件名。 123456789101112131415161718192021222324252627282930">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-19T05:51:48.000Z">
+<meta property="article:modified_time" content="2022-05-01T09:52:53.563Z">
+<meta property="article:author" content="Glooow">
+<meta property="article:tag" content="spider">
+<meta property="article:tag" content="PyQt">
+<meta property="article:tag" content="多线程">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>IEEE论文爬虫及数据统计 - 你是下雨天</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Glooow</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/moments/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                Moments
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="IEEE论文爬虫及数据统计">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-19 13:51" pubdate>
+        March 19, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      15k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      127 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IEEE论文爬虫及数据统计</h1>
+            
+            <div class="markdown-body">
+              <h2 id="ieee论文爬虫">1. IEEE论文爬虫</h2>
+<p>爬虫代码网上有很多了，这部分是直接用的网上可以跑通的<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/wp7xtj98/article/details/112711465
+">[1]</span></a></sup>。使用的时候直接调用
+<code>get_article_info()</code>，其中参数 <code>conferenceID</code>
+需要手动在 IEEE 上查询会议的 ID 号，参数 <code>saceFileName</code>
+为希望保存的 <code>csv</code> 文件名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 获取issueNumber</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_issueNumber</span>(<span class="hljs-params">conferenceID</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Get the issueNumber from the website.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    conferenceID = <span class="hljs-built_in">str</span>(conferenceID)<br>    gheaders = &#123;<br>        <span class="hljs-string">&#x27;Referer&#x27;</span>: <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/xpl/conhome/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/proceeding&#x27;</span>,<br>        <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36&#x27;</span><br>    &#125;<br>    md_url = <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/rest/publication/home/metadata?pubid=&#x27;</span>+conferenceID<br>    md_res = requests.get(md_url, headers = gheaders)<br>    md_dic = json.loads(md_res.text)<br>    issueNumber = <span class="hljs-built_in">str</span>(md_dic[<span class="hljs-string">&#x27;currentIssue&#x27;</span>][<span class="hljs-string">&#x27;issueNumber&#x27;</span>])<br>    <span class="hljs-keyword">return</span> issueNumber<br><br><span class="hljs-comment"># 爬取论文及其下载链接</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">conferenceID, saveFileName</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Collect the published paper data, and save into the csv file &quot;saveFileName&quot;.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 获取issueNumber</span><br>    issueNumber = <span class="hljs-built_in">str</span>(get_issueNumber(conferenceID))<br>    conferenceID = <span class="hljs-built_in">str</span>(conferenceID)<br><br>    <span class="hljs-comment"># 记录论文数据</span><br>    dataframe = pd.DataFrame(&#123;&#125;)<br>    paper_title = []<br>    paper_author = []<br>    paper_year = []<br>    paper_citation = []<br>    paper_abstract = []<br>    paper_ieee_kwd = []<br><br>    <span class="hljs-comment"># 从第一页开始下载</span><br>    pageNumber = <span class="hljs-number">1</span><br>    count = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">True</span>):<br>        <span class="hljs-comment"># 获取会议文章目录</span><br>        toc_url = <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/rest/search/pub/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/issue/&#x27;</span>+issueNumber+<span class="hljs-string">&#x27;/toc&#x27;</span><br>        payload = <span class="hljs-string">&#x27;&#123;&quot;pageNumber&quot;:&#x27;</span>+<span class="hljs-built_in">str</span>(pageNumber)+<span class="hljs-string">&#x27;,&quot;punumber&quot;:&quot;&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;&quot;,&quot;isnumber&quot;:&#x27;</span>+issueNumber+<span class="hljs-string">&#x27;&#125;&#x27;</span><br>        headers = &#123;<br>            <span class="hljs-string">&#x27;Host&#x27;</span>: <span class="hljs-string">&#x27;ieeexplore.ieee.org&#x27;</span>,<br>            <span class="hljs-string">&#x27;User-Agent&#x27;</span>:<span class="hljs-string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36&#x27;</span>,<br>            <span class="hljs-string">&#x27;Referer&#x27;</span>: <span class="hljs-string">&#x27;https://ieeexplore.ieee.org/xpl/conhome/&#x27;</span>+conferenceID+<span class="hljs-string">&#x27;/proceeding?pageNumber=&#x27;</span>+<span class="hljs-built_in">str</span>(pageNumber),<br>        &#125;<br>        toc_res = requests.post(toc_url, headers = headers, data=payload)<br>        toc_dic = json.loads(toc_res.text)<br>        <span class="hljs-keyword">try</span>:<br>            articles = toc_dic[<span class="hljs-string">&#x27;records&#x27;</span>]<br>        <span class="hljs-keyword">except</span> KeyError:<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">for</span> article <span class="hljs-keyword">in</span> articles:<br>                title = article[<span class="hljs-string">&#x27;highlightedTitle&#x27;</span>]<br>                paper_link = IEEE_root_url + article[<span class="hljs-string">&#x27;htmlLink&#x27;</span>]<br>                paper_info = requests.get(url=paper_link, headers=headers, timeout=<span class="hljs-number">10</span>)<br>                soup = BeautifulSoup(paper_info.text, <span class="hljs-string">&#x27;lxml&#x27;</span>)                  <span class="hljs-comment"># 解析</span><br>                <span class="hljs-comment"># 正则表达式 创建模式对象</span><br>                pattern = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;xplGlobal.document.metadata=(.*?)&quot;&#125;;&#x27;</span>, re.MULTILINE | re.DOTALL)<br>                script = soup.find(<span class="hljs-string">&quot;script&quot;</span>, text=pattern)                     <span class="hljs-comment"># 根据模式对象进行搜索</span><br>                <span class="hljs-keyword">try</span>:<br>                    res_dic = pattern.search(script.string).group(<span class="hljs-number">1</span>)+<span class="hljs-string">&#x27;&quot;&#125;&#x27;</span>      <span class="hljs-comment"># 配合search找到字典，匹配结尾字符串，降低文章摘要中也出现这种字符串的概率</span><br>                    <span class="hljs-comment"># 解析异常，一般是因为文章 abstract 中出现了字符串 &#x27;&quot;&#125;;&#x27;</span><br>                    json_data = json.loads(res_dic)                            <span class="hljs-comment"># 将json格式数据转换为字典</span><br>                <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                    <span class="hljs-built_in">print</span>(pattern.search(script.string).group(<span class="hljs-number">0</span>))<br>                    <span class="hljs-built_in">print</span>(res_dic)<br>                <span class="hljs-comment"># 保存文章信息</span><br>                paper_title.append(title)<br>                paper_year.append(json_data[<span class="hljs-string">&#x27;publicationYear&#x27;</span>])<br>                <span class="hljs-built_in">print</span>(json_data.keys())<br>                <span class="hljs-comment">#a = input(&#x27;input anything...&#x27;)</span><br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;author&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_author.append(json_data[<span class="hljs-string">&#x27;author&#x27;</span>])<br>                <span class="hljs-keyword">else</span>:<br>                    paper_author.append(<span class="hljs-literal">None</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;abstract&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_abstract.append(json_data[<span class="hljs-string">&#x27;abstract&#x27;</span>])<br>                <span class="hljs-keyword">else</span>:<br>                    paper_abstract.append(<span class="hljs-literal">None</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;keywords&#x27;</span> <span class="hljs-keyword">in</span> json_data.keys():<br>                    paper_ieee_kwd.append(json_data[<span class="hljs-string">&#x27;keywords&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;kwd&#x27;</span>])       <span class="hljs-comment"># ieee有三种 key words</span><br>                <span class="hljs-keyword">else</span>:<br>                    paper_ieee_kwd.append(<span class="hljs-literal">None</span>)<br>                count=count+<span class="hljs-number">1</span><br>                <span class="hljs-comment">#link = &#x27;https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&amp;arnumber=&#x27;+article[&#x27;articleNumber&#x27;]+&#x27;&amp;ref=&#x27;</span><br>                <span class="hljs-comment">#alf.write(title.replace(&#x27;\n&#x27;,&#x27;&#x27;)+&#x27;&gt;_&lt;&#x27;+link+&#x27;\n&#x27;)</span><br>            <br>            <span class="hljs-comment"># 写入csv文件</span><br>            dataframe = pd.DataFrame(&#123;<span class="hljs-string">&#x27;title&#x27;</span>:paper_title, <span class="hljs-string">&#x27;year&#x27;</span>:paper_year, <span class="hljs-string">&#x27;abstract&#x27;</span>:paper_abstract, <span class="hljs-string">&#x27;key words&#x27;</span>:paper_ieee_kwd&#125;)<br>            dataframe.to_csv(saveFileName, index=<span class="hljs-literal">True</span>, sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Page &#x27;</span>, pageNumber, <span class="hljs-string">&#x27;, total &#x27;</span>, count, <span class="hljs-string">&#x27;papers.&#x27;</span>)<br>            pageNumber = pageNumber+<span class="hljs-number">1</span><br>            <span class="hljs-comment"># 停一下防禁ip</span><br>            <span class="hljs-keyword">import</span> time<br>            time.sleep(<span class="hljs-number">3</span>)<br><br>    <span class="hljs-comment"># 写入csv文件</span><br>    dataframe = pd.DataFrame(&#123;<span class="hljs-string">&#x27;title&#x27;</span>:paper_title, <span class="hljs-string">&#x27;year&#x27;</span>:paper_year, <span class="hljs-string">&#x27;abstract&#x27;</span>:paper_abstract, <span class="hljs-string">&#x27;key words&#x27;</span>:paper_ieee_kwd&#125;)<br>    dataframe.to_csv(saveFileName, index=<span class="hljs-literal">True</span>, sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br>    <span class="hljs-keyword">return</span><br></code></pre></td></tr></table></figure>
+<h2 id="ieee论文数据统计">2. IEEE论文数据统计</h2>
+<h2 id="写一个图形界面">3. 写一个图形界面</h2>
+<h3 id="弹出提示窗口">3.1 弹出提示窗口</h3>
+<p>在写代码过程中有时候需要测试功能是否成功实现，于是想要加一个弹出窗口的函数可以显示调试信息，用以验证想要的功能是否正常实现。主要难点在于根据内容自动调整窗口大小，以获得较好的显示效果。</p>
+<p>采用的方法是利用 <code>QLabel.adjust()</code>
+函数获取文本显示的宽度，并据此调整窗口的大小<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt
+中文教程 (gitbook.io)
+">[2]</span></a></sup>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt6.QtWidgets <span class="hljs-keyword">import</span> (QWidget, QDialog, QLabel, QPushButton)<br><span class="hljs-keyword">from</span> PyQt6.QtCore <span class="hljs-keyword">import</span> (QSize, QRect)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        self.dialog_btn = QPushButton(<span class="hljs-string">&#x27;Click&#x27;</span>)<br>        self.dialog_btn.clicked.connect(self.click_callback)<br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">200</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;IEEE paper collector (by Glooow)&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">click_callback</span>(<span class="hljs-params">self</span>):</span><br>        self.show_dialog(<span class="hljs-string">&#x27;You clicked me!&#x27;</span>)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show_dialog</span>(<span class="hljs-params">self, info</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Pop up dialogs for debug.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        hint_dialog = QDialog()<br>        hint_dialog.setWindowTitle(<span class="hljs-string">&#x27;Hint info&#x27;</span>)<br>        <span class="hljs-comment">#hint_dialog.setWindowModality(PyQt6.QtCore.Qt.NonModal)</span><br><br>        hint_info = QLabel(info, hint_dialog)<br>        hint_info.adjustSize()<br>        padding = <span class="hljs-number">20</span><br>        max_width = <span class="hljs-number">360</span><br>        <span class="hljs-comment"># set the maximum width</span><br>        <span class="hljs-keyword">if</span> hint_info.size().width() &gt; max_width:<br>            hint_info.setGeometry(QRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, max_width, <span class="hljs-number">80</span>))<br>            hint_info.setWordWrap(<span class="hljs-literal">True</span>)<br>        hint_info.move(padding, padding)<br><br>        hint_dialog.resize(hint_info.size() + QSize(padding*<span class="hljs-number">2</span>, padding*<span class="hljs-number">2</span>))<br>        hint_dialog.<span class="hljs-built_in">exec</span>()<br></code></pre></td></tr></table></figure>
+<h3 id="文本框显示爬取日志">3.2 文本框显示爬取日志</h3>
+<p>我希望在窗口中增加一个文本框，将爬取过程中的日志信息打印出来，便于用户实时监测。</p>
+<p>采用的思路是定义一个
+<code>logging.Logger</code>，将其日志信息同时输出到窗口的文本框和控制台中打印，通过自定义
+<code>logging.Handler</code>
+可以实现这一功能<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://zhuanlan.gitbook.io/p/360306588
+">[3]</span></a></sup><sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://stackoverflow.com/questions/41176319/python-logging-output-on-both-gui-and-console
+">[5]</span></a></sup><sup id="fnref:6" class="footnote-ref"><a href="#fn:6" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://stackoverflow.com/questions/24371274/how-to-dynamically-update-qtextedit
+">[6]</span></a></sup>。实现方式为：</p>
+<ol type="1">
+<li><p>继承 <code>logging.Handler</code>
+类，并初始化阶段将整个窗口(<code>QWidget</code>类)作为参数传入，便于后续修改窗口的信息；</p></li>
+<li><p>自定义实现 <code>emit</code> 函数，在 <code>emit</code> 函数中将
+log 信息同时输出到窗口文本框、打印到控制台；</p></li>
+<li><p>创建 <code>logger</code> 的时候设置
+Handler<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/qq_37541097/article/details/108317762
+">[4]</span></a></sup></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">ex = PaperCollector()<br>logger = logging.getLogger(<span class="hljs-string">&quot;logger&quot;</span>)<br>handler = LogHandler(ex)<br>logger.addHandler(handler)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>下面是这部分功能相关的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogHandler</span>(<span class="hljs-params">logging.Handler</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, parent</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.parent = parent<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">emit</span>(<span class="hljs-params">self, record</span>):</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-built_in">print</span>(self.<span class="hljs-built_in">format</span>(record))<br>            self.parent.print_log(self.<span class="hljs-built_in">format</span>(record))<br>            QApplication.processEvents()<br>        <span class="hljs-keyword">except</span> Exception:<br>            self.handleError(record)<br>            <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Define the UI playout.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># button to start crawing</span><br>        self.startCrawling_button = QPushButton(<span class="hljs-string">&#x27;Start&#x27;</span>)<br>        self.startCrawling_button.setToolTip(<span class="hljs-string">&#x27;Click and wait for collecting published paper data.&#x27;</span>)<br>        self.startCrawling_button.clicked.connect(self.start_collect_paper)<br>        <span class="hljs-comment"># print log</span><br>        self.process = QTextEdit(readOnly=<span class="hljs-literal">True</span>)<br>        self.process.setFont(QFont(<span class="hljs-string">&quot;Source Code Pro&quot;</span>,<span class="hljs-number">9</span>))<br>        <br>        grid = QGridLayout()<br>        grid.setSpacing(<span class="hljs-number">10</span>)<br>        grid.addWidget(self.startCrawling_button, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br>        grid.addWidget(self.process, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>)<br>        self.setLayout(grid)<br>        <br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">700</span>, <span class="hljs-number">300</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;IEEE paper collector (by Glooow)&#x27;</span>)<br>        self.show()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">global</span> logger<br>        <span class="hljs-comment">#self.show_dialog(&#x27;start!&#x27;)</span><br>        get_article_info(self.conferenceID_edit.text(), self.saveFile_edit.text(), logger)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_log</span>(<span class="hljs-params">self, s</span>):</span><br>        self.process.append(s)<br>        <br>logger = <span class="hljs-literal">None</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = PaperCollector()<br><br>    <span class="hljs-keyword">global</span> logger<br>    logger = logging.getLogger(<span class="hljs-string">&quot;logger&quot;</span>)<br>    logger.setLevel(logging.INFO)<br>    formater = logging.Formatter(fmt=<span class="hljs-string">&quot;%(asctime)s [%(levelname)s] : %(message)s&quot;</span><br>                ,datefmt=<span class="hljs-string">&quot;%Y/%m/%d %H:%M:%S&quot;</span>)<br>    handler = LogHandler(ex)<br>    handler.setFormatter(formater)<br>    logger.addHandler(handler)<br><br>    sys.exit(app.<span class="hljs-built_in">exec</span>())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+<p>爬取论文的主函数如下，其中一个参数为
+<code>logger</code>，在函数内部需要打印日志信息的地方添加
+<code>logger.info(...)</code> 即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">conferenceID, saveFileName, logger</span>):</span><br>    logger.info(<span class="hljs-string">&#x27;collecting paper......&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="多线程避免卡顿">3.3 多线程避免卡顿</h3>
+<p>上述打印日志的方法不能做到实时输出信息到窗口文本框，而是会等到所有论文爬取完毕之后再一股脑的更新，这是因为PyQt的界面线程是主线程，当爬虫开始工作时，也是运行在主线程中，这时主界面就无法更新，看起来就像是卡死了。解决方法就是开一个子线程运行爬虫工作<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/article/details/109240670">PyQt
+- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客
+"&gt;[7]</span></a></sup>。</p>
+<p>具体实现细节为：</p>
+<ol type="1">
+<li>新建类 <code>SpiderThread</code> 继承 <code>QObject</code>，自定义
+<code>run</code> 函数，在其中运行爬虫程序；</li>
+<li>在 <code>SpiderThread</code> 类中定义一个 <code>_spider_finish =
+pyqtSignal()</code>，该信号用于告知主线程爬虫子线程已完成工作</li>
+<li>在 <code>PaperCollector</code> 类中定义一个 <code>_start_spider =
+pyqtSignal(str, str,
+logging.Logger)</code>，该信号用于启动爬虫子线程<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/gong_xufei/article/details/89786272
+">[8]</span></a></sup><sup id="fnref:9" class="footnote-ref"><a href="#fn:9" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/qq_39560620/article/details/105711799
+">[9]</span></a></sup>；</li>
+<li>通过 <code>pyqtSignal.connect</code>
+分别将各个信号连接到对应的槽（处理函数）上；</li>
+</ol>
+<p>下面是这部分功能相关的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt6.QtCore <span class="hljs-keyword">import</span> (QObject, pyqtSignal, QThread)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpiderThread</span>(<span class="hljs-params">QObject</span>):</span><br>    _spider_finish = pyqtSignal()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.flag_running = <span class="hljs-literal">False</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__del__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&gt;&gt;&gt; __del__&#x27;</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self, conference_ID, save_filename, logger</span>):</span><br>        get_article_info(conference_ID, save_filename, logger)<br>        self._spider_finish.emit()<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    _start_spider = pyqtSignal(<span class="hljs-built_in">str</span>, <span class="hljs-built_in">str</span>, logging.Logger)<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        <span class="hljs-comment">#sys.stdout = LogStream(newText=self.onUpdateText)</span><br><br>        self.spiderT = SpiderThread()<br>        self.thread = QThread(self)<br>        self.spiderT.moveToThread(self.thread)<br>        self._start_spider.connect(self.spiderT.run)        <span class="hljs-comment"># 只能通过信号槽启动线程处理函数</span><br>        self.spiderT._spider_finish.connect(self.finish_collect_paper)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> self.thread.isRunning():<br>            <span class="hljs-keyword">return</span><br>        <br>        self.startCrawling_button.setEnabled(<span class="hljs-literal">False</span>)<br>        self.startCrawling_button.setToolTip(<span class="hljs-string">&#x27;I\&#x27;m trying very hard to collect papers &gt;_&lt;&#x27;</span>)<br>        <span class="hljs-comment"># 先启动QThread子线程</span><br>        self.thread.start()<br>        <span class="hljs-comment"># 发送信号，启动线程处理函数</span><br>        <span class="hljs-comment"># 不能直接调用，否则会导致线程处理函数和主线程是在同一个线程，同样操作不了主界面</span><br>        <span class="hljs-keyword">global</span> logger<br>        self._start_spider.emit(self.conferenceID_edit.text(), self.saveFile_edit.text(), logger)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">finish_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        self.startCrawling_button.setEnabled(<span class="hljs-literal">True</span>)<br>        self.startCrawling_button.setToolTip(<span class="hljs-string">&#x27;Click and wait for collecting published paper data ^o^&#x27;</span>)<br>        self.thread.quit()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.thread.isRunning():<br>            <span class="hljs-keyword">return</span><br>        self.thread.quit()      <span class="hljs-comment"># 退出</span><br>        self.thread.wait()      <span class="hljs-comment"># 回收资源</span><br>        self.show_dialog(<span class="hljs-string">&#x27;stop!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="流畅中止子线程">3.4 流畅中止子线程</h3>
+<p>有时候我们需要中途停止爬虫工作，比如发现会议ID设置错误、希望先对已经爬取的部分数据进行统计分析等。在上面的实现中，尽管线程正常运行很流畅，但是如果在爬虫运行中途点击停止按钮，程序就会卡死。</p>
+<p>在原本的爬虫脚本中，<code>get_article_info()</code>
+函数内部的爬虫采用了 <code>while(True)</code> 死循环，主线程中直接用
+<code>self.thread.quit()</code>
+强制退出，从控制台来看这样确实可以停掉，但是Qt窗口却总是会卡死。原因我也不太清楚，采用的解决方法是：</p>
+<ol type="1">
+<li>定义一个爬虫类 <code>IEEESpider</code>，设置成员变量
+<code>flag_running</code>，将函数 <code>get_article_info</code>
+也设置为类成员函数；</li>
+<li>将 <code>get_article_info</code> 中的循环改为
+<code>while(self.flag_running)</code>；</li>
+<li>在主线程中想要停止爬虫子线程的时候，只需要首先设置
+<code>flag_running=False</code>，那么爬虫子线程在当前一次循环结束后就自动结束，这个时候主线程调用
+<code>self.thread.quit()</code> 就不会导致界面卡死。需要注意的是设置
+<code>flag_running=False</code> 一定要 <code>sleep</code>
+一段时间，以保证爬虫子线程能够结束当前循环，否则还是容易卡死。</li>
+</ol>
+<p>下面是这部分功能的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IEEESpider</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.flag_running = <span class="hljs-literal">False</span><br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_article_info</span>(<span class="hljs-params">self, conferenceID, saveFileName, logger</span>):</span><br>        <span class="hljs-keyword">while</span>(self.flag_running):<br>            <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpiderThread</span>(<span class="hljs-params">QObject</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-comment">#self.flag_running = False</span><br>        self.ieee_spider = IEEESpider()<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self, conference_ID, save_filename, logger</span>):</span><br>        self.ieee_spider.flag_running = <span class="hljs-literal">True</span><br>        self.ieee_spider.get_article_info(conference_ID, save_filename, logger)<br>        self._spider_finish.emit()<br>        <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_collect_paper</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.thread.isRunning():<br>            <span class="hljs-keyword">return</span><br>        self.spiderT.ieee_spider.flag_running = <span class="hljs-literal">False</span><br>        time.sleep(<span class="hljs-number">15</span>)<br>        self.thread.quit()      <span class="hljs-comment"># 退出</span><br>        <span class="hljs-comment">#self.thread.wait()      # 回收资源</span><br>        self.show_dialog(<span class="hljs-string">&#x27;stop!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="增加侧边导航栏">3.5 增加侧边导航栏</h3>
+<p>前面只有爬取论文的页面，现在我想加上数据分析的页面，那么就需要设置一个侧边导航栏，以切换两种不同的任务。</p>
+<p>实现方式为左侧设置多个按钮，右侧添加一个
+<code>QTabWidget()</code>，将不同的页面设置为子标签页，通过按钮的点击回调函数切换不同的标签页<sup id="fnref:10" class="footnote-ref"><a href="#fn:10" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt5
+侧边栏布局 • Chang Luo (luochang.ink)
+">[10]</span></a></sup>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaperCollector</span>(<span class="hljs-params">QWidget</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sidebarUI</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Define the UI playout of sidebar.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.sidebar_btn_1 = QPushButton(<span class="hljs-string">&#x27;Collector&#x27;</span>, self)<br>        self.sidebar_btn_1.clicked.connect(self.sidebar_button_1)<br>        self.sidebar_btn_2 = QPushButton(<span class="hljs-string">&#x27;Analyzer&#x27;</span>, self)<br>        self.sidebar_btn_2.clicked.connect(self.sidebar_button_2)<br>        self.sidebar_btn_3 = QPushButton(<span class="hljs-string">&#x27;Reserved&#x27;</span>, self)<br>        self.sidebar_btn_3.clicked.connect(self.sidebar_button_3)<br><br>        sidebar_layout = QVBoxLayout()<br>        sidebar_layout.addWidget(self.sidebar_btn_1)<br>        sidebar_layout.addWidget(self.sidebar_btn_2)<br>        sidebar_layout.addWidget(self.sidebar_btn_3)<br>        sidebar_layout.addStretch(<span class="hljs-number">5</span>)<br>        sidebar_layout.setSpacing(<span class="hljs-number">20</span>)<br><br>        self.sidebar_widget = QWidget()<br>        self.sidebar_widget.setLayout(sidebar_layout)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sidebar_button_1</span>(<span class="hljs-params">self</span>):</span><br>        self.right_widget.setCurrentIndex(<span class="hljs-number">0</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sidebar_button_2</span>(<span class="hljs-params">self</span>):</span><br>        self.right_widget.setCurrentIndex(<span class="hljs-number">1</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sidebar_button_3</span>(<span class="hljs-params">self</span>):</span><br>        self.right_widget.setCurrentIndex(<span class="hljs-number">2</span>)<br>        <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        Define the overall UI playout.</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        self.sidebarUI()<br>        self.spiderUI()<br>        self.analyzerUI()<br>        self.reservedUI()<br>        <br>        <span class="hljs-comment"># 多个标签页</span><br>        self.right_widget = QTabWidget()<br>        self.right_widget.tabBar().setObjectName(<span class="hljs-string">&quot;mainTab&quot;</span>)<br><br>        self.right_widget.addTab(self.spider_widget, <span class="hljs-string">&#x27;&#x27;</span>)<br>        self.right_widget.addTab(self.analyzer_widget, <span class="hljs-string">&#x27;&#x27;</span>)<br>        self.right_widget.addTab(self.reserved_widget, <span class="hljs-string">&#x27;&#x27;</span>)<br><br>        <span class="hljs-comment"># 隐藏标签部件的标签并初始化显示页面</span><br>        self.right_widget.setCurrentIndex(<span class="hljs-number">0</span>)<br>        self.right_widget.setStyleSheet(<span class="hljs-string">&#x27;&#x27;&#x27;QTabBar::tab&#123;width: 0; height: 0; margin: 0; padding: 0; border: none;&#125;&#x27;&#x27;&#x27;</span>)<br><br>        <span class="hljs-comment"># overall layout</span><br>        main_layout = QHBoxLayout()<br>        main_layout.addWidget(self.sidebar_widget)<br>        main_layout.addWidget(self.right_widget)<br>        main_layout.setStretch(<span class="hljs-number">0</span>, <span class="hljs-number">40</span>)<br>        main_layout.setStretch(<span class="hljs-number">1</span>, <span class="hljs-number">200</span>)<br>        self.setLayout(main_layout)<br><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">850</span>, <span class="hljs-number">300</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;IEEE paper collector (by Glooow)&#x27;</span>)<br>        self.show()<br></code></pre></td></tr></table></figure>
+<h3 id="next-...">3.6 next ...</h3>
+<p>接下来考虑：写数据分析页面 ......</p>
+<h1 id="referencce">Referencce</h1>
+<p>这里关于参考文献的部分，本来我想按照下面格式来写，希望实现的效果是都像<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt
+中文教程 (gitbook.io)
+">[2]</span></a></sup><sup id="fnref:10" class="footnote-ref"><a href="#fn:10" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt5
+侧边栏布局 • Chang Luo (luochang.ink)
+">[10]</span></a></sup>一样，每一条引用列出来的是超链接，而不是直接写出来链接地址，但是我发现除了第<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt
+中文教程 (gitbook.io)
+">[2]</span></a></sup><sup id="fnref:10" class="footnote-ref"><a href="#fn:10" rel="footnote"><span
+class="hint--top hint--rounded" aria-label="PyQt5
+侧边栏布局 • Chang Luo (luochang.ink)
+">[10]</span></a></sup>条，其他条这么写话都会像现在的第<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/article/details/109240670">PyQt
+- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客
+"&gt;[7]</span></a></sup>条一样，格式会乱，也不知道为什么。有人知道的话可以告诉我嘛
+&gt;_&lt;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk">[^<span class="hljs-number">1</span>]:[Python爬虫——爬取IEEE论文 - 乐 ShareLe的博客 - CSDN博客](https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/wp7xtj98/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">112711465</span>)<br>[^<span class="hljs-number">2</span>]:[PyQt 中文教程 (gitbook.io)](https:<span class="hljs-regexp">//m</span>aicss.gitbook.io<span class="hljs-regexp">/pyqt-chinese-tutoral/</span>)<br>[^<span class="hljs-number">3</span>]:[python日志：logging模块使用 - 知乎](https:<span class="hljs-regexp">//</span>zhuanlan.zhihu.com<span class="hljs-regexp">/p/</span><span class="hljs-number">360306588</span>)<br>[^<span class="hljs-number">4</span>]:[python3 自定义logging.Handler, Formatter, Filter模块 - 太阳花的小绿豆的博客 - CSDN博客](https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/qq_37541097/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">108317762</span>)<br>[^<span class="hljs-number">5</span>]:[python logging output on both GUI and console - stackoverflow](https:<span class="hljs-regexp">//</span>stackoverflow.com<span class="hljs-regexp">/questions/</span><span class="hljs-number">41176319</span>/python-logging-output-on-both-gui-and-console)<br>[^<span class="hljs-number">6</span>]:[How to dynamically update QTextEdit - stackoverflow](https:<span class="hljs-regexp">//</span>stackoverflow.com<span class="hljs-regexp">/questions/</span><span class="hljs-number">24371274</span>/how-to-dynamically-update-qtextedit)<br>[^<span class="hljs-number">7</span>]:[PyQt - 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客](https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/bailang_zhizun/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">109240670</span>)<br>[^<span class="hljs-number">8</span>]:[pyqt 带单个参数<span class="hljs-regexp">/多个参数信号&amp;槽总结 - gong xufei的博客 - CSDN博客](https:/</span><span class="hljs-regexp">/blog.csdn.net/g</span>ong_xufei<span class="hljs-regexp">/article/</span>details/<span class="hljs-number">89786272</span>)<br>[^<span class="hljs-number">9</span>]:[PyQt5 pyqtSignal: 自定义信号传入的参数方法 - Mic28的博客 - CSDN博客](https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/qq_39560620/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">105711799</span>)<br>[^<span class="hljs-number">10</span>]:[PyQt5 侧边栏布局 • Chang Luo (luochang.ink)](https:<span class="hljs-regexp">//</span>www.luochang.ink<span class="hljs-regexp">/posts/</span>pyqt5_layout_sidebar/)<br></code></pre></td></tr></table></figure>
+<section class="footnotes">
+<div class="footnote-list">
+<ol>
+<li>
+<span id="fn:1"
+class="footnote-text"><span>https://blog.csdn.net/wp7xtj98/article/details/112711465
+<a href="#fnref:1" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:2"
+class="footnote-text"><span><a target="_blank" rel="noopener" href="https://maicss.gitbook.io/pyqt-chinese-tutoral/">PyQt
+中文教程 (gitbook.io)</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:3"
+class="footnote-text"><span>https://zhuanlan.gitbook.io/p/360306588
+<a href="#fnref:3" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:4"
+class="footnote-text"><span>https://blog.csdn.net/qq_37541097/article/details/108317762
+<a href="#fnref:4" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:5"
+class="footnote-text"><span>https://stackoverflow.com/questions/41176319/python-logging-output-on-both-gui-and-console
+<a href="#fnref:5" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:6"
+class="footnote-text"><span>https://stackoverflow.com/questions/24371274/how-to-dynamically-update-qtextedit
+<a href="#fnref:6" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:7" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/article/details/109240670">PyQt
+- 使用多线程避免界面卡顿 - bailang zhizun的博客 - CSDN博客</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:8"
+class="footnote-text"><span>https://blog.csdn.net/gong_xufei/article/details/89786272
+<a href="#fnref:8" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:9"
+class="footnote-text"><span>https://blog.csdn.net/qq_39560620/article/details/105711799
+<a href="#fnref:9" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:10"
+class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.luochang.ink/posts/pyqt5_layout_sidebar/">PyQt5
+侧边栏布局 • Chang Luo (luochang.ink)</a>
+<a href="#fnref:10" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+</ol>
+</div>
+</section>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/DIY/">DIY</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/spider/">spider</a>
+                    
+                      <a class="hover-with-bg" href="/tags/PyQt/">PyQt</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/02/research/SLAM-survey/">
+                        <span class="hidden-mobile">SLAM综述</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"iw199srhJNXO53sMUbMWkSxL-gzGzoHsz","appKey":"ogmo6qYs8PSc7MBFk8A1PDUl","path":"window.location.pathname","placeholder":"说点啥子吧 ^_^ 留下邮箱可以收到回复通知哦 ~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

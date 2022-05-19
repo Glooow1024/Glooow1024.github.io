@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/03/19/diy/paper-collector/" target="_self">
+      <a class="index-excerpt" href="/2022/03/19/diy/paper-collector/" target="_self">
+        <div>
           
           1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动在 IEEE 上查询会议的 ID 号，参数 saceFileName 为希望保存的 csv 文件名。 123456789101112131415161718192021222324252627282930
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,22 +258,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/DIY/">DIY</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/DIY/" class="category-chain-item">DIY</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/spider/">spider</a>
+              <a href="/tags/spider/">#spider</a>
             
-              <a href="/tags/PyQt/">PyQt</a>
+              <a href="/tags/PyQt/">#PyQt</a>
             
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a>
             
           </div>
         
@@ -260,12 +306,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/03/02/research/SLAM-survey/" target="_self">
+      <a class="index-excerpt" href="/2022/03/02/research/SLAM-survey/" target="_self">
+        <div>
           
           关于SLAM（simultaneous localization and mapping）问题一个很粗糙的总结。  对于SLAM的发展历程，Leonard和Reid大佬将SLAM到目前为止的发展过程总结为三个阶段：  classical age（1986-2004）：早期阶段，SLAM问题的定义、基于概率框架的建模和求解方法； algorithm-analysis age（20
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -277,18 +323,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Research/">Research</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Research/" class="category-chain-item">Research</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/SLAM/">SLAM</a>
+              <a href="/tags/SLAM/">#SLAM</a>
             
           </div>
         
@@ -307,12 +367,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/software/prepare-my-pc/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/software/prepare-my-pc/" target="_self">
+        <div>
           
           最近换了电脑，很多软件都要重装，遂记录一下自己电脑常用的软件。 1. 日常必备  通讯类：微信、TIM、Foxmail； 办公类：Office、Onenote、Foxit、腾讯会议； 浏览器：Edge、Chrome； 影音娱乐：网易云音乐、PotPlayer、Irfan View； 其他：WinRAR、KeePass2；  2. 学习科研  编程：VSCode、Matlab、
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -324,11 +384,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Software/">Software</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Software/" class="category-chain-item">Software</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -347,12 +421,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/advanced-numerical-analysis/ada-krylov/" target="_self">
+        <div>
           
           1. 预备理论 现在需要求解一个大规模稀疏方程组 \(Ax&#x3D;b\)，可以用迭代法比如 Jacobi 迭代法、Gauss-Seidel 迭代法等，不过这一节要讨论的是 Krylov 子空间方法，核心部分是 Arnoldi 迭代。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -364,20 +438,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">线性方程组</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/">#线性方程组</a>
             
-              <a href="/tags/Arnoldi%E8%BF%87%E7%A8%8B/">Arnoldi过程</a>
+              <a href="/tags/Arnoldi%E8%BF%87%E7%A8%8B/">#Arnoldi过程</a>
             
           </div>
         
@@ -396,12 +484,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/" target="_self">
+        <div>
           
           7.1 定义与基本概念 定义：设随机过程 \(X&#x3D;\{X(t),t\ge0\}\)，状态空间 \(S\)，对任意 \(0\le t_0 &lt; t_1 &lt; \cdots &lt; t_n &lt; t_{n+1}\)，\(i_k\in S\)，若 \(P(X(T_k)&#x3D;i_k,0\le k\le n) &gt; 0\) 有 \[ P(X(t_{n+1})&#x3D;i_{n+1} | X(
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -413,22 +501,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">Markov过程</a>
+              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">#Markov过程</a>
             
-              <a href="/tags/%E5%B9%B3%E7%A8%B3%E5%88%86%E5%B8%83/">平稳分布</a>
+              <a href="/tags/%E5%B9%B3%E7%A8%B3%E5%88%86%E5%B8%83/">#平稳分布</a>
             
-              <a href="/tags/%E6%9E%81%E9%99%90%E5%88%86%E5%B8%83/">极限分布</a>
+              <a href="/tags/%E6%9E%81%E9%99%90%E5%88%86%E5%B8%83/">#极限分布</a>
             
           </div>
         
@@ -447,12 +549,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/stochastic-process-2/ch6-s2-states/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/stochastic-process-2/ch6-s2-states/" target="_self">
+        <div>
           
           6.4 状态空间的分解 定义：设 \(A\subset S\)，若对任意 \(i\in A\) 及 \(j\notin A\)，都有 \(p_{ij}&#x3D;0\)，称 \(A\) 为闭集。若 \(A\) 的状态是相通的，则 \(A\) 为不可约的。 引理 6.1：\(A\) 为闭集的充要条件为：任意 \(i\in A\) 及 \(j\notin A\) 都有 \(p_{ij}^{(n)}&#x3D;
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -464,22 +566,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">Markov过程</a>
+              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">#Markov过程</a>
             
-              <a href="/tags/%E5%B9%B3%E7%A8%B3%E5%88%86%E5%B8%83/">平稳分布</a>
+              <a href="/tags/%E5%B9%B3%E7%A8%B3%E5%88%86%E5%B8%83/">#平稳分布</a>
             
-              <a href="/tags/%E6%9E%81%E9%99%90%E5%88%86%E5%B8%83/">极限分布</a>
+              <a href="/tags/%E6%9E%81%E9%99%90%E5%88%86%E5%B8%83/">#极限分布</a>
             
           </div>
         
@@ -498,12 +614,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/" target="_self">
+        <div>
           
           6.1 基本概念 马尔科夫链的定义很常见了，在此不再赘述。简单而言就是 \[ P(X_{n+1}&#x3D;s_{n+1}|X_0&#x3D;s_0,...,X_{n}&#x3D;s_n) &#x3D; P(X_{n+1}&#x3D;s_{n+1}|X_{n}&#x3D;s_n) \] 还可以定义一步转移概率、转移概率矩。如果转移概率不随时间变化，就是时间齐次马尔科夫链。 定理 6.1：设随机过程 \(\{X_n,n\ge0\}\) 满足
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -515,20 +631,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">Markov过程</a>
+              <a href="/tags/Markov%E8%BF%87%E7%A8%8B/">#Markov过程</a>
             
-              <a href="/tags/%E5%B8%B8%E8%BF%94/">常返</a>
+              <a href="/tags/%E5%B8%B8%E8%BF%94/">#常返</a>
             
           </div>
         
@@ -547,12 +677,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/24/stochastic-process-2/ch5-s2-brown-extension/" target="_self">
+      <a class="index-excerpt" href="/2022/01/24/stochastic-process-2/ch5-s2-brown-extension/" target="_self">
+        <div>
           
           5.4 最大值与首中时的分布特性 设 \(\{B(t),t\ge0\}\) 是标准布朗运动，不妨设 \(B(0)&#x3D;0\)。 定义：首次击中 \(a\) 的时间 \(\tau_a&#x3D;\inf\{t:t\ge0,B(t)&#x3D;a\}\)
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -564,24 +694,38 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">首中时</a>
+              <a href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">#首中时</a>
             
-              <a href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">布朗运动</a>
+              <a href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">#布朗运动</a>
             
-              <a href="/tags/%E5%8F%8D%E6%AD%A3%E5%BC%A6%E5%AE%9A%E7%90%86/">反正弦定理</a>
+              <a href="/tags/%E5%8F%8D%E6%AD%A3%E5%BC%A6%E5%AE%9A%E7%90%86/">#反正弦定理</a>
             
-              <a href="/tags/%E5%B8%83%E6%9C%97%E6%A1%A5/">布朗桥</a>
+              <a href="/tags/%E5%B8%83%E6%9C%97%E6%A1%A5/">#布朗桥</a>
             
           </div>
         
@@ -600,12 +744,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/23/hello-world/" target="_self">
+      <a class="index-excerpt" href="/2022/01/23/hello-world/" target="_self">
+        <div>
           
           Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -633,12 +777,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
+      <a class="index-excerpt" href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
+        <div>
           
           1. 预备理论 求解常微分方程初值问题数值解 \[ \begin{align} &amp;\frac{dy}{dx} &#x3D; f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\ &amp;y(a) &#x3D; y_0 \end{align} \] 存在唯一性定理：若 \(f(x,y)\) 连续，对 \(y\) 满足 Lipschitz 条件，那么
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -650,20 +794,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">常微分方程</a>
+              <a href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">#常微分方程</a>
             
-              <a href="/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/">刚性问题</a>
+              <a href="/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/">#刚性问题</a>
             
           </div>
         
@@ -708,59 +866,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -771,42 +931,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -816,18 +957,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

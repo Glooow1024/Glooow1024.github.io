@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/" target="_self">
+      <a class="index-excerpt" href="/2020/05/10/optimization/ch23-DR-splitting-admm/" target="_self">
+        <div>
           
           前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,22 +258,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">算子分裂法</a>
+              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">#算子分裂法</a>
             
-              <a href="/tags/ADMM/">ADMM</a>
+              <a href="/tags/ADMM/">#ADMM</a>
             
           </div>
         
@@ -260,12 +306,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/09/optimization/ch22-ppa/" target="_self">
+      <a class="index-excerpt" href="/2020/05/09/optimization/ch22-ppa/" target="_self">
+        <div>
           
           在进入具体的优化算法后，我们首先讲了基于梯度的，比如梯度下降(GD)、次梯度下降(SD)；然后又讲了近似点算子，之后讲了基于近似点算子的方法，比如近似点梯度下降(PG)、对偶问题的近似点梯度下降(DPG)、加速近似点梯度下降(APG)。而这一节讲的，还是基于近似点的！他叫近似点方法(Proximal Point Algorithm, PPA)，除此之外还会介绍增广拉格朗日方法(Augmentt
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -277,24 +323,38 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/ALM/">ALM</a>
+              <a href="/tags/ALM/">#ALM</a>
             
-              <a href="/tags/%E5%A2%9E%E5%B9%BF%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">增广拉格朗日函数</a>
+              <a href="/tags/%E5%A2%9E%E5%B9%BF%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">#增广拉格朗日函数</a>
             
-              <a href="/tags/PPA/">PPA</a>
+              <a href="/tags/PPA/">#PPA</a>
             
           </div>
         
@@ -313,12 +373,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/04/music/TroubleImIn/" target="_self">
+      <a class="index-excerpt" href="/2020/05/04/music/TroubleImIn/" target="_self">
+        <div>
           
           Trouble I&#39;m In
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -330,11 +390,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Music/">Music</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Music/" class="category-chain-item">Music</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -353,12 +427,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/24/optimization/ch21-apg-fista/" target="_self">
+      <a class="index-excerpt" href="/2020/04/24/optimization/ch21-apg-fista/" target="_self">
+        <div>
           
           我们证明了梯度方法最快的收敛速度只能是 \(O(1&#x2F;k^2)\)（没有强凸假设的话），但是前面的方法最多只能达到 \(O(1&#x2F;k)\) 的收敛速度，那么有没有方法能达到这一极限呢？有！这一节要讲的加速近似梯度方法(APG)就是。这个方法的构造非常的巧妙，证明过程中会发现每一项都恰到好处的抵消了！真不知道作者是怎么想出来这么巧妙地方法，各位可以看看证明过程自行体会。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -370,22 +444,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">#PG 算法</a>
             
-              <a href="/tags/APG-%E7%AE%97%E6%B3%95/">APG 算法</a>
+              <a href="/tags/APG-%E7%AE%97%E6%B3%95/">#APG 算法</a>
             
-              <a href="/tags/FISTA-%E7%AE%97%E6%B3%95/">FISTA 算法</a>
+              <a href="/tags/FISTA-%E7%AE%97%E6%B3%95/">#FISTA 算法</a>
             
           </div>
         
@@ -404,12 +492,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/23/optimization/ch20-dual-proximal-gradient/" target="_self">
+      <a class="index-excerpt" href="/2020/04/23/optimization/ch20-dual-proximal-gradient/" target="_self">
+        <div>
           
           前面讲了梯度下降、次梯度下降、近似点梯度下降方法并分析了收敛性。一开始我们还讲了对偶原理，那么如果原问题比较难求解的时候，我们可不可以转化为对偶问题并应用梯度法求解呢？当然可以，不过有一个问题就是对偶函数的梯度或者次梯度怎么计算呢？这就是这一节要关注的问题。 首先一个问题是哪些形式的问题，其对偶问题相比于原问题更简单呢？可能有很多种，这一节主要关注一种：线性等式&#x2F;不等式约束的优化问题。之所以考虑
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -421,26 +509,40 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">#拉格朗日函数</a>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">共轭函数</a>
+              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">#共轭函数</a>
             
-              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">#PG 算法</a>
             
-              <a href="/tags/ALM/">ALM</a>
+              <a href="/tags/ALM/">#ALM</a>
             
           </div>
         
@@ -459,12 +561,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/17/optimization/ch19-proximal-gradient/" target="_self">
+      <a class="index-excerpt" href="/2020/04/17/optimization/ch19-proximal-gradient/" target="_self">
+        <div>
           
           前面讲了梯度下降法、次梯度下降法，并分析了他们的收敛性。上一节讲了近似梯度算子，我们说主要是针对非光滑问题的，这一节就要讲近似梯度算子在非光滑优化问题中的应用。先回顾一下上一节最重要的一部分内容：对于指示函数 \(\delta_C\) 来说近似梯度算子得到的实际上就是向集合 \(C\) 的投影。 1. 近似点梯度下降 这一部分考虑的问题主要是 \[ \text{minimize } f(
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -476,18 +578,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">#PG 算法</a>
             
           </div>
         
@@ -506,12 +622,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/16/optimization/ch18-proximal-mapping/" target="_self">
+      <a class="index-excerpt" href="/2020/04/16/optimization/ch18-proximal-mapping/" target="_self">
+        <div>
           
           前面讲了梯度下降法，分析了其收敛速度，对于存在不可导的函数介绍了次梯度的计算方法以及次梯度下降法，这一节要介绍的内容叫做近似点算子(Proximal mapping)，也是为了处理非光滑问题。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -523,20 +639,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">共轭函数</a>
+              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">#共轭函数</a>
             
           </div>
         
@@ -555,12 +685,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/10/optimization/ch17-subgradient-descent/" target="_self">
+      <a class="index-excerpt" href="/2020/04/10/optimization/ch17-subgradient-descent/" target="_self">
+        <div>
           
           对于光滑函数，我们可以用梯度下降法，并且证明了取不同的步长，可以得到次线性收敛，如果加上强凸性质，还可以得到线性收敛速度。那如果现在对于不可导的函数，我们就只能沿着次梯度下降，同样会面临步长的选择、方向的选择、收敛性分析等问题。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -572,20 +702,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">#梯度下降</a>
             
-              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
+              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">#次梯度</a>
             
           </div>
         
@@ -604,12 +748,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/10/optimization/ch16-subgradient/" target="_self">
+      <a class="index-excerpt" href="/2020/04/10/optimization/ch16-subgradient/" target="_self">
+        <div>
           
           前面讲了梯度下降的方法，关键在于步长的选择：固定步长、线搜索、BB方法等，但是如果优化函数本身存在不可导的点，就没有办法计算梯度了，这个时候就需要引入次梯度(Subgradient)，这一节主要关注次梯度的计算。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -621,18 +765,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">次梯度</a>
+              <a href="/tags/%E6%AC%A1%E6%A2%AF%E5%BA%A6/">#次梯度</a>
             
           </div>
         
@@ -651,12 +809,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/08/software/matlab-parpool/" target="_self">
+      <a class="index-excerpt" href="/2020/04/08/software/matlab-parpool/" target="_self">
+        <div>
           
           最近在用 MATLAB 跑仿真，但是不知怎么回事，之前并行计算 parfor 用的好好的，昨天突然就不能用了，一直报错无法启动并行池，报错原因还特别奇怪。在网上找了一大堆教程互相抄来抄去，没一个能用的。最后还是在官网论坛找到了一个答案成功解决问题。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -668,18 +826,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Software/">Software</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Software/" class="category-chain-item">Software</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/matlab/">matlab</a>
+              <a href="/tags/matlab/">#matlab</a>
             
           </div>
         
@@ -724,59 +896,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -787,42 +961,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -832,18 +987,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

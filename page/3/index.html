@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/" target="_self">
+      <a class="index-excerpt" href="/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/" target="_self">
+        <div>
           
           3.1 条件概率 在初等概率论中，条件期望的概念比较好理解，有 \({\mathbb E}[X | Y &#x3D; y_j] &#x3D; \sum_i x_i P(X&#x3D;x_i | Y &#x3D; y_j)\)，得到的条件期望实际上是一个关于 \(Y&#x3D;y_j\) 的函数。但是在现代概率论中，这一概念进行了推广，也变得更加抽象，严谨的数学定义需要高等概率的知识，本教程基本只需要建立直观理解就够了。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,24 +258,38 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%9D%A1%E4%BB%B6%E6%9C%9F%E6%9C%9B/">条件期望</a>
+              <a href="/tags/%E6%9D%A1%E4%BB%B6%E6%9C%9F%E6%9C%9B/">#条件期望</a>
             
-              <a href="/tags/%E9%9E%85/">鞅</a>
+              <a href="/tags/%E9%9E%85/">#鞅</a>
             
-              <a href="/tags/Jensen%E4%B8%8D%E7%AD%89%E5%BC%8F/">Jensen不等式</a>
+              <a href="/tags/Jensen%E4%B8%8D%E7%AD%89%E5%BC%8F/">#Jensen不等式</a>
             
-              <a href="/tags/%E9%9E%85%E5%88%86%E8%A7%A3%E5%AE%9A%E7%90%86/">鞅分解定理</a>
+              <a href="/tags/%E9%9E%85%E5%88%86%E8%A7%A3%E5%AE%9A%E7%90%86/">#鞅分解定理</a>
             
           </div>
         
@@ -262,12 +308,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/02/stochastic-process-2/ch2-stationary/" target="_self">
+      <a class="index-excerpt" href="/2021/10/02/stochastic-process-2/ch2-stationary/" target="_self">
+        <div>
           
           若无特殊说明，本章均考虑平稳过程。 严平稳过程 + 一阶矩、二阶矩均存在 \(\Longrightarrow\) 宽平稳
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -279,28 +325,42 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%AE%BD%E5%B9%B3%E7%A8%B3/">宽平稳</a>
+              <a href="/tags/%E5%AE%BD%E5%B9%B3%E7%A8%B3/">#宽平稳</a>
             
-              <a href="/tags/%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">相关函数</a>
+              <a href="/tags/%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0/">#相关函数</a>
             
-              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%9E%E7%BB%AD%E6%80%A7/">随机连续性</a>
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%9E%E7%BB%AD%E6%80%A7/">#随机连续性</a>
             
-              <a href="/tags/%E5%8A%9F%E7%8E%87%E8%B0%B1/">功率谱</a>
+              <a href="/tags/%E5%8A%9F%E7%8E%87%E8%B0%B1/">#功率谱</a>
             
-              <a href="/tags/%E9%81%8D%E5%8E%86%E6%80%A7/">遍历性</a>
+              <a href="/tags/%E9%81%8D%E5%8E%86%E6%80%A7/">#遍历性</a>
             
-              <a href="/tags/%E6%8A%BD%E6%A0%B7%E5%AE%9A%E7%90%86/">抽样定理</a>
+              <a href="/tags/%E6%8A%BD%E6%A0%B7%E5%AE%9A%E7%90%86/">#抽样定理</a>
             
           </div>
         
@@ -319,12 +379,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/02/stochastic-process-2/ch1-intro/" target="_self">
+      <a class="index-excerpt" href="/2021/10/02/stochastic-process-2/ch1-intro/" target="_self">
+        <div>
           
           这个随机过程是工科院系开设的，所以理论性不那么强，更注重于实际问题的应用。 参考教材为樊平毅老师撰写的《随机过程理论与应用》，清华大学出版社。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -336,11 +396,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -359,12 +433,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/09/12/essay/driving-subject-2/" target="_self">
+      <a class="index-excerpt" href="/2021/09/12/essay/driving-subject-2/" target="_self">
+        <div>
           
           科目二考过了，在这里记录一下几个动作的点位。这东西显然不会有人看，仅仅是自己留下记录做个纪念 :happy:
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -392,12 +466,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/08/29/communication/IQ-modulation/" target="_self">
+      <a class="index-excerpt" href="/2021/08/29/communication/IQ-modulation/" target="_self">
+        <div>
           
           1. 复信号 首先我们为什么需要复信号？ 第一是因为复信号便于数学处理，例如获得信号的包络、相位等等； 除此之外，从频域来看，实信号频谱总是共轭对称的，也就是双边带信号，这就导致有一半的频带是无用的，浪费频谱资源，因此实际通信系统中我们更希望传输单边带的复信号。 但是在实际系统中我们只能获得实信号。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -409,20 +483,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Communication-and-Networks/">Communication and Networks</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Communication-and-Networks/" class="category-chain-item">Communication and Networks</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/IQ%E8%B0%83%E5%88%B6/">IQ调制</a>
+              <a href="/tags/IQ%E8%B0%83%E5%88%B6/">#IQ调制</a>
             
-              <a href="/tags/Hilbert%E5%8F%98%E6%8D%A2/">Hilbert变换</a>
+              <a href="/tags/Hilbert%E5%8F%98%E6%8D%A2/">#Hilbert变换</a>
             
           </div>
         
@@ -441,12 +529,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/08/14/music/Later/" target="_self">
+      <a class="index-excerpt" href="/2021/08/14/music/Later/" target="_self">
+        <div>
           
           有些人一旦错过就不再
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -458,11 +546,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Music/">Music</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Music/" class="category-chain-item">Music</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -481,12 +583,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/07/09/linear-algebra/woodbury/" target="_self">
+      <a class="index-excerpt" href="/2021/07/09/linear-algebra/woodbury/" target="_self">
+        <div>
           
           版权声明：本文为CSDN博主「Anusat」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。 原文链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;Louis___Zhang&#x2F;article&#x2F;details&#x2F;103483743  在数学（特别是线性代数）中，Woodbury矩阵恒等式是以Max A.Woodbury命名的，它 可以通过对原矩阵的逆进
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -498,20 +600,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Linear-Algebra/">Linear Algebra</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linear-Algebra/" class="category-chain-item">Linear Algebra</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%BD%AC%E8%BD%BD/">转载</a>
+              <a href="/tags/%E8%BD%AC%E8%BD%BD/">#转载</a>
             
-              <a href="/tags/Woodbury-%E6%81%92%E7%AD%89%E5%BC%8F/">Woodbury 恒等式</a>
+              <a href="/tags/Woodbury-%E6%81%92%E7%AD%89%E5%BC%8F/">#Woodbury 恒等式</a>
             
           </div>
         
@@ -530,12 +646,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/06/04/stochastic-process/ch1-stopping-time/" target="_self">
+      <a class="index-excerpt" href="/2021/06/04/stochastic-process/ch1-stopping-time/" target="_self">
+        <div>
           
           第一章主要介绍随机过程中的基本概念。 1. 基本概念 什么是随机过程？ 定义：设 \((\Omega, \mathcal{F},P)\) 是一个概率空间，\((E,\mathcal{E})\) 是一个可测空间，\(\mathcal{T}\) 是一个指标集，\(X_{\mathcal{T} }&#x3D;\{X_t,t\in{\mathcal T}\}\) 是一族定义在 \((\Omega, \m
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -547,26 +663,40 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A0%B7%E6%9C%AC%E8%BD%A8%E9%81%93/">样本轨道</a>
+              <a href="/tags/%E6%A0%B7%E6%9C%AC%E8%BD%A8%E9%81%93/">#样本轨道</a>
             
-              <a href="/tags/%E5%BE%AA%E5%BA%8F%E5%8F%AF%E6%B5%8B/">循序可测</a>
+              <a href="/tags/%E5%BE%AA%E5%BA%8F%E5%8F%AF%E6%B5%8B/">#循序可测</a>
             
-              <a href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">可分性</a>
+              <a href="/tags/%E5%8F%AF%E5%88%86%E6%80%A7/">#可分性</a>
             
-              <a href="/tags/%E5%81%9C%E6%97%B6/">停时</a>
+              <a href="/tags/%E5%81%9C%E6%97%B6/">#停时</a>
             
-              <a href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">首中时</a>
+              <a href="/tags/%E9%A6%96%E4%B8%AD%E6%97%B6/">#首中时</a>
             
           </div>
         
@@ -585,12 +715,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/06/04/stochastic-process/ch0-intro/" target="_self">
+      <a class="index-excerpt" href="/2021/06/04/stochastic-process/ch0-intro/" target="_self">
+        <div>
           
           本系列为研究生随机过程的课程笔记，主要内容包括停时、鞅论、Markov过程等，以高等概率论为基础，因此会需要部分测度相关的知识（目前为止高等概率论的专栏还在咕咕...） 参考书为 Durret 的《Probability: Theory and Examples》
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -602,11 +732,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -625,12 +769,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/05/28/linear-algebra/SchurComplement/" target="_self">
+      <a class="index-excerpt" href="/2021/05/28/linear-algebra/SchurComplement/" target="_self">
+        <div>
           
           舒尔补其实就是将一个矩阵变成块对角化的矩阵，便于求逆。 1. 定义 n*n 的矩阵可以写成分块矩阵形式 \[ M &#x3D; \left[\begin{array}{cc}{A} &amp; {B} \\ {C} &amp; {D}\end{array}\right]_{n\times n} \]  若 A 是非奇异的，则 A 在 M 中的舒尔补为：\(D-CA^{-1}B\) 若 D 是
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -642,18 +786,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Linear-Algebra/">Linear Algebra</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linear-Algebra/" class="category-chain-item">Linear Algebra</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%88%92%E5%B0%94%E8%A1%A5/">舒尔补</a>
+              <a href="/tags/%E8%88%92%E5%B0%94%E8%A1%A5/">#舒尔补</a>
             
           </div>
         
@@ -698,59 +856,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -761,42 +921,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -806,18 +947,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

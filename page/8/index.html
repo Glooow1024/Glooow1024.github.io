@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/11/software/next-beautify/" target="_self">
+      <a class="index-excerpt" href="/2020/03/11/software/next-beautify/" target="_self">
+        <div>
           
           网上很多关于主题美化的教程都是老版本 next 5.1 的，最近更新到 next 7 之后摸索了好久才找到简单有效的自定义主题方式，下面是具体的操作。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,20 +258,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Hexo/">Hexo</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hexo/" class="category-chain-item">Hexo</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/hexo/">hexo</a>
+              <a href="/tags/hexo/">#hexo</a>
             
-              <a href="/tags/next/">next</a>
+              <a href="/tags/next/">#next</a>
             
           </div>
         
@@ -258,12 +304,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/07/fuzzy/ch5-clustering/" target="_self">
+      <a class="index-excerpt" href="/2020/03/07/fuzzy/ch5-clustering/" target="_self">
+        <div>
           
           现在想要对 \(n\) 个目标 \(U&#x3D;\{x_1,...,x_n\}\) 分类，并且每个对象都有多个指标，也即 \(x_i&#x3D;\{x_{i1},...,x_{im}\}\)。 模糊聚类通常包括三个步骤：  建立模糊矩阵 建立模糊等价矩阵 进行聚类
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -275,20 +321,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%9F%A9%E9%98%B5/">模糊矩阵</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%9F%A9%E9%98%B5/">#模糊矩阵</a>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E8%81%9A%E7%B1%BB/">模糊聚类</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E8%81%9A%E7%B1%BB/">#模糊聚类</a>
             
           </div>
         
@@ -307,12 +367,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/06/optimization/ch7-quasicvx/" target="_self">
+      <a class="index-excerpt" href="/2020/03/06/optimization/ch7-quasicvx/" target="_self">
+        <div>
           
           1. 拟凸函数定义 拟凸函数(quasiconvex function)的定义为：若 \(\text{dom}f\) 为凸集，且对任意的 \(\alpha\)，其下水平集 \[ S_\alpha &#x3D; \{x\in\text{dom}f | f(x)\le\alpha\} \] 都是凸集，则 \(f\) 为拟凸函数。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -324,18 +384,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%8B%9F%E5%87%B8%E5%87%BD%E6%95%B0/">拟凸函数</a>
+              <a href="/tags/%E6%8B%9F%E5%87%B8%E5%87%BD%E6%95%B0/">#拟凸函数</a>
             
           </div>
         
@@ -354,12 +428,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/04/optimization/ch6-conjugate-func/" target="_self">
+      <a class="index-excerpt" href="/2020/03/04/optimization/ch6-conjugate-func/" target="_self">
+        <div>
           
           1. 共轭函数 1.1 定义 一个函数 \(f\) 的共轭函数(conjugate function) 定义为 \[ f^*(y)&#x3D;\sup_{x\in\text{dom}f}(y^Tx-f(x)) \]
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -371,18 +445,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">共轭函数</a>
+              <a href="/tags/%E5%85%B1%E8%BD%AD%E5%87%BD%E6%95%B0/">#共轭函数</a>
             
           </div>
         
@@ -401,12 +489,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/04/optimization/ch5-preserve-cvx/" target="_self">
+      <a class="index-excerpt" href="/2020/03/04/optimization/ch5-preserve-cvx/" target="_self">
+        <div>
           
           1. 保凸变换 前面提到过一次保凸变换，前面针对的是集合，凸集经过一定的保凸变换，映射后的集合仍然是凸集。这里复习一下  任意个凸集的交集 仿射变换 透视变换 分式线性函数  而这里要讲的是对函数经过操作以后，得到的仍然是凸函数。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -418,18 +506,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E4%BF%9D%E5%87%B8%E5%8F%98%E6%8D%A2/">保凸变换</a>
+              <a href="/tags/%E4%BF%9D%E5%87%B8%E5%8F%98%E6%8D%A2/">#保凸变换</a>
             
           </div>
         
@@ -448,12 +550,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/01/fuzzy/ch4-relation/" target="_self">
+      <a class="index-excerpt" href="/2020/03/01/fuzzy/ch4-relation/" target="_self">
+        <div>
           
           1. 模糊关系 定义：模糊关系 \(R\) 的隶属函数 \(\mu_R:U\times V\to[0,1]\)，其中 \(\mu_R(x,y)\) 表示 \((x,y)\) 具有关系 \(R\) 的程度  Remarks：实际上模糊关系 \(R\) 就是定义在一个笛卡尔积的论域 \(U\times V\) 上的模糊关系，与之前介绍的普通的模糊关系并无太大差别。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -465,20 +567,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E5%85%B3%E7%B3%BB/">模糊关系</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E5%85%B3%E7%B3%BB/">#模糊关系</a>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%9F%A9%E9%98%B5/">模糊矩阵</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%9F%A9%E9%98%B5/">#模糊矩阵</a>
             
           </div>
         
@@ -497,12 +613,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/01/fuzzy/ch3-extension/" target="_self">
+      <a class="index-excerpt" href="/2020/03/01/fuzzy/ch3-extension/" target="_self">
+        <div>
           
           扩展原理实际上是将普通集合中的函数映射的概念扩展到了模糊集合上。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -514,11 +630,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -537,12 +667,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/01/fuzzy/ch2-nearness/" target="_self">
+      <a class="index-excerpt" href="/2020/03/01/fuzzy/ch2-nearness/" target="_self">
+        <div>
           
           1. 贴近度 给定 \(A,B,C\in \mathcal{F}(U)\)，\(\sigma(*,*)\) 满足以下几个条件时，被称为贴近度  \(\sigma(A,A)&#x3D;1\) \(\sigma(A,B)&#x3D;\sigma(B,A)\) 若 \(A\subset B\subset C\)，则 \(\sigma(A,B)\ge\sigma(A,C),\sigma(B,C)\ge\sig
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -554,18 +684,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%B4%B4%E8%BF%91%E5%BA%A6/">贴近度</a>
+              <a href="/tags/%E8%B4%B4%E8%BF%91%E5%BA%A6/">#贴近度</a>
             
           </div>
         
@@ -584,12 +728,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/02/29/optimization/ch4-cvx-function/" target="_self">
+      <a class="index-excerpt" href="/2020/02/29/optimization/ch4-cvx-function/" target="_self">
+        <div>
           
           1. 凸函数 1.1 凸函数定义 凸函数(convex function)的定义： \[ f(\theta x+(1-\theta)y)\le\theta f(x)+(1-\theta)f(y),\quad \forall x,y\in\text{dom}f,\theta\in[0,1] \] 函数 \(f\) 的扩展函数(extended-value extension) \(\ti
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -601,18 +745,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%87%B8%E5%87%BD%E6%95%B0/">凸函数</a>
+              <a href="/tags/%E5%87%B8%E5%87%BD%E6%95%B0/">#凸函数</a>
             
           </div>
         
@@ -631,12 +789,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/02/26/fuzzy/ch1-set/" target="_self">
+      <a class="index-excerpt" href="/2020/02/26/fuzzy/ch1-set/" target="_self">
+        <div>
           
           传统集合中元素要么属于集合，要么不属于集合。但假如我们给出一个“所有年轻人组成的集合”，那么这个时候年龄多大才算年轻人呢？30岁算年轻人嘛？有的人觉得算，有的人觉得不算，这是一个比较模糊的界定，所以就引入了模糊集的概念。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -648,18 +806,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E9%9B%86/">模糊集</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E9%9B%86/">#模糊集</a>
             
           </div>
         
@@ -704,59 +876,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -767,42 +941,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -812,18 +967,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

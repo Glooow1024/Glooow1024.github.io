@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/10/18/functional-analysis/ch0-intro/" target="_self">
+      <a class="index-excerpt" href="/2020/10/18/functional-analysis/ch0-intro/" target="_self">
+        <div>
           
           本系列泛函分析课程笔记的参考教材是清华大学出版社，步尚全老师写的《泛函分析基础》。 笔记的内容基本来自于我的听课记录，以及自己复习过程中的一些想法，由于笔者的数学功底极其不扎实，因此很可能会有不准确甚至错误之处，欢迎大家指正。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,11 +258,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Functional-Analysis/">Functional Analysis</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Functional-Analysis/" class="category-chain-item">Functional Analysis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -249,12 +295,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/08/11/software/vmware/" target="_self">
+      <a class="index-excerpt" href="/2020/08/11/software/vmware/" target="_self">
+        <div>
           
           1. 虚拟机联网问题 VMWare虚拟机大致有 3 种联网方式，以下三种方式联网自由度逐渐递减：  桥接：虚拟机就相当于局域网中的另一台主机，有独立的 ip 地址； NAT：虚拟机需要借助于主机才能联网，虚拟机也是以物理主机的身份与外界通信； Host-only：虚拟机只能与主机通信，不能联网；  有时候设置好 NAT 或者桥接模式后仍然不能联网，可以尝试输入以下命令 1sudo
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -266,20 +312,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Software/">Software</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Software/" class="category-chain-item">Software</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">虚拟机</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/">#虚拟机</a>
             
-              <a href="/tags/linux/">linux</a>
+              <a href="/tags/linux/">#linux</a>
             
           </div>
         
@@ -298,12 +358,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/07/20/hardware/raspberrypi-autostart/" target="_self">
+      <a class="index-excerpt" href="/2020/07/20/hardware/raspberrypi-autostart/" target="_self">
+        <div>
           
           最近调试树莓派，希望开机运行两个程序，其中一个是可执行文件，另一个是 python 脚本，他们都是无限循环的程序，也就是说不关机不会停止运行。中间还是遇到了很多 bug，现在记录一下自启动程序的设置方法以及debug的整个过程。 1. 自启动程序设置方法 网上用的最多的方法就是修改 &#x2F;etc&#x2F;rc.local 文件： 1sudo nano &#x2F;etc&#x2F;rc.local 进入之后在 ex
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -315,18 +375,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Hardware/">Hardware</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hardware/" class="category-chain-item">Hardware</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/raspberry-pi/">raspberry pi</a>
+              <a href="/tags/raspberry-pi/">#raspberry pi</a>
             
           </div>
         
@@ -345,12 +419,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/07/09/hardware/jy901/" target="_self">
+      <a class="index-excerpt" href="/2020/07/09/hardware/jy901/" target="_self">
+        <div>
           
           最近在用JY901做一些实验，关于JY901网上有很多资料了，也有上位机软件，可以方便的查看输出数据。我想做的是对输出的角速度进行积分，对比积分后的结果与输出的角度，如果数据都比较准确地话，那么他们应该相差不大。 这篇文章里，要完成的事情就是通过串口接收他输出的角速度和角度，然后对角速度进行积分，并实时显示数据结果。下面我首先对各个部分进行分块解释，完整的代码放在最后。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -362,18 +436,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Hardware/">Hardware</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hardware/" class="category-chain-item">Hardware</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/IMU/">IMU</a>
+              <a href="/tags/IMU/">#IMU</a>
             
           </div>
         
@@ -392,12 +480,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/06/12/music/WhyBabyWhy/" target="_self">
+      <a class="index-excerpt" href="/2020/06/12/music/WhyBabyWhy/" target="_self">
+        <div>
           
           夏天到了🍉
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -409,11 +497,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Music/">Music</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Music/" class="category-chain-item">Music</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -432,12 +534,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/06/08/hardware/raspberrypi/" target="_self">
+      <a class="index-excerpt" href="/2020/06/08/hardware/raspberrypi/" target="_self">
+        <div>
           
           1. 系统安装 参考链接 2. 连接树莓派 如果有显示器和键盘鼠标，可以直接利用HMDI线连接树莓派和显示器，像操作普通电脑一样。 如果没有显示器，就需要通过ssh连接。首先需要知道树莓派的地址。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -449,18 +551,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Hardware/">Hardware</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hardware/" class="category-chain-item">Hardware</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/raspberry-pi/">raspberry pi</a>
+              <a href="/tags/raspberry-pi/">#raspberry pi</a>
             
           </div>
         
@@ -479,12 +595,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/30/probability/law%20of%20large%20numbers/" target="_self">
+      <a class="index-excerpt" href="/2020/05/30/probability/law%20of%20large%20numbers/" target="_self">
+        <div>
           
           最近学习的时候遇到了强大数定律与弱大数定律，两者的区分提到了“依概率收敛”和“几乎处处收敛”，由于本人的数学基础太差，一直很难理解这个地方，在网上查阅了一些资料有了一些个人的理解，不知道对不对，不过还是想记录下来。提前说明，这里给出的解释非常的不严格，甚至有点搞笑，不过个人觉得很容易理解。 首先给出来强弱大数定律的表述。 对于独立同分布的无穷随机序列 \(\{X_i\}\)，期望为 \(\ma
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -496,22 +612,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Probability-Theory/">Probability Theory</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Probability-Theory/" class="category-chain-item">Probability Theory</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B/">大数定律</a>
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B/">#大数定律</a>
             
-              <a href="/tags/%E4%BE%9D%E6%A6%82%E7%8E%87%E6%94%B6%E6%95%9B/">依概率收敛</a>
+              <a href="/tags/%E4%BE%9D%E6%A6%82%E7%8E%87%E6%94%B6%E6%95%9B/">#依概率收敛</a>
             
-              <a href="/tags/%E5%87%A0%E4%B9%8E%E5%BF%85%E7%84%B6%E6%94%B6%E6%95%9B/">几乎必然收敛</a>
+              <a href="/tags/%E5%87%A0%E4%B9%8E%E5%BF%85%E7%84%B6%E6%94%B6%E6%95%9B/">#几乎必然收敛</a>
             
           </div>
         
@@ -530,12 +660,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/27/optimization/ch26-fixed-point/" target="_self">
+      <a class="index-excerpt" href="/2020/05/27/optimization/ch26-fixed-point/" target="_self">
+        <div>
           
           前面讲了很多具体的算法，比如梯度、次梯度、近似点梯度、加速近似点梯度、PPA、DR方法、ADMM、ALM等，对这些方法的迭代过程有了一些了解。这一节则主要是针对算法的收敛性进行分析，试图从一个更加抽象的层面，利用不动点迭代的思想，把上面的算法综合起来，给一个比较 general 的收敛性分析方法。 1. 什么是不动点？ 对于希尔伯特空间(Hilbert space) \(\mathcal{H
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -547,30 +677,44 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">利普希兹连续</a>
+              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">#利普希兹连续</a>
             
-              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">强凸函数</a>
+              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">#强凸函数</a>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">PG 算法</a>
+              <a href="/tags/PG-%E7%AE%97%E6%B3%95/">#PG 算法</a>
             
-              <a href="/tags/PPA/">PPA</a>
+              <a href="/tags/PPA/">#PPA</a>
             
-              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">算子分裂法</a>
+              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">#算子分裂法</a>
             
-              <a href="/tags/%E4%B8%8D%E5%8A%A8%E7%82%B9%E8%BF%AD%E4%BB%A3/">不动点迭代</a>
+              <a href="/tags/%E4%B8%8D%E5%8A%A8%E7%82%B9%E8%BF%AD%E4%BB%A3/">#不动点迭代</a>
             
           </div>
         
@@ -589,12 +733,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/24/optimization/ch25-PDHG/" target="_self">
+      <a class="index-excerpt" href="/2020/05/24/optimization/ch25-PDHG/" target="_self">
+        <div>
           
           前面的章节要么从原始问题出发，要么从对偶问题出发，通过求解近似点或者一个子优化问题进行迭代，而且推导过程中我们发现根据问题的参数特征，比如矩阵 \(A\) 是瘦高型的还是矮胖型的，采用对偶和原始问题的复杂度会不一样，可以选择一个更简单的。而这一节，我们将要从原始对偶问题出发来优化，什么是原始对偶问题呢？就是原始优化变量和对偶优化变量（原始函数和共轭函数）混合在一块，看下面的原理就知道了。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -606,26 +750,40 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">近似点算子</a>
+              <a href="/tags/%E8%BF%91%E4%BC%BC%E7%82%B9%E7%AE%97%E5%AD%90/">#近似点算子</a>
             
-              <a href="/tags/PPA/">PPA</a>
+              <a href="/tags/PPA/">#PPA</a>
             
-              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">算子分裂法</a>
+              <a href="/tags/%E7%AE%97%E5%AD%90%E5%88%86%E8%A3%82%E6%B3%95/">#算子分裂法</a>
             
-              <a href="/tags/%E5%8E%9F%E5%A7%8B%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/">原始对偶问题</a>
+              <a href="/tags/%E5%8E%9F%E5%A7%8B%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98/">#原始对偶问题</a>
             
-              <a href="/tags/PDHG/">PDHG</a>
+              <a href="/tags/PDHG/">#PDHG</a>
             
           </div>
         
@@ -644,12 +802,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/05/20/optimization/ch24-ADMM/" target="_self">
+      <a class="index-excerpt" href="/2020/05/20/optimization/ch24-ADMM/" target="_self">
+        <div>
           
           上一节讲了对偶问题上的 DR-splitting 就等价于原问题的 ADMM，这一节在详细的讲一下 ADMM 及其变种。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -661,20 +819,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ADMM/">ADMM</a>
+              <a href="/tags/ADMM/">#ADMM</a>
             
-              <a href="/tags/parallel/">parallel</a>
+              <a href="/tags/parallel/">#parallel</a>
             
           </div>
         
@@ -719,59 +891,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -782,42 +956,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -827,18 +982,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

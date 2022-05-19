@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
+      <a class="index-excerpt" href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
+        <div>
           
           1. 预备理论 根据Newton-Leibniz公式有 \(\int_a^x f(t)dt &#x3D; F(x)-F(a)\)，但是绝大部分情况很难解析求解，需要数值积分。例如中点公式 \[ \int_a^b f(x)dx \approx f(\frac{a+b}{2})(b-a) \] 若 \(f(x)\in C^2[a,b]\)，则中点公式截断误差为 \[ \int_a^b f(x)d
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,18 +258,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/">数值积分</a>
+              <a href="/tags/%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/">#数值积分</a>
             
           </div>
         
@@ -256,12 +302,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" target="_self">
+      <a class="index-excerpt" href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" target="_self">
+        <div>
           
           1. 预备理论 函数插值当中我们只有几个离散的的插值节点及其函数值，在函数逼近里我们考虑的是有一个 \(f(x),x\in[a,b]\) 已知，但是希望用一组简单的基函数 \(\{\phi_0,...,\phi_n\}\) 逼近 \(f(x)\)。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -273,24 +319,38 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%80%BC%E8%BF%91/">多项式逼近</a>
+              <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%80%BC%E8%BF%91/">#多项式逼近</a>
             
-              <a href="/tags/Pade%E9%80%BC%E8%BF%91/">Pade逼近</a>
+              <a href="/tags/Pade%E9%80%BC%E8%BF%91/">#Pade逼近</a>
             
-              <a href="/tags/Lengdre%E5%A4%9A%E9%A1%B9%E5%BC%8F/">Lengdre多项式</a>
+              <a href="/tags/Lengdre%E5%A4%9A%E9%A1%B9%E5%BC%8F/">#Lengdre多项式</a>
             
-              <a href="/tags/Chebyshev%E5%A4%9A%E9%A1%B9%E5%BC%8F/">Chebyshev多项式</a>
+              <a href="/tags/Chebyshev%E5%A4%9A%E9%A1%B9%E5%BC%8F/">#Chebyshev多项式</a>
             
           </div>
         
@@ -309,12 +369,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" target="_self">
+      <a class="index-excerpt" href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" target="_self">
+        <div>
           
           1. 预备理论 假设有离散的 \(\{x_0,x_1,...,x_n\}\) 插值节点，以及对应的函数值 \(\{f(x_0),....,f(x_n)\}\)，希望用函数 \(\phi(x)\) 来近似 \(f(x)\)，使其满足插值条件 \(\phi(x_i)&#x3D;f(x_i),i&#x3D;0,...,n\)。一般选择多项式插值函数 \(p(x)&#x3D;a_0+a_1x+\cdots+a_n x^n \in
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -326,18 +386,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">高等数值分析</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%8F%92%E5%80%BC/">插值</a>
+              <a href="/tags/%E6%8F%92%E5%80%BC/">#插值</a>
             
           </div>
         
@@ -356,12 +430,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" target="_self">
+      <a class="index-excerpt" href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" target="_self">
+        <div>
           
           5.1 布朗运动概念 定义：若一个随机过程 \(\{X(t),t\ge0\}\) 满足  \(X(t)\) 是独立增量过程； \(\forall s,t\ge0, X(t+s)-X(s)\sim {\mathcal N}(0,c^2t)\)； \(X(t)\) 关于 \(t\) 是连续函数；  则称 \(X(t)\) 是布朗运动或维纳过程。 可以验证 \(R(t_1,t_2)
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -373,22 +447,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">布朗运动</a>
+              <a href="/tags/%E5%B8%83%E6%9C%97%E8%BF%90%E5%8A%A8/">#布朗运动</a>
             
-              <a href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/">高斯过程</a>
+              <a href="/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/">#高斯过程</a>
             
-              <a href="/tags/%E7%BB%B4%E7%BA%B3%E8%BF%87%E7%A8%8B/">维纳过程</a>
+              <a href="/tags/%E7%BB%B4%E7%BA%B3%E8%BF%87%E7%A8%8B/">#维纳过程</a>
             
           </div>
         
@@ -407,12 +495,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/11/17/music/Onion/" target="_self">
+      <a class="index-excerpt" href="/2021/11/17/music/Onion/" target="_self">
+        <div>
           
           洋葱🧅
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -424,11 +512,25 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Music/">Music</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Music/" class="category-chain-item">Music</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
@@ -447,12 +549,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" target="_self">
+      <a class="index-excerpt" href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" target="_self">
+        <div>
           
           4.5 非时齐次泊松过程 定义：一个计数过程若满足：  \(N(0)&#x3D;0\)； 它是独立增量过程； 对充分小的 \(\Delta t&gt;0\)，有 \(P(N(t+\Delta t)-N(t)&#x3D;1) &#x3D; \lambda(t) \Delta t + o(\Delta t)\)，\(P(N(t+\Delta t)-N(t)\ge 2)&#x3D;o(\Delta t)\)；  则称它为具
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -464,22 +566,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">泊松过程</a>
+              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">#泊松过程</a>
             
-              <a href="/tags/%E6%9B%B4%E6%96%B0%E8%BF%87%E7%A8%8B/">更新过程</a>
+              <a href="/tags/%E6%9B%B4%E6%96%B0%E8%BF%87%E7%A8%8B/">#更新过程</a>
             
-              <a href="/tags/Wald%E7%AD%89%E5%BC%8F/">Wald等式</a>
+              <a href="/tags/Wald%E7%AD%89%E5%BC%8F/">#Wald等式</a>
             
           </div>
         
@@ -498,12 +614,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" target="_self">
+      <a class="index-excerpt" href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" target="_self">
+        <div>
           
           4.1 泊松过程的定义与基本性质 定义 4.1：随机过程 \(\{N(t),t\ge0\}\) 称为时齐泊松过程，若满足下列条件：  他是一个计数过程，且 \(N(0)&#x3D;0\)； （独立增量）任取 \(0 &lt; t_1 &lt; t_2 &lt; \cdots &lt; t_n\)，\(N(t_1),N(t_2)-N(t_1),...,N(t_n)-N(t_{n-1})\) 相互
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -515,22 +631,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">泊松过程</a>
+              <a href="/tags/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B/">#泊松过程</a>
             
-              <a href="/tags/%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83/">指数分布</a>
+              <a href="/tags/%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83/">#指数分布</a>
             
-              <a href="/tags/%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/">顺序统计量</a>
+              <a href="/tags/%E9%A1%BA%E5%BA%8F%E7%BB%9F%E8%AE%A1%E9%87%8F/">#顺序统计量</a>
             
           </div>
         
@@ -549,12 +679,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/24/essay/2021-1024/" target="_self">
+      <a class="index-excerpt" href="/2021/10/24/essay/2021-1024/" target="_self">
+        <div>
           
           :fireworks:
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -582,12 +712,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/" target="_self">
+      <a class="index-excerpt" href="/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/" target="_self">
+        <div>
           
           3.11 鞅论的应用 栗子 1：三人赌博，每一轮从中随机依次选出两个人，第一个被选中的人给第二个一枚硬币。如果其中一个人没有硬币，其余两人继续赌博，直到其中一个人赢得所有硬币。假设三个人被选中概率完全相等，且每次选择相互独立。如果最初三人拥有的硬币数分别为 \(a,b,c\)，求此游戏结束的平均时间。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -599,20 +729,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%9E%85/">鞅</a>
+              <a href="/tags/%E9%9E%85/">#鞅</a>
             
-              <a href="/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/">停时定理</a>
+              <a href="/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/">#停时定理</a>
             
           </div>
         
@@ -631,12 +775,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2021/10/16/stochastic-process-2/ch3-s2-martingale-stopping%20time/" target="_self">
+      <a class="index-excerpt" href="/2021/10/16/stochastic-process-2/ch3-s2-martingale-stopping%20time/" target="_self">
+        <div>
           
           3.7 停时与停时定理 为了更好表述，下面给出一个不严谨的 \(\sigma\) 域和停时的定义。 用 \(F_n &#x3D; \sigma(Y_k,0\le k \le n)\) 表示 \(Y_0,...,Y_n\) 可提供的全部信息，称为他们生成的 \(\sigma\) 域。 假设有非负随机变量 \(\tau\) 和随机序列 \(\{Y_n,n\ge0\}\)，若 \(\forall n\
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -648,32 +792,46 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/">随机过程2</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-chain-item">随机过程2</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%81%9C%E6%97%B6/">停时</a>
+              <a href="/tags/%E5%81%9C%E6%97%B6/">#停时</a>
             
-              <a href="/tags/%E9%9E%85/">鞅</a>
+              <a href="/tags/%E9%9E%85/">#鞅</a>
             
-              <a href="/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/">停时定理</a>
+              <a href="/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/">#停时定理</a>
             
-              <a href="/tags/%E4%B8%8A%E7%A9%BF%E4%B8%8D%E7%AD%89%E5%BC%8F/">上穿不等式</a>
+              <a href="/tags/%E4%B8%8A%E7%A9%BF%E4%B8%8D%E7%AD%89%E5%BC%8F/">#上穿不等式</a>
             
-              <a href="/tags/%E9%9E%85%E6%94%B6%E6%95%9B%E5%AE%9A%E7%90%86/">鞅收敛定理</a>
+              <a href="/tags/%E9%9E%85%E6%94%B6%E6%95%9B%E5%AE%9A%E7%90%86/">#鞅收敛定理</a>
             
-              <a href="/tags/%E6%9E%81%E5%A4%A7%E5%80%BC%E4%B8%8D%E7%AD%89%E5%BC%8F/">极大值不等式</a>
+              <a href="/tags/%E6%9E%81%E5%A4%A7%E5%80%BC%E4%B8%8D%E7%AD%89%E5%BC%8F/">#极大值不等式</a>
             
-              <a href="/tags/Markov%E4%B8%8D%E7%AD%89%E5%BC%8F/">Markov不等式</a>
+              <a href="/tags/Markov%E4%B8%8D%E7%AD%89%E5%BC%8F/">#Markov不等式</a>
             
-              <a href="/tags/Azuma%E4%B8%8D%E7%AD%89%E5%BC%8F/">Azuma不等式</a>
+              <a href="/tags/Azuma%E4%B8%8D%E7%AD%89%E5%BC%8F/">#Azuma不等式</a>
             
           </div>
         
@@ -718,59 +876,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -781,42 +941,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -826,18 +967,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

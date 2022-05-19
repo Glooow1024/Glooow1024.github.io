@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,34 +189,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bus.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="纸上得来终觉浅，绝知此事要躬行">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bus.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="纸上得来终觉浅，绝知此事要躬行"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -209,12 +241,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/05/optimization/ch15-gradient/" target="_self">
+      <a class="index-excerpt" href="/2020/04/05/optimization/ch15-gradient/" target="_self">
+        <div>
           
           前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -226,28 +258,42 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">利普希兹连续</a>
+              <a href="/tags/%E5%88%A9%E6%99%AE%E5%B8%8C%E5%85%B9%E8%BF%9E%E7%BB%AD/">#利普希兹连续</a>
             
-              <a href="/tags/co-coercivity/">co-coercivity</a>
+              <a href="/tags/co-coercivity/">#co-coercivity</a>
             
-              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">强凸函数</a>
+              <a href="/tags/%E5%BC%BA%E5%87%B8%E5%87%BD%E6%95%B0/">#强凸函数</a>
             
-              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降</a>
+              <a href="/tags/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">#梯度下降</a>
             
-              <a href="/tags/%E7%BA%BF%E6%90%9C%E7%B4%A2/">线搜索</a>
+              <a href="/tags/%E7%BA%BF%E6%90%9C%E7%B4%A2/">#线搜索</a>
             
-              <a href="/tags/BB%E6%96%B9%E6%B3%95/">BB方法</a>
+              <a href="/tags/BB%E6%96%B9%E6%B3%95/">#BB方法</a>
             
           </div>
         
@@ -266,12 +312,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/04/05/optimization/ch14-sdp-rep/" target="_self">
+      <a class="index-excerpt" href="/2020/04/05/optimization/ch14-sdp-rep/" target="_self">
+        <div>
           
           这一节简单介绍一个 SDP Representablity（SDP-Rep），这个概念的提出主要是为了便于判断某个问题是否可以转化为 SDP 优化问题。 定义：集合 \(X\subseteq R^n\) 是 SDP-Rep 的，如果他可以表示为 \[ X&#x3D;\{x| \text{there exist }u\in R^k \text{ such that for some } \\A_i
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -283,18 +329,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/SDP/">SDP</a>
+              <a href="/tags/SDP/">#SDP</a>
             
           </div>
         
@@ -313,12 +373,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/27/optimization/ch13-complementary/" target="_self">
+      <a class="index-excerpt" href="/2020/03/27/optimization/ch13-complementary/" target="_self">
+        <div>
           
           前面我们讲了凸优化问题、对偶原理、拉格朗日函数、KKT 条件，还从几何角度解释了强对偶性，那么这一节将从代数角度解释强对偶性，并给出 KKT 条件中的互补性条件的新的表达形式。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -330,26 +390,40 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">KKT条件</a>
+              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">#KKT条件</a>
             
-              <a href="/tags/%E4%BA%92%E8%A1%A5%E6%80%A7%E6%9D%A1%E4%BB%B6/">互补性条件</a>
+              <a href="/tags/%E4%BA%92%E8%A1%A5%E6%80%A7%E6%9D%A1%E4%BB%B6/">#互补性条件</a>
             
-              <a href="/tags/LP/">LP</a>
+              <a href="/tags/LP/">#LP</a>
             
-              <a href="/tags/SOCP/">SOCP</a>
+              <a href="/tags/SOCP/">#SOCP</a>
             
-              <a href="/tags/SDP/">SDP</a>
+              <a href="/tags/SDP/">#SDP</a>
             
           </div>
         
@@ -368,12 +442,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/26/optimization/ch12-kkt/" target="_self">
+      <a class="index-excerpt" href="/2020/03/26/optimization/ch12-kkt/" target="_self">
+        <div>
           
           上一小节讲了拉格朗日函数，可以把原始问题转化为对偶问题，并且对偶问题是凸的。我们还得到了弱对偶性和强对偶性的概念，并且提到了 Slater Condition 保证凸问题的强对偶性成立，并且给出了一些几何的直观解释。那么在这一节，我们将引出著名的 KKT 条件，它给出了最优解需要满足的必要条件，是求解优化问题最优解的一个重要方式。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -385,22 +459,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">对偶原理</a>
+              <a href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">#对偶原理</a>
             
-              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">#拉格朗日函数</a>
             
-              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">KKT条件</a>
+              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/">#KKT条件</a>
             
           </div>
         
@@ -419,12 +507,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/18/optimization/ch11-dual/" target="_self">
+      <a class="index-excerpt" href="/2020/03/18/optimization/ch11-dual/" target="_self">
+        <div>
           
           前面讲了凸优化问题的定义，以及一些常见的凸优化问题类型，这一章就要引入著名的拉格朗日函数和对偶问题了。通过对偶问题，我们可以将一些非凸问题转化为凸优化问题，还可以求出原问题的非平凡下界，这对复杂优化问题是很有用的。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -436,22 +524,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">对偶原理</a>
+              <a href="/tags/%E5%AF%B9%E5%81%B6%E5%8E%9F%E7%90%86/">#对偶原理</a>
             
-              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">拉格朗日函数</a>
+              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%87%BD%E6%95%B0/">#拉格朗日函数</a>
             
-              <a href="/tags/SCQ/">SCQ</a>
+              <a href="/tags/SCQ/">#SCQ</a>
             
           </div>
         
@@ -470,12 +572,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/15/fuzzy/ch7-ahp/" target="_self">
+      <a class="index-excerpt" href="/2020/03/15/fuzzy/ch7-ahp/" target="_self">
+        <div>
           
           日常生活中有许多决策问题。决策是指在面临多种方案时需要依据一定的标准选择某一种方案。 比如买钢笔，一般要依据质量、颜色、实用性、价格、外形等方面的因素选择某一支钢笔。 又比如假期旅游，是去风光秀丽的苏州，还是去迷人的北戴河，或者是去山水甲天下的桂林，一般会依据景色、费用、食宿条件、旅途等因素选择去哪个地方。 我们可以利用上一节讲的模糊综合评判的方法，对每一个备选方案都进行一次打分，最后取分最
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -487,18 +589,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/">层次分析法</a>
+              <a href="/tags/%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95/">#层次分析法</a>
             
           </div>
         
@@ -517,12 +633,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/14/optimization/ch10-cvx-optimization/" target="_self">
+      <a class="index-excerpt" href="/2020/03/14/optimization/ch10-cvx-optimization/" target="_self">
+        <div>
           
           前面讲了那么多关于凸集、凸函数的知识，然而都是铺垫，现在我们才来到了这门课的重头戏部分——凸优化问题！
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -534,28 +650,42 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/LP/">LP</a>
+              <a href="/tags/LP/">#LP</a>
             
-              <a href="/tags/SOCP/">SOCP</a>
+              <a href="/tags/SOCP/">#SOCP</a>
             
-              <a href="/tags/SDP/">SDP</a>
+              <a href="/tags/SDP/">#SDP</a>
             
-              <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">凸优化问题</a>
+              <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">#凸优化问题</a>
             
-              <a href="/tags/QP/">QP</a>
+              <a href="/tags/QP/">#QP</a>
             
-              <a href="/tags/GP/">GP</a>
+              <a href="/tags/GP/">#GP</a>
             
           </div>
         
@@ -574,12 +704,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/13/fuzzy/ch6-evaluate/" target="_self">
+      <a class="index-excerpt" href="/2020/03/13/fuzzy/ch6-evaluate/" target="_self">
+        <div>
           
           假如我们现在设计了一种服装，想要调研一下这种服装的受欢迎程度，该怎么办呢？ 首先是怎么表示受欢迎程度呢？我们可以简单分为三个等级：受欢迎、一般欢迎、不受欢迎，由于不同的人感受可能不同，结合前面模糊集的概念，我们可以引入隶属度，比如调查后得到 50% 的人喜欢，30%一般，20%不喜欢，我们就可以取隶属度分别为 0.5，0.3，0.2。 当然这样太粗糙了，我们知道评价一个衣服的因素有很多，比
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -591,18 +721,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Fuzzy-Mathematics/">Fuzzy Mathematics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Fuzzy-Mathematics/" class="category-chain-item">Fuzzy Mathematics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%BB%BC%E5%90%88%E8%AF%84%E5%88%A4/">模糊综合评判</a>
+              <a href="/tags/%E6%A8%A1%E7%B3%8A%E7%BB%BC%E5%90%88%E8%AF%84%E5%88%A4/">#模糊综合评判</a>
             
           </div>
         
@@ -621,12 +765,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/11/optimization/ch9-gene-cvx/" target="_self">
+      <a class="index-excerpt" href="/2020/03/11/optimization/ch9-gene-cvx/" target="_self">
+        <div>
           
           有时候函数 \(f\) 为向量，此时怎么定义凸函数呢？根据广义不等式引入。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -638,18 +782,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%B9%BF%E4%B9%89%E5%87%B8%E5%87%BD%E6%95%B0/">广义凸函数</a>
+              <a href="/tags/%E5%B9%BF%E4%B9%89%E5%87%B8%E5%87%BD%E6%95%B0/">#广义凸函数</a>
             
           </div>
         
@@ -668,12 +826,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2020/03/11/optimization/ch8-log-cvx/" target="_self">
+      <a class="index-excerpt" href="/2020/03/11/optimization/ch8-log-cvx/" target="_self">
+        <div>
           
           对数凹函数，顾名思义即取完对数以后 \(\log f(x)\) 是凹函数，其应用比如在求最大后验 MAP 时，往往会对联合概率密度函数取对数。
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -685,18 +843,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Convex-Optimization/">Convex Optimization</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Convex-Optimization/" class="category-chain-item">Convex Optimization</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%AF%B9%E6%95%B0%E5%87%B9%E5%87%BD%E6%95%B0/">对数凹函数</a>
+              <a href="/tags/%E5%AF%B9%E6%95%B0%E5%87%B9%E5%87%BD%E6%95%B0/">#对数凹函数</a>
             
           </div>
         
@@ -741,59 +913,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -804,42 +978,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -849,18 +1004,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

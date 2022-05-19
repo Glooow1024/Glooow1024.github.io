@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>Categories - 你是下雨天</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,22 +48,41 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.1"><link rel="alternate" href="/atom.xml" title="你是下雨天" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 60vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>Glooow</strong>
@@ -151,6 +176,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -163,29 +189,35 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Category">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Categories"></span>
           
         </div>
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
+        <div id="board"
           >
           
           <div class="container">
@@ -200,24 +232,27 @@
 <div class="category-list">
   
   
-  
-  
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Convex Optimization"
         id="heading-395838d8a75771a13eb85240b7d59f35" role="tab" data-toggle="collapse" href="#collapse-395838d8a75771a13eb85240b7d59f35"
         aria-expanded="false"
       >
         Convex Optimization
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Convex-Optimization/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>28</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-395838d8a75771a13eb85240b7d59f35" role="tabpanel" aria-labelledby="heading-395838d8a75771a13eb85240b7d59f35">
+      
+        <a href="/categories/Convex-Optimization/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>28</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-395838d8a75771a13eb85240b7d59f35"
+           role="tabpanel" aria-labelledby="heading-395838d8a75771a13eb85240b7d59f35">
         
         
           
@@ -226,70 +261,90 @@
     
       
       
-        <a href="/2020/05/27/optimization/ch26-fixed-point/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/27/optimization/ch26-fixed-point/" title="凸优化笔记26：不动点迭代"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记26：不动点迭代</span>
         </a>
       
     
       
       
-        <a href="/2020/05/24/optimization/ch25-PDHG/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/24/optimization/ch25-PDHG/" title="凸优化笔记25：原始对偶问题 PDHG"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记25：原始对偶问题 PDHG</span>
         </a>
       
     
       
       
-        <a href="/2020/05/20/optimization/ch24-ADMM/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/20/optimization/ch24-ADMM/" title="凸优化笔记24：ADMM"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记24：ADMM</span>
         </a>
       
     
       
       
-        <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/10/optimization/ch23-DR-splitting-admm/" title="凸优化笔记23：算子分裂法 &amp; ADMM"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记23：算子分裂法 &amp; ADMM</span>
         </a>
       
     
       
       
-        <a href="/2020/05/09/optimization/ch22-ppa/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/09/optimization/ch22-ppa/" title="凸优化笔记22：近似点算法"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记22：近似点算法</span>
         </a>
       
     
       
       
-        <a href="/2020/04/24/optimization/ch21-apg-fista/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/24/optimization/ch21-apg-fista/" title="凸优化笔记21：加速近似点梯度下降"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记21：加速近似点梯度下降</span>
         </a>
       
     
       
       
-        <a href="/2020/04/23/optimization/ch20-dual-proximal-gradient/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/23/optimization/ch20-dual-proximal-gradient/" title="凸优化笔记20：对偶近似点梯度下降"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记20：对偶近似点梯度下降</span>
         </a>
       
     
       
       
-        <a href="/2020/04/17/optimization/ch19-proximal-gradient/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/17/optimization/ch19-proximal-gradient/" title="凸优化笔记19：近似点梯度下降"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记19：近似点梯度下降</span>
         </a>
       
     
       
       
-        <a href="/2020/04/16/optimization/ch18-proximal-mapping/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/16/optimization/ch18-proximal-mapping/" title="凸优化笔记18：近似点算子 Proximal Mapping"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记18：近似点算子 Proximal Mapping</span>
         </a>
       
     
       
       
-        <a href="/2020/04/10/optimization/ch17-subgradient-descent/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/10/optimization/ch17-subgradient-descent/" title="凸优化笔记17：次梯度下降"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">凸优化笔记17：次梯度下降</span>
         </a>
       
@@ -308,20 +363,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="随机过程2"
         id="heading-4ab02262a8b3e7395a7d1ed8709b0a56" role="tab" data-toggle="collapse" href="#collapse-4ab02262a8b3e7395a7d1ed8709b0a56"
         aria-expanded="false"
       >
         随机过程2
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>14</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-4ab02262a8b3e7395a7d1ed8709b0a56" role="tabpanel" aria-labelledby="heading-4ab02262a8b3e7395a7d1ed8709b0a56">
+      
+        <a href="/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>14</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-4ab02262a8b3e7395a7d1ed8709b0a56"
+           role="tabpanel" aria-labelledby="heading-4ab02262a8b3e7395a7d1ed8709b0a56">
         
         
           
@@ -330,70 +390,90 @@
     
       
       
-        <a href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/stochastic-process-2/ch7-s1-continuous-markov/" title="【随机过程2】连续参数马尔可夫链"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】连续参数马尔可夫链</span>
         </a>
       
     
       
       
-        <a href="/2022/01/24/stochastic-process-2/ch6-s2-states/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/stochastic-process-2/ch6-s2-states/" title="【随机过程2】马尔可夫过程2 | 状态空间"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】马尔可夫过程2 | 状态空间</span>
         </a>
       
     
       
       
-        <a href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/stochastic-process-2/ch6-s1-concepts/" title="【随机过程2】马尔可夫过程1 | 基本概念"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】马尔可夫过程1 | 基本概念</span>
         </a>
       
     
       
       
-        <a href="/2022/01/24/stochastic-process-2/ch5-s2-brown-extension/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/stochastic-process-2/ch5-s2-brown-extension/" title="【随机过程2】布朗运动2 | 推广"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】布朗运动2 | 推广</span>
         </a>
       
     
       
       
-        <a href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" class="list-group-item list-group-item-action">
+        <a href="/2021/11/25/stochastic-process-2/ch5-s1-brown-concepts/" title="【随机过程2】布朗运动1 | 定义与基本性质"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】布朗运动1 | 定义与基本性质</span>
         </a>
       
     
       
       
-        <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" class="list-group-item list-group-item-action">
+        <a href="/2021/11/09/stochastic-process-2/ch4-s2-possion-extend/" title="【随机过程2】泊松过程2 | 泊松过程扩展"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】泊松过程2 | 泊松过程扩展</span>
         </a>
       
     
       
       
-        <a href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" class="list-group-item list-group-item-action">
+        <a href="/2021/11/02/stochastic-process-2/ch4-s1-possion-concepts/" title="【随机过程2】泊松过程1 | 定义与基本性质"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】泊松过程1 | 定义与基本性质</span>
         </a>
       
     
       
       
-        <a href="/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/" class="list-group-item list-group-item-action">
+        <a href="/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/" title="【随机过程2】离散鞅论3 | 鞅论应用"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】离散鞅论3 | 鞅论应用</span>
         </a>
       
     
       
       
-        <a href="/2021/10/16/stochastic-process-2/ch3-s2-martingale-stopping%20time/" class="list-group-item list-group-item-action">
+        <a href="/2021/10/16/stochastic-process-2/ch3-s2-martingale-stopping%20time/" title="【随机过程2】离散鞅论2 | 停时与停时定理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】离散鞅论2 | 停时与停时定理</span>
         </a>
       
     
       
       
-        <a href="/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/" class="list-group-item list-group-item-action">
+        <a href="/2021/10/03/stochastic-process-2/ch3-s1-martingale-concepts/" title="【随机过程2】离散鞅论1 | 基本概念"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【随机过程2】离散鞅论1 | 基本概念</span>
         </a>
       
@@ -412,20 +492,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="统计推断"
         id="heading-bf81ff20a5ae163b97513b9a1ba385ba" role="tab" data-toggle="collapse" href="#collapse-bf81ff20a5ae163b97513b9a1ba385ba"
         aria-expanded="false"
       >
         统计推断
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>11</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-bf81ff20a5ae163b97513b9a1ba385ba" role="tabpanel" aria-labelledby="heading-bf81ff20a5ae163b97513b9a1ba385ba">
+      
+        <a href="/categories/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>11</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-bf81ff20a5ae163b97513b9a1ba385ba"
+           role="tabpanel" aria-labelledby="heading-bf81ff20a5ae163b97513b9a1ba385ba">
         
         
           
@@ -434,70 +519,90 @@
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch11_Sumproduct/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch11_Sumproduct/" title="统计推断(十一)  Sum-product algorithm"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(十一)  Sum-product algorithm</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch10_Elimination/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch10_Elimination/" title="统计推断(十) Elimination algorithm"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(十) Elimination algorithm</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch9_GraphModels/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch9_GraphModels/" title="统计推断(九) Graphical models"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(九) Graphical models</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch8_ModelSelection/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch8_ModelSelection/" title="统计推断(八) Model Selection"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(八) Model Selection</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch7_TypicalSequence/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch7_TypicalSequence/" title="统计推断(七)  Typical Sequence"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(七)  Typical Sequence</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch6_Modeling/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch6_Modeling/" title="统计推断(六) Modeling"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(六) Modeling</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch5_EMAlgorithm/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch5_EMAlgorithm/" title="统计推断(五)  EM algorithm"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(五)  EM algorithm</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch4_InformationGeometry/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch4_InformationGeometry/" title="统计推断(四) Information Geometry"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(四) Information Geometry</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch3_ExponentialFamily/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch3_ExponentialFamily/" title="统计推断(三) Exponential Family"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(三) Exponential Family</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/statistic/SI_Ch2_Estimation/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/statistic/SI_Ch2_Estimation/" title="统计推断(二) Estimation Problem"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">统计推断(二) Estimation Problem</span>
         </a>
       
@@ -516,20 +621,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Functional Analysis"
         id="heading-c2afbd59f7ff4b4211f3f50ee3f12df2" role="tab" data-toggle="collapse" href="#collapse-c2afbd59f7ff4b4211f3f50ee3f12df2"
         aria-expanded="false"
       >
         Functional Analysis
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Functional-Analysis/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>9</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-c2afbd59f7ff4b4211f3f50ee3f12df2" role="tabpanel" aria-labelledby="heading-c2afbd59f7ff4b4211f3f50ee3f12df2">
+      
+        <a href="/categories/Functional-Analysis/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>9</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-c2afbd59f7ff4b4211f3f50ee3f12df2"
+           role="tabpanel" aria-labelledby="heading-c2afbd59f7ff4b4211f3f50ee3f12df2">
         
         
           
@@ -538,63 +648,81 @@
     
       
       
-        <a href="/2020/12/27/functional-analysis/ch4-5-open-closed/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/27/functional-analysis/ch4-5-open-closed/" title="泛函分析笔记8：开映射定理与闭图像定理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记8：开映射定理与闭图像定理</span>
         </a>
       
     
       
       
-        <a href="/2020/12/26/functional-analysis/ch4-4-convergence/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/26/functional-analysis/ch4-4-convergence/" title="泛函分析笔记7：弱收敛与弱星收敛"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记7：弱收敛与弱星收敛</span>
         </a>
       
     
       
       
-        <a href="/2020/12/26/functional-analysis/ch4-3-banach-steinhauss/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/26/functional-analysis/ch4-3-banach-steinhauss/" title="泛函分析笔记6：一致有界性原理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记6：一致有界性原理</span>
         </a>
       
     
       
       
-        <a href="/2020/12/26/functional-analysis/ch4-2-application/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/26/functional-analysis/ch4-2-application/" title="泛函分析笔记5：Hahn-Banach定理的应用"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记5：Hahn-Banach定理的应用</span>
         </a>
       
     
       
       
-        <a href="/2020/12/14/functional-analysis/ch4-1-hahn-banach/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/14/functional-analysis/ch4-1-hahn-banach/" title="泛函分析笔记4：Hahn-Banach定理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记4：Hahn-Banach定理</span>
         </a>
       
     
       
       
-        <a href="/2020/12/11/functional-analysis/ch3-hilbert-space/" class="list-group-item list-group-item-action">
+        <a href="/2020/12/11/functional-analysis/ch3-hilbert-space/" title="泛函分析笔记3：内积空间"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记3：内积空间</span>
         </a>
       
     
       
       
-        <a href="/2020/11/10/functional-analysis/ch2-normed-space/" class="list-group-item list-group-item-action">
+        <a href="/2020/11/10/functional-analysis/ch2-normed-space/" title="泛函分析笔记2：赋范空间"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记2：赋范空间</span>
         </a>
       
     
       
       
-        <a href="/2020/10/18/functional-analysis/ch1-metric-space/" class="list-group-item list-group-item-action">
+        <a href="/2020/10/18/functional-analysis/ch1-metric-space/" title="泛函分析笔记1：度量空间"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记1：度量空间</span>
         </a>
       
     
       
       
-        <a href="/2020/10/18/functional-analysis/ch0-intro/" class="list-group-item list-group-item-action">
+        <a href="/2020/10/18/functional-analysis/ch0-intro/" title="泛函分析笔记0：绪论"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">泛函分析笔记0：绪论</span>
         </a>
       
@@ -607,20 +735,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Fuzzy Mathematics"
         id="heading-92ba4ded90323b234ef915a724179902" role="tab" data-toggle="collapse" href="#collapse-92ba4ded90323b234ef915a724179902"
         aria-expanded="false"
       >
         Fuzzy Mathematics
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Fuzzy-Mathematics/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>7</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-92ba4ded90323b234ef915a724179902" role="tabpanel" aria-labelledby="heading-92ba4ded90323b234ef915a724179902">
+      
+        <a href="/categories/Fuzzy-Mathematics/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>7</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-92ba4ded90323b234ef915a724179902"
+           role="tabpanel" aria-labelledby="heading-92ba4ded90323b234ef915a724179902">
         
         
           
@@ -629,49 +762,63 @@
     
       
       
-        <a href="/2020/03/15/fuzzy/ch7-ahp/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/15/fuzzy/ch7-ahp/" title="模糊数学笔记 7：层次分析法"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 7：层次分析法</span>
         </a>
       
     
       
       
-        <a href="/2020/03/13/fuzzy/ch6-evaluate/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/13/fuzzy/ch6-evaluate/" title="模糊数学笔记 6：模糊综合评判"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 6：模糊综合评判</span>
         </a>
       
     
       
       
-        <a href="/2020/03/07/fuzzy/ch5-clustering/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/07/fuzzy/ch5-clustering/" title="模糊数学笔记 5：模糊聚类"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 5：模糊聚类</span>
         </a>
       
     
       
       
-        <a href="/2020/03/01/fuzzy/ch4-relation/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/01/fuzzy/ch4-relation/" title="模糊数学笔记 4：模糊关系"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 4：模糊关系</span>
         </a>
       
     
       
       
-        <a href="/2020/03/01/fuzzy/ch3-extension/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/01/fuzzy/ch3-extension/" title="模糊数学笔记 3：扩展原理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 3：扩展原理</span>
         </a>
       
     
       
       
-        <a href="/2020/03/01/fuzzy/ch2-nearness/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/01/fuzzy/ch2-nearness/" title="模糊数学笔记 2：贴近度"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 2：贴近度</span>
         </a>
       
     
       
       
-        <a href="/2020/02/26/fuzzy/ch1-set/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/26/fuzzy/ch1-set/" title="模糊数学笔记 1：模糊集 Fuzzy set"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">模糊数学笔记 1：模糊集 Fuzzy set</span>
         </a>
       
@@ -684,20 +831,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Software"
         id="heading-719d067b229178f03bcfa1da4ac4dede" role="tab" data-toggle="collapse" href="#collapse-719d067b229178f03bcfa1da4ac4dede"
         aria-expanded="false"
       >
         Software
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Software/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>6</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-719d067b229178f03bcfa1da4ac4dede" role="tabpanel" aria-labelledby="heading-719d067b229178f03bcfa1da4ac4dede">
+      
+        <a href="/categories/Software/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>6</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-719d067b229178f03bcfa1da4ac4dede"
+           role="tabpanel" aria-labelledby="heading-719d067b229178f03bcfa1da4ac4dede">
         
         
           
@@ -706,42 +858,54 @@
     
       
       
-        <a href="/2022/01/24/software/prepare-my-pc/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/software/prepare-my-pc/" title="我的电脑（不时更新）"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">我的电脑（不时更新）</span>
         </a>
       
     
       
       
-        <a href="/2020/08/11/software/vmware/" class="list-group-item list-group-item-action">
+        <a href="/2020/08/11/software/vmware/" title="VMWare15 + Ubuntu18.04 踩坑记录"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">VMWare15 + Ubuntu18.04 踩坑记录</span>
         </a>
       
     
       
       
-        <a href="/2020/04/08/software/matlab-parpool/" class="list-group-item list-group-item-action">
+        <a href="/2020/04/08/software/matlab-parpool/" title="MATLAB R2016a 无法启动并行池"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">MATLAB R2016a 无法启动并行池</span>
         </a>
       
     
       
       
-        <a href="/2020/01/08/software/taskbar/" class="list-group-item list-group-item-action">
+        <a href="/2020/01/08/software/taskbar/" title="Windows任务栏右侧小图标显示不完整"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Windows任务栏右侧小图标显示不完整</span>
         </a>
       
     
       
       
-        <a href="/2003/06/04/software/mathematica/" class="list-group-item list-group-item-action">
+        <a href="/2003/06/04/software/mathematica/" title="Mathematica激活"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Mathematica激活</span>
         </a>
       
     
       
       
-        <a href="/2002/08/05/software/acrobat/" class="list-group-item list-group-item-action">
+        <a href="/2002/08/05/software/acrobat/" title="Adobe Acrobat Pro DC更新后提示登录激活问题"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Adobe Acrobat Pro DC更新后提示登录激活问题</span>
         </a>
       
@@ -754,20 +918,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="高等数值分析"
         id="heading-c53e6f9ae00087c05fcc269bdbd43e77" role="tab" data-toggle="collapse" href="#collapse-c53e6f9ae00087c05fcc269bdbd43e77"
         aria-expanded="false"
       >
         高等数值分析
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>5</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-c53e6f9ae00087c05fcc269bdbd43e77" role="tabpanel" aria-labelledby="heading-c53e6f9ae00087c05fcc269bdbd43e77">
+      
+        <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>5</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-c53e6f9ae00087c05fcc269bdbd43e77"
+           role="tabpanel" aria-labelledby="heading-c53e6f9ae00087c05fcc269bdbd43e77">
         
         
           
@@ -776,35 +945,45 @@
     
       
       
-        <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/24/advanced-numerical-analysis/ada-krylov/" title="【高等数值分析】Krylov子空间方法"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【高等数值分析】Krylov子空间方法</span>
         </a>
       
     
       
       
-        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" title="【高等数值分析】常微分方程数值解"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【高等数值分析】常微分方程数值解</span>
         </a>
       
     
       
       
-        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" title="【高等数值分析】数值积分和数值微分"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【高等数值分析】数值积分和数值微分</span>
         </a>
       
     
       
       
-        <a href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-approximation/" title="【高等数值分析】函数逼近"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【高等数值分析】函数逼近</span>
         </a>
       
     
       
       
-        <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" class="list-group-item list-group-item-action">
+        <a href="/2022/01/07/advanced-numerical-analysis/ada-interpolation/" title="【高等数值分析】多项式插值"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">【高等数值分析】多项式插值</span>
         </a>
       
@@ -817,20 +996,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Music"
         id="heading-47dcbd834e669233d7eb8a51456ed217" role="tab" data-toggle="collapse" href="#collapse-47dcbd834e669233d7eb8a51456ed217"
         aria-expanded="false"
       >
         Music
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Music/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>5</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-47dcbd834e669233d7eb8a51456ed217" role="tabpanel" aria-labelledby="heading-47dcbd834e669233d7eb8a51456ed217">
+      
+        <a href="/categories/Music/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>5</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-47dcbd834e669233d7eb8a51456ed217"
+           role="tabpanel" aria-labelledby="heading-47dcbd834e669233d7eb8a51456ed217">
         
         
           
@@ -839,35 +1023,45 @@
     
       
       
-        <a href="/2021/11/17/music/Onion/" class="list-group-item list-group-item-action">
+        <a href="/2021/11/17/music/Onion/" title="洋葱"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">洋葱</span>
         </a>
       
     
       
       
-        <a href="/2021/08/14/music/Later/" class="list-group-item list-group-item-action">
+        <a href="/2021/08/14/music/Later/" title="今夕何夕"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">今夕何夕</span>
         </a>
       
     
       
       
-        <a href="/2021/02/12/music/LovePea/" class="list-group-item list-group-item-action">
+        <a href="/2021/02/12/music/LovePea/" title="红豆"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">红豆</span>
         </a>
       
     
       
       
-        <a href="/2020/06/12/music/WhyBabyWhy/" class="list-group-item list-group-item-action">
+        <a href="/2020/06/12/music/WhyBabyWhy/" title="Why Baby Why"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Why Baby Why</span>
         </a>
       
     
       
       
-        <a href="/2020/05/04/music/TroubleImIn/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/04/music/TroubleImIn/" title="Trouble I&#39;m In"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Trouble I&#39;m In</span>
         </a>
       
@@ -880,20 +1074,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Linear Algebra"
         id="heading-eee5ea614c3474d72c29c96917c356e9" role="tab" data-toggle="collapse" href="#collapse-eee5ea614c3474d72c29c96917c356e9"
         aria-expanded="false"
       >
         Linear Algebra
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Linear-Algebra/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>4</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-eee5ea614c3474d72c29c96917c356e9" role="tabpanel" aria-labelledby="heading-eee5ea614c3474d72c29c96917c356e9">
+      
+        <a href="/categories/Linear-Algebra/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>4</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-eee5ea614c3474d72c29c96917c356e9"
+           role="tabpanel" aria-labelledby="heading-eee5ea614c3474d72c29c96917c356e9">
         
         
           
@@ -902,28 +1101,36 @@
     
       
       
-        <a href="/2021/07/09/linear-algebra/woodbury/" class="list-group-item list-group-item-action">
+        <a href="/2021/07/09/linear-algebra/woodbury/" title="转载 | Woodbury 恒等式"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">转载 | Woodbury 恒等式</span>
         </a>
       
     
       
       
-        <a href="/2021/05/28/linear-algebra/SchurComplement/" class="list-group-item list-group-item-action">
+        <a href="/2021/05/28/linear-algebra/SchurComplement/" title="舒尔补"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">舒尔补</span>
         </a>
       
     
       
       
-        <a href="/2021/04/08/linear-algebra/complex_space/" class="list-group-item list-group-item-action">
+        <a href="/2021/04/08/linear-algebra/complex_space/" title="转载|理解复数域上的向量空间"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">转载|理解复数域上的向量空间</span>
         </a>
       
     
       
       
-        <a href="/2020/02/03/linear-algebra/matrix/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/03/linear-algebra/matrix/" title="矩阵分析学习笔记"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">矩阵分析学习笔记</span>
         </a>
       
@@ -936,20 +1143,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Hardware"
         id="heading-3c02a379965ab0dfcd77b1c484450433" role="tab" data-toggle="collapse" href="#collapse-3c02a379965ab0dfcd77b1c484450433"
         aria-expanded="false"
       >
         Hardware
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Hardware/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>3</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-3c02a379965ab0dfcd77b1c484450433" role="tabpanel" aria-labelledby="heading-3c02a379965ab0dfcd77b1c484450433">
+      
+        <a href="/categories/Hardware/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-3c02a379965ab0dfcd77b1c484450433"
+           role="tabpanel" aria-labelledby="heading-3c02a379965ab0dfcd77b1c484450433">
         
         
           
@@ -958,21 +1170,27 @@
     
       
       
-        <a href="/2020/07/20/hardware/raspberrypi-autostart/" class="list-group-item list-group-item-action">
+        <a href="/2020/07/20/hardware/raspberrypi-autostart/" title="树莓派设置开机自启动程序"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">树莓派设置开机自启动程序</span>
         </a>
       
     
       
       
-        <a href="/2020/07/09/hardware/jy901/" class="list-group-item list-group-item-action">
+        <a href="/2020/07/09/hardware/jy901/" title="JY901串口数据接收与处理(Python)"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">JY901串口数据接收与处理(Python)</span>
         </a>
       
     
       
       
-        <a href="/2020/06/08/hardware/raspberrypi/" class="list-group-item list-group-item-action">
+        <a href="/2020/06/08/hardware/raspberrypi/" title="树莓派使用"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">树莓派使用</span>
         </a>
       
@@ -985,20 +1203,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Cybernetics"
         id="heading-5958d9a69c598f395c7d979651644c1c" role="tab" data-toggle="collapse" href="#collapse-5958d9a69c598f395c7d979651644c1c"
         aria-expanded="false"
       >
         Cybernetics
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Cybernetics/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>2</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-5958d9a69c598f395c7d979651644c1c" role="tabpanel" aria-labelledby="heading-5958d9a69c598f395c7d979651644c1c">
+      
+        <a href="/categories/Cybernetics/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-5958d9a69c598f395c7d979651644c1c"
+           role="tabpanel" aria-labelledby="heading-5958d9a69c598f395c7d979651644c1c">
         
         
           
@@ -1007,14 +1230,18 @@
     
       
       
-        <a href="/2020/02/21/cybernetics/pid/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/21/cybernetics/pid/" title="PID 控制器"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">PID 控制器</span>
         </a>
       
     
       
       
-        <a href="/2020/02/20/cybernetics/lasalle/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/20/cybernetics/lasalle/" title="LaSalle&#39;s invariance principle 拉萨尔不变性原理"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">LaSalle&#39;s invariance principle 拉萨尔不变性原理</span>
         </a>
       
@@ -1027,20 +1254,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Git"
         id="heading-0bcc70105ad279503e31fe7b3f47b665" role="tab" data-toggle="collapse" href="#collapse-0bcc70105ad279503e31fe7b3f47b665"
         aria-expanded="false"
       >
         Git
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Git/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>2</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-0bcc70105ad279503e31fe7b3f47b665" role="tabpanel" aria-labelledby="heading-0bcc70105ad279503e31fe7b3f47b665">
+      
+        <a href="/categories/Git/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>2</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-0bcc70105ad279503e31fe7b3f47b665"
+           role="tabpanel" aria-labelledby="heading-0bcc70105ad279503e31fe7b3f47b665">
         
         
           
@@ -1049,14 +1281,18 @@
     
       
       
-        <a href="/2019/12/29/git/git-principle-2/" class="list-group-item list-group-item-action">
+        <a href="/2019/12/29/git/git-principle-2/" title="Git 工作原理(二)"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Git 工作原理(二)</span>
         </a>
       
     
       
       
-        <a href="/2019/12/29/git/git-principle-1/" class="list-group-item list-group-item-action">
+        <a href="/2019/12/29/git/git-principle-1/" title="Git 工作原理(一)"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Git 工作原理(一)</span>
         </a>
       
@@ -1069,20 +1305,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Communication and Networks"
         id="heading-9151102c3e6b8d84d103ee8111ca0040" role="tab" data-toggle="collapse" href="#collapse-9151102c3e6b8d84d103ee8111ca0040"
         aria-expanded="false"
       >
         Communication and Networks
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Communication-and-Networks/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-9151102c3e6b8d84d103ee8111ca0040" role="tabpanel" aria-labelledby="heading-9151102c3e6b8d84d103ee8111ca0040">
+      
+        <a href="/categories/Communication-and-Networks/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-9151102c3e6b8d84d103ee8111ca0040"
+           role="tabpanel" aria-labelledby="heading-9151102c3e6b8d84d103ee8111ca0040">
         
         
           
@@ -1091,7 +1332,9 @@
     
       
       
-        <a href="/2021/08/29/communication/IQ-modulation/" class="list-group-item list-group-item-action">
+        <a href="/2021/08/29/communication/IQ-modulation/" title="正交(IQ)调制解调与希尔伯特变换"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">正交(IQ)调制解调与希尔伯特变换</span>
         </a>
       
@@ -1104,20 +1347,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Probability Theory"
         id="heading-6d69105ec4c5322b89f7eb8c65e2f96a" role="tab" data-toggle="collapse" href="#collapse-6d69105ec4c5322b89f7eb8c65e2f96a"
         aria-expanded="false"
       >
         Probability Theory
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Probability-Theory/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-6d69105ec4c5322b89f7eb8c65e2f96a" role="tabpanel" aria-labelledby="heading-6d69105ec4c5322b89f7eb8c65e2f96a">
+      
+        <a href="/categories/Probability-Theory/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-6d69105ec4c5322b89f7eb8c65e2f96a"
+           role="tabpanel" aria-labelledby="heading-6d69105ec4c5322b89f7eb8c65e2f96a">
         
         
           
@@ -1126,7 +1374,9 @@
     
       
       
-        <a href="/2020/05/30/probability/law%20of%20large%20numbers/" class="list-group-item list-group-item-action">
+        <a href="/2020/05/30/probability/law%20of%20large%20numbers/" title="强大数定律与弱大数定律"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">强大数定律与弱大数定律</span>
         </a>
       
@@ -1139,55 +1389,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-f027f27d0d548351e4d362e9b90678a9" role="tab" data-toggle="collapse" href="#collapse-f027f27d0d548351e4d362e9b90678a9"
-        aria-expanded="false"
-      >
-        Research
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/Research/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-f027f27d0d548351e4d362e9b90678a9" role="tabpanel" aria-labelledby="heading-f027f27d0d548351e4d362e9b90678a9">
-        
-        
-          
-  <div class="category-post-list">
     
-    
-      
-      
-        <a href="/2022/03/02/research/SLAM-survey/" class="list-group-item list-group-item-action">
-          <span class="category-post">SLAM综述</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Signal Processing"
         id="heading-fb93336ab960d4ccca06e3a9ff73596b" role="tab" data-toggle="collapse" href="#collapse-fb93336ab960d4ccca06e3a9ff73596b"
         aria-expanded="false"
       >
         Signal Processing
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Signal-Processing/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-fb93336ab960d4ccca06e3a9ff73596b" role="tabpanel" aria-labelledby="heading-fb93336ab960d4ccca06e3a9ff73596b">
+      
+        <a href="/categories/Signal-Processing/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-fb93336ab960d4ccca06e3a9ff73596b"
+           role="tabpanel" aria-labelledby="heading-fb93336ab960d4ccca06e3a9ff73596b">
         
         
           
@@ -1196,7 +1416,9 @@
     
       
       
-        <a href="/2019/12/10/signal-processing/particle%20filter/" class="list-group-item list-group-item-action">
+        <a href="/2019/12/10/signal-processing/particle%20filter/" title="Particle Filter"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Particle Filter</span>
         </a>
       
@@ -1209,20 +1431,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="电子产品"
         id="heading-cdce861f8e0123644ff6c0a124cfc69a" role="tab" data-toggle="collapse" href="#collapse-cdce861f8e0123644ff6c0a124cfc69a"
         aria-expanded="false"
       >
         电子产品
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-cdce861f8e0123644ff6c0a124cfc69a" role="tabpanel" aria-labelledby="heading-cdce861f8e0123644ff6c0a124cfc69a">
+      
+        <a href="/categories/%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-cdce861f8e0123644ff6c0a124cfc69a"
+           role="tabpanel" aria-labelledby="heading-cdce861f8e0123644ff6c0a124cfc69a">
         
         
           
@@ -1231,7 +1458,9 @@
     
       
       
-        <a href="/2020/02/09/software/laptop/" class="list-group-item list-group-item-action">
+        <a href="/2020/02/09/software/laptop/" title="笔记本选购指南"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">笔记本选购指南</span>
         </a>
       
@@ -1244,20 +1473,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Hexo"
         id="heading-c00d1eb68b529768ba98c975c76a9b66" role="tab" data-toggle="collapse" href="#collapse-c00d1eb68b529768ba98c975c76a9b66"
         aria-expanded="false"
       >
         Hexo
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/Hexo/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-c00d1eb68b529768ba98c975c76a9b66" role="tabpanel" aria-labelledby="heading-c00d1eb68b529768ba98c975c76a9b66">
+      
+        <a href="/categories/Hexo/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-c00d1eb68b529768ba98c975c76a9b66"
+           role="tabpanel" aria-labelledby="heading-c00d1eb68b529768ba98c975c76a9b66">
         
         
           
@@ -1266,7 +1500,9 @@
     
       
       
-        <a href="/2020/03/11/software/next-beautify/" class="list-group-item list-group-item-action">
+        <a href="/2020/03/11/software/next-beautify/" title="Hexo NexT 7.7 主题美化"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">Hexo NexT 7.7 主题美化</span>
         </a>
       
@@ -1279,20 +1515,25 @@
   
     
     
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-03f933764cfb504f7e8b74f5c1d1000a" role="tab" data-toggle="collapse" href="#collapse-03f933764cfb504f7e8b74f5c1d1000a"
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Research"
+        id="heading-f027f27d0d548351e4d362e9b90678a9" role="tab" data-toggle="collapse" href="#collapse-f027f27d0d548351e4d362e9b90678a9"
         aria-expanded="false"
       >
-        DIY
+        Research
+        <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
-      <a href="/categories/DIY/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-03f933764cfb504f7e8b74f5c1d1000a" role="tabpanel" aria-labelledby="heading-03f933764cfb504f7e8b74f5c1d1000a">
+      
+        <a href="/categories/Research/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-f027f27d0d548351e4d362e9b90678a9"
+           role="tabpanel" aria-labelledby="heading-f027f27d0d548351e4d362e9b90678a9">
         
         
           
@@ -1301,7 +1542,51 @@
     
       
       
-        <a href="/2022/03/19/diy/paper-collector/" class="list-group-item list-group-item-action">
+        <a href="/2022/03/02/research/SLAM-survey/" title="SLAM综述"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">SLAM综述</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="DIY"
+        id="heading-03f933764cfb504f7e8b74f5c1d1000a" role="tab" data-toggle="collapse" href="#collapse-03f933764cfb504f7e8b74f5c1d1000a"
+        aria-expanded="false"
+      >
+        DIY
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/DIY/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>1</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-03f933764cfb504f7e8b74f5c1d1000a"
+           role="tabpanel" aria-labelledby="heading-03f933764cfb504f7e8b74f5c1d1000a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/03/19/diy/paper-collector/" title="IEEE论文爬虫及数据统计"
+           class="list-group-item list-group-item-action
+           ">
           <span class="category-post">IEEE论文爬虫及数据统计</span>
         </a>
       
@@ -1313,6 +1598,7 @@
     </div>
   
 </div>
+
 
               </div>
             </div>
@@ -1341,59 +1627,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        Views: 
+        <span id="busuanzi_value_site_pv"></span>
+        
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        Visitors: 
+        <span id="busuanzi_value_site_uv"></span>
+        
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -1404,42 +1692,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-        typing(title);
+        typing(text);
       
     })(window, document);
   </script>
@@ -1449,18 +1718,30 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
 
 
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

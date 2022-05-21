@@ -19,7 +19,7 @@
     <meta name="description" content="前面讲了梯度下降法、次梯度下降法，并分析了他们的收敛性。上一节讲了近似梯度算子，我们说主要是针对非光滑问题的，这一节就要讲近似梯度算子在非光滑优化问题中的应用。先回顾一下上一节最重要的一部分内容：对于指示函数 \(\delta_C\) 来说近似梯度算子得到的实际上就是向集合 \(C\) 的投影。 1. 近似点梯度下降 这一部分考虑的问题主要是 \[ \text{minimize } f(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记19：近似点梯度下降">
-<meta property="og:url" content="http://example.com/2020/04/17/optimization/ch19-proximal-gradient/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/04/17/optimization/ch19-proximal-gradient/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面讲了梯度下降法、次梯度下降法，并分析了他们的收敛性。上一节讲了近似梯度算子，我们说主要是针对非光滑问题的，这一节就要讲近似梯度算子在非光滑优化问题中的应用。先回顾一下上一节最重要的一部分内容：对于指示函数 \(\delta_C\) 来说近似梯度算子得到的实际上就是向集合 \(C\) 的投影。 1. 近似点梯度下降 这一部分考虑的问题主要是 \[ \text{minimize } f(">
 <meta property="og:locale" content="zh_CN">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -565,7 +565,7 @@ class="math inline">\(f(x_k)-f^\star \le
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记19：近似点梯度下降</div>
-      <div>http://example.com/2020/04/17/optimization/ch19-proximal-gradient/</div>
+      <div>https://glooow1024.github.io/2020/04/17/optimization/ch19-proximal-gradient/</div>
     </div>
     <div class="license-meta">
       

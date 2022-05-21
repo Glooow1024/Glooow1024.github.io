@@ -19,7 +19,7 @@
     <meta name="description" content="前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记15：梯度方法 Gradient Method">
-<meta property="og:url" content="http://example.com/2020/04/05/optimization/ch15-gradient/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/04/05/optimization/ch15-gradient/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面的章节基本上讲完了凸优化相关的理论部分，在对偶原理以及 KKT 条件那里我们已经体会到了理论之美！接下来我们就要进入求解算法的部分，这也是需要浓墨重彩的一部分，毕竟我们学习凸优化就是为了解决实际当中的优化问题。我们今天首先要接触的就是大名鼎鼎的梯度方法。现在人工智能和人工神经网络很火，经常可以听到反向传播，这实际上就是梯度下降方法的应用，他的思想其实很简单，就是沿着函数梯度的反方向走就会使函">
 <meta property="og:locale" content="zh_CN">
@@ -76,7 +76,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -756,7 +756,7 @@ alt="BB method" />
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记15：梯度方法 Gradient Method</div>
-      <div>http://example.com/2020/04/05/optimization/ch15-gradient/</div>
+      <div>https://glooow1024.github.io/2020/04/05/optimization/ch15-gradient/</div>
     </div>
     <div class="license-meta">
       

@@ -19,7 +19,7 @@
     <meta name="description" content="前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记23：算子分裂法 &amp; ADMM">
-<meta property="og:url" content="http://example.com/2020/05/10/optimization/ch23-DR-splitting-admm/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/05/10/optimization/ch23-DR-splitting-admm/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面章节中，针对 \(\min f(x)+g(Ax)\) 形式的优化问题，我们介绍了如 PG、dual PG、ALM、PPA 等方法。但是比如 PG 方法为 \[ x_{k+1}&#x3D;\text{prox}_{th}(x_k-t_k\nabla g(x_k)) \] ALM 的第一步要解一个联合优化问题 \[ (x^{k+1},y^{k+1}) &#x3D; \arg\min_{x,y} L_t(x,">
 <meta property="og:locale" content="zh_CN">
@@ -73,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -705,7 +705,7 @@ y_k-\bar{v}\|_2\)</span> 存在，因此 <span class="math display">\[
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记23：算子分裂法 &amp; ADMM</div>
-      <div>http://example.com/2020/05/10/optimization/ch23-DR-splitting-admm/</div>
+      <div>https://glooow1024.github.io/2020/05/10/optimization/ch23-DR-splitting-admm/</div>
     </div>
     <div class="license-meta">
       

@@ -19,7 +19,7 @@
     <meta name="description" content="前面讲了梯度下降法，分析了其收敛速度，对于存在不可导的函数介绍了次梯度的计算方法以及次梯度下降法，这一节要介绍的内容叫做近似点算子(Proximal mapping)，也是为了处理非光滑问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记18：近似点算子 Proximal Mapping">
-<meta property="og:url" content="http://example.com/2020/04/16/optimization/ch18-proximal-mapping/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/04/16/optimization/ch18-proximal-mapping/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面讲了梯度下降法，分析了其收敛速度，对于存在不可导的函数介绍了次梯度的计算方法以及次梯度下降法，这一节要介绍的内容叫做近似点算子(Proximal mapping)，也是为了处理非光滑问题。">
 <meta property="og:locale" content="zh_CN">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -787,7 +787,7 @@ alt="proof 2" />
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记18：近似点算子 Proximal Mapping</div>
-      <div>http://example.com/2020/04/16/optimization/ch18-proximal-mapping/</div>
+      <div>https://glooow1024.github.io/2020/04/16/optimization/ch18-proximal-mapping/</div>
     </div>
     <div class="license-meta">
       

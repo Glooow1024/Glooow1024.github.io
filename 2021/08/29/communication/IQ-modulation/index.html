@@ -19,7 +19,7 @@
     <meta name="description" content="1. 复信号 首先我们为什么需要复信号？ 第一是因为复信号便于数学处理，例如获得信号的包络、相位等等； 除此之外，从频域来看，实信号频谱总是共轭对称的，也就是双边带信号，这就导致有一半的频带是无用的，浪费频谱资源，因此实际通信系统中我们更希望传输单边带的复信号。 但是在实际系统中我们只能获得实信号。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正交(IQ)调制解调与希尔伯特变换">
-<meta property="og:url" content="http://example.com/2021/08/29/communication/IQ-modulation/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2021/08/29/communication/IQ-modulation/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="1. 复信号 首先我们为什么需要复信号？ 第一是因为复信号便于数学处理，例如获得信号的包络、相位等等； 除此之外，从频域来看，实信号频谱总是共轭对称的，也就是双边带信号，这就导致有一半的频带是无用的，浪费频谱资源，因此实际通信系统中我们更希望传输单边带的复信号。 但是在实际系统中我们只能获得实信号。">
 <meta property="og:locale" content="zh_CN">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -418,7 +418,7 @@ t)\)</span>，实际上只发射了它的实部 <span class="math inline">\(z(t)
   <div class="license-box my-3">
     <div class="license-title">
       <div>正交(IQ)调制解调与希尔伯特变换</div>
-      <div>http://example.com/2021/08/29/communication/IQ-modulation/</div>
+      <div>https://glooow1024.github.io/2021/08/29/communication/IQ-modulation/</div>
     </div>
     <div class="license-meta">
       

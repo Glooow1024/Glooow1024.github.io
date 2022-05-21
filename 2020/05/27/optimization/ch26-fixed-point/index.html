@@ -19,7 +19,7 @@
     <meta name="description" content="前面讲了很多具体的算法，比如梯度、次梯度、近似点梯度、加速近似点梯度、PPA、DR方法、ADMM、ALM等，对这些方法的迭代过程有了一些了解。这一节则主要是针对算法的收敛性进行分析，试图从一个更加抽象的层面，利用不动点迭代的思想，把上面的算法综合起来，给一个比较 general 的收敛性分析方法。 1. 什么是不动点？ 对于希尔伯特空间(Hilbert space) \(\mathcal{H">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记26：不动点迭代">
-<meta property="og:url" content="http://example.com/2020/05/27/optimization/ch26-fixed-point/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/05/27/optimization/ch26-fixed-point/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面讲了很多具体的算法，比如梯度、次梯度、近似点梯度、加速近似点梯度、PPA、DR方法、ADMM、ALM等，对这些方法的迭代过程有了一些了解。这一节则主要是针对算法的收敛性进行分析，试图从一个更加抽象的层面，利用不动点迭代的思想，把上面的算法综合起来，给一个比较 general 的收敛性分析方法。 1. 什么是不动点？ 对于希尔伯特空间(Hilbert space) \(\mathcal{H">
 <meta property="og:locale" content="zh_CN">
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -667,7 +667,7 @@ class="math inline">\(R_B=(z)=(I+B)^{-1}(z)\)</span></p>
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记26：不动点迭代</div>
-      <div>http://example.com/2020/05/27/optimization/ch26-fixed-point/</div>
+      <div>https://glooow1024.github.io/2020/05/27/optimization/ch26-fixed-point/</div>
     </div>
     <div class="license-meta">
       

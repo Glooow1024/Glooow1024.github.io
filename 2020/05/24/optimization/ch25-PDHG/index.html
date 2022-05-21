@@ -19,7 +19,7 @@
     <meta name="description" content="前面的章节要么从原始问题出发，要么从对偶问题出发，通过求解近似点或者一个子优化问题进行迭代，而且推导过程中我们发现根据问题的参数特征，比如矩阵 \(A\) 是瘦高型的还是矮胖型的，采用对偶和原始问题的复杂度会不一样，可以选择一个更简单的。而这一节，我们将要从原始对偶问题出发来优化，什么是原始对偶问题呢？就是原始优化变量和对偶优化变量（原始函数和共轭函数）混合在一块，看下面的原理就知道了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记25：原始对偶问题 PDHG">
-<meta property="og:url" content="http://example.com/2020/05/24/optimization/ch25-PDHG/index.html">
+<meta property="og:url" content="https://glooow1024.github.io/2020/05/24/optimization/ch25-PDHG/index.html">
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="前面的章节要么从原始问题出发，要么从对偶问题出发，通过求解近似点或者一个子优化问题进行迭代，而且推导过程中我们发现根据问题的参数特征，比如矩阵 \(A\) 是瘦高型的还是矮胖型的，采用对偶和原始问题的复杂度会不一样，可以选择一个更简单的。而这一节，我们将要从原始对偶问题出发来优化，什么是原始对偶问题呢？就是原始优化变量和对偶优化变量（原始函数和共轭函数）混合在一块，看下面的原理就知道了。">
 <meta property="og:locale" content="zh_CN">
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"glooow1024.github.io","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -992,7 +992,7 @@ g^{*}}\left(z_{k}+\sigma A\left(2 x_{k+1}-x_{k}\right)\right)\end{array}
   <div class="license-box my-3">
     <div class="license-title">
       <div>凸优化笔记25：原始对偶问题 PDHG</div>
-      <div>http://example.com/2020/05/24/optimization/ch25-PDHG/</div>
+      <div>https://glooow1024.github.io/2020/05/24/optimization/ch25-PDHG/</div>
     </div>
     <div class="license-meta">
       

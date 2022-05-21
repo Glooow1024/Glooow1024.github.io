@@ -24,7 +24,7 @@
 <meta property="og:description" content="写这篇文章的起因是我一直对数字调制和模拟调制这两个概念比较模糊，对于相应的通信系统结构也觉得比较混乱，所以在网上查了很多资料来理清楚这件事情。本文引用了诸多网络上的博客、文章中的文字和图片，引用之处都标注了参考出处，若有侵权请告知我，我会删除侵权部分。  信号的调制简单来说，就是用基带信号去控制（调制）单频载波信号的某个或某几个参数，从而使得调制后的信号中嵌入了希望传递的信息[1]。这个载">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-20T16:16:24.000Z">
-<meta property="article:modified_time" content="2022-05-21T02:58:05.526Z">
+<meta property="article:modified_time" content="2022-05-21T06:33:31.583Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="IQ调制">
 <meta property="article:tag" content="调制与解调">
@@ -32,6 +32,7 @@
 <meta property="article:tag" content="模拟调制">
 <meta property="article:tag" content="数字调制">
 <meta property="article:tag" content="QAM">
+<meta property="article:tag" content="OFDM">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -237,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          10k 字
+          12k 字
         
       </span>
     
@@ -248,7 +249,7 @@
         
         
         
-          87 分钟
+          102 分钟
         
       </span>
     
@@ -344,7 +345,7 @@ aria-label="https://www.zseries.in/telecom%20lab/telecom%20generations/
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/zuochao_2013/article/details/78337600
 ">[24]</span></a></sup>。</p>
-<p>随著版图不断扩大，IT业巨头们开始觊觎起蜂窝移动通信市场大饼——4G。随著版图不断扩大，IT业巨头们开始觊觎起蜂窝移动通信市场大饼——4G。OFDM说起来也不是新技术，早在1960年代贝尔实验室发明OFDM后，技术框架约在1980年代便已建立完成。然而当时能支持OFDM的硬件不成熟，CDMA又由高通领军一时红火，便淘汰在3G标准之外。简单来说就是CDMA太红，如果
+<p>随着版图不断扩大，IT业巨头们开始觊觎起蜂窝移动通信市场大饼——4G。OFDM说起来也不是新技术，早在1960年代贝尔实验室发明OFDM后，技术框架约在1980年代便已建立完成。然而当时能支持OFDM的硬件不成熟，CDMA又由高通领军一时红火，便淘汰在3G标准之外。简单来说就是CDMA太红，如果
 Intel和
 IT大厂没有在WiFi上将OFDM技术发扬光大，电信业没有一家注意到早期不被重视的OFDM。由于WiMax的关系，OFDM才又重新进入电信业和学术界的视野中。简单来说就是CDMA太红，如果
 Intel和
@@ -434,7 +435,7 @@ aria-label="https://blog.csdn.net/weixin_50912862/article/details/114679288
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/m0_51288996/article/details/121340840
 ">[4]</span></a></sup>。</p>
-<h2 id="模拟调制">4. 模拟调制</h2>
+<h2 id="模拟调制与解调">4. 模拟调制与解调</h2>
 <p>我们都假设基带信号是 <span
 class="math inline">\(m(t)\)</span>，载波频率是 <span
 class="math inline">\(f_c\)</span>，调制后的信号是 <span
@@ -548,6 +549,24 @@ class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/weixin_50912862/article/details/114694510
 ">[6]</span></a></sup>。调频信号的包络恒定，而噪声往往是作用在信号幅度上，因此FM信号抗噪声能力强；但是FM信号需要占用较大的信号带宽，频谱利用率低。</p>
 <h2 id="数字调制">5. 数字调制</h2>
+<p>在开始本节之前，需要明晰的一点是，相比于模拟调制，数字调制当中“调制”的概念已经被扩展了。具体而言，在模拟调制当中，基带模拟信号与高频载波通过前面介绍的几种调制方式混合之后，得到的就直接是待发送的射频信号。而在数字调制中通常包含三个阶段：</p>
+<ol type="1">
+<li>第一个阶段将二进制比特流映射为某种效率更高的数字信号（通常被称为码流），这个过程被称为基带调制；</li>
+<li>第二个阶段将码流通过脉冲成型滤波器，将会突变的数字信号变成连续光滑的模拟信号，得到的就是基带信号；</li>
+<li>第三个阶段将基带信号搬移到高频载波上，这个过程被称为载波调制/带通调制/射频调制。</li>
+</ol>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/digital-communication-system-diagram.png" srcset="/img/loading.gif" lazyload
+alt="digital-communication-system-diagram" />
+<figcaption
+aria-hidden="true">digital-communication-system-diagram</figcaption>
+</figure>
+<p>在本节的几个子小节中，5.3
+IQ调制属于第三阶段载波调制，5.7脉冲成型滤波器属于第二阶段，其余的部分则属于第一阶段基带调制。为了讲述的方便以及前后逻辑的顺畅，这里将他们穿插起来，但是希望读者在脑海里能够明确他们在系统中的位置以及各自的作用。</p>
+<blockquote>
+<p>实际上，笔者在写本文之前对模拟和数字调制感到困惑、不理解也是源于此。</p>
+</blockquote>
 <h3 id="二进制数字调制">5.1 二进制数字调制</h3>
 <p>最简单的数字调制系统中，基带信号是0-1二进制数字波形，通过控制开关实现对载波的调制，因此这里面的调幅AM、调相PM、调频FM也分别被称为幅度键控ASK/通-断键控OOK、相位键控PSK、频移键控FSK。他们各自图示如下<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote"><span
 class="hint--top hint--rounded"
@@ -632,8 +651,8 @@ alt="constellation-16APSK" />
 <figcaption aria-hidden="true">constellation-16APSK</figcaption>
 </figure>
 <p>不过这里有一个问题就是：我们实际系统中只能产生实信号，而这里转换到复数域虽然看起来很简洁，但是实际系统如何实现呢？答案就是用两路信号，分别表示复信号的实部和虚部，也就是I路（In-phase）和Q路（Quadrature）。这就引出了下面的正交幅度调制QAM。</p>
-<h3 id="正交幅度调制qam">5.3 正交幅度调制QAM</h3>
-<p>QAM在现代的数字通信系统种已经算是基操了。前面我们已经提到了symbol可以用复数表示，那么我们要传输的码流就是一个复基带信号，记为<span
+<h3 id="iq调制">5.3 IQ调制</h3>
+<p>说白了IQ调制就是把复的基带信号搬移到高频载波上，仅此而已。前面我们已经提到了symbol可以用复数表示，那么我们要传输的码流就是一个复基带信号，记为<span
 class="math inline">\(s_0(t) = a(t) + j b(t)\)</span>，其中 <span
 class="math inline">\(a(t)\)</span> 和 <span
 class="math inline">\(b(t)\)</span>
@@ -674,9 +693,11 @@ alt="diagram-IQ-demodulation" /></td>
 </tr>
 </tbody>
 </table>
-<p>有了IQ调制，我们只需要分别控制I、Q两路基带信号的幅度，就能得到任意的星座图，所以各种MPSK、MASK以及MAPSK等都能通过这种方式获得，这种调制方式也被称为正交幅度调制QAM。</p>
+<p>IQ调制在数学上是如此的漂亮，实际系统中又是如此的方便好用，因此在现代无线通信系统中几乎是必备的。后面介绍的各种基带调制方式也基本都会配合IQ调制来使用。</p>
+<h3 id="正交幅度调制qam">5.4 正交幅度调制QAM</h3>
+<p>有了IQ调制，我们只需要分别控制I、Q两路基带信号的幅度，就能得到星座图上任意一个点，所以各种MPSK、MASK以及MAPSK等都能通过这种方式获得，这种调制方式也被称为正交幅度调制QAM。</p>
 <p>其实也不难发现QPSK实际上就是两路（载波）相互正交的BPSK，实际上也是4QAM。</p>
-<h3 id="偏移四相位键控offset-qpsk">5.4 偏移四相位键控Offset-QPSK</h3>
+<h3 id="偏移四相位键控offset-qpsk">5.5 偏移四相位键控Offset-QPSK</h3>
 <p>在一般的QPSK基础上有一些变种，比如OQPSK，与QPSK的区别就在于I、Q两路的码流在时间上错开了半个码元周期，这样可以避免出现两个支路同时出现极性翻转的情况，好处是：1）避免180°的相位跳变，这种情况下最多只有90°相位跳变；2）避免I、Q两路信号同时过零点，降低信号峰均比PAR<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote"><span
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/weixin_50912862/article/details/114735043
@@ -695,7 +716,7 @@ alt="OQPSK" />
 </figure>
 <p>除此之外，还有其他的变种，例如<span
 class="math inline">\(\pi/4\)</span>-QPSK等，不再赘述。</p>
-<h3 id="最小频移键控msk">5.5 最小频移键控MSK</h3>
+<h3 id="最小频移键控msk">5.6 最小频移键控MSK</h3>
 <p>前面介绍的不管是二进制还是多进制，码流信号都认为是矩形波，实际上这种矩形波性能并不好。因为矩形波从时域来看会导致相位跳变，波形不光滑、不连续，从频域来看就是矩形波旁瓣幅度较大，会出现频谱扩展，对相邻信道产生干扰。为了解决这个问题，那就把矩形波换掉！换成边缘光滑的波形！</p>
 <p>最小频移键控MSK（Minimum-shift
 keying）可以看成是一种特殊的OQPSK，把原来的矩形方波换成半正弦波。如果从另一个角度来看，也可以认为是频率分离为比特率二分之一的连续相位频移键控CP-BFSK（一般通过开关实现的FSK信号在边沿处也会出现波形不连续，而MSK中波形/相位总是连续的）。如下图所示<sup id="fnref:15" class="footnote-ref"><a href="#fn:15" rel="footnote"><span
@@ -795,7 +816,60 @@ alt="MSK-demodulation" /></td>
 </tr>
 </tbody>
 </table>
-<h3 id="高斯最小频移键控gmsk">5.6 高斯最小频移键控GMSK</h3>
+<h3 id="脉冲成型滤波器">5.7 脉冲成型滤波器</h3>
+<p>MSK当中将矩形波换成了半正弦波，在实现的时候直接用一个正弦波发生器加上开关就可以了，但如果我们想换成其他形状的光滑波形呢？就没有这么简单了，这里就引出了数字传输中的脉冲成型滤波器。</p>
+<p>数字调制之后得到的码流是矩形波，从时域来看存在跳变，从频域来看频谱宽度无穷大，这在实际系统当中是不可能实现的，原因是我们无法生成跳变的信号，并且信道和收发机的通带也不是无穷带宽的。因此我们需要将码流脉冲转化为模拟信号，这个模拟信号从时域来看是连续光滑的，从频域来看是带限的，如下图所示<sup id="fnref:29" class="footnote-ref"><a href="#fn:29" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://wirelesspi.com/pulse-shaping-filter/
+">[29]</span></a></sup>。思路很简单，将码流脉冲通过一个脉冲成型滤波器，输出信号就是滤波器冲激响应的叠加。不过关键的问题在于这个脉冲成型滤波器要怎么设计？</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/rectangular-sa.png" srcset="/img/loading.gif" lazyload
+alt="rectangular-sa" />
+<figcaption aria-hidden="true">rectangular-sa</figcaption>
+</figure>
+<p>设计的关键在于不能有符号间串扰（Inter Symbol Interference,
+ISI）。什么意思呢？频域带限会导致时域扩展，要想当前码元对相邻的码元没有干扰，如下图所示<sup id="fnref:30" class="footnote-ref"><a href="#fn:30" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://dsp.stackexchange.com/questions/36340/nyquist-criterion-for-zero-isi
+">[30]</span></a></sup>，需要其时域波形在相邻码元的采样时刻幅值为0，这就是Nyquist准则。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/zero-ISI.png" srcset="/img/loading.gif" lazyload
+alt="zero-ISI" />
+<figcaption aria-hidden="true">zero-ISI</figcaption>
+</figure>
+<p>记经过基带调制的复码流为 <span class="math inline">\(\{
+a_k\}\)</span>，码元间隔（采样周期）为 <span
+class="math inline">\(T_s\)</span>，脉冲成型滤波器的冲激响应为 <span
+class="math inline">\(g(t)\)</span>，那么脉冲成型之后的模拟基带信号为
+<span class="math display">\[
+s_0(t) = \sum_{k=-\infty}^{\infty} a_k g(t-kT_s)
+\]</span> 对应的Nyquist无码间串扰条件即为： <span
+class="math display">\[
+g(kT_s) = \begin{cases}1, &amp; k=0 \\ 0, &amp; k\ne 0 \end{cases}
+\]</span> 等价的频域条件为（<span
+class="math inline">\(G(f)\)</span>为<span
+class="math inline">\(g(t)\)</span>的傅里叶变换）<sup id="fnref:31" class="footnote-ref"><a href="#fn:31" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://en.wikipedia.org/wiki/Nyquist_ISI_criterion
+">[31]</span></a></sup>： <span class="math display">\[
+\frac{1}{T_s} \sum_{k=-\infty}^{\infty} G\left(f-\frac{k}{T_S}\right) =
+1, \forall f
+\]</span> 实际系统中常用的就是升余弦滤波器（Raised Cosine
+Filter），不同滚降系数的RC滤波器频谱如下图所示<sup id="fnref:31" class="footnote-ref"><a href="#fn:31" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://en.wikipedia.org/wiki/Nyquist_ISI_criterion
+">[31]</span></a></sup>，他两侧的边沿是余弦曲线。</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/raised-cosine-filter.png" srcset="/img/loading.gif" lazyload
+alt="raised-cosine-filter" />
+<figcaption aria-hidden="true">raised-cosine-filter</figcaption>
+</figure>
+<p>除此之外还有Sinc filter（频谱是理想矩形），Gaussian
+filter（时域冲激响应是高斯的PDF）。第二代移动通信标准GSM中就采用高斯滤波器。</p>
+<h3 id="高斯最小频移键控gmsk">5.8 高斯最小频移键控GMSK</h3>
 <p>终于到了GMSK，其被应用于GSM通信标准、蓝牙、卫星通信当中。GMSK是在MSK的基础上，为了改善信号的旁瓣衰减性能，增加了一个高斯滤波器进行整形<sup id="fnref:14" class="footnote-ref"><a href="#fn:14" rel="footnote"><span
 class="hint--top hint--rounded"
 aria-label="https://en.wikipedia.org/wiki/Minimum-shift_keying
@@ -826,7 +900,7 @@ src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2022/GM
 alt="GMSK-phase" />
 <figcaption aria-hidden="true">GMSK-phase</figcaption>
 </figure>
-<h3 id="正交频分复用ofdm">5.7 正交频分复用OFDM</h3>
+<h3 id="正交频分复用ofdm">5.9 正交频分复用OFDM</h3>
 <p>OFDM本身又是一个非常精妙的调制技术。简单来理解，就是同时传输多路IQ调制的信号，不同路的载波频率不同，在一个符号周期内他们相互正交，互不干扰。</p>
 <p>再详细一点的解释。首先对于IQ调制来说，I、Q两路本身是相互正交的，但是他们的载波还是位于同一个频点上，把两路放在一起看就是把基带信号的复频谱搬移到单一载波频点上<sup id="fnref:11" class="footnote-ref"><a href="#fn:11" rel="footnote"><span
 class="hint--top hint--rounded"
@@ -865,7 +939,15 @@ alt="OFDM" />
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/m0_52840978/article/details/123674928
 ">[25]</span></a></sup>。</p>
-<h2 id="总结">6. 总结</h2>
+<h2 id="数字解调">6. 数字解调</h2>
+<p>解调是调制的逆过程，所以数字解调也包括三个阶段：</p>
+<ol type="1">
+<li>第一阶段将信号从载波频段搬回到基带，如果调制的时候采用的是IQ调制，那么解调就采用IQ解调就好了；</li>
+<li>第二阶段从模拟的基带波形中恢复出数字信号，最佳接收方案为匹配滤波并以<span
+class="math inline">\(1/T_s\)</span>的频率进行采样；</li>
+<li>第三阶段从数字信号中解调出原本想传输的比特流，需要根据星座图对得到的采样进行判决。</li>
+</ol>
+<h2 id="总结">7. 总结</h2>
 <p>QAM和IQ调制yyds！OFDM yyds!</p>
 <h2 id="reference">Reference</h2>
 <section class="footnotes">
@@ -1041,6 +1123,24 @@ class="footnote-text"><span>https://blog.csdn.net/madongchunqiu/article/details/
 <a href="#fnref:28" rev="footnote" class="footnote-backref">
 ↩︎</a></span></span>
 </li>
+<li>
+<span id="fn:29"
+class="footnote-text"><span>https://wirelesspi.com/pulse-shaping-filter/
+<a href="#fnref:29" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:30"
+class="footnote-text"><span>https://dsp.stackexchange.com/questions/36340/nyquist-criterion-for-zero-isi
+<a href="#fnref:30" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:31"
+class="footnote-text"><span>https://en.wikipedia.org/wiki/Nyquist_ISI_criterion
+<a href="#fnref:31" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
 </ol>
 </div>
 </section>
@@ -1087,6 +1187,8 @@ class="footnote-text"><span>https://blog.csdn.net/madongchunqiu/article/details/
         <a href="/tags/%E6%95%B0%E5%AD%97%E8%B0%83%E5%88%B6/">#数字调制</a>
       
         <a href="/tags/QAM/">#QAM</a>
+      
+        <a href="/tags/OFDM/">#OFDM</a>
       
     </div>
   

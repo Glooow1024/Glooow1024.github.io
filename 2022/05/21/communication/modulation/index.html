@@ -23,8 +23,10 @@
 <meta property="og:site_name" content="你是下雨天">
 <meta property="og:description" content="写这篇文章的起因是我一直对数字调制和模拟调制这两个概念比较模糊，对于相应的通信系统结构也觉得比较混乱，所以在网上查了很多资料来理清楚这件事情。本文引用了诸多网络上的博客、文章中的文字和图片，引用之处都标注了参考出处，若有侵权请告知我，我会删除侵权部分。  信号的调制简单来说，就是用基带信号去控制（调制）单频载波信号的某个或某几个参数，从而使得调制后的信号中嵌入了希望传递的信息[1]。这个载">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="e:/Study/lab/Others/channel%20model/img/OFDM-parallel.png">
+<meta property="og:image" content="e:/Study/lab/Others/channel%20model/img/OFDM-FFT.png">
 <meta property="article:published_time" content="2022-05-20T16:16:24.000Z">
-<meta property="article:modified_time" content="2022-05-21T00:53:00.352Z">
+<meta property="article:modified_time" content="2022-05-21T02:55:09.008Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="IQ调制">
 <meta property="article:tag" content="调制与解调">
@@ -33,6 +35,7 @@
 <meta property="article:tag" content="数字调制">
 <meta property="article:tag" content="QAM">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="e:/Study/lab/Others/channel%20model/img/OFDM-parallel.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -237,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.7k 字
+          10k 字
         
       </span>
     
@@ -248,7 +251,7 @@
         
         
         
-          81 分钟
+          87 分钟
         
       </span>
     
@@ -827,12 +830,44 @@ alt="GMSK-phase" />
 <figcaption aria-hidden="true">GMSK-phase</figcaption>
 </figure>
 <h3 id="正交频分复用ofdm">5.7 正交频分复用OFDM</h3>
-<p>OFDM本身又是一个非常精妙的调制技术，在这里不再详细展开了，可以参考网上相关资料。LTE中OFDM采用的调制方式最高能达到256QAM，NR中能达到1024QAM<sup id="fnref:25" class="footnote-ref"><a href="#fn:25" rel="footnote"><span
+<p>OFDM本身又是一个非常精妙的调制技术。简单来理解，就是同时传输多路IQ调制的信号，不同路的载波频率不同，在一个符号周期内他们相互正交，互不干扰。</p>
+<p>再详细一点的解释。首先对于IQ调制来说，I、Q两路本身是相互正交的，但是他们的载波还是位于同一个频点上，把两路放在一起看就是把基带信号的复频谱搬移到单一载波频点上<sup id="fnref:11" class="footnote-ref"><a href="#fn:11" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://glooow1024.github.io/2021/08/29/communication/IQ-modulation/
+">[11]</span></a></sup>。而OFDM可以理解为在N个不同的载波频点上，并行传输了N个这样的IQ调制信号。需要注意这些子载波也不是随意选取的，需要满足在一个符号周期内的正交性，子载波之间不能有干扰。示意图如下<sup id="fnref:27" class="footnote-ref"><a href="#fn:27" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/madongchunqiu/article/details/18614233
+">[27]</span></a></sup>：</p>
+<figure>
+<img src="E:\Study\lab\Others\channel%20model\img\OFDM-parallel.png" srcset="/img/loading.gif" lazyload
+alt="OFDM-parallel" />
+<figcaption aria-hidden="true">OFDM-parallel</figcaption>
+</figure>
+<p>但是实际系统中直接这样实现会有很多麻烦，所以人们想出了一种非常巧妙的办法。要传输的串行二进制比特流首先转化为N路并行的比特流，每一路比特流在经过QAM映射为码流，这些码流控制了不同频点载波的复幅度，所以同一时刻不同支路的码元，实际上就是要发送信号的频谱，那么对这些系数进行IFFT，我们就把他们从频域变换到了时域，N路并行的码元映射为了1路串行的N个时刻的（复）信号，然后再将得到时域波形实部和虚部送入一个IQ调制，即可得到要发送的射频信号。示意图如下<sup id="fnref:27" class="footnote-ref"><a href="#fn:27" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://blog.csdn.net/madongchunqiu/article/details/18614233
+">[27]</span></a></sup>：</p>
+<figure>
+<img src="E:\Study\lab\Others\channel%20model\img\OFDM-FFT.png" srcset="/img/loading.gif" lazyload
+alt="OFDM-FFT" />
+<figcaption aria-hidden="true">OFDM-FFT</figcaption>
+</figure>
+<p>OFDM的系统框图如下所示<sup id="fnref:28" class="footnote-ref"><a href="#fn:28" rel="footnote"><span
+class="hint--top hint--rounded"
+aria-label="https://ecse.monash.edu/staff/eviterbo/OTFS-VTC18/Tutorial_ICC2019___OTFS_modulation.pdf
+">[28]</span></a></sup>：</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2021/OFDM.jpg" srcset="/img/loading.gif" lazyload
+alt="OFDM" />
+<figcaption aria-hidden="true">OFDM</figcaption>
+</figure>
+<p>除此之外，OFDM中还包括了循环前缀以及其他细节的设计，在这里不再详细展开了，可以参考网上相关资料。LTE中OFDM采用的调制方式最高能达到256QAM，NR中能达到1024QAM<sup id="fnref:25" class="footnote-ref"><a href="#fn:25" rel="footnote"><span
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/m0_52840978/article/details/123674928
 ">[25]</span></a></sup>。</p>
 <h2 id="总结">6. 总结</h2>
-<p>QAM和IQ调制yyds！</p>
+<p>QAM和IQ调制yyds！OFDM yyds!</p>
 <h2 id="reference">Reference</h2>
 <section class="footnotes">
 <div class="footnote-list">
@@ -994,6 +1029,17 @@ class="footnote-text"><span>https://blog.csdn.net/m0_52840978/article/details/12
 <span id="fn:26"
 class="footnote-text"><span>https://norstc.blog.csdn.net/article/details/80504263
 <a href="#fnref:26" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:27"
+class="footnote-text"><span>https://blog.csdn.net/madongchunqiu/article/details/18614233
+<a href="#fnref:27" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:28" class="footnote-text"><span>https://ecse.monash.edu/staff/eviterbo/OTFS-VTC18/Tutorial_ICC2019___OTFS_modulation.pdf
+<a href="#fnref:28" rev="footnote" class="footnote-backref">
 ↩︎</a></span></span>
 </li>
 </ol>

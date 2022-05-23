@@ -315,8 +315,7 @@ VNC、修改分辨率</p></li>
 </ol>
 <h3 id="方法二网线">2.2 方法二：网线</h3>
 <p>可以用网线直接把树莓派和笔记本电脑连接在一块。之后需要打开
-<code>控制面板 -&gt; 网络和 Internet -&gt;
-网络和共享中心</code>，不出意外的话可以看到下面的东西</p>
+<code>控制面板 -&gt; 网络和 Internet -&gt; 网络和共享中心</code>，不出意外的话可以看到下面的东西</p>
 <p><img
 src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/net.PNG" srcset="/img/loading.gif" lazyload /></p>
 <p>点击 <code>WLAN -&gt; 属性 -&gt; 共享</code>， 如下图勾选对号并且点击
@@ -327,11 +326,11 @@ src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/ne
 <code>IPv4地址</code>，记住他 <code>192.168.137.1</code>。</p>
 <p><img
 src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/net4.PNG" srcset="/img/loading.gif" lazyload /></p>
-<p>然后打开命令行 <code>win+R -&gt; cmd</code>，输入 <code>arp
--a</code>，就可以看到下面的东西，找到那个接口
+<p>然后打开命令行 <code>win+R -&gt; cmd</code>，输入
+<code>arp -a</code>，就可以看到下面的东西，找到那个接口
 <code>192.168.137.1</code>（就是上面记住的那个地址），看下面的 IP
-地址（我这里是因为连接了两次，所以分配了两次地址 <code>192.168.137.43 or
-79</code>，如果是第一次连接的话应该只有一个地址）就是树莓派的地址。</p>
+地址（我这里是因为连接了两次，所以分配了两次地址
+<code>192.168.137.43 or 79</code>，如果是第一次连接的话应该只有一个地址）就是树莓派的地址。</p>
 <p><img
 src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/net5.PNG" srcset="/img/loading.gif" lazyload /></p>
 <p>获得这个 IP 地址以后就能跟方法一中一样，用 ssh 连接树莓派了。</p>
@@ -366,8 +365,8 @@ src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2020/ne
 <li>豆瓣：http://pypi.douban.com/simple/</li>
 </ul>
 <h2 id="串口通信">5. 串口通信</h2>
-<p>树莓派需要手动打开串口，可以在命令行输入 <code>sudo
-raspi-config</code> 选择 <code>interface options</code> 打开
+<p>树莓派需要手动打开串口，可以在命令行输入
+<code>sudo raspi-config</code> 选择 <code>interface options</code> 打开
 <code>Serial</code>。树莓派 4B 的针脚如图所示，对于 USB
 转串口模块只需要接树莓派的 6(GND),8(TXD),10(RXD) 口即可，注意 USB
 转串口的 RXD 要与树莓派的 TXD 连接。</p>

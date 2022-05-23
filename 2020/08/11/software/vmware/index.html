@@ -303,15 +303,15 @@
 </ol>
 <p>有时候设置好 NAT 或者桥接模式后仍然不能联网，可以尝试输入以下命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo service network-manager restart<br></code></pre></td></tr></table></figure>
-<p>也可以尝试先把虚拟机关机，点击 VMWare <code>编辑 &gt;&gt; 更改设置
-&gt;&gt;还原默认设置 &gt;&gt; 确定</code>，然后虚拟机开机就可以了。</p>
+<p>也可以尝试先把虚拟机关机，点击 VMWare
+<code>编辑 &gt;&gt; 更改设置 &gt;&gt;还原默认设置 &gt;&gt; 确定</code>，然后虚拟机开机就可以了。</p>
 <p>找不到网络连接图标</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo service network-manager stop<br>sudo rm /var/lib/NetworkManager/NetworkManager.state<br>sudo service network-manager start<br><span class="hljs-meta">#</span><span class="bash"> 将文件里面唯一的<span class="hljs-literal">false</span>改成<span class="hljs-literal">true</span></span><br>sudo gedit /etc/NetworkManager/NetworkManager.conf<br>sudo service network-manager restart<br></code></pre></td></tr></table></figure>
 <h2 id="vi-输入问题">2. vi 输入问题</h2>
 <p>vi 输入模式下方向键会出来 A, B, C, D，而且退格键不好使。</p>
 <h3 id="方法-1">方法 1</h3>
-<p>可以修改文件 <code>/etc/vim/vimrc.tiny</code>，注释掉原来的 <code>set
-compatible</code>，改成以下内容</p>
+<p>可以修改文件 <code>/etc/vim/vimrc.tiny</code>，注释掉原来的
+<code>set compatible</code>，改成以下内容</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">set</span> nocompatible<br><span class="hljs-built_in">set</span> backspace=2<br></code></pre></td></tr></table></figure>
 <h3 id="方法-2">方法 2</h3>
 <p>在用户个人目录下创建文件 <code>.vimrc</code>，写入以下内容</p>

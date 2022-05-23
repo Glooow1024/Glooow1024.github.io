@@ -359,9 +359,9 @@ git 版本控制，上一篇文章中并没有牵涉到分支 branch
 的哈希值已经改变了</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> git ls-files --stage</span><br>100644 63db897b879aac027311451ea6d8158daab3ac39 0       a.txt<br>100644 c200906efd24ec5e783bee7f23b5d7c941b0c12c 0       dir/b.txt<br><br></code></pre></td></tr></table></figure>
 <h3 id="git-commit">2.3 <code>git commit</code></h3>
-<p>然后我们提交一哈，不出意外的话用 <code>$ git cat-file --batch-check
---batch-all-objects</code> 会发现多了一个 <code>commit</code> 和一个
-<code>tree</code>
+<p>然后我们提交一哈，不出意外的话用
+<code>$ git cat-file --batch-check --batch-all-objects</code>
+会发现多了一个 <code>commit</code> 和一个 <code>tree</code>
 文件，这是我们在上一篇文章中所讲的，忘记的可以再回顾一下。</p>
 <p>再看当前 <code>br1</code> 已经被修改了</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> cat .git/refs/heads/br1</span><br>4b60ac6ea7ebab972920f84bd07de3d20d7d5804<br><span class="hljs-meta"></span><br><span class="hljs-meta">$</span><span class="bash"> cat .git/logs/refs/heads/br1</span><br>0000000000000000000000000000000000000000 b00f88d6e09fd9e767fc3246c971bf0d14f0621e Glooow1024 &lt;glooow1024@gmail.com&gt; 1577615247 +0800	branch: Created from master<br>b00f88d6e09fd9e767fc3246c971bf0d14f0621e 4b60ac6ea7ebab972920f84bd07de3d20d7d5804 Glooow1024 &lt;glooow1024@gmail.com&gt; 1577616495 +0800	commit: commit br 1<br><br></code></pre></td></tr></table></figure>

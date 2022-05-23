@@ -314,15 +314,15 @@ bug，现在记录一下自启动程序的设置方法以及debug的整个过程
 <code>&amp;</code>，这个符号可以理解为允许当前行的程序在后台运行，这样就可以继续启动下一行的程序了。</li>
 <li>第一行的 <code>sleep 5</code> 表示先暂停
 5s，主要是为了防止有的变量或者环境还没有准备好，可以根据情况决定是否添加。</li>
-<li>运行 python 脚本的时候最好前面用 <code>/usr/bin/python3
-xxx.py</code> 而不是直接 <code>python3
-xxx.py</code>，后者不一定会报错，但是像前面说的，还是尽量用绝对路径。</li>
+<li>运行 python 脚本的时候最好前面用
+<code>/usr/bin/python3 xxx.py</code> 而不是直接
+<code>python3 xxx.py</code>，后者不一定会报错，但是像前面说的，还是尽量用绝对路径。</li>
 <li>最重要的一点，也是我的 bug 原因所在：运行 python
 脚本的时候，网上大多数教程说的是添加 <code>python3 xxx.py</code>
-就行了，但是我 debug 过程中发现必须要使用 <code>sudo -H -u pi
-/xxx/python3 xxxx.py</code> 来显式的指定用户，否则可能会报错
-<code>ModuleNotFoundError: No module named
-'XXX'</code>，这应该是因为某些包只在某个用户环境中安装了。</li>
+就行了，但是我 debug 过程中发现必须要使用
+<code>sudo -H -u pi /xxx/python3 xxxx.py</code>
+来显式的指定用户，否则可能会报错
+<code>ModuleNotFoundError: No module named 'XXX'</code>，这应该是因为某些包只在某个用户环境中安装了。</li>
 </ol>
 <h2 id="debug技巧">2. debug技巧</h2>
 <p>按照上面的方法修改 <code>rc.local</code>

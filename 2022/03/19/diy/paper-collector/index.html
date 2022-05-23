@@ -357,11 +357,10 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/bailang_zhizun/articl
 <ol type="1">
 <li>新建类 <code>SpiderThread</code> 继承 <code>QObject</code>，自定义
 <code>run</code> 函数，在其中运行爬虫程序；</li>
-<li>在 <code>SpiderThread</code> 类中定义一个 <code>_spider_finish =
-pyqtSignal()</code>，该信号用于告知主线程爬虫子线程已完成工作</li>
-<li>在 <code>PaperCollector</code> 类中定义一个 <code>_start_spider =
-pyqtSignal(str, str,
-logging.Logger)</code>，该信号用于启动爬虫子线程<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote"><span
+<li>在 <code>SpiderThread</code> 类中定义一个
+<code>_spider_finish = pyqtSignal()</code>，该信号用于告知主线程爬虫子线程已完成工作</li>
+<li>在 <code>PaperCollector</code> 类中定义一个
+<code>_start_spider = pyqtSignal(str, str, logging.Logger)</code>，该信号用于启动爬虫子线程<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote"><span
 class="hint--top hint--rounded"
 aria-label="https://blog.csdn.net/gong_xufei/article/details/89786272
 ">[8]</span></a></sup><sup id="fnref:9" class="footnote-ref"><a href="#fn:9" rel="footnote"><span

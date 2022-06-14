@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>无线通信标准杂谈</title>
+    <link href="/2022/06/14/communication/communication-specification/"/>
+    <url>/2022/06/14/communication/communication-specification/</url>
+    
+    <content type="html"><![CDATA[<h2 id="g-lte">4G LTE</h2><p>采用OFDM调制，支持的带宽有（大带宽）10MHz、15MHz、20MHz，（窄带）1.4MHz、3MHz、5MHz。正常情况下子载波间隔15KHz，符号周期66.7us，加上循环前缀长度为71.35us。LTE在时域上的最小单位为时隙，以0.5ms为周期，在15KHz下，0.5ms*15KHz=7.5个正弦波，因此一个时隙内可以容纳7个symbol，多余出来的时间分配给各个符号的循环前缀<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/Angel_YJ/article/details/89001077">LTE学习笔记1：LTE，子载波，OFDM- angel yj的博客 - CSDN博客 "&gt;[3]</span></a></sup>。</p><p>各个子载波可以根据信道状况采用不同的调制方式，如BPSK，QPSK，8PSK，16QAM，64QAM等；当信道条件好时采用高阶调制方式，而当信道条件差时采用抗干扰能力强的低阶调制方式<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/jyqxerxes/article/details/78981109">LTE学习笔记四：OFDM- jyqxerxes的博客 - CSDN博客 "&gt;[2]</span></a></sup>。</p><h2 id="g-nr">5G NR</h2><p>在5GNR中，定义了两种频段范围，FR1和FR2，FR1表示低频频段，FR2表示毫米波高频频段。具体FR1和FR2表示的频段范围如下表所示：</p><table><thead><tr class="header"><th>Frequency range</th><th>Frequency range</th></tr></thead><tbody><tr class="odd"><td>FR1 (Sub-6GHz)</td><td>410MHz - 7125MHz</td></tr><tr class="even"><td>FR2 (mmWave)</td><td>24250MHz - 52600MHz</td></tr></tbody></table><p>其中Sub6G频段以3.5GHz为主（3.2GHz-4.2GHz），最大带宽为100MHz。mmWave频段以28/39/60/73GHz为主，带宽50MHz-400MHz<sup id="fnref:6" class="footnote-ref"><a href="#fn:6" rel="footnote"><spanclass="hint--top hint--rounded" aria-label="5G - Wikipedia">[6]</span></a></sup>。</p><p>5G仍旧采用OFDM调制，但是不同于4GLTE在于设置了多个不同的子载波间隔，也即<spanclass="math inline">\(\Delta f=2^\mu \cdot 15\)</span>[kHz]，其中<spanclass="math inline">\(\mu=0,1,2,3,4\)</span>，也就是子载波间隔<spanclass="math inline">\(\Delta f\)</span>取值为15/30/60/120/240kHz。</p><p>在5G和4G中，帧的长度都是10ms，子帧长度都是1ms。在LTE中，一个子帧包含了14个符号。5G中，当调制符号时间变短时，一个子帧长度1ms内也就有了更多的符号<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/u010202588/article/details/94360185">5G/4G：子载波间隔和采样时长- 楚来客的博客 - CSDN博客"&gt;[4]</span></a></sup>。与4G不同，5G中的时隙长度不是固定的，每个时隙内都有14个符号，但是随着子载波间隔的不同，对应的时隙不再是固定的0.5ms<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/weixin_39702335/article/details/110309294">OFDM载波间隔5G NR的空口技术 - weixin 39702335的博客 - CSDN博客"&gt;[5]</span></a></sup>。</p><p>这些参数看起来很多很复杂，实际上只需要关注两件事。第一个是符号周期，这是由子载波间隔决定的；第二个是帧长度，这个是由5GNR标准规定的固定长度10ms。前者是最小单位，后者是最大单位。至于中间的时隙长度、符号个数等参数，就是在一个帧内对这么多个符号进行组合，至于怎么组合全看协议规定。</p><p>在OFDM接收端需要进行时域采样并FFT，这里涉及到两个参数：采样频率和FFT点数。采样频率<spanclass="math inline">\(f_s\)</span>由带宽<spanclass="math inline">\(B\)</span>决定，FFT点数<spanclass="math inline">\(N=2B\ast T_{\text{symbol}}=2B/\Deltaf\)</span>，因此FFT点数大约是子载波个数的2倍，和子载波间隔大小无直接关系。尽管如此，子载波间隔越大，符号周期越短，这就要求FFT在更短的时间内完成，并且同等子载波个数情况下信号带宽越大，采样频率越高，对处理器的速度要求越高。</p><p>4G以子帧为单位进行调度，而5G则以时隙为单位进行调度。</p><p>资源块（RB, Resource block）</p><p>还没太搞懂多用户的时频资源是怎么分配的，网上大多语焉不详。</p><h2 id="g-毫米波通信">5G 毫米波通信</h2><p>看到一篇博客（2019）<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://www.edn.com/mmwave-and-ofdm-is-phy-research-dead/">mmWaveand OFDM: Is PHY research dead? - EDN"&gt;[1]</span></a></sup>，讲的是5G mmWave的物理层信号PHYs（physicallayers）设计。主要观点是现有的物理层信号基本都是基于OFDM，但是当载频高于某个点之后，OFDM就不适合了，需要研究新的物理层信号。3GPP组织目前推出了Release15和16，频点都低于52.6GHz，在此频段下仍旧采用OFDM波形，但是超过某个频点（也许52.6GHz并不是确切的阈值点）之后，由于实际的物理器件难以实现OFDM信号所需的峰均比、增益平坦度和效率等，在更高频点上不得不设计新的物理信号波形。Nokia、NI等公司在73GHz频点上研究了2GHz带宽的单载波信号波形，在2信道MIMO系统中演示了14.6Gbps的吞吐量。另外802.11ad就是一个单载波调制的毫米波通信协议。</p><h2 id="reference">Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><ahref="https://www.edn.com/mmwave-and-ofdm-is-phy-research-dead/">mmWaveand OFDM: Is PHY research dead? - EDN</a><a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><ahref="https://blog.csdn.net/jyqxerxes/article/details/78981109">LTE学习笔记四：OFDM- jyqxerxes的博客 - CSDN博客</a><a href="#fnref:2" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><ahref="https://blog.csdn.net/Angel_YJ/article/details/89001077">LTE学习笔记1：LTE，子载波，OFDM- angel yj的博客 - CSDN博客</a><a href="#fnref:3" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><ahref="https://blog.csdn.net/u010202588/article/details/94360185">5G/4G：子载波间隔和采样时长- 楚来客的博客 - CSDN博客</a><a href="#fnref:4" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><ahref="https://blog.csdn.net/weixin_39702335/article/details/110309294">OFDM载波间隔5G NR的空口技术 - weixin 39702335的博客 - CSDN博客</a><a href="#fnref:5" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:6"class="footnote-text"><span><a href="https://en.wikipedia.org/wiki/5G">5G- Wikipedia</a><a href="#fnref:6" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    
+    
+    <categories>
+      
+      <category>Communication and Networks</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>OFDM</tag>
+      
+      <tag>4G LTE</tag>
+      
+      <tag>5G NR</tag>
+      
+      <tag>毫米波通信</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>信号调制与解调</title>
     <link href="/2022/05/21/communication/modulation/"/>
     <url>/2022/05/21/communication/modulation/</url>

@@ -6,7 +6,7 @@
   <link href="https://glooow1024.github.io/atom.xml" rel="self"/>
   
   <link href="https://glooow1024.github.io/"/>
-  <updated>2022-05-23T07:43:25.610Z</updated>
+  <updated>2022-06-14T08:32:25.413Z</updated>
   <id>https://glooow1024.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>无线通信标准杂谈</title>
+    <link href="https://glooow1024.github.io/2022/06/14/communication/communication-specification/"/>
+    <id>https://glooow1024.github.io/2022/06/14/communication/communication-specification/</id>
+    <published>2022-06-14T08:24:03.000Z</published>
+    <updated>2022-06-14T08:32:25.413Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="g-lte">4G LTE</h2><p>采用OFDM调制，支持的带宽有（大带宽）10MHz、15MHz、20MHz，（窄带）1.4MHz、3MHz、5MHz。正常情况下子载波间隔15KHz，符号周期66.7us，加上循环前缀长度为71.35us。LTE在时域上的最小单位为时隙，以0.5ms为周期，在15KHz下，0.5ms*15KHz=7.5个正弦波，因此一个时隙内可以容纳7个symbol，多余出来的时间分配给各个符号的循环前缀<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/Angel_YJ/article/details/89001077">LTE学习笔记1：LTE，子载波，OFDM- angel yj的博客 - CSDN博客 "&gt;[3]</span></a></sup>。</p><p>各个子载波可以根据信道状况采用不同的调制方式，如BPSK，QPSK，8PSK，16QAM，64QAM等；当信道条件好时采用高阶调制方式，而当信道条件差时采用抗干扰能力强的低阶调制方式<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/jyqxerxes/article/details/78981109">LTE学习笔记四：OFDM- jyqxerxes的博客 - CSDN博客 "&gt;[2]</span></a></sup>。</p><h2 id="g-nr">5G NR</h2><p>在5GNR中，定义了两种频段范围，FR1和FR2，FR1表示低频频段，FR2表示毫米波高频频段。具体FR1和FR2表示的频段范围如下表所示：</p><table><thead><tr class="header"><th>Frequency range</th><th>Frequency range</th></tr></thead><tbody><tr class="odd"><td>FR1 (Sub-6GHz)</td><td>410MHz - 7125MHz</td></tr><tr class="even"><td>FR2 (mmWave)</td><td>24250MHz - 52600MHz</td></tr></tbody></table><p>其中Sub6G频段以3.5GHz为主（3.2GHz-4.2GHz），最大带宽为100MHz。mmWave频段以28/39/60/73GHz为主，带宽50MHz-400MHz<sup id="fnref:6" class="footnote-ref"><a href="#fn:6" rel="footnote"><spanclass="hint--top hint--rounded" aria-label="5G - Wikipedia">[6]</span></a></sup>。</p><p>5G仍旧采用OFDM调制，但是不同于4GLTE在于设置了多个不同的子载波间隔，也即<spanclass="math inline">\(\Delta f=2^\mu \cdot 15\)</span>[kHz]，其中<spanclass="math inline">\(\mu=0,1,2,3,4\)</span>，也就是子载波间隔<spanclass="math inline">\(\Delta f\)</span>取值为15/30/60/120/240kHz。</p><p>在5G和4G中，帧的长度都是10ms，子帧长度都是1ms。在LTE中，一个子帧包含了14个符号。5G中，当调制符号时间变短时，一个子帧长度1ms内也就有了更多的符号<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/u010202588/article/details/94360185">5G/4G：子载波间隔和采样时长- 楚来客的博客 - CSDN博客"&gt;[4]</span></a></sup>。与4G不同，5G中的时隙长度不是固定的，每个时隙内都有14个符号，但是随着子载波间隔的不同，对应的时隙不再是固定的0.5ms<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://blog.csdn.net/weixin_39702335/article/details/110309294">OFDM载波间隔5G NR的空口技术 - weixin 39702335的博客 - CSDN博客"&gt;[5]</span></a></sup>。</p><p>这些参数看起来很多很复杂，实际上只需要关注两件事。第一个是符号周期，这是由子载波间隔决定的；第二个是帧长度，这个是由5GNR标准规定的固定长度10ms。前者是最小单位，后者是最大单位。至于中间的时隙长度、符号个数等参数，就是在一个帧内对这么多个符号进行组合，至于怎么组合全看协议规定。</p><p>在OFDM接收端需要进行时域采样并FFT，这里涉及到两个参数：采样频率和FFT点数。采样频率<spanclass="math inline">\(f_s\)</span>由带宽<spanclass="math inline">\(B\)</span>决定，FFT点数<spanclass="math inline">\(N=2B\ast T_{\text{symbol}}=2B/\Deltaf\)</span>，因此FFT点数大约是子载波个数的2倍，和子载波间隔大小无直接关系。尽管如此，子载波间隔越大，符号周期越短，这就要求FFT在更短的时间内完成，并且同等子载波个数情况下信号带宽越大，采样频率越高，对处理器的速度要求越高。</p><p>4G以子帧为单位进行调度，而5G则以时隙为单位进行调度。</p><p>资源块（RB, Resource block）</p><p>还没太搞懂多用户的时频资源是怎么分配的，网上大多语焉不详。</p><h2 id="g-毫米波通信">5G 毫米波通信</h2><p>看到一篇博客（2019）<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote">&lt;spanclass="hint--top hint--rounded" aria-label="<ahref="https://www.edn.com/mmwave-and-ofdm-is-phy-research-dead/">mmWaveand OFDM: Is PHY research dead? - EDN"&gt;[1]</span></a></sup>，讲的是5G mmWave的物理层信号PHYs（physicallayers）设计。主要观点是现有的物理层信号基本都是基于OFDM，但是当载频高于某个点之后，OFDM就不适合了，需要研究新的物理层信号。3GPP组织目前推出了Release15和16，频点都低于52.6GHz，在此频段下仍旧采用OFDM波形，但是超过某个频点（也许52.6GHz并不是确切的阈值点）之后，由于实际的物理器件难以实现OFDM信号所需的峰均比、增益平坦度和效率等，在更高频点上不得不设计新的物理信号波形。Nokia、NI等公司在73GHz频点上研究了2GHz带宽的单载波信号波形，在2信道MIMO系统中演示了14.6Gbps的吞吐量。另外802.11ad就是一个单载波调制的毫米波通信协议。</p><h2 id="reference">Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><ahref="https://www.edn.com/mmwave-and-ofdm-is-phy-research-dead/">mmWaveand OFDM: Is PHY research dead? - EDN</a><a href="#fnref:1" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><ahref="https://blog.csdn.net/jyqxerxes/article/details/78981109">LTE学习笔记四：OFDM- jyqxerxes的博客 - CSDN博客</a><a href="#fnref:2" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><ahref="https://blog.csdn.net/Angel_YJ/article/details/89001077">LTE学习笔记1：LTE，子载波，OFDM- angel yj的博客 - CSDN博客</a><a href="#fnref:3" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><ahref="https://blog.csdn.net/u010202588/article/details/94360185">5G/4G：子载波间隔和采样时长- 楚来客的博客 - CSDN博客</a><a href="#fnref:4" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><ahref="https://blog.csdn.net/weixin_39702335/article/details/110309294">OFDM载波间隔5G NR的空口技术 - weixin 39702335的博客 - CSDN博客</a><a href="#fnref:5" rev="footnote" class="footnote-backref">↩︎</a></span></span></li><li><span id="fn:6"class="footnote-text"><span><a href="https://en.wikipedia.org/wiki/5G">5G- Wikipedia</a><a href="#fnref:6" rev="footnote" class="footnote-backref">↩︎</a></span></span></li></ol></div></section>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;g-lte&quot;&gt;4G LTE&lt;/h2&gt;
+&lt;p&gt;采用OFDM调制，支持的带宽有（大带宽）10MHz、15MHz、20MHz，（窄带）1.4MHz、3MHz、5MHz。正常情况下子载波间隔15KHz，符号周期66.7us，加上循环前缀长度为71.35us。LTE在时域</summary>
+      
+    
+    
+    
+    <category term="Communication and Networks" scheme="https://glooow1024.github.io/categories/Communication-and-Networks/"/>
+    
+    
+    <category term="OFDM" scheme="https://glooow1024.github.io/tags/OFDM/"/>
+    
+    <category term="4G LTE" scheme="https://glooow1024.github.io/tags/4G-LTE/"/>
+    
+    <category term="5G NR" scheme="https://glooow1024.github.io/tags/5G-NR/"/>
+    
+    <category term="毫米波通信" scheme="https://glooow1024.github.io/tags/%E6%AF%AB%E7%B1%B3%E6%B3%A2%E9%80%9A%E4%BF%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>信号调制与解调</title>
@@ -588,32 +619,6 @@ t)-N(t)\ge 2)=o(\Delta t)\)&lt;/span&gt;；&lt;/li&gt;
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>【随机过程2】离散鞅论3 | 鞅论应用</title>
-    <link href="https://glooow1024.github.io/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/"/>
-    <id>https://glooow1024.github.io/2021/10/16/stochastic-process-2/ch3-s3-martingale-application/</id>
-    <published>2021-10-16T15:08:38.000Z</published>
-    <updated>2021-10-19T04:09:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="鞅论的应用">3.11 鞅论的应用</h2><p><em>栗子1</em>：三人赌博，每一轮从中随机依次选出两个人，第一个被选中的人给第二个一枚硬币。如果其中一个人没有硬币，其余两人继续赌博，直到其中一个人赢得所有硬币。假设三个人被选中概率完全相等，且每次选择相互独立。如果最初三人拥有的硬币数分别为<span class="math inline">\(a,b,c\)</span>，求此游戏结束的平均时间。</p><span id="more"></span><p><strong>解</strong>：设三个人在第 <spanclass="math inline">\(n\)</span> 次赌博之后拥有的硬币分别为 <spanclass="math inline">\(X_n,Y_n,Z_n\)</span>，记 <spanclass="math inline">\(S_n=X_n Y_n+Y_n Z_n+X_n Z_n\)</span>。定义 <spanclass="math inline">\(M_n=\sum_{k=1}^n (S_k - {\mathbb E}[S_k |X_0,Y_0,Z_0,...,X_{k-1},Y_{k-1},Z_{k-1}])\)</span>，则可以证明 <spanclass="math inline">\(\{M_n\}\)</span> 是鞅。下面想要计算 <spanclass="math inline">\(M_n\)</span> 的具体表达式，需要分情况讨论：</p><ul><li>case1：<spanclass="math inline">\(X_{k-1}Y_{k-1}Z_{k-1}&gt;0\)</span>，可以验证<span class="math inline">\({\mathbb E}[X_k Y_k | X_{k-1}=x,Y_{k-1}=y] =xy-1/3\)</span>，因此有 <span class="math inline">\({\mathbb E}[S_k |X_{k-1},Y_{k-1},Z_{k-1}] = S_{k-1}-1\)</span>；</li><li>case2：<span class="math inline">\(X_{k-1}=0\)</span>，此时有 <spanclass="math inline">\(X_k=0\)</span>，<spanclass="math inline">\({\mathbb E}[S_k | X_{k-1},Y_{k-1},Z_{k-1}] =S_{k-1}-1\)</span>；</li></ul><p>因此有 <span class="math inline">\(M_{n} =S_n-S_0+n\)</span>，可以验证<strong>鞅的停时定理 3</strong>条件成立，从而有 <span class="math inline">\({\mathbb E}[M_{\tau}] ={\mathbb E}[M_0]=0\)</span>，又有 <span class="math inline">\({\mathbbE}[M_\tau] = {\mathbb E}S_\tau - {\mathbb E}S_0 + {\mathbb E}\tau ={\mathbb E}\tau - {\mathbb E}S_0 = 0\)</span>，因此 <spanclass="math inline">\({\mathbb E}\tau={\mathbbE}S_0=ab+bc+ac\)</span>。</p><blockquote><p><strong>Note</strong>：如何想到这样定义一个鞅？首先考虑一阶统计量<span class="math inline">\(S_n=X_n+Y_n+Z_n\)</span>恒等于常数，因此考虑二阶统计量。</p></blockquote><p><em>栗子 2</em>（随机徘徊）：一维随机徘徊，<spanclass="math inline">\(Y_n\)</span>表示第 <spanclass="math inline">\(n\)</span> 个时刻质点移动的距离，<spanclass="math inline">\(P(Y_n=1)=P(Y_n=-1)=1/2\)</span>，在 <spanclass="math inline">\(n\)</span> 时刻质点离开原点的距离为 <spanclass="math inline">\(X_n=\sum_{i=1}^n Y_i\)</span>，其中 <spanclass="math inline">\(X_0=0\)</span>，容易验证 <spanclass="math inline">\(\{X_n\}\)</span> 关于 <spanclass="math inline">\(\{Y_n\}\)</span> 是鞅。下面需要讨论：</p><ol type="1"><li>从原点到达 1 的平均时间；</li><li>设 <span class="math inline">\(a&lt;0&lt;b\)</span>为两个整数，质点先到达 <span class="math inline">\(a\)</span> 的概率<span class="math inline">\(P_a\)</span>？</li><li>设 <span class="math inline">\(a&lt;0&lt;b\)</span>为两个整数，质点到达 <span class="math inline">\(a\)</span> 或 <spanclass="math inline">\(b\)</span> 的平均时间？</li></ol><p><em>解</em>：(1) 定义停时 <span class="math inline">\(\tau_1=\min\{n: X_0=0,X_n=1 \}\)</span>，那么需要求 <spanclass="math inline">\({\mathbbE}\tau\)</span>，可以考虑用<strong>鞅的停时定理3</strong>，首<strong>先假设条件 <span class="math inline">\({\mathbbE}\tau&lt;\infty\)</span> 成立</strong>，<spanclass="math inline">\({\mathbb E}[|X_{n+1}-X_n| | Y_0,...,Y_n]={\mathbbE}[|Y_{n+1}|]=1\)</span>，于是停时定理 3 条件满足，那么就有 <spanclass="math inline">\({\mathbb E}X_{\tau} = {\mathbbE}X_0=0\)</span>，但是根据停时的定义有 <spanclass="math inline">\({\mathbb E}X_\tau=1\)</span>，矛盾，这说明假设<span class="math inline">\({\mathbb E}\tau&lt;\infty\)</span>不成立，所以 <span class="math inline">\({\mathbbE}\tau=\infty\)</span>。</p><ol start="2" type="1"><li><p>设 <span class="math inline">\({\tau}\)</span> 表示从 <spanclass="math inline">\(0\)</span> 出发达到 <spanclass="math inline">\(a\)</span> 或 <spanclass="math inline">\(b\)</span> 的时间，<spanclass="math inline">\(\tau\)</span> 关于 <spanclass="math inline">\(\{Y_n\}\)</span> 是停时，容易验证 <spanclass="math inline">\(P(\tau&lt;\infty | X_0=0)=1\)</span>，而且 <spanclass="math inline">\(|X_{\tau \wedge n}| \le \max{-a,b}\)</span>，因此<span class="math inline">\({\mathbb E}[\sup_{n} |X_{\tau\wedgen}|]&lt;\infty\)</span>，<strong>鞅的停时定理 2</strong>条件满足，因此有 <span class="math inline">\({\mathbb E}X_\tau = aP_a +bP_b ={\mathbb E}X_0=0\)</span>，另外有 <spanclass="math inline">\(P_a+P_b=1\)</span>，于是可以得到 <spanclass="math inline">\(P_a=b/(b-a)\)</span>。</p></li><li><p>设 <span class="math inline">\(\tau\)</span> 为从 <spanclass="math inline">\(0\)</span> 出发达到 <spanclass="math inline">\(a\)</span> 或 <spanclass="math inline">\(b\)</span> 的时间，<spanclass="math inline">\(\tau\)</span> 关于 <spanclass="math inline">\(\{Y_n\}\)</span>是停时，接下来的关键就是构造一个新的鞅，使其与时间 <spanclass="math inline">\(n\)</span>产生直接的关系，这样利用停时定理的时候就能求得 <spanclass="math inline">\({\mathbb E}\tau\)</span>。那么可以取 <spanclass="math inline">\({Z_n} = \sum_{k=1}^n (X_k^2 - {\mathbb E}[X_k^2 |Y_0,...,Y_{k-1}])\)</span>，关于 <span class="math inline">\(\{Y_n\}\)</span> 是鞅，并且可以验证 <span class="math inline">\({\mathbbE}[X_k^2 | Y_0,...,Y_{k-1}]={\mathbb E}[(X_{k-1}+Y_k)^2 |Y_0,...,Y_{k-1}] = X_{k-1}^2+1\)</span>，因此有 <spanclass="math inline">\({Z_n}=X_n^2-n\)</span>。验证停时定理 3 的条件<span class="math inline">\({\mathbb E}[|Z_{n+1}-Z_n| | Y_0,...,Y_n] \le2|X_n|{\mathbb E}|Y_{n+1}| + 1+1 \le2\max(-a,b)+2\)</span>，根据停时定理 3 有 <spanclass="math inline">\({\mathbb E}Z_\tau = P_a(a^2-{\mathbb E}\tau) +P_b(b^2 - {\mathbb E}\tau) = {\mathbb E}Z_0=0\)</span>，故 <spanclass="math inline">\({\mathbb E}\tau=-ab\)</span>。</p></li></ol><p><strong>Note</strong>：利用停时定理时，条件 <spanclass="math inline">\({\mathbb E}\tau&lt;\infty\)</span>可以先假设成立，然后用求解的结果来验证。</p><h2 id="连续鞅论">3.12 连续鞅论</h2><p><strong>定义（鞅）</strong>：<span class="math inline">\(\{X(t),t\ge0\}\)</span> 为一个随机过程，如果 <spanclass="math inline">\(\{X(t),t\ge0\}\)</span> 满足下列条件：</p><ol type="1"><li>（存在性）对任意的 <span class="math inline">\(t\ge0\)</span>，有<span class="math inline">\({\mathbb E}|X(t)|&lt;\infty\)</span>；</li><li>（鞅性）对任意的 <span class="math inline">\(0\let_0&lt;t_1&lt;\cdots&lt;t_n&lt;t_{n+1}\)</span>，有 <spanclass="math inline">\({\mathbb E}[X(t_{n+1}) | X(t_1),...,X(t_n)] =X(t_{n})\)</span>；</li></ol><p>则称 <span class="math inline">\(\{X(t),t\ge0\}\)</span>是<strong>鞅</strong>。</p><p><strong>定义（上鞅）</strong>：<span class="math inline">\(\{X(t),t\ge0\}\)</span> 为一个随机过程，如果 <spanclass="math inline">\(\{X(t),t\ge0\}\)</span> 满足下列条件：</p><ol type="1"><li>（存在性）对任意的 <span class="math inline">\(t\ge0\)</span>，有<span class="math inline">\({\mathbb E}X(t)^-&lt;\infty\)</span>；</li><li>（鞅性）对任意的 <span class="math inline">\(0\let_0&lt;t_1&lt;\cdots&lt;t_n&lt;t_{n+1}\)</span>，有 <spanclass="math inline">\({\mathbb E}[X(t_{n+1}) | X(t_1),...,X(t_n)] \leX(t_{n})\)</span>；</li></ol><p>则称 <span class="math inline">\(\{X(t),t\ge0\}\)</span>是<strong>上鞅</strong>。下鞅定义类似。</p><p><strong>定理 3.12（停时定理）</strong>：设 <spanclass="math inline">\(\{X(t),t\ge0\}\)</span> 是鞅，<spanclass="math inline">\(\tau\)</span> 是关于 <spanclass="math inline">\(\{X(t),t\ge0\}\)</span> 的停时，若 <spanclass="math inline">\(P(\tau&lt;\infty)=1\)</span>，且 <spanclass="math inline">\({\mathbb E}[\sup_{t\ge0} |X_{\tau \wedge t}|] &lt;\infty\)</span>，则 <span class="math inline">\({\mathbb E}X_\tau ={\mathbb E}[X(0)]\)</span>。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;鞅论的应用&quot;&gt;3.11 鞅论的应用&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;栗子
-1&lt;/em&gt;：三人赌博，每一轮从中随机依次选出两个人，第一个被选中的人给第二个一枚硬币。如果其中一个人没有硬币，其余两人继续赌博，直到其中一个人赢得所有硬币。假设三个人被选中概率完全相等，且每次选择相互独立。如果最初三人拥有的硬币数分别为
-&lt;span class=&quot;math inline&quot;&gt;\(a,b,c\)&lt;/span&gt;，求此游戏结束的平均时间。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="随机过程2" scheme="https://glooow1024.github.io/categories/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B2/"/>
-    
-    
-    <category term="鞅" scheme="https://glooow1024.github.io/tags/%E9%9E%85/"/>
-    
-    <category term="停时定理" scheme="https://glooow1024.github.io/tags/%E5%81%9C%E6%97%B6%E5%AE%9A%E7%90%86/"/>
     
   </entry>
   

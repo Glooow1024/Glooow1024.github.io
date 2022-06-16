@@ -1693,7 +1693,7 @@
     
     <tags>
       
-      <tag>matlab</tag>
+      <tag>Matlab</tag>
       
     </tags>
     
@@ -2852,31 +2852,6 @@
   
   
   <entry>
-    <title>Mathematica激活</title>
-    <link href="/2003/06/04/software/mathematica/"/>
-    <url>/2003/06/04/software/mathematica/</url>
-    
-    <content type="html"><![CDATA[<p>Mathematica激活方法：安装好之后启动软件，选择其他方式激活 &gt;&gt;手动激活 &gt;&gt; 输入激活密钥和密码。</p><p>根据 Math ID 生成激活密钥和密码的<ahref="ibug.io/blog/2019/05/mathematica-keygen/">链接</a>，Math ID在需要输入激活密钥和密码的那里可以看到。</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>Software</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Mathematica</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Adobe Acrobat Pro DC更新后提示登录激活问题</title>
     <link href="/2002/08/05/software/acrobat/"/>
     <url>/2002/08/05/software/acrobat/</url>
@@ -2894,6 +2869,50 @@
     <tags>
       
       <tag>Adobe</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>转载 | Typora破解</title>
+    <link href="/2002/06/16/software/typora/"/>
+    <url>/2002/06/16/software/typora/</url>
+    
+    <content type="html"><![CDATA[<h2 id="下载">下载</h2><p>安装包及破解文件：<ahref="https://lanzouv.com/b04cdi4if">https://lanzouv.com/b04cdi4if</a>，密码：<code>dyuh</code></p><p>一定要下载上面链接中的安装包，否则序列号无效。</p><h2 id="安装破解">安装破解</h2><ol type="1"><li>双击 exe 文件安装；</li><li>将<code>app.asar.txt</code>文件名的<code>.txt</code>后缀去掉，并覆盖至安装路径的<code>resources</code>文件夹内；</li><li>打开Typora，输入<code>key.txt</code>中提供的任意一组序列号，邮箱可以任意填写，但是需要保证是邮箱的格式，例如<code>1@1.com</code>。</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>Software</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Mathematica激活</title>
+    <link href="/2001/06/04/software/mathematica/"/>
+    <url>/2001/06/04/software/mathematica/</url>
+    
+    <content type="html"><![CDATA[<p>Mathematica激活方法：安装好之后启动软件，选择其他方式激活 &gt;&gt;手动激活 &gt;&gt; 输入激活密钥和密码。</p><p>根据 Math ID 生成激活密钥和密码的<ahref="ibug.io/blog/2019/05/mathematica-keygen/">链接</a>，Math ID在需要输入激活密钥和密码的那里可以看到。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Software</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Mathematica</tag>
       
     </tags>
     

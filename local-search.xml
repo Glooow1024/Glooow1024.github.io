@@ -2881,12 +2881,12 @@
     <link href="/2002/06/16/software/typora/"/>
     <url>/2002/06/16/software/typora/</url>
     
-    <content type="html"><![CDATA[<h2 id="下载">下载</h2><p>安装包及破解文件：<ahref="https://lanzouv.com/b04cdi4if">https://lanzouv.com/b04cdi4if</a>，密码：<code>dyuh</code></p><p>一定要下载上面链接中的安装包，否则序列号无效。</p><h2 id="安装破解">安装破解</h2><ol type="1"><li>双击 exe 文件安装；</li><li>将<code>app.asar.txt</code>文件名的<code>.txt</code>后缀去掉，并覆盖至安装路径的<code>resources</code>文件夹内；</li><li>打开Typora，输入<code>key.txt</code>中提供的任意一组序列号，邮箱可以任意填写，但是需要保证是邮箱的格式，例如<code>1@1.com</code>。</li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>原文：<ahref="https://www.cnblogs.com/xiaohi/p/15907083.html">Typora（morkdown编辑器）的下载和破解- article - 博客园 (cnblogs.com)</a></p></blockquote><h2 id="下载">下载</h2><p>安装包及破解文件：<ahref="https://lanzouv.com/b04cdi4if">https://lanzouv.com/b04cdi4if</a>，密码：<code>dyuh</code></p><p>一定要下载上面链接中的安装包，否则序列号无效。</p><h2 id="安装破解">安装破解</h2><ol type="1"><li>双击 exe 文件安装；</li><li>将<code>app.asar.txt</code>文件名的<code>.txt</code>后缀去掉，并覆盖至安装路径的<code>resources</code>文件夹内；</li><li>打开Typora，输入<code>key.txt</code>中提供的任意一组序列号，邮箱可以任意填写，但是需要保证是邮箱的格式，例如<code>1@1.com</code>。</li></ol>]]></content>
     
     
     <categories>
       
-      <category>Software</category>
+      <category>Softwarey</category>
       
     </categories>
     

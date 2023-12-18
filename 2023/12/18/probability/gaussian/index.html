@@ -16,23 +16,24 @@
   <meta name="author" content="Glooow">
   <meta name="keywords" content="">
   
-    <meta name="description" content="当时只道是寻常    我们总是爱得太迟，等到那人真的失去，才追悔莫及。   最可怕是，爱得太迟，只差一秒，心声都已变历史。">
+    <meta name="description" content="后面推导中反复用到Woodbury恒等式 \[ (A+UCV)^{-1} &#x3D; A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1} \]  1. 边缘分布 假设 \(\boldsymbol{x}\sim {\mathcal N}(\boldsymbol{\mu}, \boldsymbol\Sigma_1), \boldsymbol{y}|\b">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爱得太迟">
-<meta property="og:url" content="https://glooow1024.github.io/2023/02/10/music/ThePresentPerson/index.html">
+<meta property="og:title" content="高斯分布常用公式">
+<meta property="og:url" content="https://glooow1024.github.io/2023/12/18/probability/gaussian/index.html">
 <meta property="og:site_name" content="你是下雨天">
-<meta property="og:description" content="当时只道是寻常    我们总是爱得太迟，等到那人真的失去，才追悔莫及。   最可怕是，爱得太迟，只差一秒，心声都已变历史。">
+<meta property="og:description" content="后面推导中反复用到Woodbury恒等式 \[ (A+UCV)^{-1} &#x3D; A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1} \]  1. 边缘分布 假设 \(\boldsymbol{x}\sim {\mathcal N}(\boldsymbol{\mu}, \boldsymbol\Sigma_1), \boldsymbol{y}|\b">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-10T15:15:01.000Z">
-<meta property="article:modified_time" content="2023-02-17T05:36:51.249Z">
+<meta property="article:published_time" content="2023-12-18T13:46:07.000Z">
+<meta property="article:modified_time" content="2023-12-18T13:48:28.398Z">
 <meta property="article:author" content="Glooow">
+<meta property="article:tag" content="高斯分布">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>爱得太迟 - 你是下雨天</title>
+  <title>高斯分布常用公式 - 你是下雨天</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -208,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="爱得太迟"></span>
+            <span id="subtitle" data-typed-text="高斯分布常用公式"></span>
           
         </div>
 
@@ -219,8 +220,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-10 23:15" pubdate>
-          2023年2月10日 晚上
+        <time datetime="2023-12-18 21:46" pubdate>
+          2023年12月18日 晚上
         </time>
       </span>
     
@@ -231,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          508 字
+          2.7k 字
         
       </span>
     
@@ -242,7 +243,7 @@
         
         
         
-          5 分钟
+          23 分钟
         
       </span>
     
@@ -288,69 +289,81 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">爱得太迟</h1>
+            <h1 style="display: none">高斯分布常用公式</h1>
             
             <div class="markdown-body">
               
-              <center>
-<h2>
-当时只道是寻常
-</h2>
-</center>
-<center>
-我们总是爱得太迟，等到那人真的失去，才追悔莫及。
-</center>
-<center>
-最可怕是，爱得太迟，只差一秒，心声都已变历史。
-</center>
-<span id="more"></span>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&amp;id=5240533&amp;auto=1&amp;height=66">
-</iframe>
-<blockquote>
-<p>我过去 那死党 早晚共对</p>
-<p>各也扎职以后 没法 畅聚</p>
-<p>而终於 相约到 但无言共对 疏淡如水</p>
-<p>日夜做 见爸爸 刚好想呻</p>
-<p>却霎眼 看出他 多了皱纹</p>
-<p>而他的苍老感 是从来未觉 太内疚担心</p>
-<p>·</p>
-<p>最心痛是 爱得太迟</p>
-<p>有些心意 不可等某个日子</p>
-<p>盲目地发奋 忙忙忙其实自私</p>
-<p>梦中也习惯 有压力要我得志</p>
-<p>最可怕是 爱需要及时</p>
-<p>只差一秒 心声都已变历史</p>
-<p>忙极亦放肆 见我爱见的相知</p>
-<p>要抱要吻要怎么也好 偏要推说等下一次</p>
-<p>·</p>
-<p>我也觉 我体质 彷似下降</p>
-<p>看了症得到是 别要太忙</p>
-<p>而影碟 都扫光 但从来未看 因有事赶</p>
-<p>日夜做 储的钱 都应该够</p>
-<p>到圣诞 正好讲 跟我白头</p>
-<p>谁知她开了口 未能挨下去 已恨我很久</p>
-<p>·</p>
-<p>错失太易 爱得太迟</p>
-<p>我怎想到 她忍不到那日子</p>
-<p>盲目地发奋 忙忙忙从来未知</p>
-<p>幸福会掠过 再也没法说钟意</p>
-<p>爱一个字 也需要及时</p>
-<p>只差一秒 心声都已变历史</p>
-<p>为何未放肆 见我爱见的相知</p>
-<p>要抱要吻要怎么也好 不要相信一切有下次</p>
-<p>·</p>
-<p>相拥我所爱又花几多秒</p>
-<p>这几秒 能够做到又有多少</p>
-<p>未算少 足够遗憾忘掉</p>
-<p>多少抱憾 多少过路人</p>
-<p>太懂估计 却不懂爱惜自身</p>
-<p>人人在发奋 想起他朝都兴奋</p>
-<p>但今晚未过 你要过也很吸引</p>
-<p>纵不信运 你不过是人</p>
-<p>理想很远 爱於咫尺却在等</p>
-<p>来日别操心 趁你有能力开心</p>
-<p>世界有太多东西发生 不要等到天上俯瞰</p>
+              <blockquote>
+<p>后面推导中反复用到Woodbury恒等式 <span class="math display">\[
+(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}
+\]</span></p>
 </blockquote>
+<h3 id="边缘分布">1. 边缘分布</h3>
+<p>假设 <span class="math inline">\(\boldsymbol{x}\sim {\mathcal
+N}(\boldsymbol{\mu}, \boldsymbol\Sigma_1),
+\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},
+\boldsymbol\Sigma_2)\)</span>，那么 <span
+class="math inline">\(\boldsymbol{y}\)</span> 的边缘分布也是高斯分布
+<span class="math display">\[
+\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu}_3, \boldsymbol\Sigma_3)
+\\
+\boldsymbol\Sigma_3 = (\boldsymbol\Sigma_2^{-1} -
+\boldsymbol\Sigma_2^{-1}\boldsymbol{A}
+(\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}
+\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol{A}^{\rm T}
+\boldsymbol\Sigma_2^{-1})^{-1} = \boldsymbol\Sigma_2 +
+\boldsymbol{A}\boldsymbol\Sigma_1 \boldsymbol{A}^{\rm T} \\
+\boldsymbol{\mu}_3 = \boldsymbol\Sigma_3 \boldsymbol\Sigma_2^{-\rm T}
+\boldsymbol{A} (\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}
+\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol\Sigma_1^{-1}
+\boldsymbol{\mu} = \boldsymbol{A\mu}\\
+\]</span></p>
+<h3 id="后验分布">2. 后验分布</h3>
+<p>假设有先验 <span class="math inline">\(\boldsymbol{x}\sim {\mathcal
+N}(\boldsymbol{\mu}, \boldsymbol\Sigma_1)\)</span>，似然 <span
+class="math inline">\(\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},
+\boldsymbol\Sigma_2)\)</span>，那么关于 <span
+class="math inline">\(\boldsymbol{x}\)</span> 的后验分布也是高斯分布
+<span class="math display">\[
+p(\boldsymbol{x}| \hat{\boldsymbol{y}}) \propto
+p(\boldsymbol{x},\hat{\boldsymbol{y}}) = p(\boldsymbol{x})
+p(\hat{\boldsymbol{y}} | \boldsymbol{x}) \sim {\mathcal
+N}(\boldsymbol{\mu}_4, \boldsymbol\Sigma_4) \\
+\boldsymbol{\Sigma}_4 = (\boldsymbol\Sigma_1^{-1} + \boldsymbol{A}^{\rm
+T}\boldsymbol{\Sigma}_2^{-1}\boldsymbol{A})^{-1} \\
+\boldsymbol{\mu}_4 = \boldsymbol{\Sigma}_4
+(\boldsymbol{\Sigma}_1^{-1}\boldsymbol{\mu} + \boldsymbol{A}^{\rm
+T}\boldsymbol{\Sigma}_2^{-1}\hat{\boldsymbol{y}})
+\]</span> 特殊情况下，假如 <span
+class="math inline">\(\boldsymbol{A}=\boldsymbol{I},
+\boldsymbol{\Sigma}_2=\sigma^2\boldsymbol{I},\boldsymbol{\mu}=\boldsymbol{0}\)</span>，此时将有
+<span class="math display">\[
+\boldsymbol{\Sigma}_4 = \sigma^2 \boldsymbol{\Sigma}_1
+(\boldsymbol{\Sigma}_1 + \sigma^2\boldsymbol{I})^{-1} \\
+\boldsymbol\mu_4 =
+\boldsymbol{\Sigma}_1(\boldsymbol{\Sigma}_1+\sigma^2\boldsymbol{I})^{-1}\hat{\boldsymbol{y}}
+\]</span></p>
+<h3 id="条件分布">3. 条件分布</h3>
+<p>假设 <span
+class="math inline">\(\boldsymbol{x}_1,\boldsymbol{x}_2\)</span>
+服从联合高斯分布 <span class="math display">\[
+\begin{bmatrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \end{bmatrix} \sim
+{\mathcal N} \left( \begin{bmatrix} \boldsymbol{\mu}_1 \\
+\boldsymbol{\mu}_2 \end{bmatrix},  \begin{bmatrix}
+\boldsymbol{\Sigma}_{11} &amp; \boldsymbol{\Sigma}_{12} \\
+\boldsymbol{\Sigma}_{21} &amp; \boldsymbol{\Sigma}_{22}
+\end{bmatrix}  \right)
+\]</span> 那么 <span class="math inline">\(\boldsymbol{x}_2 |
+\boldsymbol{x}_1\)</span> 也服从高斯分布 <span class="math display">\[
+\boldsymbol{x}_2 | \boldsymbol{x}_1 \sim {\mathcal
+N}(\boldsymbol{\mu}_5, \boldsymbol{\Sigma}_5) \\
+\boldsymbol{\Sigma}_5 = \boldsymbol{\Sigma}_{22}
+-  \boldsymbol{\Sigma}_{21} \boldsymbol{\Sigma}_{11}^{-1}
+\boldsymbol{\Sigma}_{12} \\
+\boldsymbol{\mu}_5 = \boldsymbol{\mu}_2 + \boldsymbol{\Sigma}_{21}
+\boldsymbol{\Sigma}_{11}^{-1} (\hat{\boldsymbol{x}}_1 -
+\boldsymbol{\mu}_1)
+\]</span></p>
 
               
             </div>
@@ -368,7 +381,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Music/" class="category-chain-item">Music</a>
+  <a href="/categories/Probability-Theory/" class="category-chain-item">Probability Theory</a>
   
   
 
@@ -380,6 +393,13 @@
     </div>
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83/">#高斯分布</a>
+      
+    </div>
+  
 </div>
 
 
@@ -388,8 +408,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>爱得太迟</div>
-      <div>https://glooow1024.github.io/2023/02/10/music/ThePresentPerson/</div>
+      <div>高斯分布常用公式</div>
+      <div>https://glooow1024.github.io/2023/12/18/probability/gaussian/</div>
     </div>
     <div class="license-meta">
       
@@ -401,7 +421,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月10日</div>
+          <div>2023年12月18日</div>
         </div>
       
       
@@ -431,18 +451,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/18/probability/gaussian/" title="高斯分布常用公式">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">高斯分布常用公式</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/03/essay/amusing_ourselves_to_death/" title="《娱乐至死》读后感">
-                        <span class="hidden-mobile">《娱乐至死》读后感</span>
+                      <a href="/2023/02/10/music/ThePresentPerson/" title="爱得太迟">
+                        <span class="hidden-mobile">爱得太迟</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

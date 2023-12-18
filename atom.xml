@@ -6,7 +6,7 @@
   <link href="https://glooow1024.github.io/atom.xml" rel="self"/>
   
   <link href="https://glooow1024.github.io/"/>
-  <updated>2023-02-17T05:36:51.249Z</updated>
+  <updated>2023-12-18T13:48:28.398Z</updated>
   <id>https://glooow1024.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高斯分布常用公式</title>
+    <link href="https://glooow1024.github.io/2023/12/18/probability/gaussian/"/>
+    <id>https://glooow1024.github.io/2023/12/18/probability/gaussian/</id>
+    <published>2023-12-18T13:46:07.000Z</published>
+    <updated>2023-12-18T13:48:28.398Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>后面推导中反复用到Woodbury恒等式 <span class="math display">\[(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}\]</span></p></blockquote><h3 id="边缘分布">1. 边缘分布</h3><p>假设 <span class="math inline">\(\boldsymbol{x}\sim {\mathcalN}(\boldsymbol{\mu}, \boldsymbol\Sigma_1),\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},\boldsymbol\Sigma_2)\)</span>，那么 <spanclass="math inline">\(\boldsymbol{y}\)</span> 的边缘分布也是高斯分布<span class="math display">\[\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu}_3, \boldsymbol\Sigma_3)\\\boldsymbol\Sigma_3 = (\boldsymbol\Sigma_2^{-1} -\boldsymbol\Sigma_2^{-1}\boldsymbol{A}(\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1})^{-1} = \boldsymbol\Sigma_2 +\boldsymbol{A}\boldsymbol\Sigma_1 \boldsymbol{A}^{\rm T} \\\boldsymbol{\mu}_3 = \boldsymbol\Sigma_3 \boldsymbol\Sigma_2^{-\rm T}\boldsymbol{A} (\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol\Sigma_1^{-1}\boldsymbol{\mu} = \boldsymbol{A\mu}\\\]</span></p><h3 id="后验分布">2. 后验分布</h3><p>假设有先验 <span class="math inline">\(\boldsymbol{x}\sim {\mathcalN}(\boldsymbol{\mu}, \boldsymbol\Sigma_1)\)</span>，似然 <spanclass="math inline">\(\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},\boldsymbol\Sigma_2)\)</span>，那么关于 <spanclass="math inline">\(\boldsymbol{x}\)</span> 的后验分布也是高斯分布<span class="math display">\[p(\boldsymbol{x}| \hat{\boldsymbol{y}}) \proptop(\boldsymbol{x},\hat{\boldsymbol{y}}) = p(\boldsymbol{x})p(\hat{\boldsymbol{y}} | \boldsymbol{x}) \sim {\mathcalN}(\boldsymbol{\mu}_4, \boldsymbol\Sigma_4) \\\boldsymbol{\Sigma}_4 = (\boldsymbol\Sigma_1^{-1} + \boldsymbol{A}^{\rmT}\boldsymbol{\Sigma}_2^{-1}\boldsymbol{A})^{-1} \\\boldsymbol{\mu}_4 = \boldsymbol{\Sigma}_4(\boldsymbol{\Sigma}_1^{-1}\boldsymbol{\mu} + \boldsymbol{A}^{\rmT}\boldsymbol{\Sigma}_2^{-1}\hat{\boldsymbol{y}})\]</span> 特殊情况下，假如 <spanclass="math inline">\(\boldsymbol{A}=\boldsymbol{I},\boldsymbol{\Sigma}_2=\sigma^2\boldsymbol{I},\boldsymbol{\mu}=\boldsymbol{0}\)</span>，此时将有<span class="math display">\[\boldsymbol{\Sigma}_4 = \sigma^2 \boldsymbol{\Sigma}_1(\boldsymbol{\Sigma}_1 + \sigma^2\boldsymbol{I})^{-1} \\\boldsymbol\mu_4 =\boldsymbol{\Sigma}_1(\boldsymbol{\Sigma}_1+\sigma^2\boldsymbol{I})^{-1}\hat{\boldsymbol{y}}\]</span></p><h3 id="条件分布">3. 条件分布</h3><p>假设 <spanclass="math inline">\(\boldsymbol{x}_1,\boldsymbol{x}_2\)</span>服从联合高斯分布 <span class="math display">\[\begin{bmatrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \end{bmatrix} \sim{\mathcal N} \left( \begin{bmatrix} \boldsymbol{\mu}_1 \\\boldsymbol{\mu}_2 \end{bmatrix},  \begin{bmatrix}\boldsymbol{\Sigma}_{11} &amp; \boldsymbol{\Sigma}_{12} \\\boldsymbol{\Sigma}_{21} &amp; \boldsymbol{\Sigma}_{22}\end{bmatrix}  \right)\]</span> 那么 <span class="math inline">\(\boldsymbol{x}_2 |\boldsymbol{x}_1\)</span> 也服从高斯分布 <span class="math display">\[\boldsymbol{x}_2 | \boldsymbol{x}_1 \sim {\mathcalN}(\boldsymbol{\mu}_5, \boldsymbol{\Sigma}_5) \\\boldsymbol{\Sigma}_5 = \boldsymbol{\Sigma}_{22}-  \boldsymbol{\Sigma}_{21} \boldsymbol{\Sigma}_{11}^{-1}\boldsymbol{\Sigma}_{12} \\\boldsymbol{\mu}_5 = \boldsymbol{\mu}_2 + \boldsymbol{\Sigma}_{21}\boldsymbol{\Sigma}_{11}^{-1} (\hat{\boldsymbol{x}}_1 -\boldsymbol{\mu}_1)\]</span></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;后面推导中反复用到Woodbury恒等式 &lt;span class=&quot;math display&quot;&gt;\[
+(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}
+\]&lt;/span&gt;</summary>
+      
+    
+    
+    
+    <category term="Probability Theory" scheme="https://glooow1024.github.io/categories/Probability-Theory/"/>
+    
+    
+    <category term="高斯分布" scheme="https://glooow1024.github.io/tags/%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83/"/>
+    
+  </entry>
   
   <entry>
     <title>爱得太迟</title>
@@ -575,29 +602,6 @@ t_2)\)&lt;/span&gt;，所以布朗运动是&lt;strong&gt;非平稳过程&lt;/str
     <category term="高斯过程" scheme="https://glooow1024.github.io/tags/%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B/"/>
     
     <category term="维纳过程" scheme="https://glooow1024.github.io/tags/%E7%BB%B4%E7%BA%B3%E8%BF%87%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>洋葱</title>
-    <link href="https://glooow1024.github.io/2021/11/17/music/Onion/"/>
-    <id>https://glooow1024.github.io/2021/11/17/music/Onion/</id>
-    <published>2021-11-17T07:04:17.000Z</published>
-    <updated>2023-02-10T15:49:26.940Z</updated>
-    
-    <content type="html"><![CDATA[<center><h2>洋葱🧅</h1></center><span id="more"></span><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&amp;id=176053&amp;auto=1&amp;height=66"></iframe><blockquote><p>如果你眼神能够为我 片刻的降临</p><p>如果你能听到 心碎的声音</p><p>沉默的守护着你 沉默的等奇迹</p><p>沉默的让自己 像是空气</p><p>·</p><p>大家都吃着聊着笑着 今晚多开心</p><p>最角落里的我 笑得多合群</p><p>盘底的洋葱像我 永远是调味品</p><p>偷偷的看着你 偷偷的隐藏着自己</p><p>·</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会发现 你会讶异</p><p>你是我 最压抑 最深处的秘密</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会鼻酸 你会流泪</p><p>只要你能 听到我 看到我的全心全意</p><p>·</p><p>听你说你和你的他们 暧昧的空气</p><p>我和我的绝望 装得很风趣</p><p>我就像一颗洋葱 永远是配角戏</p><p>多希望能与你 有一秒专属的剧情</p><p>·</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会发现 你会讶异</p><p>你是我 最压抑 最深处的秘密</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会鼻酸 你会流泪</p><p>只要你能 听到我 看到我的全心全意</p><p>·</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会发现 你会讶异</p><p>你是我 最压抑 最深处的秘密</p><p>如果你愿意一层一层</p><p>一层地剥开我的心</p><p>你会鼻酸 你会流泪</p><p>只要你能 听到我 看到我的全心全意</p><p>你会鼻酸 你会流泪</p><p>只要你能 听到我 看到我的全心全意</p></blockquote>]]></content>
-    
-    
-    <summary type="html">&lt;center&gt;
-&lt;h2&gt;
-洋葱🧅
-&lt;/h1&gt;
-&lt;/center&gt;</summary>
-    
-    
-    
-    <category term="Music" scheme="https://glooow1024.github.io/categories/Music/"/>
-    
     
   </entry>
   

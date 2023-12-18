@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>高斯分布常用公式</title>
+    <link href="/2023/12/18/probability/gaussian/"/>
+    <url>/2023/12/18/probability/gaussian/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>后面推导中反复用到Woodbury恒等式 <span class="math display">\[(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}\]</span></p></blockquote><h3 id="边缘分布">1. 边缘分布</h3><p>假设 <span class="math inline">\(\boldsymbol{x}\sim {\mathcalN}(\boldsymbol{\mu}, \boldsymbol\Sigma_1),\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},\boldsymbol\Sigma_2)\)</span>，那么 <spanclass="math inline">\(\boldsymbol{y}\)</span> 的边缘分布也是高斯分布<span class="math display">\[\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu}_3, \boldsymbol\Sigma_3)\\\boldsymbol\Sigma_3 = (\boldsymbol\Sigma_2^{-1} -\boldsymbol\Sigma_2^{-1}\boldsymbol{A}(\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1})^{-1} = \boldsymbol\Sigma_2 +\boldsymbol{A}\boldsymbol\Sigma_1 \boldsymbol{A}^{\rm T} \\\boldsymbol{\mu}_3 = \boldsymbol\Sigma_3 \boldsymbol\Sigma_2^{-\rm T}\boldsymbol{A} (\boldsymbol\Sigma_1^{-1}+\boldsymbol{A}^{\rm T}\boldsymbol\Sigma_2^{-1} \boldsymbol{A})^{-1} \boldsymbol\Sigma_1^{-1}\boldsymbol{\mu} = \boldsymbol{A\mu}\\\]</span></p><h3 id="后验分布">2. 后验分布</h3><p>假设有先验 <span class="math inline">\(\boldsymbol{x}\sim {\mathcalN}(\boldsymbol{\mu}, \boldsymbol\Sigma_1)\)</span>，似然 <spanclass="math inline">\(\boldsymbol{y}|\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{A}\boldsymbol{x},\boldsymbol\Sigma_2)\)</span>，那么关于 <spanclass="math inline">\(\boldsymbol{x}\)</span> 的后验分布也是高斯分布<span class="math display">\[p(\boldsymbol{x}| \hat{\boldsymbol{y}}) \proptop(\boldsymbol{x},\hat{\boldsymbol{y}}) = p(\boldsymbol{x})p(\hat{\boldsymbol{y}} | \boldsymbol{x}) \sim {\mathcalN}(\boldsymbol{\mu}_4, \boldsymbol\Sigma_4) \\\boldsymbol{\Sigma}_4 = (\boldsymbol\Sigma_1^{-1} + \boldsymbol{A}^{\rmT}\boldsymbol{\Sigma}_2^{-1}\boldsymbol{A})^{-1} \\\boldsymbol{\mu}_4 = \boldsymbol{\Sigma}_4(\boldsymbol{\Sigma}_1^{-1}\boldsymbol{\mu} + \boldsymbol{A}^{\rmT}\boldsymbol{\Sigma}_2^{-1}\hat{\boldsymbol{y}})\]</span> 特殊情况下，假如 <spanclass="math inline">\(\boldsymbol{A}=\boldsymbol{I},\boldsymbol{\Sigma}_2=\sigma^2\boldsymbol{I},\boldsymbol{\mu}=\boldsymbol{0}\)</span>，此时将有<span class="math display">\[\boldsymbol{\Sigma}_4 = \sigma^2 \boldsymbol{\Sigma}_1(\boldsymbol{\Sigma}_1 + \sigma^2\boldsymbol{I})^{-1} \\\boldsymbol\mu_4 =\boldsymbol{\Sigma}_1(\boldsymbol{\Sigma}_1+\sigma^2\boldsymbol{I})^{-1}\hat{\boldsymbol{y}}\]</span></p><h3 id="条件分布">3. 条件分布</h3><p>假设 <spanclass="math inline">\(\boldsymbol{x}_1,\boldsymbol{x}_2\)</span>服从联合高斯分布 <span class="math display">\[\begin{bmatrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2 \end{bmatrix} \sim{\mathcal N} \left( \begin{bmatrix} \boldsymbol{\mu}_1 \\\boldsymbol{\mu}_2 \end{bmatrix},  \begin{bmatrix}\boldsymbol{\Sigma}_{11} &amp; \boldsymbol{\Sigma}_{12} \\\boldsymbol{\Sigma}_{21} &amp; \boldsymbol{\Sigma}_{22}\end{bmatrix}  \right)\]</span> 那么 <span class="math inline">\(\boldsymbol{x}_2 |\boldsymbol{x}_1\)</span> 也服从高斯分布 <span class="math display">\[\boldsymbol{x}_2 | \boldsymbol{x}_1 \sim {\mathcalN}(\boldsymbol{\mu}_5, \boldsymbol{\Sigma}_5) \\\boldsymbol{\Sigma}_5 = \boldsymbol{\Sigma}_{22}-  \boldsymbol{\Sigma}_{21} \boldsymbol{\Sigma}_{11}^{-1}\boldsymbol{\Sigma}_{12} \\\boldsymbol{\mu}_5 = \boldsymbol{\mu}_2 + \boldsymbol{\Sigma}_{21}\boldsymbol{\Sigma}_{11}^{-1} (\hat{\boldsymbol{x}}_1 -\boldsymbol{\mu}_1)\]</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Probability Theory</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>高斯分布</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>爱得太迟</title>
     <link href="/2023/02/10/music/ThePresentPerson/"/>
     <url>/2023/02/10/music/ThePresentPerson/</url>

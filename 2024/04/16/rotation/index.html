@@ -24,7 +24,7 @@
 <meta property="og:description" content="关于三维旋转、欧拉角和四元数，以前只是简单的调用库函数做转换，并没有深入理解，最近在网上找资料发现还是良莠不齐，很多文章写得比较杂乱，这里根据自己学习后的理解整理出一篇文章以供参考。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-16T14:24:20.000Z">
-<meta property="article:modified_time" content="2024-04-16T18:04:32.371Z">
+<meta property="article:modified_time" content="2024-04-18T13:19:09.952Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="旋转">
 <meta property="article:tag" content="欧拉角">
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k 字
+          8.7k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          41 分钟
+          73 分钟
         
       </span>
     
@@ -315,7 +315,7 @@ alt="欧拉角旋转" />
 <p>更具体清晰的描述如下：首先假设<strong>世界坐标系</strong>为<span
 class="math inline">\(xyz\)</span>，飞机自身的局部坐标系为<span
 class="math inline">\(XYZ\)</span>（<strong>刚体坐标系</strong>），世界坐标系始终保持固定不变，而飞机局部坐标系在飞机旋转过程中会发生变化。假设飞机初始坐标系为<span
-class="math inline">\(X_1Y_1Z_1\)</span>，想要旋转到一个新的姿态<span
+class="math inline">\(X_1Y_1Z_1(=xyz)\)</span>，想要旋转到一个新的姿态<span
 class="math inline">\(X_2Y_2Z_2\)</span>，那么欧拉给出的一个结论是：任意两个姿态之间，只需要绕
 <span class="math inline">\(x,y,z(X,Y,Z)\)</span>
 轴做3次旋转即可完成。不过，具体到旋转过程中，绕哪几个轴旋转的先后顺序和角度都会对最终结果有影响<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote">&lt;span
@@ -324,8 +324,8 @@ target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85108850">欧�
 - 知乎(zhihu.com) "&gt;[2]</span></a></sup>：</p>
 <ol type="1">
 <li>内旋还是外旋：可以注意到上面动图中首先绕z轴旋转，第一次旋转之后局部坐标系的<span
-class="math inline">\(xy\)</span>轴与世界坐标系的<span
-class="math inline">\(XY\)</span>轴已经不对齐了，因此第二步是以局部坐标系的轴进行旋转还是以世界坐标系为轴进行旋转？前者被称为内旋，后者为外旋。显然其他参数相同的情况下，两种方式得到的结果不同。</li>
+class="math inline">\(XY\)</span>轴与世界坐标系的<span
+class="math inline">\(xy\)</span>轴已经不对齐了，因此第二步是以局部坐标系的轴进行旋转还是以世界坐标系为轴进行旋转？前者被称为内旋，后者为外旋。显然其他参数相同的情况下，两种方式得到的结果不同。</li>
 <li>旋转轴的顺序：欧拉角实际上有两大类，一类是Proper Euler
 angles，其旋转顺序包括 (z-x-z, x-y-x, y-z-y, z-y-z, x-z-x,
 y-x-y)，第二类是Tait–Bryan angles，包括 (x-y-z, y-z-x, z-x-y, x-z-y,
@@ -338,17 +338,21 @@ class="math inline">\((\alpha,\beta,\gamma)\)</span>，需要注意的是如果�
 </ol>
 <blockquote>
 <p>最后给一个小的总结，也就是说要想用欧拉角的方式描述一个三维旋转，实际上需要5个参数，即：1）内旋or外旋；2）旋转顺序；3）每次旋转的角度。</p>
+<p>另外纠正一个重要的误解：<strong>欧拉角并不是描述一个静态的姿态角，而是描述一种过程</strong>！（相信很多人和我一样一直没意识到这点）姿态本身是唯一确定的，但是变换到这个姿态的过程是不唯一的，因此欧拉角与内旋/外旋、旋转顺序都密切相关！</p>
 </blockquote>
+<h2 id="旋转矩阵">2. 旋转矩阵</h2>
 <p>我们知道旋转可以用矩阵表示，如果考虑外旋的话，那么假设某个点在世界坐标系中的初始位置为
 <span
-class="math inline">\(\boldsymbol{p}_0\)</span>，如果跟随飞机坐标系按照某个Tait–Bryan
-angles做外旋，不妨设为 <span class="math inline">\(z(\gamma)\to
-y(\beta)\to x(\alpha)\)</span>，其旋转后的坐标是可以表示为 <span
+class="math inline">\(\boldsymbol{p}_0\)</span>，如果跟随世界坐标系按照某个Tait–Bryan
+angles做外旋，不妨设为 <span class="math inline">\(x(\alpha)\to
+y(\beta)\to
+z(\gamma)\)</span>，其旋转后的坐标（在世界坐标系中）是可以表示为 <span
 class="math inline">\(\boldsymbol{p}&#39;= \boldsymbol{R} *
 \boldsymbol{p}_0\)</span>，其中 <span
 class="math inline">\(\boldsymbol{R}\)</span>
 为旋转矩阵，那么这个旋转矩阵可以写为 <span
-class="math inline">\(\boldsymbol{R}=\boldsymbol{R}_x(\alpha)\boldsymbol{R}_y(\beta)\boldsymbol{R}_z(\gamma)\)</span>，其中
+class="math inline">\(\boldsymbol{R}_{\rm
+extrinsic}=\boldsymbol{R}_z(\gamma)\boldsymbol{R}_y(\beta)\boldsymbol{R}_x(\alpha)\)</span>，其中
 <span class="math display">\[
 \begin{align}
 \boldsymbol{R}_x(\alpha) &amp;= \left[\begin{array}{ccc}
@@ -368,14 +372,139 @@ class="math inline">\(\boldsymbol{R}=\boldsymbol{R}_x(\alpha)\boldsymbol{R}_y(\b
 \end{array}\right]
 \end{align}
 \]</span>
-外旋比较简单，但内旋的旋转矩阵就比较复杂，公式推导比较繁琐，这里给出一个简洁的结论：</p>
+外旋比较简单，但内旋的旋转矩阵就比较复杂，首先给出一个结论：如果内旋操作为
+<span class="math inline">\(Z(\gamma) \to Y&#39;(\beta)\to
+X&#39;&#39;(\alpha)\)</span>，那么其对应的旋转矩阵为 <span
+class="math display">\[
+\boldsymbol{R}_{\rm
+intrinsic}=\boldsymbol{R}_{X&#39;&#39;}(\alpha)\boldsymbol{R}_{Y&#39;}(\beta)\boldsymbol{R}_{Z}(\gamma)=\boldsymbol{R}_z(\gamma)\boldsymbol{R}_y(\beta)\boldsymbol{R}_x(\alpha)
+\]</span> 也就是和前面外旋 <span class="math inline">\(x(\alpha)\to
+y(\beta)\to z(\gamma)\)</span> 的结果是完全一样的。也就是说：</p>
 <blockquote>
 <p>每种特定顺序的外旋等价于其相反顺序的内旋，例如 <span
-class="math inline">\(z(\gamma)\to y(\beta)\to x(\alpha)\)</span> 与
-<span class="math inline">\(X(\alpha)\to Y(\beta)\to Z(\gamma)\)</span>
-的旋转是等价的。</p>
+class="math inline">\(x(\alpha)\to y(\beta)\to z(\gamma)\)</span> 与
+<span class="math inline">\(Z(\gamma) \to Y&#39;(\beta)\to
+X&#39;&#39;(\alpha)\)</span> 的旋转是等价的。</p>
 </blockquote>
-<h2 id="万向锁">2. 万向锁</h2>
+<p>上面 <span class="math inline">\(\boldsymbol{R}_{\rm
+intrinsic}\)</span> 的表达式中，第1次旋转绕 <span
+class="math inline">\(Z(=z)\)</span> 轴旋转，因此 <span
+class="math inline">\(\boldsymbol{R}_{Z}(\gamma)=\boldsymbol{R}_z(\gamma)\)</span>，然而在做第2次旋转的时候，此时初始的
+<span class="math inline">\(Y\)</span> 轴已经被旋转到了 <span
+class="math inline">\(Y&#39;\)</span> 处，因此绕 <span
+class="math inline">\(Y&#39;\)</span> 轴的旋转需要根据 <span
+class="math inline">\(Y&#39;\)</span> 的方向来确定，<span
+class="math inline">\(\boldsymbol{R}_{Y&#39;}(\beta)\)</span>
+表达式推导较为繁琐，而第3次旋转类似，其旋转轴变为了 <span
+class="math inline">\(Z&#39;&#39;\)</span>，表达式则更为复杂。但是经过推导，会发现他们神奇地和
+<span
+class="math inline">\(\boldsymbol{R}_z(\gamma)\boldsymbol{R}_y(\beta)\boldsymbol{R}_x(\alpha)\)</span>
+完全等价！实际上这并不是巧合，如何理解呢？下面我将参考博客<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://dominicplein.medium.com/extrinsic-intrinsic-rotation-do-i-multiply-from-right-or-left-357c38c1abfd">Extrinsic
+&amp; intrinsic rotation: Do I multiply from right or left? | by Dominic
+Plein | Medium
+"&gt;[7]</span></a></sup>给出解释，稍微有点绕，不想深究细节的可以只记住上面的结论，跳过这段。</p>
+<p>首先定义一些符号，有两个坐标系，即世界坐标系 <span
+class="math inline">\(W\)</span> 和旋转后刚体坐标系 <span
+class="math inline">\(B\)</span>，我们一开始只考虑单步旋转，也即 <span
+class="math inline">\(W\)</span>
+绕某个轴（外旋，同时也是内旋）旋转1次即为 <span
+class="math inline">\(B\)</span>，刚体上有一个点 <span
+class="math inline">\(A\)</span> 跟着刚体坐标系做旋转，旋转后变为点
+<span class="math inline">\(A&#39;\)</span>。记旋转前后点 A
+在世界坐标系<span class="math inline">\(W\)</span>中的坐标为 <span
+class="math inline">\({}^{\rm W}\boldsymbol{p}_{A}, {}^{\rm
+W}\boldsymbol{p}_{A&#39;}\)</span>，在 <span
+class="math inline">\(B\)</span> 中的坐标为 <span
+class="math inline">\({}^{\rm
+B}\boldsymbol{p}_{A&#39;}\)</span>。那么可以有下面两个等式：</p>
+<ol type="1">
+<li>记从 <span class="math inline">\(W\)</span> 到 <span
+class="math inline">\(B\)</span> 的旋转矩阵为 <span
+class="math inline">\({}^{\rm W}\boldsymbol{R}_{\rm
+B}\)</span>（外旋矩阵的形式，例如如果<span
+class="math inline">\(W\)</span>到<span
+class="math inline">\(B\)</span>是绕着<span
+class="math inline">\(x\)</span>轴旋转<span
+class="math inline">\(\alpha\)</span>，那么就有<span
+class="math inline">\({}^{\rm W}\boldsymbol{R}_{\rm
+B}=\boldsymbol{R}_{x}(\alpha)\)</span>），那么我们有 <span
+class="math inline">\({}^{\rm W}\boldsymbol{p}_{A&#39;} = {}^{\rm
+W}\boldsymbol{R}_{\rm B} {}^{\rm W}\boldsymbol{p}_{A}\)</span>；</li>
+<li>另一方面，由于点 <span class="math inline">\(A\)</span>
+跟着刚体坐标系做旋转，因此其在刚体坐标系中的坐标始终保持不变，也就是说我们有
+<span class="math inline">\({}^{\rm B}\boldsymbol{p}_{A&#39;} = {}^{\rm
+W}\boldsymbol{p}_{A}\)</span>；</li>
+</ol>
+<p>基于以上两个等式，可以得到 <span class="math inline">\({}^{\rm
+W}\boldsymbol{p}_{A&#39;} = {}^{\rm W}\boldsymbol{R}_{\rm B} {}^{\rm
+B}\boldsymbol{p}_{A&#39;}\)</span>，注意到此时发生了质的变化，我们把在同一个点两个不同坐标系中的坐标，通过旋转矩阵
+<span class="math inline">\({}^{\rm W}\boldsymbol{R}_{\rm B}\)</span>
+联系在了一起！实际上，矩阵<span class="math inline">\({}^{\rm
+W}\boldsymbol{R}_{\rm B}\)</span>有两种含义：1）从 <span
+class="math inline">\(W\)</span> 到 <span
+class="math inline">\(B\)</span>
+的旋转矩阵；2）空间中的同一个点，将其在<span
+class="math inline">\(B\)</span>坐标系下的坐标映射到<span
+class="math inline">\(W\)</span>坐标系下坐标的<strong>过渡矩阵</strong>。</p>
+<p>那么再思考一下，所谓的外旋实际上同时也是关于坐标系 <span
+class="math inline">\(W\)</span> 的内旋！如果把世界坐标系 <span
+class="math inline">\(W\)</span> 直接替换成任意一个刚体坐标系 <span
+class="math inline">\(C\)</span>，那么我们就有 <span
+class="math inline">\({}^{\rm C}\boldsymbol{p}_{A&#39;} = {}^{\rm
+C}\boldsymbol{R}_{\rm B} {}^{\rm
+B}\boldsymbol{p}_{A&#39;}\)</span>。还剩下一个问题就是，<span
+class="math inline">\({}^{\rm C}\boldsymbol{R}_{\rm B}\)</span>
+的表达式是什么？<strong>实际上，假如 <span class="math inline">\(C\to
+B\)</span> 是绕 <span class="math inline">\(x\)</span> 轴内旋 <span
+class="math inline">\(\alpha\)</span>，那么就有 <span
+class="math inline">\({}^{\rm C}\boldsymbol{R}_{\rm B} =
+\boldsymbol{R}_{x}(\alpha)\)</span>！（思考一下为什么~）</strong></p>
+<p>现在考虑多步旋转，内旋操作为 <span class="math inline">\(Z(\gamma)
+\to Y&#39;(\beta)\to
+X&#39;&#39;(\alpha)\)</span>，旋转过程中的坐标系分别为 <span
+class="math inline">\(W\to B\to C\to D\)</span>，某一个点 A
+经过多此旋转变为 <span class="math inline">\(A\to A&#39; \to A&#39;&#39;
+\to A&#39;&#39;&#39;\)</span>，旋转前 <span
+class="math inline">\(A\)</span> 的坐标为 <span
+class="math inline">\({}^{\rm W}\boldsymbol{p}_{A}\)</span>，由于 <span
+class="math inline">\(A\)</span>
+始终跟着刚体坐标系旋转，因此其在局部坐标系中的坐标始终不变，也就是 <span
+class="math inline">\({}^{\rm
+D}\boldsymbol{p}_{A&#39;&#39;&#39;}={}^{\rm
+C}\boldsymbol{p}_{A&#39;&#39;}={}^{\rm B}\boldsymbol{p}_{A&#39;}={}^{\rm
+W}\boldsymbol{p}_{A}\)</span>，那么可以有如下关系：</p>
+<ol type="1">
+<li>先在坐标系 <span class="math inline">\(C\)</span>
+的视角下，考虑最后一次旋转操作，有 <span class="math inline">\({}^{\rm
+C}\boldsymbol{p}_{A&#39;&#39;&#39;} = {}^{\rm C}\boldsymbol{R}_{\rm D}
+{}^{\rm D}\boldsymbol{p}_{A&#39;&#39;&#39;} = \boldsymbol{R}_{x}(\alpha)
+{}^{\rm D}\boldsymbol{p}_{A&#39;&#39;&#39;} = \boldsymbol{R}_{x}(\alpha)
+{}^{\rm W}\boldsymbol{p}_{A}\)</span>；</li>
+<li>然后在坐标系 <span class="math inline">\(B\)</span>
+的视角下，考虑倒数第二次旋转操作，有 <span class="math inline">\({}^{\rm
+B}\boldsymbol{p}_{A&#39;&#39;&#39;} = {}^{\rm B}\boldsymbol{R}_{\rm C}
+{}^{\rm C}\boldsymbol{p}_{A&#39;&#39;&#39;} = \boldsymbol{R}_{y}(\beta)
+{}^{\rm C}\boldsymbol{p}_{A&#39;&#39;&#39;} =
+\boldsymbol{R}_{y}(\beta)\boldsymbol{R}_{x}(\alpha) {}^{\rm
+W}\boldsymbol{p}_{A}\)</span>；</li>
+<li>接着在坐标系 <span class="math inline">\(W\)</span>
+的视角下，考虑倒数第三次旋转操作，类似的有 <span
+class="math inline">\({}^{\rm W}\boldsymbol{p}_{A&#39;&#39;&#39;} =
+\boldsymbol{R}_{z}(\gamma)\boldsymbol{R}_{y}(\beta)\boldsymbol{R}_{x}(\alpha)
+{}^{\rm W}\boldsymbol{p}_{A}\)</span>。</li>
+</ol>
+<p>因此我们就得到了内旋操作 <span class="math inline">\(Z(\gamma) \to
+Y&#39;(\beta)\to X&#39;&#39;(\alpha)\)</span> 对应的旋转矩阵恰好就是
+<span
+class="math inline">\(\boldsymbol{R}_z(\gamma)\boldsymbol{R}_y(\beta)\boldsymbol{R}_x(\alpha)\)</span>，和外旋
+<span class="math inline">\(x(\alpha)\to y(\beta)\to z(\gamma)\)</span>
+是完全一样的。</p>
+<p>还有另一种解释方法，<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/407150749/answer/2354982075">旋转矩阵为何左乘是相对固定坐标系，右乘是相对当前坐标系？
+- 知乎 (zhihu.com)</a></p>
+<h2 id="万向锁">3. 万向锁</h2>
 <p>提到欧拉角旋转，很多文章会谈到万向锁问题，需要注意的是：欧拉角用来表示物体的旋转状态是没有问题的，万向锁是用欧拉角表示<strong>旋转过程</strong>中的一种状态，因此其影响到的是<strong>连续运动的问题</strong><sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;span
 class="hint--top hint--rounded" aria-label="<a
 target="_blank" rel="noopener" href="https://blog.csdn.net/seraph0321/article/details/111773593">欧拉角表示旋转会出现的问题——万向锁(Gimbal
@@ -479,9 +608,12 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/seraph0321/article/de
 Lock)-CSDN博客 "&gt;[3]</span></a></sup> <a
 target="_blank" rel="noopener" href="https://blog.csdn.net/seraph0321/article/details/111773593">欧拉角表示旋转会出现的问题——万向锁(Gimbal
 Lock)-CSDN博客</a></p>
-<h2 id="四元数">3. 四元数</h2>
+<h2 id="四元数">4. 四元数</h2>
 <p>其实大家可以发现，欧拉角方式描述三维旋转的一个关键问题是不唯一性，也就是多种不同的旋转操作可以得到相同的结果，被称为Ambiguity。</p>
-<p>关于四元数的部分后面再写吧。。。</p>
+<p>关于四元数的部分参考大佬写的教程<sup id="fnref:8" class="footnote-ref"><a href="#fn:8" rel="footnote">&lt;span
+class="hint--top hint--rounded" aria-label="<a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/23005815/answer/483589712">如何形象地理解四元数？
+- 知乎 "&gt;[8]</span></a></sup>，后面再写吧。。。</p>
 <h2 id="reference">Reference</h2>
 <section class="footnotes">
 <div class="footnote-list">
@@ -526,6 +658,20 @@ target="_blank" rel="noopener" href="https://www.zhihu.com/question/433208062/an
 target="_blank" rel="noopener" href="https://www.zhihu.com/question/47736315/answer/236808639">如何通俗地解释欧拉角？之后为何要引入四元数？
 - 大脸怪的回答 - 知乎</a>
 <a href="#fnref:6" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:7" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://dominicplein.medium.com/extrinsic-intrinsic-rotation-do-i-multiply-from-right-or-left-357c38c1abfd">Extrinsic
+&amp; intrinsic rotation: Do I multiply from right or left? | by Dominic
+Plein | Medium</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref">
+↩︎</a></span></span>
+</li>
+<li>
+<span id="fn:8" class="footnote-text"><span><a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/23005815/answer/483589712">如何形象地理解四元数？
+- 知乎</a> <a href="#fnref:8" rev="footnote" class="footnote-backref">
 ↩︎</a></span></span>
 </li>
 </ol>
@@ -598,6 +744,12 @@ target="_blank" rel="noopener" href="https://www.zhihu.com/question/47736315/ans
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/04/26/moto_subject1/" title="摩托驾驶证科目一易错点">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">摩托驾驶证科目一易错点</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

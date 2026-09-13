@@ -103,9 +103,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: 
-    github: git@github.com:Glooow1024/Glooow1024.github.io.git
-    gitee: git@gitee.com:glooow/Glooow.git
+  repository: git@github.com:Glooow1024/Glooow1024.github.io.git
   branch: master
 
 # Search 2019/12/21

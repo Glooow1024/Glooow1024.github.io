@@ -52,6 +52,7 @@
 - 部分文章用 `<!--more-->` 截断首页摘要；部分用 `[TOC]` 生成目录。
 - 文章图片惯例：放在 `source/_posts/imgs/`（或分类目录下的 `img/`，如 `statistic/img/`），用相对路径引用。
 - 新文章按主题放入 `source/_posts/` 下对应分类子目录；新主题可新建子目录（分类按 front matter 的 `categories` 决定，与目录无关）。
+- **文件名规范（用户明确要求，2026-09-13 起）**：新文章/新文档的文件名**一律用英文**（推荐小写 + 连字符/下划线，如 `git-principle-1.md`），**不要用汉字**；中文标题写在 front matter 的 `title` 字段。英文文件名直接决定 URL（Hexo slug），更友好也利于换电脑迁移。参考反例：曾用中文名 `AI的逗号.md`，后由用户手动改为 `AIs-comma.md`。
 - **源码版本管理**：项目根目录是 git 仓库（分支 `source`，远程 `origin`）；提交后 push 到 GitHub `source` 分支，具体见第 7 节。
 
 ## 4. 发布工作流（日常唯一操作）

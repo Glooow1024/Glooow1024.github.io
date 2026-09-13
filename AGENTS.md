@@ -58,16 +58,17 @@
 
 1. 在 `source/_posts/` 下新建 Markdown（或用 `npx hexo new "标题"` 走模板）。
 2. `npx hexo generate`（构建到 `public/`）。
-3. `npx hexo deploy`（hexo-deployer-git 将 `public/` 内容推送到 GitHub master + Gitee master）。
-4. GitHub Pages 自动更新上线。
+3. **本地预览（部署前必做）**：`npx hexo server` 启动本地服务，把预览链接 `http://localhost:4000` 提供给用户，**等用户确认视觉效果后再部署**。用户确认后停掉服务（见下方命令）。
+4. `npx hexo deploy`（hexo-deployer-git 将 `public/` 内容推送到 GitHub master）。
+5. GitHub Pages 自动更新上线。
 
 常用命令（Windows PowerShell）：
 
 ```powershell
 npx hexo new "标题"        # 新建文章
-npx hexo server            # 本地预览 http://localhost:4000
-npx hexo clean             # 清缓存
+npx hexo clean             # 清缓存（删除 public/ 和 db.json）
 npx hexo generate          # 构建
+npx hexo server            # 本地预览 http://localhost:4000（长驻进程，预览后 Ctrl+C 停止）
 npx hexo deploy            # 部署
 git -C .deploy_git log -1  # 查看最后一次成功部署的提交
 ```
@@ -75,6 +76,8 @@ git -C .deploy_git log -1  # 查看最后一次成功部署的提交
 > **重要**：项目根目录是 git 仓库，但**只提交源码**（`source/`、配置、主题、scaffolds），`node_modules/`、`public/`、`.deploy_git/`、`db.json` 已被 `.gitignore` 排除。GitHub 仓库 `master` 分支只有构建产物。
 
 **源码备份习惯**：发布完成后顺手提交一次源码到 `source` 分支（命令见第 7 节），避免源码只留在本地。
+
+**工作约定（每次构建完成后必做）**：构建成功后主动启动 `npx hexo server` 提供本地预览链接，让用户先查看视觉效果（文章排版、公式、图片、目录等），确认无误后再执行部署。不要跳过预览直接部署。
 
 ## 5. 构建环境注意（容易踩坑）
 

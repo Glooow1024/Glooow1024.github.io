@@ -346,8 +346,7 @@ class="math inline">\(f\)</span> 做 Lipschitz
 可以是任意正实数，而不需要 <span class="math inline">\(0&lt; t_k &lt;
 1/L\)</span></strong>。类比 PG 中的收敛性分析可以得到 $$
 t_{i}(f(x_{i+1})-f^{})
-(|x_{i}-x<sup>{}|<em>{2}<sup>{2}-|x_{i+1}-x</sup>{}|</em>{2}</sup>{2})
-\</p>
+(|x_{i}-x<sup>{}|_{2}</sup>{2}-|x_{i+1}-x<sup>{}|_{2}</sup>{2}) \</p>
 <p>f(x_{k})-f^{} k <span class="math display">\[
 同样得，我们也可以引入外差进行加速
 \]</span> x_{k+1}=<em>{t</em>{k}
@@ -452,8 +451,8 @@ z^{k+1} &amp;= z^k + t(Ax^{k+1}-y^{k+1})
 class="math inline">\(h(z)=g^{\star}(z)+f^{\star}\left(-A^{T}
 z\right)\)</span>，那么就需要求解 $$ z^{+} = <em>{th}(z) =
 (f<sup>{}(-A</sup>{T} u)+g^{}(u)+|u-z|</em>{2}^{2}) \</p>
-<p>z-z^+ th(z<sup>+)=t(-Af</sup>(-A<sup>Tz</sup>+)+g<sup>(z</sup>+) $$
-这个 <span class="math inline">\(z^+\)</span> 乍一看跟 ALM 的 <span
+<p>z-z^+ th(z^+)=t(-Af<sup>(-A</sup>Tz^+)+g<sup>(z</sup>+) $$ 这个 <span
+class="math inline">\(z^+\)</span> 乍一看跟 ALM 的 <span
 class="math inline">\(z^{k+1}\)</span>
 没有一点关系啊，为什么说他们俩等价呢？这就要引出下面一个等式了（先打个预防针，这个等式以及他的推导很不直观，我也没有想到一个很好的解释，但是这个等式以及推导又很重要！在后面章节中也会用到）</p>
 <blockquote>

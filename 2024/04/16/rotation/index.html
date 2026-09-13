@@ -24,7 +24,7 @@
 <meta property="og:description" content="关于三维旋转、欧拉角和四元数，以前只是简单的调用库函数做转换，并没有深入理解，最近在网上找资料发现还是良莠不齐，很多文章写得比较杂乱，这里根据自己学习后的理解整理出一篇文章以供参考。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-16T14:24:20.000Z">
-<meta property="article:modified_time" content="2024-04-18T13:19:09.952Z">
+<meta property="article:modified_time" content="2026-09-13T03:20:40.867Z">
 <meta property="article:author" content="Glooow">
 <meta property="article:tag" content="旋转">
 <meta property="article:tag" content="欧拉角">
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.7k 字
+          9.3k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          73 分钟
+          78 分钟
         
       </span>
     
@@ -505,11 +505,13 @@ class="math inline">\(\boldsymbol{R}_z(\gamma)\boldsymbol{R}_y(\beta)\boldsymbol
 target="_blank" rel="noopener" href="https://www.zhihu.com/question/407150749/answer/2354982075">旋转矩阵为何左乘是相对固定坐标系，右乘是相对当前坐标系？
 - 知乎 (zhihu.com)</a></p>
 <h2 id="万向锁">3. 万向锁</h2>
-<p>提到欧拉角旋转，很多文章会谈到万向锁问题，需要注意的是：欧拉角用来表示物体的旋转状态是没有问题的，万向锁是用欧拉角表示<strong>旋转过程</strong>中的一种状态，因此其影响到的是<strong>连续运动的问题</strong><sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;span
+<p>提到欧拉角旋转，很多文章会谈到万向锁问题，需要注意的是：欧拉角用来表示物体的旋转状态，在绝大多数（非奇异）区域是没有问题的；万向锁是欧拉角<strong>参数化本身</strong>在特定姿态处的奇异性（singularity），它使得欧拉角在奇异点附近出现<strong>连续运动的问题</strong>（如插值跳变、控制失效）<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;span
 class="hint--top hint--rounded" aria-label="<a
 target="_blank" rel="noopener" href="https://blog.csdn.net/seraph0321/article/details/111773593">欧拉角表示旋转会出现的问题——万向锁(Gimbal
 Lock)-CSDN博客
-"&gt;[3]</span></a></sup>。另外，<strong>万向锁发生在内旋过程中</strong>，外旋过程是不会发生的。万向锁现象：假设内旋
+"&gt;[3]</span></a></sup>。另外，<strong>万向锁与内旋/外旋无关</strong>——它是欧拉角参数化的固有性质，无论内旋还是外旋，只要中间轴的旋转角为
+<span class="math inline">\(\pm
+90^\circ\)</span>，第一、第三旋转轴就会重合，丢失一个自由度。这其实也是上一节内旋/外旋等价性的直接推论：任何内旋序列都等价于一个相反顺序的外旋序列，因此奇异点必然同时出现在两者之中。万向锁现象：假设内旋
 <span class="math inline">\(Z\to Y\to X\)</span>，初始刚体坐标系为 <span
 class="math inline">\(X_0Y_0Z_0\)</span>，其与世界坐标系重合，第1次旋转的时候绕着
 <span class="math inline">\(Z_0/z\)</span>
@@ -524,7 +526,7 @@ class="math inline">\(z\)</span>
 class="math inline">\(X_2\)</span>
 轴做旋转，但从世界坐标系来看，也就等价于绕着 <span
 class="math inline">\(z\)</span>
-轴旋转，也就是说第1次和第3次旋转是完全可互相替代的，换言之失去了一个旋转的自由度。其他的内旋顺序也是类似的。简而言之，内旋过程中，当第二个旋转轴旋转90°/-90°时，第三个轴的转动效果可以被第一个旋转轴替代。</p>
+轴旋转，也就是说第1次和第3次旋转是完全可互相替代的，换言之失去了一个旋转的自由度。其他的旋转顺序也是类似的。简而言之，当第二个旋转轴旋转90°/-90°时，第三个轴的转动效果可以被第一个旋转轴替代。</p>
 <p>通常网上文章的另一种解释思路是用万向节，也就是陀螺仪的例子，个人认为这个例子不合适。首先陀螺仪中三轴万向锁中的三个轴并不总是保持互相垂直的，外圈的轴旋转并不会带动内圈轴旋转，因此它和我们直接理解刚体坐标系的旋转根本不是一回事。那么网上广为流传的那个粒子和万向锁有什么联系呢？还是结合刚才内旋
 <span class="math inline">\(Z\to Y\to X\)</span>
 的例子，以及网上流传的众多图片，下面将给出一个解释。</p>
@@ -542,14 +544,14 @@ alt="三轴陀螺仪" />
 <table>
 
 <thead>
-<tr class="header">
+<tr>
 <th>绿色绕x轴旋转</th>
 <th>红色绕y轴旋转</th>
 <th>蓝色绕z轴旋转</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><img
 src="https://raw.githubusercontent.com/Glooow1024/ImgHosting/master/hexo/2024/gyroscope1.webp" srcset="/img/loading.gif" lazyload /></td>
 <td><img
@@ -585,8 +587,10 @@ alt="三轴陀螺仪的万向锁现象" />
 <p>另一种解释思路是从矩阵运算的角度<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote">&lt;span
 class="hint--top hint--rounded" aria-label="<a
 target="_blank" rel="noopener" href="https://www.zhihu.com/question/433208062/answer/3008859970">关于欧拉角万向锁一直搞不明白万向锁为啥会形成？
-- 东方白的回答 - 知乎 "&gt;[5]</span></a></sup>，考虑前面提到的旋转矩阵
-<span
+- 东方白的回答 - 知乎 "&gt;[5]</span></a></sup>，考虑 <span
+class="math inline">\(XYZ\)</span> 顺序（即内旋 <span
+class="math inline">\(X\to Y&#39;\to Z&#39;&#39;\)</span>，等价于外旋
+<span class="math inline">\(z\to y\to x\)</span>）的旋转矩阵 <span
 class="math inline">\(\boldsymbol{R}=\boldsymbol{R}_x(\alpha)\boldsymbol{R}_y(\beta)\boldsymbol{R}_z(\gamma)\)</span>，当
 <span class="math inline">\(\beta=\pm\pi/2\)</span> 的时候，会推导出
 <span class="math display">\[
@@ -595,13 +599,32 @@ class="math inline">\(\boldsymbol{R}=\boldsymbol{R}_x(\alpha)\boldsymbol{R}_y(\b
 \sin (\alpha+\gamma) &amp; \cos (\alpha+\gamma) &amp; 0 \\
 -\cos (\alpha+\gamma) &amp; \sin (\alpha+\gamma) &amp; 0
 \end{array}\right]
-\]</span>
-这里有一点不太合适的，因为万向锁发生在内旋过程中，而这样左乘的矩阵实际上是对应的外旋操作，因此这个解释是有一点小问题的。但也说得通，因为前面提到过内旋和外旋有对应关系，所以可以认为是另一种内旋等价转换为外旋。这里可以看到复合的旋转矩阵
-<span class="math inline">\(\boldsymbol{R}\)</span>
-实际上只做了2个旋转操作，也就是所谓一个自由度被“锁”住了。</p>
+\]</span> 可以看到矩阵中只剩下两个独立的自由度：绕 <span
+class="math inline">\(x\)</span> 轴的角 <span
+class="math inline">\(\alpha\)</span> 与绕 <span
+class="math inline">\(z\)</span> 轴的角 <span
+class="math inline">\(\gamma\)</span> 以 <span
+class="math inline">\(\alpha+\gamma\)</span>
+的组合形式出现，二者无法再被独立控制，丢失的正是这个自由度。注意这里用的是外旋视角（<span
+class="math inline">\(\boldsymbol{R}_x\boldsymbol{R}_y\boldsymbol{R}_z\)</span>
+左乘），退化同样发生——这恰好印证了上面的结论：<strong>万向锁与内旋/外旋无关</strong>，它是欧拉角在
+<span class="math inline">\(\beta=\pm\pi/2\)</span> 处的参数化奇异。</p>
 <blockquote>
-<p>前提到内旋和外旋操作是有等价关系的，又提到万向锁只发生在内旋过程中，这是否矛盾呢？我的理解是不矛盾，因为我们说内旋和外旋等价的时候，关注的是结果，也就是两种操作不管过程如何，最终旋转后的坐标系是相同的；而在考虑万向锁问题的时候，我们关注的是旋转的过程。</p>
+<p>可能有读者会问：既然内旋和外旋等价，为什么还要单独讨论万向锁？因为万向锁描述的不是内旋/外旋的区别，而是欧拉角参数化在
+<span class="math inline">\(\beta=\pm90^\circ\)</span>
+附近的奇异性：在奇异姿态附近，两个旋转轴趋于重合，微小的角度变化无法被独立表示，导致插值与控制出现跳变。这也是四元数等表示方法在工程中更受青睐的原因之一。</p>
 </blockquote>
+<p><strong>内旋/外旋视角的小结</strong>：万向锁的本质可以从两个视角来理解——</p>
+<ul>
+<li><strong>内旋</strong>：前序旋转让第 1 个旋转轴与第 3
+个旋转轴共线（重合），于是原本独立的两次旋转变成绕同一根轴转动，两个角度只能控制同一个转动，丢失
+1 个自由度；</li>
+<li><strong>外旋</strong>：三根世界轴固定不动，轴本身不会重合，只是先后两次旋转的运动效果等价于绕同一根轴转动（如上文矩阵退化后
+<span class="math inline">\(\alpha\)</span> 与 <span
+class="math inline">\(\gamma\)</span> 仅以 <span
+class="math inline">\(\alpha+\gamma\)</span>
+的组合形式出现），自由度坍缩。</li>
+</ul>
 <p>关于万向锁带来的问题，例如3D动画中的插帧问题，以及云台追踪问题，可以参考博客<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote">&lt;span
 class="hint--top hint--rounded" aria-label="<a
 target="_blank" rel="noopener" href="https://blog.csdn.net/seraph0321/article/details/111773593">欧拉角表示旋转会出现的问题——万向锁(Gimbal

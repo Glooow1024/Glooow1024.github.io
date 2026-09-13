@@ -6,7 +6,7 @@
   <link href="https://glooow1024.github.io/atom.xml" rel="self"/>
   
   <link href="https://glooow1024.github.io/"/>
-  <updated>2024-04-26T04:03:51.073Z</updated>
+  <updated>2026-09-13T02:49:01.736Z</updated>
   <id>https://glooow1024.github.io/</id>
   
   <author>
@@ -17,13 +17,81 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>AI的逗号</title>
+    <link href="https://glooow1024.github.io/2026/09/13/essay/AI%E7%9A%84%E9%80%97%E5%8F%B7/"/>
+    <id>https://glooow1024.github.io/2026/09/13/essay/AI%E7%9A%84%E9%80%97%E5%8F%B7/</id>
+    <published>2026-09-13T02:48:46.000Z</published>
+    <updated>2026-09-13T02:49:01.736Z</updated>
+    
+    <content type="html"><![CDATA[<p>AI安全</p><p>在讲AI安全研究什么之前，首先要知道AI可能会有哪些危害：</p><ul><li>提示词攻击，在通信中劫持并篡改提示词，注入攻击提示词，从而输出有害内容；</li><li>隐私泄露，通过特定的提示词可能会导致AI输出中包含你之前交互过程中输入的个人隐私信息；更严重的可能操纵并损伤个人电脑、导致经济损失等；在未来具身智能逐渐成熟之后，还可能导致人身安全；</li><li>公共安全，AI被用于辅助生化武器研发、制造；</li><li></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;AI安全&lt;/p&gt;
+&lt;p&gt;在讲AI安全研究什么之前，首先要知道AI可能会有哪些危害：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提示词攻击，在通信中劫持并篡改提示词，注入攻击提示词，从而输出有害内容；&lt;/li&gt;
+&lt;li&gt;隐私泄露，通过特定的提示词可能会导致AI输出中包含你之前交互过程</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>相机配件</title>
+    <link href="https://glooow1024.github.io/2024/06/07/essay/camera-accessories/"/>
+    <id>https://glooow1024.github.io/2024/06/07/essay/camera-accessories/</id>
+    <published>2024-06-07T15:49:58.000Z</published>
+    <updated>2024-06-07T16:09:24.911Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="必需">必需</h3><ul><li>备用电池</li><li>存储卡</li><li>相机包</li><li>UV镜：保护镜头</li><li>ND镜：减光镜，减少进光量，相机的墨镜；适合拍山水风光多的场景</li><li>遮光罩</li><li>三脚架（马小路）</li><li>防潮箱</li><li>镜头清洁套装</li></ul><h3 id="可选">可选</h3><ul><li>CPL：偏振镜，消除镜面、水面反光</li><li>柔光镜：让高光变柔和</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;必需&quot;&gt;必需&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;备用电池&lt;/li&gt;
+&lt;li&gt;存储卡&lt;/li&gt;
+&lt;li&gt;相机包&lt;/li&gt;
+&lt;li&gt;UV镜：保护镜头&lt;/li&gt;
+&lt;li&gt;ND镜：减光镜，减少进光量，相机的墨镜；适合拍山水风光多的场景&lt;/li&gt;
+&lt;li&gt;遮光罩&lt;/</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>烘焙初体验——蛋挞和泡芙</title>
+    <link href="https://glooow1024.github.io/2024/05/05/essay/baking-trial/"/>
+    <id>https://glooow1024.github.io/2024/05/05/essay/baking-trial/</id>
+    <published>2024-05-05T15:51:42.000Z</published>
+    <updated>2024-05-05T15:57:13.564Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近学习了蛋挞和泡芙的制作，还算比较成功，写下此文作记录。</p><span id="more"></span><h3 id="蛋挞">1. 蛋挞</h3><h4 id="所需材料">1.1 所需材料</h4><ul><li>厨具：空气炸锅/烤箱，电子秤</li><li>食材：<ul><li>蛋挞皮（网上直接买）</li><li>蛋挞液（网上直接买，或者自己调制），自己调制的话需要牛奶，鸡蛋，淡奶油</li></ul></li></ul><h3 id="泡芙">2. 泡芙</h3><ul><li>厨具：空气炸锅/烤箱，电子秤，打蛋器</li><li>食材：<ul><li>黄油/玉米油，玉米淀粉</li><li>低筋面粉，鸡蛋</li><li>淡奶油</li><li>糖，盐</li></ul></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;最近学习了蛋挞和泡芙的制作，还算比较成功，写下此文作记录。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>摩托驾驶证科目一易错点</title>
-    <link href="https://glooow1024.github.io/2024/04/26/moto_subject1/"/>
-    <id>https://glooow1024.github.io/2024/04/26/moto_subject1/</id>
+    <link href="https://glooow1024.github.io/2024/04/26/essay/moto_subject1/"/>
+    <id>https://glooow1024.github.io/2024/04/26/essay/moto_subject1/</id>
     <published>2024-04-26T04:01:44.000Z</published>
     <updated>2024-04-26T04:03:51.073Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="限速相关">限速相关</h4><ul><li>无中心线，城市道路30公路40</li><li>有中心线，城市道路50公路70</li><li>划有两条以上车道的，城市道路70</li><li>封闭的机动车专用道，限速80</li><li>运载易燃易爆、剧毒、放射性等，在封闭的机动车专用道和公路上，限速60；在城市道路上限速50</li><li>限30<ul><li>遇雾、雨、雪等能见度50m以内，限速30km/h</li><li>机动车进出非机动车道时，限速30</li><li>通过急弯路时，限速30</li><li>三轮、拖拉机、电瓶车等，限速30</li></ul></li></ul><h4 id="距离相关">距离相关</h4><ul><li>夜间会车，距离150m意外，将远光灯改为近光灯</li><li>车辆故障，车后50-100m设置警告标志</li><li>口5站3：交叉路口、隧道口50m内不能停车；公交站、消防栓、消防队门前30m内不能停车</li><li>距离掉头点50-100m驶入最左侧车道</li></ul><h4 id="扣分相关">扣分相关</h4><p>骑摩托车不戴头盔，扣1分</p><table><thead><tr class="header"><th>3分</th><th>6分</th><th>9分</th><th>12分</th></tr></thead><tbody><tr class="odd"><td>一般城市道路上逆行</td><td>高速上违法占用应急车道</td><td>高速上停车</td><td>高速上逆行</td></tr><tr class="even"><td>不规避校车</td><td>不按交通信号灯指示通行</td><td></td><td></td></tr><tr class="odd"><td></td><td>驾驶证被暂扣期间驾车</td><td>准驾不符<br>未取得校车驾驶资格驾驶校车</td><td>伪造、变造机动车驾驶证</td></tr><tr class="even"><td></td><td></td><td>不悬挂车牌、遮挡号牌</td><td>使用伪造、变造机动车号牌</td></tr><tr class="odd"><td></td><td></td><td></td><td>饮酒后驾车</td></tr><tr class="even"><td></td><td></td><td></td><td>超速50%以上</td></tr></tbody></table><h4 id="驾驶证相关">驾驶证相关</h4><ul><li><p>多久不得申请驾驶证：<strong>假一吊二撤三醉五逃终身，撤、毒、代三年</strong></p><ul><li><p>虚假材料，一年内不得重新申请驾驶证</p></li><li><p>以欺骗、贿赂等手段<strong>取得驾驶证</strong>，被依法撤销的，<strong>三年内</strong>不得重新申请驾驶证</p></li><li><p>考试<strong>过程中</strong>有贿赂、舞弊行为的，<strong>一年内</strong>不得再次申领驾驶证</p></li><li><p>注射毒品的，三年内不得申请驾驶证</p></li></ul></li><li><p>饮酒后驾车，暂扣6个月驾驶证，罚款1000-2000元</p></li><li><p>超速50%以上，吊销驾驶证，罚款200-2000元</p></li></ul><h4 id="罚款相关">罚款相关</h4><ul><li>转让不登记，罚200</li><li>隐瞒、欺骗手段补领机动车驾驶证，罚款200-500</li><li>提供虚假材料申请驾驶证，处500元罚款</li><li>代罚三倍不超五万，代审三倍不超两万</li><li>饮酒后驾车，暂扣6个月驾驶证，罚款1000-2000元</li><li>超速50%以上，吊销驾驶证，罚款200-2000元</li><li>交通事故，机动车已采取必要措施，赔偿金额，高架桥上5%不超过一万，普通道路10%不超过五万</li><li>违反倒车规定，未按交警指挥行驶，抛洒，罚100</li><li>改装助力，罚款50</li></ul><h4 id="拘役相关">拘役相关</h4><ul><li>交通事故致人重伤、死亡，三年以下</li><li>致人重伤、死亡并逃逸，3-7年</li></ul><h4 id="时限相关">时限相关</h4><ul><li>驾驶证有效期超过<strong>一年</strong>以上未换证的，驾驶证会被注销</li><li>驾驶证有效期满之前，<strong>90日内</strong>申请换证</li><li>申请人信息变化的，要在<strong>30日内</strong>申请换证</li><li>摩托车注册登记之日起，10年以内，每2年检验1次；超过10年的，每1年检验1次</li></ul><h4 id="灯光相关">灯光相关</h4><ul><li>雾天：雾灯、危险报警闪光灯；不能开启远光灯，浓雾会反射灯光</li></ul><h4 id="路标相关">路标相关</h4><ul><li>弯道：一急二反三连续</li><li>路面不平两个包</li><li>栅栏有人，火车头无人</li></ul>]]></content>
+    <content type="html"><![CDATA[<h4 id="限速相关">限速相关</h4><ul><li>无中心线，城市道路30公路40</li><li>有中心线，城市道路50公路70</li><li>划有两条以上车道的，城市道路70</li><li>封闭的机动车专用道，限速80</li><li>运载易燃易爆、剧毒、放射性等，在封闭的机动车专用道和公路上，限速60；在城市道路上限速50</li><li>限30<ul><li>遇雾、雨、雪等能见度50m以内，限速30km/h</li><li>机动车进出非机动车道时，限速30</li><li>通过急弯路时，限速30</li><li>三轮、拖拉机、电瓶车等，限速30</li></ul></li></ul><h4 id="距离相关">距离相关</h4><ul><li>夜间会车，距离150m意外，将远光灯改为近光灯</li><li>车辆故障，车后50-100m设置警告标志</li><li>口5站3：交叉路口、隧道口50m内不能停车；公交站、消防栓、消防队门前30m内不能停车</li><li>距离掉头点50-100m驶入最左侧车道</li></ul><h4 id="扣分相关">扣分相关</h4><p>骑摩托车不戴头盔，扣1分</p><table><thead><tr><th>3分</th><th>6分</th><th>9分</th><th>12分</th></tr></thead><tbody><tr><td>一般城市道路上逆行</td><td>高速上违法占用应急车道</td><td>高速上停车</td><td>高速上逆行</td></tr><tr><td>不规避校车</td><td>不按交通信号灯指示通行</td><td></td><td></td></tr><tr><td></td><td>驾驶证被暂扣期间驾车</td><td>准驾不符<br>未取得校车驾驶资格驾驶校车</td><td>伪造、变造机动车驾驶证</td></tr><tr><td></td><td></td><td>不悬挂车牌、遮挡号牌</td><td>使用伪造、变造机动车号牌</td></tr><tr><td></td><td></td><td></td><td>饮酒后驾车</td></tr><tr><td></td><td></td><td></td><td>超速50%以上</td></tr></tbody></table><h4 id="驾驶证相关">驾驶证相关</h4><ul><li><p>多久不得申请驾驶证：<strong>假一吊二撤三醉五逃终身，撤、毒、代三年</strong></p><ul><li><p>虚假材料，一年内不得重新申请驾驶证</p></li><li><p>以欺骗、贿赂等手段<strong>取得驾驶证</strong>，被依法撤销的，<strong>三年内</strong>不得重新申请驾驶证</p></li><li><p>考试<strong>过程中</strong>有贿赂、舞弊行为的，<strong>一年内</strong>不得再次申领驾驶证</p></li><li><p>注射毒品的，三年内不得申请驾驶证</p></li></ul></li><li><p>饮酒后驾车，暂扣6个月驾驶证，罚款1000-2000元</p></li><li><p>超速50%以上，吊销驾驶证，罚款200-2000元</p></li></ul><h4 id="罚款相关">罚款相关</h4><ul><li>转让不登记，罚200</li><li>隐瞒、欺骗手段补领机动车驾驶证，罚款200-500</li><li>提供虚假材料申请驾驶证，处500元罚款</li><li>代罚三倍不超五万，代审三倍不超两万</li><li>饮酒后驾车，暂扣6个月驾驶证，罚款1000-2000元</li><li>超速50%以上，吊销驾驶证，罚款200-2000元</li><li>交通事故，机动车已采取必要措施，赔偿金额，高架桥上5%不超过一万，普通道路10%不超过五万</li><li>违反倒车规定，未按交警指挥行驶，抛洒，罚100</li><li>改装助力，罚款50</li></ul><h4 id="拘役相关">拘役相关</h4><ul><li>交通事故致人重伤、死亡，三年以下</li><li>致人重伤、死亡并逃逸，3-7年</li></ul><h4 id="时限相关">时限相关</h4><ul><li>驾驶证有效期超过<strong>一年</strong>以上未换证的，驾驶证会被注销</li><li>驾驶证有效期满之前，<strong>90日内</strong>申请换证</li><li>申请人信息变化的，要在<strong>30日内</strong>申请换证</li><li>摩托车注册登记之日起，10年以内，每2年检验1次；超过10年的，每1年检验1次</li></ul><h4 id="灯光相关">灯光相关</h4><ul><li>雾天：雾灯、危险报警闪光灯；不能开启远光灯，浓雾会反射灯光</li></ul><h4 id="路标相关">路标相关</h4><ul><li>弯道：一急二反三连续</li><li>路面不平两个包</li><li>栅栏有人，火车头无人</li></ul>]]></content>
     
     
       
@@ -488,90 +556,6 @@ class=&quot;math inline&quot;&gt;\(\tau_a=\inf\{t:t\ge0,B(t)=a\}\)&lt;/span&gt;&
     <category term="反正弦定理" scheme="https://glooow1024.github.io/tags/%E5%8F%8D%E6%AD%A3%E5%BC%A6%E5%AE%9A%E7%90%86/"/>
     
     <category term="布朗桥" scheme="https://glooow1024.github.io/tags/%E5%B8%83%E6%9C%97%E6%A1%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://glooow1024.github.io/2022/01/23/hello-world/"/>
-    <id>https://glooow1024.github.io/2022/01/23/hello-world/</id>
-    <published>2022-01-23T11:47:05.001Z</published>
-    <updated>2019-12-10T11:33:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your veryfirst post. Check <a href="https://hexo.io/docs/">documentation</a> formore info. If you get any problems when using Hexo, you can find theanswer in <ahref="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> oryou can ask me on <ahref="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="quick-start">Quick Start</h2><h3 id="create-a-new-post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="run-server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="generate-static-files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="deploy-to-remote-sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <ahref="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very
-first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; fo</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>【高等数值分析】常微分方程数值解</title>
-    <link href="https://glooow1024.github.io/2022/01/14/advanced-numerical-analysis/ada-nsode/"/>
-    <id>https://glooow1024.github.io/2022/01/14/advanced-numerical-analysis/ada-nsode/</id>
-    <published>2022-01-14T01:26:08.000Z</published>
-    <updated>2022-01-14T01:28:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="预备理论">1. 预备理论</h2><p>求解常微分方程初值问题数值解 <span class="math display">\[\begin{align}&amp;\frac{dy}{dx} = f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\&amp;y(a) = y_0\end{align}\]</span> 存在唯一性定理：若 <span class="math inline">\(f(x,y)\)</span>连续，对 <span class="math inline">\(y\)</span> 满足 Lipschitz条件，那么初值问题有唯一解。</p><span id="more"></span><p>对上面的常微分方程积分就有 <span class="math inline">\(y(t_{n+k}) -y(t_{n-j}) = \int_{t_{n-j}}^{t_{n+k}} f(t,y(t))dt\)</span>，所以实际上可以转化为数值积分的问题，所以这一节的方法和数值积分很类似。但是这里的问题在于被积函数值是不知道的。</p><h2 id="线性多步法">2. 线性多步法</h2><p>在数值积分里面 <span class="math inline">\(f(t_k,y(t_k))\)</span>是已知的，主要是在设计求积节点对应的系数。在这里还需要首先估计每个节点的函数值。对前面的式子采样求积就得到<span class="math inline">\(y(t_{n+k}) - y(t_{n-j}) = h\sum_i \beta_if_{n-i}\)</span>，就引出了下面要介绍的线性多步法。</p><h3 id="线性多步法-1">2.1 线性多步法</h3><p>记 <span class="math inline">\(f_n=f(t_n,y_n),y_n=y(t_n)\)</span>，线性多步法（线性 <spanclass="math inline">\(k\)</span> 步法）的一般表达式为 <spanclass="math display">\[\sum_{i=0}^k \alpha_i y_{n+i} = h\sum_{i=0}^{k} \beta_i f_{n+i}\]</span> 其中 <span class="math inline">\(\alpha_k=1,\alpha_0^2+\beta_0^2\ne0\)</span>。给一些特例：</p><ul><li><span class="math inline">\(\alpha_0=-1,\beta_0=1,\beta_1=0\)</span>时为显式Euler法 <span class="math inline">\(y_{n+1}=y_n +hf_n\)</span>；</li><li><span class="math inline">\(\alpha_0=-1,\beta_0=0,\beta_1=1\)</span>时为隐式Euler法 <span class="math inline">\(y_{n+1}=y_n +hf_{n+1}\)</span>；</li><li><span class="math inline">\(\alpha_0=-1,\beta_0=\beta_1=1/2\)</span>时为梯形法 <span class="math inline">\(y_{n+1} = y_n +h/2(f_n+f_{n+1})\)</span>。</li></ul><p>可以定义<strong>“特征多项式”</strong>，在后面分析稳定性和收敛性的时候会很有用<span class="math display">\[\rho(\xi) = \sum_{i=0}^k \alpha_i \xi^i, \quad \sigma(\xi)=\sum_{i=0}^k\beta_i\xi^i\]</span>如何衡量数值求解方法的精度呢？定义<strong>局部截断误差</strong>为 <spanclass="math display">\[T_{n+k} = \sum_{i=0}^k [\alpha_i y(t_{n+i}) - h\beta_i y&#39;(t_{n+i})]\]</span> 对上面的式子做Taylor展开，可以得到形如 <spanclass="math inline">\(T_{n+1} = -1/90 h^5y^{(5)}(x_n)+O(h^6)\)</span>（这是Simpson公式的局部截断误差），这个式子表明Simpson公式是4阶的。</p><p>对于线性 <span class="math inline">\(k\)</span>步法，要想设计一种迭代方法使得数值精度是 <spanclass="math inline">\(p\)</span>阶的，可以采用待定系数法，保证局部截断误差中 <spanclass="math inline">\(y^{(1)}(x),...,y^{(q)}(x)\)</span>前面的系数都是0。</p><h3 id="稳定性与收敛性">2.2 稳定性与收敛性</h3><h4 id="相容性">2.2.1 相容性</h4><p>首先引入相容性的概念。若某个多步法的截断误差满足 <spanclass="math inline">\(T(t,y(t),h)=o(h)\)</span>那么称其为<strong>相容的</strong>。若 <spanclass="math inline">\(T(t,y(t),h)=O(h^{q+1})\)</span>，则称其为 <spanclass="math inline">\(q\)</span> 阶的。</p><p>实际上，相容性就是说该方法至少是1阶的，也就是当 <spanclass="math inline">\(y\)</span>为一次线性函数时，该方法要能够得到准确解。</p><p><strong>定理</strong>：相容的多步法充要条件是 <spanclass="math inline">\(\rho(1)=0,\rho&#39;(1)=\sigma(1)\)</span>。</p><h4 id="零稳定性">2.2.2 零稳定性</h4><p><strong>根条件</strong>：若多项式 <spanclass="math inline">\(\rho(\xi)\)</span> 的 <spanclass="math inline">\(k\)</span> 个根的模长都<strong>不大于1</strong>，并且模值等于 1 的根都是单根，则称其满足根条件。</p><p><strong>Note</strong>：根条件考虑的是齐次差分方程的解。当 <spanclass="math inline">\(f\equiv 0\)</span>的时候，齐次差分方程的解具有指数形式 <spanclass="math inline">\(y(n)=\sum_i P(n) \xi_i^n\)</span>，其中 <spanclass="math inline">\(P(n)\)</span> 是一个多项式， <spanclass="math inline">\(\xi_i\)</span> 就是 <spanclass="math inline">\(\rho(\xi)\)</span>的根（这里没考虑重根的情况，不过是类似的），如果 <spanclass="math inline">\(|\xi_i|&lt;1\)</span> 就意味着 <spanclass="math inline">\(\lim_{n\to\infty}y(n) =0\)</span>，那么这跟稳定性有什么关系呢？</p><p><strong>定理</strong>：线性多步法关于初值稳定的充要条件是 <spanclass="math inline">\(\rho(\xi)\)</span> 满足根条件。</p><p><strong>Note</strong>：这个定理说明了根条件和（零）稳定性二者的等价关系。为什么呢？假设真实的初值为<span class="math inline">\(y_0=y(t_0)\)</span>，真实的解为 <spanclass="math inline">\(y(n)=y_0\xi_0^{(n-t_0)}\)</span>。而我们计算的时候由于各种原因拿到的初值是有误差的，也就是<span class="math inline">\(\hat{y}_0\)</span>，那么最后求得的误差就是<spanclass="math inline">\(\hat{y}(n)-y(n)=(\hat{y}_0-y_0)\xi_0^{(n-t_0)}\)</span>，如果不满足根条件，当<span class="math inline">\(n\to\infty\)</span> 的时候，<spanclass="math inline">\(\hat{y}(n)-y(n) \to\infty\)</span>，解就是不稳定的。</p><h4 id="收敛性">2.2.3 收敛性</h4><p><strong>定义</strong>：假设在区间 <spanclass="math inline">\([a,b]\)</span> 上等距划分 <spanclass="math inline">\(N\)</span> 个区间，<span class="math inline">\(x_n= a+nh,n=0,1,...,N\)</span>，求解初值问题得到的解为 <spanclass="math inline">\(y_n,n=0,1,...,N\)</span>，最大整体误差为 <spanclass="math inline">\(E(h) = \max_{n} |y(x_n) - y_n|\)</span>，如果满足<span class="math inline">\(\lim_{h\to0}E(h)=0\)</span>，则称方法是<strong>收敛</strong>的。如果 <spanclass="math inline">\(E(h) \le Ch^p\)</span>，则称方法是 <spanclass="math inline">\(p\)</span> 阶收敛的。</p><p><strong>定理</strong>：相容性 + 零稳定性 <spanclass="math inline">\(\iff\)</span> 收敛性。</p><h4 id="绝对稳定性">2.2.4 绝对稳定性</h4><p>前面的零稳定性是跟所选择的方法有关的。而这里的绝对稳定性研究的是微分方程本身的属性。如果方程本身性质很不好，那么可能无论选择什么方法都是不稳定的。</p><p>取 <span class="math inline">\(f(x,y)=\lambday\)</span>，再研究方法的稳定性。以试验方程为例 <spanclass="math display">\[\begin{cases}y&#39; = \lambda y, t\in[a,b] \\y(a) = \tilde{y}_0\end{cases}\]</span> 用Euler法得到 <span class="math inline">\(y_n =(1+h\lambda)y_{n-1}\)</span>，于是两个解的误差满足 <spanclass="math inline">\(y_n-z_n = (1+h\lambda)^n (y_0-z_0)\)</span>，若<spanclass="math inline">\(|1+h\lambda|&gt;1\)</span>，则误差总会放大，这是我们不希望的。</p><p>要保证稳定性，既与方程本身的性质（也即 <spanclass="math inline">\(\lambda\)</span>） 有关，也与所选择的步长 <spanclass="math inline">\(h\)</span>有关。从另一个角度而言，方程本身的性质（<spanclass="math inline">\(\lambda\)</span>）会影响可选择的 <spanclass="math inline">\(h\)</span> 的范围。由此引出绝对稳定性的概念。</p><p>对前面提到的线性多步法，把 <span class="math inline">\(f(x,y)=\lambday\)</span> 代回去就有 <span class="math display">\[\sum_{i=0}^k (\alpha_i - h\lambda \beta_i) y_{n+i} = 0\]</span> 称 <span class="math inline">\(\Pi(\xi;z) = \rho(\xi) -z\sigma(\xi)\)</span> 为<strong>稳定多项式</strong>。</p><p><strong>定理</strong>：对给定的 <spanclass="math inline">\(z\)</span>，若 <spanclass="math inline">\(\Pi(\xi;z)\)</span> 的 <spanclass="math inline">\(k\)</span> 个根的模都<strong>小于1</strong>，则其是绝对稳定的。（满足这样条件的 <spanclass="math inline">\(z\)</span>的集合构成<strong>绝对稳定区域</strong>。）</p><h2 id="runge-kutta方法">3. Runge-Kutta方法</h2><p>Runge-Kutta方法和线性多步法的主要区别在于，其在 <spanclass="math inline">\(x_n,x_{n+1}\)</span>中间又进行了采样、插值。这种方法大概可以表示为 <spanclass="math display">\[\begin{align}&amp; y_{n+1} = y_n + h\sum_{i=1}^{s} b_i k_i \\&amp; k_i = y_n + f(t_n + c_i h, y_n + \sum_{i=1}^s a_{ij} k_j)\end{align}\]</span> 其中 <span class="math inline">\(0\le c_i\le1\)</span>。实际上<span class="math inline">\(k_i \approx y(t_n+c_i h)\)</span>，就是在<span class="math inline">\([y_n,y_{n+1}]\)</span>中间又进行了采样插值。</p><p>这样提高了精度，同时也会增加计算复杂度。</p><p>除此之外，提高精度的方法还有 Richardson 外推方法。</p><h2 id="刚性问题">4. 刚性问题</h2><p>刚性问题也是方程本身的属性，主要是指某些情况下两个特解的尺度相差很大，比如两个指数衰减的过程混合在一起，但是其中一个衰减特别快（<spanclass="math inline">\(\exp(-\lambda t)\)</span> 的 <spanclass="math inline">\(\lambda\)</span>特别大），另一个则衰减特别慢，那么数值求解的时候很可能只能看到衰减慢的那个过程，另一个则被忽略。这在化学反应中是经常遇到的。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;预备理论&quot;&gt;1. 预备理论&lt;/h2&gt;
-&lt;p&gt;求解常微分方程初值问题数值解 &lt;span class=&quot;math display&quot;&gt;\[
-\begin{align}
-&amp;amp;\frac{dy}{dx} = f(x,y), \quad a &amp;lt; x &amp;lt; b, |y| &amp;lt; \infty \\
-&amp;amp;y(a) = y_0
-\end{align}
-\]&lt;/span&gt; 存在唯一性定理：若 &lt;span class=&quot;math inline&quot;&gt;\(f(x,y)\)&lt;/span&gt;
-连续，对 &lt;span class=&quot;math inline&quot;&gt;\(y\)&lt;/span&gt; 满足 Lipschitz
-条件，那么初值问题有唯一解。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="高等数值分析" scheme="https://glooow1024.github.io/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/"/>
-    
-    
-    <category term="常微分方程" scheme="https://glooow1024.github.io/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/"/>
-    
-    <category term="刚性问题" scheme="https://glooow1024.github.io/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【高等数值分析】数值积分和数值微分</title>
-    <link href="https://glooow1024.github.io/2022/01/09/advanced-numerical-analysis/ada-integration/"/>
-    <id>https://glooow1024.github.io/2022/01/09/advanced-numerical-analysis/ada-integration/</id>
-    <published>2022-01-09T13:55:54.000Z</published>
-    <updated>2022-01-09T13:58:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="预备理论">1. 预备理论</h2><p>根据Newton-Leibniz公式有 <span class="math inline">\(\int_a^x f(t)dt=F(x)-F(a)\)</span>，但是绝大部分情况很难解析求解，需要数值积分。例如<strong>中点公式</strong><span class="math display">\[\int_a^b f(x)dx \approx f(\frac{a+b}{2})(b-a)\]</span> 若 <span class="math inline">\(f(x)\inC^2[a,b]\)</span>，则中点公式<strong>截断误差</strong>为 <spanclass="math display">\[\int_a^b f(x)dx - f(\frac{a+b}{2})(b-a) = \frac{(b-a)^2}{24}f&#39;&#39;(\xi), \quad \xi\in(a,b)\]</span> <span id="more"></span></p><h2 id="插值型求积公式">2. 插值型求积公式</h2><p>顾名思义，就是先插值再求积分。方法为给定求积节点 <spanclass="math inline">\(x_k,k=0,1,...,n\)</span> 和求积系数 <spanclass="math inline">\(A_k,k=0,1,...,n\)</span>，插值型求积公式表示为<span class="math display">\[\int_a^b f(x)dx \approx \sum_{k=0}^n A_k f(x_k)\]</span> 根据多项式插值中的理论，余项可表示为 <spanclass="math display">\[E_n(f) = \frac{1}{(n+1)!}\int_a^b f^{(n+1)}(\xi(x)) w_{n+1}(x) dx\]</span> 当 <span class="math inline">\(f(x)\in{\mathcal P}_n\)</span>时都有 <spanclass="math inline">\(E_n(f)=0\)</span>。由此可以定义代数精度，如果对所有<span class="math inline">\(p\in{\mathcal P}_m\)</span> 有 <spanclass="math inline">\(E_n(p)=0\)</span>，而对某个 <spanclass="math inline">\(q\in{\mathcal P}_{m+1}\)</span> 有 <spanclass="math inline">\(E_n(q)\ne 0\)</span>，称求积公式具有 <spanclass="math inline">\(m\)</span> 次<strong>代数精度</strong>。</p><p>插值型求积公式主要分为两类：Newton-Cotes求积公式和Gauss型求积公式。前者等距选取插值节点，后者则未必。</p><h3 id="newton-cotes求积公式">2.1 Newton-Cotes求积公式</h3><p>方法是将区间 <span class="math inline">\([a,b]\)</span> <spanclass="math inline">\(n\)</span> 等分，得到 <spanclass="math inline">\(h =\frac{b-a}{n},x_k=a+kh,k=0,...,n\)</span>，再利用Lagrange插值公式 <spanclass="math inline">\(l_k(x)\)</span>，得到 <spanclass="math display">\[\int_a^b f(x)dx = (b-a)\sum_{k} \frac{f(x_k)}{b-a}\int_a^b l_k(x)dx =(b-a)\sum_k C_k^{(n)} f(x_k)\]</span> 其中 <spanclass="math inline">\(C_k^{(n)}=\frac{1}{b-a}\int_a^b \prod_{j\nek}\frac{x-x_j}{x_k-x_j}dx = \frac{1}{n}\int_a^b \prod_{j\nek}\frac{t-j}{k-j}dx\)</span> 称为 Cotes求积系数，不仅<strong>与被积函数无关</strong>，<strong>与求积区间也无关</strong>。</p><p>该方法有如下性质：</p><ul><li><span class="math inline">\(\sum_{k=0}^n C_k^{(n)} = 1\)</span>（取<span class="math inline">\(f\equiv1\)</span> 即可得证）；</li><li><span class="math inline">\(E_n(f) = \frac{1}{(n+1)!}\int_a^bf^{(n+1)}(\xi(x)) w_{n+1}(x) dx\)</span>；</li><li>当 <span class="math inline">\(n\)</span> 为偶数时，代数精度为 <spanclass="math inline">\(n+1\)</span>；当 <spanclass="math inline">\(n\)</span> 为奇数时，代数精度为 <spanclass="math inline">\(n\)</span>。（直观理解是因为奇次多项式的奇对称性积分后恰好为0）</li></ul><p>下面是 <span class="math inline">\(n\)</span> 取不同数值的特例。</p><p><span class="math inline">\(n=1\)</span> 时为梯形公式，代数精度为<span class="math inline">\(1\)</span>： <span class="math display">\[\begin{align}&amp;\int_a^b f(x)dx \approx \frac{b-a}{2}[f(a)+f(b)] \\&amp;E_1(f) = -\frac{(b-a)^3}{12} f&#39;&#39;(\xi), \xi\in[a,b]\end{align}\]</span> <span class="math inline">\(n = 2\)</span> 时为 Simpson公式，代数精度为 <span class="math inline">\(3\)</span>： <spanclass="math display">\[\begin{align}&amp;\int_a^b f(x)dx \approx \frac{b-a}{6}[f(a)+4f(\frac{a+b}{2})+f(b)]\\&amp;E_1(f) = -\frac{(b-a)^5}{2880} f^{(4)}(\xi), \xi\in[a,b]\end{align}\]</span></p><h3 id="gauss型求积公式">2.2 Gauss型求积公式</h3><p>求积公式也表示为 <span class="math display">\[\int_a^b f(x)dx \approx \sum_{k=0}^n A_k f(x_k)\]</span>但与Newton-Cotes方法不同的是求积节点并非等距选取，而是将参数待定，解出使代数精度最高的参数<span class="math inline">\(A_k\)</span> 和 <spanclass="math inline">\(x_k\)</span>。共有 <spanclass="math inline">\(2n+2\)</span> 个参数待定，分别取 <spanclass="math inline">\(f(x)=1,x,x^2,...,x^{2n+1}\)</span>列方程组，因此代数精度最高可以达到 <spanclass="math inline">\(2n+1\)</span>。</p><p>从理论上也可以证明代数精度至多为 <spanclass="math inline">\(2n+1\)</span>。</p><p>证明：取 <spanclass="math inline">\(f(x)=\prod_{k=0}^n(x-x_k)^2\)</span>，那么上面等式左边一定有<span class="math inline">\(\int_a^b f(x)dx &gt;0\)</span>，但是等式右边有 <span class="math inline">\(\sum_{k} A_kf(x_k)=0\)</span>，显然不相等。证毕。</p><p>除此之外，Gauss型求积公式还可以拓展到带权积分的情况，也即 <spanclass="math display">\[\int_a^b \rho(x)f(x)dx = \sum_{k=0}^n A_k f(x_k) +\frac{1}{(n+1)!}\int_a^b f^{(n+1)}(\xi(x)) w_{n+1}(x) dx\]</span> 关键问题是如何求解 <spanclass="math inline">\(A_k,x_k\)</span> 呢？</p><p>由于代数精度为 <span class="math inline">\(2n+1\)</span>，对 <spanclass="math inline">\(\forall f\in{\mathcalP}_{2n+1}\)</span>，截断误差应满足 <spanclass="math inline">\(\frac{1}{(n+1)!}\int_a^b f^{(n+1)}(\xi(x))w_{n+1}(x) dx=0\)</span>。又由于 <spanclass="math inline">\(f^{(n+1)}\in{\mathcal P}_n\)</span>，那么只需要取<span class="math inline">\(w_{n+1}(x)\)</span> 为 <spanclass="math inline">\(n+1\)</span> 阶正交多项式（权函数为 <spanclass="math inline">\(\rho\)</span>）即可满足该条件。因此Gauss型求积公式的求解方法为：</p><ol type="1"><li>权函数为 <span class="math inline">\(\rho\)</span>，求 <spanclass="math inline">\(n+1\)</span> 阶正交多项式；</li><li>求 <span class="math inline">\(n+1\)</span> 个根 <spanclass="math inline">\(x_k\)</span>（在逼近一章中已经证明了一定存在 <spanclass="math inline">\(n+1\)</span> 个不同的根）；</li><li>取 <span class="math inline">\(f(x)=1,x,...,x^n\)</span>列线性方程组求 <span class="math inline">\(A_k\)</span>。</li></ol><p>Gauss型求积公式有如下性质：</p><ul><li><span class="math inline">\(A_k &gt; 0,k=0,1,...,n\)</span>（取<span class="math inline">\(f(x)=l_i(x)\)</span> 即可证明）；</li><li><span class="math inline">\(\sum_{k=0}^n A_k = \int_a^b\rho(x)dx\)</span>（取 <span class="math inline">\(f\equiv\)</span>即可证明）；</li><li>余项 <span class="math inline">\(E_n(f) =\frac{1}{(2n+2)!}f^{(2n+2)}(\eta)\int_a^b \rho(x) [w_{n+1}(x)]^2dx\)</span>。</li></ul><h2 id="数值微分">3. 数值微分</h2><p>数值微分和数值积分类似，也有插值型微分公式，即先进性多项式插值，再求导数值。</p><p>还可以利用Richardson外推公式提高精度。</p>]]></content>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;预备理论&quot;&gt;1. 预备理论&lt;/h2&gt;
-&lt;p&gt;根据Newton-Leibniz公式有 &lt;span class=&quot;math inline&quot;&gt;\(\int_a^x f(t)dt
-=
-F(x)-F(a)\)&lt;/span&gt;，但是绝大部分情况很难解析求解，需要数值积分。例如&lt;strong&gt;中点公式&lt;/strong&gt;
-&lt;span class=&quot;math display&quot;&gt;\[
-\int_a^b f(x)dx \approx f(\frac{a+b}{2})(b-a)
-\]&lt;/span&gt; 若 &lt;span class=&quot;math inline&quot;&gt;\(f(x)\in
-C^2[a,b]\)&lt;/span&gt;，则中点公式&lt;strong&gt;截断误差&lt;/strong&gt;为 &lt;span
-class=&quot;math display&quot;&gt;\[
-\int_a^b f(x)dx - f(\frac{a+b}{2})(b-a) = \frac{(b-a)^2}{24}
-f&amp;#39;&amp;#39;(\xi), \quad \xi\in(a,b)
-\]&lt;/span&gt;</summary>
-    
-    
-    
-    <category term="高等数值分析" scheme="https://glooow1024.github.io/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/"/>
-    
-    
-    <category term="数值积分" scheme="https://glooow1024.github.io/tags/%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/"/>
     
   </entry>
   

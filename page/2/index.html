@@ -236,6 +236,211 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/06/14/communication/communication-specification/" target="_self">
+          无线通信标准杂谈
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/06/14/communication/communication-specification/" target="_self">
+        <div>
+          
+          4G LTE 采用OFDM调制，支持的带宽有（大带宽）10MHz、15MHz、20MHz，（窄带）1.4MHz、3MHz、5MHz。正常情况下子载波间隔15KHz，符号周期66.7us，加上循环前缀长度为71.35us。LTE在时域上的最小单位为时隙，以0.5ms为周期，在15KHz下，0.5ms*15KHz&#x3D;7.5个正弦波，因此一个时隙内可以容纳7个symbol，多余出来的时间分配给各个符号的
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-14 16:24" pubdate>
+              2022-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Communication-and-Networks/" class="category-chain-item">Communication and Networks</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OFDM/">#OFDM</a>
+            
+              <a href="/tags/4G-LTE/">#4G LTE</a>
+            
+              <a href="/tags/5G-NR/">#5G NR</a>
+            
+              <a href="/tags/%E6%AF%AB%E7%B1%B3%E6%B3%A2%E9%80%9A%E4%BF%A1/">#毫米波通信</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/21/communication/modulation/" target="_self">
+          信号调制与解调
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/05/21/communication/modulation/" target="_self">
+        <div>
+          
+          写这篇文章的起因是我一直对数字调制和模拟调制这两个概念比较模糊，对于相应的通信系统结构也觉得比较混乱，所以在网上查了很多资料来理清楚这件事情。本文引用了诸多网络上的博客、文章中的文字和图片，引用之处都标注了参考出处，若有侵权请告知我，我会删除侵权部分。  信号的调制简单来说，就是用基带信号去控制（调制）单频载波信号的某个或某几个参数，从而使得调制后的信号中嵌入了希望传递的信息[1]。这个载
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-21 00:16" pubdate>
+              2022-05-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Communication-and-Networks/" class="category-chain-item">Communication and Networks</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/IQ%E8%B0%83%E5%88%B6/">#IQ调制</a>
+            
+              <a href="/tags/%E8%B0%83%E5%88%B6%E4%B8%8E%E8%A7%A3%E8%B0%83/">#调制与解调</a>
+            
+              <a href="/tags/%E7%A7%BB%E5%8A%A8%E9%80%9A%E4%BF%A1/">#移动通信</a>
+            
+              <a href="/tags/%E6%A8%A1%E6%8B%9F%E8%B0%83%E5%88%B6/">#模拟调制</a>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%97%E8%B0%83%E5%88%B6/">#数字调制</a>
+            
+              <a href="/tags/QAM/">#QAM</a>
+            
+              <a href="/tags/OFDM/">#OFDM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/03/19/diy/paper-collector/" target="_self">
+          IEEE论文爬虫及数据统计
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/03/19/diy/paper-collector/" target="_self">
+        <div>
+          
+          1. IEEE论文爬虫 爬虫代码网上有很多了，这部分是直接用的网上可以跑通的[1]。使用的时候直接调用 get_article_info()，其中参数 conferenceID 需要手动在 IEEE 上查询会议的 ID 号，参数 saceFileName 为希望保存的 csv 文件名。 123456789101112131415161718192021222324252627282930
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-19 13:51" pubdate>
+              2022-03-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/DIY/" class="category-chain-item">DIY</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/spider/">#spider</a>
+            
+              <a href="/tags/PyQt/">#PyQt</a>
+            
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/03/02/research/SLAM-survey/" target="_self">
           SLAM综述
         </a>
@@ -661,163 +866,6 @@
               <a href="/tags/%E5%8F%8D%E6%AD%A3%E5%BC%A6%E5%AE%9A%E7%90%86/">#反正弦定理</a>
             
               <a href="/tags/%E5%B8%83%E6%9C%97%E6%A1%A5/">#布朗桥</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/23/hello-world/" target="_self">
-          Hello World
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/01/23/hello-world/" target="_self">
-        <div>
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-23 19:47" pubdate>
-              2022-01-23
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
-          【高等数值分析】常微分方程数值解
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/01/14/advanced-numerical-analysis/ada-nsode/" target="_self">
-        <div>
-          
-          1. 预备理论 求解常微分方程初值问题数值解 \[ \begin{align} &amp;\frac{dy}{dx} &#x3D; f(x,y), \quad a &lt; x &lt; b, |y| &lt; \infty \\ &amp;y(a) &#x3D; y_0 \end{align} \] 存在唯一性定理：若 \(f(x,y)\) 连续，对 \(y\) 满足 Lipschitz 条件，那么
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-14 09:26" pubdate>
-              2022-01-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">#常微分方程</a>
-            
-              <a href="/tags/%E5%88%9A%E6%80%A7%E9%97%AE%E9%A2%98/">#刚性问题</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
-          【高等数值分析】数值积分和数值微分
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/01/09/advanced-numerical-analysis/ada-integration/" target="_self">
-        <div>
-          
-          1. 预备理论 根据Newton-Leibniz公式有 \(\int_a^x f(t)dt &#x3D; F(x)-F(a)\)，但是绝大部分情况很难解析求解，需要数值积分。例如中点公式 \[ \int_a^b f(x)dx \approx f(\frac{a+b}{2})(b-a) \] 若 \(f(x)\in C^2[a,b]\)，则中点公式截断误差为 \[ \int_a^b f(x)d
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-09 21:55" pubdate>
-              2022-01-09
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E9%AB%98%E7%AD%89%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" class="category-chain-item">高等数值分析</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/">#数值积分</a>
             
           </div>
         

@@ -1,0 +1,15 @@
+# 依赖与构建产物（均可重新生成，不入库）
+node_modules/
+public/
+.deploy_git/
+db.json
+
+# 日志与系统文件
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 历史主题备份包（themes/fluid 已入库，zip 无需备份）
+themes/*.zip
+themes/landscape/

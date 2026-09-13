@@ -1,6 +1,8 @@
 # 项目背景说明（Glooow 个人博客）
 
 > 本文档是项目的唯一背景入口。任何需要在本项目工作的 Agent（或换电脑后的你自己），**先完整阅读本文档**，再动手。
+>
+> **版本管理状态（2026-09-13 起）**：源码已纳入 git 管理，托管在本仓库 `source` 分支；`master` 分支是构建产物（线上服务）。详见第 7 节。
 
 ## 1. 这是什么
 
@@ -50,6 +52,7 @@
 - 部分文章用 `<!--more-->` 截断首页摘要；部分用 `[TOC]` 生成目录。
 - 文章图片惯例：放在 `source/_posts/imgs/`（或分类目录下的 `img/`，如 `statistic/img/`），用相对路径引用。
 - 新文章按主题放入 `source/_posts/` 下对应分类子目录；新主题可新建子目录（分类按 front matter 的 `categories` 决定，与目录无关）。
+- **源码版本管理**：项目根目录是 git 仓库（分支 `source`，远程 `origin`）；提交后 push 到 GitHub `source` 分支，具体见第 7 节。
 
 ## 4. 发布工作流（日常唯一操作）
 
@@ -69,7 +72,9 @@ npx hexo deploy            # 部署
 git -C .deploy_git log -1  # 查看最后一次成功部署的提交
 ```
 
-> **重要**：项目根目录**不是 git 仓库**，源码不入库；GitHub 仓库里只有构建产物（`public/` 的内容）。
+> **重要**：项目根目录是 git 仓库，但**只提交源码**（`source/`、配置、主题、scaffolds），`node_modules/`、`public/`、`.deploy_git/`、`db.json` 已被 `.gitignore` 排除。GitHub 仓库 `master` 分支只有构建产物。
+
+**源码备份习惯**：发布完成后顺手提交一次源码到 `source` 分支（命令见第 7 节），避免源码只留在本地。
 
 ## 5. 构建环境注意（容易踩坑）
 
@@ -95,16 +100,32 @@ git -C .deploy_git log -1  # 查看最后一次成功部署的提交
   - `source/_posts/essay/camera-accessories.md`（2024-06-07，相机配件）
 - 核对命令：`git -C .deploy_git log -1` 对比线上；对比 `source/_posts/` 下文件 front matter 日期与部署日期，晚于部署日期的即未发布。
 
-## 7. 换电脑迁移指南（重要）
+## 7. 源码版本管理与换电脑迁移（已就绪）
 
-**只 clone GitHub 仓库是不够的**——master 分支只有构建产物（HTML/CSS/JS），**没有** `source/`、`_config.yml`、`themes/`、`package.json`、`scaffolds/`，clone 下来无法继续写作。
+**当前状态（2026-09-13）**：项目源码已纳入 git 管理并托管到 GitHub 仓库 `source` 分支（初始提交 `32cc46d`，323 个文件）。
 
-完整迁移步骤（尚未执行，需要时按此操作）：
+```
+仓库结构（一个仓库、两个分支，互不干扰）：
+- master：构建产物（HTML/CSS/JS），GitHub Pages 线上服务，由 hexo deploy 自动更新，勿手动改
+- source：全部源码（source/、_config.yml、themes/fluid/、scaffolds/、package.json、AGENTS.md 等），备份与迁移用
+```
 
-1. **先把源码纳入 git 管理**（当前缺失的一环）：推荐在 GitHub 仓库新建 `source` 分支存放整个项目根目录（排除 `node_modules/`、`public/`、`.deploy_git/`、`db.json`），或新建独立私有源码仓库。
-2. 新电脑安装：Node.js LTS、git。
-3. `git clone` 源码分支/仓库到本地。
-4. `npm install` 安装 node 依赖。
-5. **单独安装 pandoc**（见第 5 节，`npm install` 不会装）。
-6. 配置 SSH key，并确认能连 `git@github.com`（部署需要）与 `git@gitee.com`；`_config.yml` 的 deploy 段用的是 SSH 地址。
-7. 写文章 → `npx hexo generate` → `npx hexo deploy`（`.deploy_git` 会自动重建）。
+`.gitignore` 已排除：`node_modules/`、`public/`、`.deploy_git/`、`db.json`、日志、系统文件、主题历史 zip。
+
+**日常备份习惯**：每次写完文章发布后，顺手提交源码：
+
+```powershell
+git add -A
+git commit -m "发布：<文章标题>"
+git push origin source
+```
+
+**换电脑恢复步骤**（只需这几步）：
+
+1. 新电脑安装 Node.js LTS、git，以及 pandoc（winget 命令见第 5 节）。
+2. `git clone -b source git@github.com:Glooow1024/Glooow1024.github.io.git`
+3. `npm install`（自动安装依赖与 Fluid 主题，无需手动下载主题）。
+4. 配置 SSH key，确认能连 `git@github.com`（部署需要）与 `git@gitee.com`（可选）。
+5. `npx hexo generate` → `npx hexo deploy` 即可上线（`.deploy_git` 会自动重建）。
+
+> 注意：`master` 分支上没有源码，clone 时务必用 `-b source` 指定分支。

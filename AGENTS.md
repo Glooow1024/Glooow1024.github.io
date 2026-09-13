@@ -93,11 +93,12 @@ git -C .deploy_git log -1  # 查看最后一次成功部署的提交
 
 ## 6. 发布状态快照（2026-09-13 核对，可能过期，以命令结果为准）
 
-- 线上最后一次成功部署：**2024-04-26**（`.deploy_git` HEAD = `31d9d18`，与 GitHub master 一致）。
-- **已生成但未部署的文章（3 篇）**——`hexo generate` 已产出页面，但尚未 `hexo deploy` 上线：
-  - `source/_posts/essay/ai_harness.md`（2026-08-24，AI 治理/AI 安全，内容未写完，末尾有断点）
+- **线上已更新至 2026-09-13**：`hexo deploy` 成功推送 GitHub master（`.deploy_git` HEAD = `b2ab3aa`）。
+- 本次发布的文章（全部已上线，线上页面验证通过）：
+  - `source/_posts/essay/AI的逗号.md`（2026-09-13，AI 治理，更名并更新日期；**正文未写完**，末尾有断点）
   - `source/_posts/essay/baking-trial.md`（2024-05-05，烘焙初体验——蛋挞和泡芙）
   - `source/_posts/essay/camera-accessories.md`（2024-06-07，相机配件）
+- **Gitee 镜像不再维护**（用户决定，2026-09-13）：Gitee 未配置 SSH 公钥，`hexo deploy` 推送 GitHub 成功后会在 Gitee 一步报错退出（`Permission denied (publickey)`），属预期现象，**GitHub 已成功无需理会**。
 - 核对命令：`git -C .deploy_git log -1` 对比线上；对比 `source/_posts/` 下文件 front matter 日期与部署日期，晚于部署日期的即未发布。
 
 ## 7. 源码版本管理与换电脑迁移（已就绪）
